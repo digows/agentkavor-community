@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Share an idea
+    url: https://github.com/digows/agentkavor-community/discussions/categories/ideas
+    about: Propose and discuss improvements with the community.
+  - name: Ask the community
+    url: https://github.com/digows/agentkavor-community/discussions/categories/q-a
+    about: Ask a usage or workflow question.
+  - name: Report a security vulnerability
+    url: https://github.com/digows/agentkavor-community/security/advisories/new
+    about: Report security concerns privately. Never disclose them in a public Issue.

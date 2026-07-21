@@ -1,0 +1,36 @@
+title: "[Show and tell] "
+labels:
+  - "type: show-and-tell"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share a workflow, project, or lesson from using Kavor. Only include material you are authorized to publish.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What did you build or learn?
+      description: Give the community a concise overview.
+    validations:
+      required: true
+  - type: textarea
+    id: kavor-role
+    attributes:
+      label: How did Kavor help?
+      description: Describe the Kavor workflow, Nodes, or collaboration pattern you used.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details, links, or screenshots
+      description: Optional. Add public supporting material.
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: Publication confirmation
+      options:
+        - label: I am authorized to publish everything included in this submission.
+          required: true

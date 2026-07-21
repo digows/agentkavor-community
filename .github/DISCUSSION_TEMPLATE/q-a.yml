@@ -1,0 +1,37 @@
+title: "[Question] "
+labels:
+  - "type: question"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ask a focused question and include enough context for the community to help. This is public: remove credentials, private code, and confidential Workspace information.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help understanding or accomplishing?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What were you doing, and what have you already tried?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Kavor version
+      description: Optional. Include this when the question may depend on product behavior.
+      placeholder: "For example: 1.0.0"
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: Public content confirmation
+      options:
+        - label: I removed private or sensitive information from this submission.
+          required: true

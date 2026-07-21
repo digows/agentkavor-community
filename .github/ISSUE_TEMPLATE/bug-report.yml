@@ -1,0 +1,78 @@
+name: Bug report
+description: Report a reproducible problem in Kavor.
+title: "[Bug] "
+labels:
+  - "type: bug"
+  - "status: needs-triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Search existing Issues first.
+
+        This report is public. Remove credentials, private source code, terminal output, personal data, local paths, repository details, and confidential Workspace information.
+  - type: input
+    id: version
+    attributes:
+      label: Kavor version
+      placeholder: "For example: 1.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: operating-system-version
+    attributes:
+      label: Operating system version
+      placeholder: "For example: Windows 11 24H2, macOS 15.5, or Ubuntu 24.04"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and its impact.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Open...
+        2. Select...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Optional. Add sanitized screenshots or other public information that helps reproduce the problem.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched for an existing Issue that reports this problem.
+          required: true
+        - label: I removed private or sensitive information from this report.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

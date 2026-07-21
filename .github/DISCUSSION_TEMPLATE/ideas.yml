@@ -1,0 +1,64 @@
+title: "[Idea] "
+labels:
+  - "type: idea"
+  - "status: needs-triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping shape Kavor. Search existing ideas before submitting and add your context to a matching Discussion when possible.
+
+        This is a public forum. Do not include credentials, private source code, terminal output, personal data, or confidential Workspace information.
+  - type: dropdown
+    id: product-area
+    attributes:
+      label: Product area
+      description: Which part of Kavor is most closely related to this idea?
+      options:
+        - Canvas
+        - Coding Agents
+        - Terminals
+        - Specifications
+        - Git workflow
+        - Collaboration
+        - Updates and packaging
+        - Accessibility
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What are you trying to accomplish, and what makes it difficult today?
+      placeholder: Describe the workflow and who is affected.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What would a successful result look like? Focus on the outcome rather than implementation details.
+    validations:
+      required: true
+  - type: textarea
+    id: direction
+    attributes:
+      label: Suggested direction
+      description: Optional. Describe a possible solution, interaction, or design.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current alternatives or workarounds
+      description: Optional. Explain how you handle this today.
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: Public content confirmation
+      options:
+        - label: I searched for similar ideas and removed private or sensitive information from this submission.
+          required: true
