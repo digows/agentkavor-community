@@ -6,6 +6,21 @@ body:
     attributes:
       value: |
         Ask a focused question and include enough context for the community to help. This is public: remove credentials, private code, and confidential Workspace information.
+  - type: dropdown
+    id: product-area
+    attributes:
+      label: Product area
+      options:
+        - Canvas and Nodes
+        - CodingAgents and providers
+        - Connections and Guardrails
+        - Terminals
+        - Specifications, Files, and Sticky Notes
+        - Git and worktrees
+        - Installation and updates
+        - Other or not sure
+    validations:
+      required: true
   - type: textarea
     id: question
     attributes:

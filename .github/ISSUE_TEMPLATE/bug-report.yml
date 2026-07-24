@@ -15,7 +15,19 @@ body:
     id: version
     attributes:
       label: Kavor version
-      placeholder: "For example: 1.0.0"
+      description: Find this in Kavor's About or update information.
+      placeholder: "For example: 1.0.4"
+    validations:
+      required: true
+  - type: dropdown
+    id: release-channel
+    attributes:
+      label: Release channel
+      options:
+        - Stable
+        - Pre-release
+        - Development build
+        - Not sure
     validations:
       required: true
   - type: dropdown
@@ -33,6 +45,33 @@ body:
     attributes:
       label: Operating system version
       placeholder: "For example: Windows 11 24H2, macOS 15.5, or Ubuntu 24.04"
+    validations:
+      required: true
+  - type: dropdown
+    id: architecture
+    attributes:
+      label: System architecture
+      options:
+        - x64
+        - arm64
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: product-area
+    attributes:
+      label: Product area
+      options:
+        - Canvas and Nodes
+        - CodingAgents and providers
+        - Connections and Guardrails
+        - Terminals
+        - Specifications, Files, and Sticky Notes
+        - Git and worktrees
+        - Installation and updates
+        - Settings
+        - Accessibility
+        - Other or not sure
     validations:
       required: true
   - type: textarea
@@ -62,7 +101,7 @@ body:
     id: additional-context
     attributes:
       label: Additional context
-      description: Optional. Add sanitized screenshots or other public information that helps reproduce the problem.
+      description: Optional. Add sanitized screenshots, logs, or other public information that helps reproduce the problem.
     validations:
       required: false
   - type: checkboxes

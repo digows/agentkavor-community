@@ -27,6 +27,13 @@ body:
       description: Optional. Add public supporting material.
     validations:
       required: false
+  - type: textarea
+    id: lesson
+    attributes:
+      label: What should another developer take away?
+      description: Optional. Share a reusable lesson, trade-off, or workflow pattern.
+    validations:
+      required: false
   - type: checkboxes
     id: public-content
     attributes:

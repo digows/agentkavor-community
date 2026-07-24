@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Download Kavor
+    url: https://download.agentkavor.com
+    about: Get the latest Kavor build for your platform.
   - name: Share an idea
     url: https://github.com/digows/agentkavor-community/discussions/categories/ideas
     about: Propose and discuss improvements with the community.

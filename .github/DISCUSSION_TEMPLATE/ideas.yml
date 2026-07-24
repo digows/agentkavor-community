@@ -15,13 +15,15 @@ body:
       label: Product area
       description: Which part of Kavor is most closely related to this idea?
       options:
-        - Canvas
-        - Coding Agents
+        - Canvas and Nodes
+        - CodingAgents and providers
+        - Connections and Guardrails
         - Terminals
-        - Specifications
-        - Git workflow
-        - Collaboration
-        - Updates and packaging
+        - Specifications, Files, and Sticky Notes
+        - Git and worktrees
+        - Collaboration and conversations
+        - Agent capabilities and integrations
+        - Installation and updates
         - Accessibility
         - Other
     validations:
