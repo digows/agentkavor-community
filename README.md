@@ -44,7 +44,8 @@ that process before every answer is polished or final.
 The first track investigates **Visible Agent Capabilities**: coding agents already have instructions, tools,
 plugins, MCP servers, and connections, but can the person using them clearly see and control what each agent can do?
 
-[Read Building Kavor: Visible Agent Capabilities](building-kavor/visible-agent-capabilities/README.md).
+[Read the Visible Agent Capabilities track](building-kavor/visible-agent-capabilities/README.md) ·
+[Join the first Building Kavor Discussion](https://github.com/digows/agentkavor-community/discussions/2)
 
 ## Get involved
 

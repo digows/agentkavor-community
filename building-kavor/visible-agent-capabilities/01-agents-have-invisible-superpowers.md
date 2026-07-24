@@ -90,4 +90,5 @@ Think about the most capable coding-agent setup you currently use:
 - Which access would you be uncomfortable granting silently?
 - Which integration would best test whether this model is honest?
 
-Continue the conversation in [Kavor Discussions](https://github.com/digows/agentkavor-community/discussions).
+Continue the conversation in
+[Building Kavor Discussion #01](https://github.com/digows/agentkavor-community/discussions/2).

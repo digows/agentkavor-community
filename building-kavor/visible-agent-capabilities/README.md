@@ -99,4 +99,5 @@ but they introduce separate runtime and interaction problems that would obscure 
 - What evidence should Kavor retain when a capability is used?
 - Which real integration would expose the weakest part of this model?
 
-Follow the track here and in [Kavor Discussions](https://github.com/digows/agentkavor-community/discussions).
+Follow the track here and
+[join the Building Kavor Discussion](https://github.com/digows/agentkavor-community/discussions/2).

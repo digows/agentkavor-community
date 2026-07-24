@@ -15,7 +15,8 @@ configuration. Most of that power is invisible at the moment it matters.
 We are exploring how Kavor can make an agent's capabilities visible, attachable, and revocable directly from its
 Node—without collapsing instructions, executable tools, credentials, and authorization into one vague concept.
 
-[Follow the Visible Agent Capabilities track](visible-agent-capabilities/README.md).
+[Follow the Visible Agent Capabilities track](visible-agent-capabilities/README.md) and
+[join the inaugural Discussion](https://github.com/digows/agentkavor-community/discussions/2).
 
 ## How a track works
 
