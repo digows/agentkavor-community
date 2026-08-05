@@ -15,6 +15,7 @@ Specifications, arquivos, CodingAgents, Terminals, evidências e decisões que t
 ## Comece aqui
 
 - [O que é o Kavor?](./what-is-kavor.md) explica o modelo e o vocabulário central.
+- [Feche seu primeiro loop](./first-loop.md) com uma Specification, dois CodingAgents e evidências compartilhadas.
 - [Notas de versão](./release-notes/index.md) registra cada release pública do Kavor.
 
 ## Seu primeiro loop em cinco minutos
@@ -26,10 +27,10 @@ Specifications, arquivos, CodingAgents, Terminals, evidências e decisões que t
 
 Comece com esse pequeno loop fechado. Adicione revisores, Files e Sticky Notes apenas quando o trabalho se beneficiar deles.
 
-## Release atual e plataformas
+## Plataformas e download
 
-Kavor 1.2.0 é a release pública atual. Kavor é gratuito e está disponível para Windows, macOS e Linux.
-[Baixe o Kavor](https://download.agentkavor.com/pt-br) ou veja [o que mudou](./release-notes/1.2.0.md).
+Kavor é gratuito e está disponível para Windows, macOS e Linux.
+[Baixe o Kavor](https://download.agentkavor.com/pt-br) ou consulte as [notas de versão](./release-notes/index.md).
 
 ## Obtenha ajuda e construa o Kavor conosco
 

@@ -54,4 +54,7 @@ Comece pequeno: conecte uma Specification a um CodingAgent e um Terminal. Peça 
 contrato, inspecione as evidências e preserve a decisão no Workspace. Adicione revisores e loops mais ricos somente
 quando o trabalho se beneficiar deles.
 
+[Siga o tutorial completo do primeiro loop](./first-loop.md) para adicionar implementação, revisão, evidências
+compartilhadas e uma decisão humana.
+
 [Baixe o Kavor](https://download.agentkavor.com/pt-br) ou leia as [notas de versão](./release-notes/index.md).

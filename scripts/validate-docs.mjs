@@ -14,7 +14,7 @@ const expectedLanguageTags = new Map([
   ['ja', 'ja'],
   ['ru', 'ru'],
 ])
-const documentKinds = new Set(['landing', 'guide', 'release-index', 'release-note'])
+const documentKinds = new Set(['landing', 'tutorial', 'guide', 'release-index', 'release-note'])
 const maximumMarkdownBytes = 256 * 1024
 
 function fail(message) {

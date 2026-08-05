@@ -15,6 +15,7 @@ Specifications, файлы, CodingAgents, Terminals, доказательств�
 ## С чего начать
 
 - [Что такое Kavor?](./what-is-kavor.md) объясняет модель и основные термины.
+- [Замкните первый цикл](./first-loop.md) со Specification, двумя CodingAgents и общими доказательствами.
 - [Примечания к выпускам](./release-notes/index.md) содержат историю всех публичных версий Kavor.
 
 ## Первый замкнутый цикл за пять минут
@@ -26,10 +27,10 @@ Specifications, файлы, CodingAgents, Terminals, доказательств�
 
 Начните с этого небольшого замкнутого цикла. Добавляйте ревьюеров, Files и Sticky Notes только тогда, когда они нужны работе.
 
-## Текущий выпуск и платформы
+## Платформы и загрузка
 
-Kavor 1.2.0 — текущий публичный выпуск. Kavor бесплатен и доступен для Windows, macOS и Linux.
-[Скачать Kavor](https://download.agentkavor.com/ru) или посмотреть [что изменилось](./release-notes/1.2.0.md).
+Kavor бесплатен и доступен для Windows, macOS и Linux.
+[Скачать Kavor](https://download.agentkavor.com/ru) или открыть [примечания к выпускам](./release-notes/index.md).
 
 ## Получить помощь и повлиять на Kavor
 

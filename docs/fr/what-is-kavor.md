@@ -54,4 +54,7 @@ Commencez petit : reliez une Specification à un CodingAgent et à un Terminal. 
 contrat, examinez les preuves et conservez la décision dans le Workspace. Ajoutez des relecteurs et des boucles plus
 riches uniquement lorsque le travail en bénéficie.
 
+[Suivez le tutoriel complet de la première boucle](./first-loop.md) pour ajouter implémentation, revue, preuves
+partagées et décision humaine.
+
 [Téléchargez Kavor](https://download.agentkavor.com/fr) ou consultez les [notes de version](./release-notes/index.md).

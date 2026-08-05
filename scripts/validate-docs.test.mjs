@@ -18,12 +18,21 @@ async function withCorpus(callback) {
 
 test('validates the complete released corpus', async () => {
   const result = await validateDocumentation(resolve('docs'))
-  assert.deepEqual(result, { locales: 7, pages: 70, releases: 7 })
+  assert.deepEqual(result, { locales: 7, pages: 77, releases: 7 })
 
   for (const locale of ['en', 'pt-br', 'es', 'fr', 'zh', 'ja', 'ru']) {
     const source = await readFile(join('docs', locale, 'what-is-kavor.md'), 'utf8')
     assert.match(source, /!\[[^\]]+]\(https:\/\/agentkavor\.com\/kavor-working-demo-poster\.jpg\)/)
     assert.match(source, new RegExp(`https://agentkavor\\.com/${locale}/videos/overview`))
+  }
+})
+
+test('accepts tutorial as a first-class documentation kind', async () => {
+  const result = await validateDocumentation(resolve('docs'))
+  assert.equal(result.pages, 77)
+  for (const locale of ['en', 'pt-br', 'es', 'fr', 'zh', 'ja', 'ru']) {
+    const source = await readFile(join('docs', locale, 'first-loop.md'), 'utf8')
+    assert.match(source, /^kind: tutorial$/m)
   }
 })
 
@@ -85,7 +94,7 @@ test('rejects unsupported page frontmatter instead of silently projecting it', a
 test('rejects an incomplete locale', async () => {
   await withCorpus(async (sourceDirectory) => {
     await rm(join(sourceDirectory, 'ru', 'release-notes', '1.0.0.md'))
-    await assert.rejects(validateDocumentation(sourceDirectory), /must contain exactly 10 cataloged Markdown files/)
+    await assert.rejects(validateDocumentation(sourceDirectory), /must contain exactly 11 cataloged Markdown files/)
   })
 })
 
@@ -111,8 +120,8 @@ test('requires content changes to advance a correctly chained release ID', async
     await writeFile(
       catalogPath,
       catalog
-        .replace('releaseId: docs-2026-08-05.1', 'releaseId: docs-2026-08-06.1')
-        .replace('previousReleaseId: null', 'previousReleaseId: docs-2026-08-05.1'),
+        .replace('releaseId: docs-2026-08-05.2', 'releaseId: docs-2026-08-06.1')
+        .replace('previousReleaseId: docs-2026-08-05.1', 'previousReleaseId: docs-2026-08-05.2'),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
@@ -130,13 +139,13 @@ test('binds a product release to its complete approved English documentation pro
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
       version: '1.2.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-05.1',
+      expectedReleaseId: 'docs-2026-08-05.2',
     }))
     await writeFile(releaseNotesSourcePath, '# Kavor 1.2.0\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
       version: '1.2.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-05.1',
+      expectedReleaseId: 'docs-2026-08-05.2',
     }), /differ from the approved English documentation projection/)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })

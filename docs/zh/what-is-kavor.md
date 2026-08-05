@@ -49,4 +49,6 @@ Connection 表达的是 Kavor 内部的授权；它并不意味着应将 Workspa
 从小处开始：把一个 Specification 连接到一个 CodingAgent 和一个 Terminal。让 CodingAgent 实现契约，
 检查证据，并把决策保留在 Workspace 中。只有在工作确实需要时，再加入审查者和更复杂的闭环。
 
+[按照完整的第一个闭环教程操作](./first-loop.md)，加入实现、审查、共享证据和人工决策。
+
 [下载 Kavor](https://download.agentkavor.com/zh)，或阅读[发行说明](./release-notes/index.md)。

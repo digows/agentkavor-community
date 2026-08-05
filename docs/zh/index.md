@@ -15,6 +15,7 @@ Specifications、文件、CodingAgents、Terminals、证据与决策，让软件
 ## 从这里开始
 
 - [什么是 Kavor？](./what-is-kavor.md)介绍其模型和核心术语。
+- [完成第一个闭环](./first-loop.md)，用 Specification、两个 CodingAgents 和共享证据协作。
 - [发行说明](./release-notes/index.md)记录 Kavor 的每个公开版本。
 
 ## 五分钟完成第一个闭环
@@ -26,10 +27,10 @@ Specifications、文件、CodingAgents、Terminals、证据与决策，让软件
 
 先从这个小型闭环开始。只有在工作确实需要时，再添加审查者、Files 和 Sticky Notes。
 
-## 当前版本与平台
+## 平台与下载
 
-Kavor 1.2.0 是当前公开版本。Kavor 免费提供 Windows、macOS 和 Linux 版本。
-[下载 Kavor](https://download.agentkavor.com/zh)，或查看[本次更新内容](./release-notes/1.2.0.md)。
+Kavor 免费提供 Windows、macOS 和 Linux 版本。
+[下载 Kavor](https://download.agentkavor.com/zh)，或浏览[发行说明](./release-notes/index.md)。
 
 ## 获取帮助并参与塑造 Kavor
 

@@ -55,4 +55,7 @@ Kavor はローカルファーストです。Workspace、リポジトリ、フ�
 CodingAgent に契約を実装させ、証拠を確認し、意思決定を Workspace に残します。レビュー担当や複雑なループは、
 作業に価値がある場合にだけ追加します。
 
+[最初のループの完全なチュートリアル](./first-loop.md)に沿って、実装、レビュー、共有された証拠、
+人間の判断を追加してください。
+
 [Kavor をダウンロード](https://download.agentkavor.com/ja)するか、[リリースノート](./release-notes/index.md)をお読みください。

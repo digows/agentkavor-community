@@ -16,6 +16,7 @@ Kavor は Coding Agent を取り巻くローカルファーストのシステム
 ## ここから始める
 
 - [Kavor とは？](./what-is-kavor.md)でモデルと中心的な用語を説明します。
+- [最初のループを完結](./first-loop.md)させ、Specification、2 つの CodingAgents、共有された証拠を使います。
 - [リリースノート](./release-notes/index.md)で Kavor のすべての公開リリースを確認できます。
 
 ## 5 分で最初のループを閉じる
@@ -27,10 +28,10 @@ Kavor は Coding Agent を取り巻くローカルファーストのシステム
 
 まずはこの小さな閉じたループから始めます。レビュー担当、Files、Sticky Notes は、作業に必要なときだけ追加してください。
 
-## 現在のリリースと対応プラットフォーム
+## 対応プラットフォームとダウンロード
 
-Kavor 1.2.0 が現在の公開リリースです。Kavor は無料で、Windows、macOS、Linux で利用できます。
-[Kavor をダウンロード](https://download.agentkavor.com/ja)するか、[変更内容](./release-notes/1.2.0.md)を確認してください。
+Kavor は無料で、Windows、macOS、Linux で利用できます。
+[Kavor をダウンロード](https://download.agentkavor.com/ja)するか、[リリースノート](./release-notes/index.md)を確認してください。
 
 ## サポートを受け、Kavor を一緒につくる
 

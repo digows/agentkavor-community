@@ -52,4 +52,7 @@ Start small: connect one Specification to one CodingAgent and one Terminal. Ask 
 contract, inspect the evidence, and keep the decision in the Workspace. Add reviewers and richer loops only when the
 work benefits from them.
 
+[Follow the complete first-loop tutorial](./first-loop.md) to add implementation, review, shared evidence, and a
+human decision.
+
 [Download Kavor](https://download.agentkavor.com/en) or read the [release notes](./release-notes/index.md).
