@@ -1,0 +1,180 @@
+schemaVersion: 1
+releaseId: docs-2026-08-05.1
+sourceRepository: digows/agentkavor-community
+currentProductVersion: 1.2.0
+previousReleaseId: null
+locales:
+  - slug: en
+    languageTag: en
+    label: English
+  - slug: pt-br
+    languageTag: pt-BR
+    label: Português
+  - slug: es
+    languageTag: es
+    label: Español
+  - slug: fr
+    languageTag: fr
+    label: Français
+  - slug: zh
+    languageTag: zh-Hans
+    label: 中文
+  - slug: ja
+    languageTag: ja
+    label: 日本語
+  - slug: ru
+    languageTag: ru
+    label: Русский
+navigation:
+  - id: start
+    documents:
+      - what-is-kavor
+  - id: release-notes
+    documents:
+      - release-notes
+documents:
+  - id: docs-home
+    kind: landing
+    slug: ""
+    path: index.md
+    status: published
+    introducedIn: 1.0.0
+    lastVerifiedIn: 1.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: what-is-kavor
+    kind: guide
+    slug: what-is-kavor
+    path: what-is-kavor.md
+    status: published
+    introducedIn: 1.0.0
+    lastVerifiedIn: 1.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: release-notes
+    kind: release-index
+    slug: release-notes
+    path: release-notes/index.md
+    status: published
+    introducedIn: 1.0.0
+    lastVerifiedIn: 1.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: release-notes-1.2.0
+    kind: release-note
+    slug: release-notes/1.2.0
+    path: release-notes/1.2.0.md
+    status: published
+    introducedIn: 1.2.0
+    lastVerifiedIn: 1.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.2.0
+    publishedAt: 2026-07-28T16:40:07Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.2.0
+    sourceBodySha256: cd05926fb5c3ae52cc868f1c056de7c9ded7ea6f90ba189bb7be18c22500e67b
+  - id: release-notes-1.1.0
+    kind: release-note
+    slug: release-notes/1.1.0
+    path: release-notes/1.1.0.md
+    status: published
+    introducedIn: 1.1.0
+    lastVerifiedIn: 1.1.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.1.0
+    publishedAt: 2026-07-26T21:32:00Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.1.0
+    sourceBodySha256: c2a53fca3351cd564e1e53931375d87b4c671aace027236a1ebf53bfb387968c
+  - id: release-notes-1.0.6
+    kind: release-note
+    slug: release-notes/1.0.6
+    path: release-notes/1.0.6.md
+    status: published
+    introducedIn: 1.0.6
+    lastVerifiedIn: 1.0.6
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.0.6
+    publishedAt: 2026-07-25T01:15:18Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.6
+    sourceBodySha256: d0359d7e923a35fca4799c91dd9dc65fa4bdf0b0fabebd42802dec2833bffb4b
+  - id: release-notes-1.0.4
+    kind: release-note
+    slug: release-notes/1.0.4
+    path: release-notes/1.0.4.md
+    status: published
+    introducedIn: 1.0.4
+    lastVerifiedIn: 1.0.4
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.0.4
+    publishedAt: 2026-07-24T04:52:19Z
+    prerelease: true
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.4
+    sourceBodySha256: ac0b7ae880b1d624a0c40aa41266b45ab0b0acf49ffed520cfa02a251d21c0d2
+  - id: release-notes-1.0.3
+    kind: release-note
+    slug: release-notes/1.0.3
+    path: release-notes/1.0.3.md
+    status: published
+    introducedIn: 1.0.3
+    lastVerifiedIn: 1.0.3
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.0.3
+    publishedAt: 2026-07-23T22:46:35Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.3
+    sourceBodySha256: 3885fd2dc9d228e06c22cd85e44c593f8d859d1d219697dfae64772618303b3b
+  - id: release-notes-1.0.1
+    kind: release-note
+    slug: release-notes/1.0.1
+    path: release-notes/1.0.1.md
+    status: published
+    introducedIn: 1.0.1
+    lastVerifiedIn: 1.0.1
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.0.1
+    publishedAt: 2026-07-23T07:50:00Z
+    prerelease: true
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.1
+    sourceBodySha256: aeb96faf4171d31070cd31b2a5e99111bbd753440c91b158a354545c544b43fd
+  - id: release-notes-1.0.0
+    kind: release-note
+    slug: release-notes/1.0.0
+    path: release-notes/1.0.0.md
+    status: published
+    introducedIn: 1.0.0
+    lastVerifiedIn: 1.0.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.0.0
+    publishedAt: 2026-07-22T15:23:53Z
+    prerelease: true
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.0
+    sourceBodySha256: d1f81c2fa7b06df44f430e6a6a5fa2df8183b55165848329041db484e7cf1979

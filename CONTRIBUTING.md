@@ -52,4 +52,17 @@ Keep a pull request focused and explain:
 
 Product implementation changes are not accepted in this repository.
 
+### Documentation pull requests
+
+Public Kavor documentation lives under [`docs/`](docs/README.md) and is published at
+[`agentkavor.com/docs`](https://agentkavor.com/en/docs). Documentation files are plain Markdown only. Do not add MDX,
+JSX, imports, scripts, raw HTML, credentials, private product information, or personal data.
+
+Keep stable document IDs and paths aligned across every locale declared in `docs/catalog.yaml`. A localized document
+must be a complete translation of the current source; do not publish an English fallback under another locale.
+
+By submitting documentation, diagrams, or original documentation media under `docs/`, you agree to license that
+contribution under the [Creative Commons Attribution 4.0 International license](docs/LICENSE). Kavor trademarks,
+third-party assets, downloadable software, and source code retain their stated licenses.
+
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).

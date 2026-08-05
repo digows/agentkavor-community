@@ -7,6 +7,7 @@ It keeps the engineering context around AI-assisted development visible and dura
 disposable chat sessions.
 
 [Download Kavor](https://download.agentkavor.com) · [Visit agentkavor.com](https://agentkavor.com) ·
+[Read the Docs](https://agentkavor.com/en/docs) ·
 [Join the Discussions](https://github.com/digows/agentkavor-community/discussions) ·
 [Follow Building Kavor](building-kavor/README.md)
 
@@ -67,6 +68,9 @@ Issues. Security reports must remain private.
 
 This repository is Kavor's public community and release hub. It contains community documentation, public product
 experiments, participation forms, and downloadable releases. The Kavor product source is maintained separately.
+
+The reviewed Markdown under [`docs/`](docs/README.md) is the editorial source for Kavor's localized public
+documentation. The canonical human and SEO publication is [agentkavor.com/en/docs](https://agentkavor.com/en/docs).
 
 Before participating, read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md),
 [SUPPORT.md](SUPPORT.md), and [SECURITY.md](SECURITY.md).
