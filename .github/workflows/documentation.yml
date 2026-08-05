@@ -64,6 +64,10 @@ jobs:
       - name: Validate contributed documentation with trusted code
         run: node trusted/scripts/validate-docs.mjs --source pull-request-source/docs --base-source trusted/docs
 
+      - name: Validate approved editorial release metadata
+        if: contains(github.event.pull_request.labels.*.name, 'editorial-release')
+        run: node trusted/scripts/validate-editorial-pr.mjs --source pull-request-source/docs --base-source trusted/docs --event "${GITHUB_EVENT_PATH}"
+
   validate-main:
     if: github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "docs:validate": "node scripts/validate-docs.mjs",
-    "test": "node --test scripts/validate-docs.test.mjs"
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "yaml": "2.9.0"
