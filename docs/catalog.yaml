@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-08-05.3
+releaseId: docs-2026-08-06.1
 sourceRepository: digows/agentkavor-community
 currentProductVersion: 1.2.0
-previousReleaseId: docs-2026-08-05.2
+previousReleaseId: docs-2026-08-05.3
 locales:
   - slug: en
     languageTag: en
@@ -30,6 +30,7 @@ navigation:
     documents:
       - what-is-kavor
       - first-loop
+      - agents-and-roles
   - id: release-notes
     documents:
       - release-notes
@@ -60,6 +61,17 @@ documents:
     kind: tutorial
     slug: first-loop
     path: first-loop.md
+    status: published
+    introducedIn: 1.2.0
+    lastVerifiedIn: 1.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: agents-and-roles
+    kind: guide
+    slug: agents-and-roles
+    path: agents-and-roles.md
     status: published
     introducedIn: 1.2.0
     lastVerifiedIn: 1.2.0
