@@ -15,6 +15,7 @@ const expectedLanguageTags = new Map([
   ['ru', 'ru'],
 ])
 const documentKinds = new Set(['landing', 'tutorial', 'guide', 'release-index', 'release-note'])
+const approvedMediaOrigins = new Set(['https://agentkavor.com', 'https://media.agentkavor.com'])
 const maximumMarkdownBytes = 256 * 1024
 
 function fail(message) {
@@ -118,7 +119,7 @@ function validateMarkdownImages(markdown, sourcePath) {
       fail(`${sourcePath} contains an image outside the approved canonical media origin: ${source}`)
     }
     assert(
-      sourceUrl.protocol === 'https:' && sourceUrl.hostname === 'agentkavor.com',
+      approvedMediaOrigins.has(sourceUrl.origin),
       `${sourcePath} contains an image outside the approved canonical media origin: ${source}`,
     )
   }
