@@ -6,6 +6,10 @@ This directory is the public editorial source for the documentation published at
 Every document is plain Markdown with validated YAML frontmatter. Locale directories mirror the stable document IDs
 and paths in `catalog.yaml`. Do not add MDX, JSX, imports, scripts, raw HTML, or executable examples.
 
+Documentation images must use HTTPS URLs from the approved canonical origins `agentkavor.com` or
+`media.agentkavor.com`. Media bytes are published and verified by the Website media pipeline; documentation consumes
+the returned canonical URLs and must not add or publish binaries independently.
+
 The seven supported locale directories are `en`, `pt-br`, `es`, `fr`, `zh`, `ja`, and `ru`. A translation must be
 complete and current before its URL is published; the website never substitutes English inside a localized route.
 
