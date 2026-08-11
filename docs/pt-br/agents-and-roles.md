@@ -3,7 +3,7 @@ id: agents-and-roles
 title: Como escolher CodingAgents e definir papéis no Kavor
 description: Aprenda a dividir o trabalho entre CodingAgents, preservar contexto compartilhado e escolher provider, modelo e effort para cada responsabilidade.
 kind: guide
-lastReviewedAt: 2026-08-06
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/pt-br/docs/agents-and-roles
 ---
 
@@ -18,8 +18,9 @@ código e a preparação da entrega compete por atenção com decisões que já 
 
 No Kavor, você pode dividir essas responsabilidades entre CodingAgents sem transformar o trabalho em chats isolados.
 Os participantes formam um grafo ao redor de recursos duráveis, como Specifications, Files e Sticky Notes. As
-Connections tornam o contexto e as capacidades visíveis; as mensagens permitem handoffs e discussões; e a decisão
-final continua com você.
+Connections tornam o contexto e as capacidades visíveis; qualquer CodingAgent pode trabalhar com os Nodes
+alcançáveis em seu componente e conversar com outros CodingAgents desse mesmo grafo. As mensagens permitem handoffs
+e discussões, e a decisão final continua com você.
 
 [![Spec Writer, Builder, Reviewer e Shipper conectados em um Canvas do Kavor](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/pt-br/videos/agents-and-roles)
 
@@ -72,8 +73,10 @@ em Nodes duráveis:
 - os **CodingAgents** assumem responsabilidades distintas ao redor desses recursos.
 
 Essa memória compartilhada não é um único histórico de conversa crescendo indefinidamente. É um conjunto explícito
-de recursos que os participantes podem consultar e atualizar conforme as Connections e os Guardrails autorizarem.
-Quando uma sessão termina, a Specification, os Files, as notas e as evidências continuam no Workspace.
+de recursos que os participantes podem consultar e atualizar quando existe um caminho de Connections até eles. A
+Connection não precisa ser direta. Se houver um Guardrail na Connection direta entre um CodingAgent e um recurso,
+porém, a restrição continua valendo para esse par mesmo que o grafo ofereça outra rota. Quando uma sessão termina, a
+Specification, os Files, as notas e as evidências continuam no Workspace.
 
 Um grafo de implementação, revisão e entrega pode ser pensado assim:
 
@@ -87,7 +90,8 @@ Contexto durável: Files · Sticky Note · Terminal · outputs da Specification
 ```
 
 Essa representação mostra a divisão de responsabilidade, não a direção das Connections. Connections não executam
-uma sequência automaticamente; elas tornam relações, contexto e capacidades inspecionáveis no Canvas.
+uma sequência automaticamente; elas formam o componente alcançável que compartilha contexto e tornam relações,
+limites e capacidades inspecionáveis no Canvas. Não é necessário ligar cada agente diretamente a cada recurso.
 
 ## Divida também a janela de contexto
 
@@ -130,7 +134,8 @@ qualidade das evidências produzidas.
 
 ## Use conversas para handoffs e trabalho paralelo
 
-CodingAgents no mesmo fluxo não precisam trabalhar em silêncio. Use as mensagens do Kavor quando um agente precisa:
+CodingAgents no mesmo grafo não precisam trabalhar em silêncio nem ter uma Connection direta entre si. Qualquer par
+alcançável pode trocar mensagens. Use as mensagens do Kavor quando um agente precisa:
 
 - entregar uma implementação para revisão;
 - pedir esclarecimento a quem escreveu a Specification;
@@ -210,7 +215,7 @@ Para cada CodingAgent, confirme:
 
 - consigo descrever seu papel em uma frase?
 - ele tem um resultado observável e uma condição de parada?
-- o grafo disponibiliza somente o contexto e as capacidades necessários?
+- o componente alcançável disponibiliza o contexto e as capacidades necessários, sem recursos acidentais?
 - provider, modelo e effort combinam com ambiguidade e risco?
 - está claro com quem ele deve conversar e para quê?
 - decisões e evidências serão preservadas fora da conversa?
@@ -219,7 +224,7 @@ Para cada CodingAgent, confirme:
 Um bom Canvas não é o que contém mais agentes. É o que deixa responsabilidade, contexto, handoffs, evidência e decisão
 claros para todos os participantes — inclusive você.
 
-Monte essa estrutura na prática em [Como fechar seu primeiro loop no Kavor](./first-loop.md) ou revise os conceitos em
+Monte essa estrutura na prática em [Como fechar seu primeiro loop no Kavor](./first-loop.md), entenda
+[como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md) ou revise os conceitos em
 [O que é o Kavor?](./what-is-kavor.md).
-
 

@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-08-11.1
+releaseId: docs-2026-08-11.2
 sourceRepository: digows/agentkavor-community
 currentProductVersion: 1.3.0
-previousReleaseId: docs-2026-08-07.1
+previousReleaseId: docs-2026-08-11.1
 locales:
   - slug: en
     languageTag: en
@@ -31,6 +31,8 @@ navigation:
       - what-is-kavor
       - nodes
       - connections
+      - coding-agents-and-canvas
+      - schedule
       - first-loop
       - agents-and-roles
   - id: release-notes
@@ -76,6 +78,28 @@ documents:
     path: connections.md
     status: published
     introducedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: coding-agents-and-canvas
+    kind: guide
+    slug: coding-agents-and-canvas
+    path: coding-agents-and-canvas.md
+    status: published
+    introducedIn: 1.3.0
+    lastVerifiedIn: 1.3.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: schedule
+    kind: guide
+    slug: schedule
+    path: schedule.md
+    status: published
+    introducedIn: 1.3.0
     lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true

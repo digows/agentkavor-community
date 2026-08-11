@@ -3,7 +3,7 @@ id: docs-home
 title: Documentação do Kavor
 description: Aprenda como o Kavor mantém o trabalho de engenharia ao redor dos coding agents visível, durável e sob seu controle.
 kind: landing
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/pt-br/docs
 ---
 
@@ -16,13 +16,16 @@ Specifications, arquivos, CodingAgents, Terminals, evidências e decisões que t
 
 - [O que é o Kavor?](./what-is-kavor.md) explica o modelo e o vocabulário central.
 - [Feche seu primeiro loop](./first-loop.md) com uma Specification, dois CodingAgents e evidências compartilhadas.
+- [Entenda como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md).
+- [Use Schedule para dar um relógio ao seu grafo](./schedule.md).
 - [Notas de versão](./release-notes/index.md) registra cada release pública do Kavor.
 
 ## Seu primeiro loop em cinco minutos
 
 1. Baixe e abra o Kavor; depois escolha o diretório que será a raiz do seu Workspace.
 2. Adicione uma Specification, um CodingAgent e um Terminal ao Canvas.
-3. Conecte a Specification e o Terminal ao CodingAgent para manter visíveis o contexto e as capacidades disponíveis.
+3. Conecte Specification, Terminal e CodingAgent em um único componente para tornar contexto e capacidades
+   alcançáveis.
 4. Peça ao CodingAgent para implementar a Specification, inspecione as evidências e decida o que aceitar.
 
 Comece com esse pequeno loop fechado. Adicione revisores, Files e Sticky Notes apenas quando o trabalho se beneficiar deles.

@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor 文档
 description: 了解 Kavor 如何让编码智能体周围的工程工作保持可见、持久并由你掌控。
 kind: landing
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/zh/docs
 ---
 
@@ -16,13 +16,15 @@ Specifications、文件、CodingAgents、Terminals、证据与决策，让软件
 
 - [什么是 Kavor？](./what-is-kavor.md)介绍其模型和核心术语。
 - [完成第一个闭环](./first-loop.md)，用 Specification、两个 CodingAgents 和共享证据协作。
+- 了解 [CodingAgents 如何查看和构建 Canvas](./coding-agents-and-canvas.md)。
+- 使用 [Schedule 为图谱加上时钟](./schedule.md)。
 - [发行说明](./release-notes/index.md)记录 Kavor 的每个公开版本。
 
 ## 五分钟完成第一个闭环
 
 1. 下载并打开 Kavor，然后选择一个目录作为 Workspace 的根目录。
 2. 在 Canvas 上添加一个 Specification、一个 CodingAgent 和一个 Terminal。
-3. 将 Specification 和 Terminal 连接到 CodingAgent，让可用的上下文与能力保持可见。
+3. 将 Specification、Terminal 和 CodingAgent 连成一个组件，使上下文与能力可达。
 4. 请 CodingAgent 实现 Specification，检查它提供的证据，并决定接受哪些结果。
 
 先从这个小型闭环开始。只有在工作确实需要时，再添加审查者、Files 和 Sticky Notes。

@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor documentation
 description: Learn how Kavor keeps the engineering work around coding agents visible, durable, and under your control.
 kind: landing
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/en/docs
 ---
 
@@ -16,13 +16,15 @@ Specifications, files, CodingAgents, Terminals, evidence, and decisions that mak
 
 - [What is Kavor?](./what-is-kavor.md) explains the model and the core vocabulary.
 - [Close your first loop](./first-loop.md) with a Specification, two CodingAgents, and shared evidence.
+- [Understand how CodingAgents see and build the Canvas](./coding-agents-and-canvas.md).
+- [Use Schedule to give your graph a clock](./schedule.md).
 - [Release notes](./release-notes/index.md) records every public Kavor release.
 
 ## Your first loop in five minutes
 
 1. Download and open Kavor, then choose the directory that will be the root of your Workspace.
 2. Add one Specification, one CodingAgent, and one Terminal to the Canvas.
-3. Connect the Specification and Terminal to the CodingAgent so the available context and capabilities stay visible.
+3. Connect the Specification, Terminal, and CodingAgent in one component so context and capabilities are reachable.
 4. Ask the CodingAgent to implement the Specification, inspect its evidence, and decide what you accept.
 
 Start with this small closed loop. Add reviewers, Files, and Sticky Notes only when the work benefits from them.

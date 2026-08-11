@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor ドキュメント
 description: Coding Agent を取り巻くエンジニアリング作業を、Kavor が可視化し、永続化し、あなたの管理下に保つ仕組みを学びます。
 kind: landing
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/ja/docs
 ---
 
@@ -17,13 +17,15 @@ Kavor は Coding Agent を取り巻くローカルファーストのシステム
 
 - [Kavor とは？](./what-is-kavor.md)でモデルと中心的な用語を説明します。
 - [最初のループを完結](./first-loop.md)させ、Specification、2 つの CodingAgents、共有された証拠を使います。
+- [CodingAgents が Canvas を見て構築する仕組み](./coding-agents-and-canvas.md)を理解します。
+- [Schedule でグラフに時計を与えます](./schedule.md)。
 - [リリースノート](./release-notes/index.md)で Kavor のすべての公開リリースを確認できます。
 
 ## 5 分で最初のループを閉じる
 
 1. Kavor をダウンロードして開き、Workspace のルートにするディレクトリを選びます。
 2. Canvas に Specification、CodingAgent、Terminal を 1 つずつ追加します。
-3. Specification と Terminal を CodingAgent に接続し、利用できるコンテキストと能力を可視化します。
+3. Specification、Terminal、CodingAgent を 1 つの component に接続し、context と capabilities を到達可能にします。
 4. CodingAgent に Specification の実装を依頼し、証拠を確認して、何を受け入れるかを決めます。
 
 まずはこの小さな閉じたループから始めます。レビュー担当、Files、Sticky Notes は、作業に必要なときだけ追加してください。

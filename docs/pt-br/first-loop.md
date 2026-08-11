@@ -3,7 +3,7 @@ id: first-loop
 title: Como fechar seu primeiro loop no Kavor
 description: Monte um loop pequeno com uma Specification, Claude Code, Codex e uma Sticky Note, da intenção à decisão humana.
 kind: tutorial
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/pt-br/docs/first-loop
 ---
 
@@ -36,8 +36,9 @@ A sequência de trabalho será:
 
 `Specification → Claude Code → mensagem → Codex → decisão humana`
 
-A Specification ficará conectada aos dois CodingAgents. Claude Code e Codex também ficarão conectados entre si e à
-mesma Sticky Note.
+Os quatro Nodes formarão um único componente alcançável. Uma topologia mínima conecta a Specification ao Claude
+Code, o Claude Code ao Codex e o Codex à Sticky Note. Os dois CodingAgents conseguem trabalhar com todos os recursos
+alcançáveis e conversar entre si, mesmo quando um recurso não está diretamente ao lado dos dois.
 
 Connections não são setas de fluxo. Elas são relações entre Nodes; a ordem acima descreve o trabalho deste tutorial.
 
@@ -50,8 +51,9 @@ ele também pode criar os Nodes e Connections com você.
 Você pode começar com este pedido:
 
 > Consulte a documentação oficial do Kavor e me ajude a montar um primeiro loop para esta tarefa. Primeiro, explique
-> a estrutura e as Connections necessárias. Depois, se as Connections atuais autorizarem, crie a Specification, os
-> CodingAgents e a Sticky Note, conecte-os e pare antes de iniciar a implementação para eu revisar o loop.
+> a menor estrutura e as Connections necessárias. Depois, se o grafo atual e a opção Allow workspace editing
+> autorizarem, crie a Specification, os CodingAgents e a Sticky Note em uma única alteração atômica, conecte-os e
+> pare antes de iniciar a implementação para eu revisar o loop.
 
 A documentação não amplia o acesso do CodingAgent, não cria Connections implícitas e não permite contornar
 Guardrails. Se o serviço de documentação estiver indisponível, as demais ferramentas locais do Kavor continuam
@@ -82,17 +84,19 @@ Clique com o botão direito no Canvas e adicione:
 Renomeie os CodingAgents se isso ajudar a deixar os papéis claros, por exemplo `Implementer` e `Reviewer`. Na Sticky
 Note, use um título simples, como `Implementation and review notes`.
 
-Crie estas cinco Connections:
+Crie estas três Connections:
 
 1. Specification — Claude Code;
-2. Specification — Codex;
-3. Claude Code — Codex;
-4. Claude Code — Sticky Note;
-5. Codex — Sticky Note.
+2. Claude Code — Codex;
+3. Codex — Sticky Note.
 
 Arraste o ponto circular de um Node até o ponto circular do outro. Na primeira Connection de cada tipo, leia a
 confirmação do Kavor antes de continuar. Não adicione Guardrails neste primeiro loop; use-os depois, quando houver uma
 restrição concreta a aplicar.
+
+Essas três Connections já deixam os quatro Nodes no mesmo grafo alcançável. Connections diretas adicionais continuam
+válidas quando tornam a intenção visual mais clara ou quando precisam carregar um Guardrail específico. Elas não são
+obrigatórias apenas para repetir acesso que o grafo já oferece.
 
 ## 3. Peça uma entrega verificável
 
@@ -108,7 +112,8 @@ trabalho no CodingAgent e não trate “pronto” como evidência suficiente.
 
 ## 4. Receba a revisão
 
-Quando a mensagem chegar, o Codex poderá usar a Specification e a Sticky Note diretamente conectadas. Peça que ele:
+Quando a mensagem chegar, o Codex poderá usar a Specification e a Sticky Note porque ambas estão em seu grafo
+alcançável. Peça que ele:
 
 - compare a implementação com cada critério de aceite;
 - execute as verificações relevantes;
@@ -144,14 +149,15 @@ Ao final:
 
 ## Se algo não funcionar
 
-- **O CodingAgent não encontra a Specification ou a Sticky Note:** confirme a Connection direta entre os dois Nodes.
-  Referenciar um Node em uma mensagem não concede acesso por si só.
-- **A mensagem não chega:** confirme a Connection entre os CodingAgents e abra `Messages` para verificar a entrega. Um
-  provider ocupado pode receber a mensagem depois.
+- **O CodingAgent não encontra a Specification ou a Sticky Note:** confirme se existe um caminho de Connections entre
+  o agente e o recurso. Referenciar um Node em uma mensagem não concede acesso por si só.
+- **A mensagem não chega:** confirme se os CodingAgents pertencem ao mesmo componente alcançável e abra `Messages`
+  para verificar a entrega. Eles não precisam de uma Connection direta; um provider ocupado pode receber a mensagem
+  depois.
 - **Um Guardrail bloqueia a ação:** abra a Connection e revise a restrição; não peça ao CodingAgent para contorná-la.
 - **Faltam evidências:** peça ao CodingAgent para registrar arquivos, commits ou outros outputs duráveis na
   Specification e complementar a Sticky Note.
 
-Continue por [O que é o Kavor?](https://agentkavor.com/pt-br/docs/what-is-kavor), veja as
+Continue por [Como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md), veja as
 [notas de versão](https://agentkavor.com/pt-br/docs/release-notes) ou compartilhe seu primeiro loop na
 [Kavor Community](https://github.com/digows/agentkavor-community/discussions).
