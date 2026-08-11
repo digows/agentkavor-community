@@ -36,6 +36,21 @@ test('accepts tutorial as a first-class documentation kind', async () => {
   }
 })
 
+test('keeps navigation documents in one authoritative section', async () => {
+  await withCorpus(async (sourceDirectory) => {
+    const catalogPath = join(sourceDirectory, 'catalog.yaml')
+    const catalog = await readFile(catalogPath, 'utf8')
+    await writeFile(
+      catalogPath,
+      catalog.replace(
+        '  - id: core-model\n    documents:\n      - nodes',
+        '  - id: core-model\n    documents:\n      - what-is-kavor\n      - nodes',
+      ),
+    )
+    await assert.rejects(validateDocumentation(sourceDirectory), /Navigation document IDs must be unique/)
+  })
+})
+
 test('requires accessible documentation images from the canonical media origin', async () => {
   await withCorpus(async (sourceDirectory) => {
     const pagePath = join(sourceDirectory, 'en', 'what-is-kavor.md')
@@ -120,8 +135,8 @@ test('requires content changes to advance a correctly chained release ID', async
     await writeFile(
       catalogPath,
       catalog
-        .replace('releaseId: docs-2026-08-11.2', 'releaseId: docs-2026-08-11.3')
-        .replace('previousReleaseId: docs-2026-08-11.1', 'previousReleaseId: docs-2026-08-11.2'),
+        .replace('releaseId: docs-2026-08-11.3', 'releaseId: docs-2026-08-11.4')
+        .replace('previousReleaseId: docs-2026-08-11.2', 'previousReleaseId: docs-2026-08-11.3'),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
@@ -139,13 +154,13 @@ test('binds a product release to its complete approved English documentation pro
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
       version: '1.3.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-11.2',
+      expectedReleaseId: 'docs-2026-08-11.3',
     }))
     await writeFile(releaseNotesSourcePath, '# Kavor 1.3.0\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
       version: '1.3.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-11.2',
+      expectedReleaseId: 'docs-2026-08-11.3',
     }), /differ from the approved English documentation projection/)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })
