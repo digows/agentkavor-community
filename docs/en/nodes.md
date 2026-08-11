@@ -3,7 +3,7 @@ id: nodes
 title: Kavor Nodes
 description: Understand what CodingAgent, Specification, Sticky Note, Terminal, File, and Trigger do on their own and what they gain when connected.
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/en/docs/nodes
 ---
 
@@ -17,9 +17,9 @@ Every first-class item on that Canvas is a **Node**. A CodingAgent is a Node. So
 Terminals, Files, and Triggers share the same space because each can participate in the work with a distinct
 responsibility.
 
-A Node is already useful by itself. When you create a **Connection**, that utility becomes an explicit capability.
-When several Connections form a graph, context, execution, memory, and collaboration stop being scattered across
-isolated windows and sessions.
+A Node is already useful by itself. When you create a **Connection**, it joins a reachable component. CodingAgents in
+that graph can work with context, execution, memory, and collaborators at any distance without requiring a direct
+Connection to every resource.
 
 This is the model:
 
@@ -35,18 +35,18 @@ participants or their Connections.*
 
 ## What a Connection actually changes
 
-A Connection answers a practical question: **what can these two Nodes do together?**
+A Connection first answers a practical question: **which graph do these Nodes belong to?**
 
-Depending on the pair, it may let a CodingAgent work with a Specification, write to a Sticky Note, operate a Terminal,
-treat a File as explicit scope, or talk to another CodingAgent. It can also give a Terminal the canonical path of a
-File or wake a CodingAgent with an active session at a defined time.
+Any CodingAgent can work with reachable Nodes and message other CodingAgents in the same component. A direct
+Connection may still have its own contract: select a Schedule target, give a Terminal a File or Specification path,
+or carry a Guardrail between one CodingAgent and one resource.
 
 At the same time, a Connection establishes a boundary:
 
 - nearby Nodes on the Canvas do not gain access to one another;
 - mentioning a Node in a message does not grant a capability;
-- not every Node pair is supported;
-- a Guardrail can restrict a capability granted by a Connection;
+- not every Node pair accepts a direct Connection, although unsupported pairs may share a component through valid paths;
+- a Guardrail restricts its direct pair and remains effective even when another route exists;
 - the graph makes context reachable, but does not approve actions automatically.
 
 The result is less magical and more useful: you can inspect the structure before, during, and after the work.
@@ -63,7 +63,7 @@ Each CodingAgent can have a clear role. The harness preserves its native provide
 it offers them. You can keep a Spec Writer focused on questions and decisions, a Builder focused on implementation,
 and a Reviewer responsible for challenging the result.
 
-Connected CodingAgents can exchange asynchronous messages. You can still inspect those conversations in the Messages
+CodingAgents in the same reachable component can exchange asynchronous messages without a direct Connection. You can still inspect those conversations in the Messages
 panel and intervene when needed. Connecting them to Specifications, Files, Sticky Notes, and Terminals makes it clear
 which resources participate in the work.
 
@@ -122,9 +122,9 @@ script, SQL file, configuration, or other material visually as command input wit
 
 The File does not become a disposable attachment. It remains the real source in the filesystem.
 
-### Trigger: a visible cause of activity
+### Schedule: a visible cause of activity
 
-A Trigger schedules an action in time. It can deliver a command to a Terminal, like an operating-system cron, or send
+Schedule is Kavor's available Trigger source. It schedules an action in time. It can deliver a command to a Terminal, like an operating-system cron, or send
 a clear prompt to a CodingAgent with an active session.
 
 Its value grows when the target is already connected to other Nodes. A Trigger can wake an agent responsible for
@@ -134,7 +134,7 @@ review from another CodingAgent.
 That is how a calendar time can start a small autonomous or semi-autonomous system. The Trigger starts the activity;
 the graph provides context, tools, memory, and collaboration.
 
-A Trigger does not decide what is worth doing, expand permissions, or start a session you left off. It has exactly one
+Schedule does not decide what is worth doing, expand permissions, or start a session you left off. It has exactly one
 direct target: a CodingAgent or a Terminal.
 
 ## When Nodes form a graph
@@ -196,4 +196,6 @@ intent, execution, evidence, and decision.
 - [Close your first loop](./first-loop.md) with a Specification, two CodingAgents, and a Sticky Note.
 - Learn [how to choose CodingAgents and roles](./agents-and-roles.md) for formulation, implementation, review, and
   delivery.
+- Learn to use [Schedule to give your graph a clock](./schedule.md).
+- Understand [how CodingAgents see and build the Canvas](./coding-agents-and-canvas.md).
 - Return to [What is Kavor?](./what-is-kavor.md) for the complete product model.

@@ -3,7 +3,7 @@ id: nodes
 title: Nodes do Kavor
 description: Entenda o que CodingAgent, Specification, Sticky Note, Terminal, File e Trigger fazem sozinhos e o que ganham quando conectados.
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/pt-br/docs/nodes
 ---
 
@@ -17,9 +17,9 @@ Cada item de primeira classe desse Canvas é um **Node**. Um CodingAgent é um N
 Notes, Terminals, Files e Triggers ocupam o mesmo espaço porque todos podem participar do trabalho — cada um com uma
 responsabilidade diferente.
 
-Sozinho, um Node já tem utilidade. Quando você cria uma **Connection**, essa utilidade vira uma capacidade explícita.
-Quando várias Connections formam um grafo, contexto, execução, memória e colaboração deixam de ficar espalhados em
-janelas e sessões isoladas.
+Sozinho, um Node já tem utilidade. Quando você cria uma **Connection**, ele passa a participar de um componente
+alcançável. Nesse grafo, CodingAgents podem trabalhar com contexto, execução, memória e colaboradores a qualquer
+distância — sem depender de uma Connection direta para cada recurso.
 
 Esse é o modelo:
 
@@ -35,19 +35,19 @@ esconder os participantes nem suas Connections.*
 
 ## O que uma Connection realmente muda
 
-Uma Connection responde a uma pergunta prática: **o que esses dois Nodes podem fazer juntos?**
+Uma Connection responde primeiro a uma pergunta prática: **de qual grafo esses Nodes participam?**
 
-Dependendo da combinação, ela pode permitir que um CodingAgent trabalhe com uma Specification, escreva em uma Sticky
-Note, opere um Terminal, considere um File como parte explícita do escopo ou converse com outro CodingAgent. Também
-pode entregar a um Terminal o caminho canônico de um File ou acordar um CodingAgent com sessão ativa em um horário
-definido.
+Qualquer CodingAgent pode trabalhar com os Nodes alcançáveis por esse grafo e conversar com outros CodingAgents do
+mesmo componente. A Connection direta ainda pode ter um contrato próprio: selecionar o alvo de um Schedule, entregar
+ao Terminal o caminho canônico de um File ou Specification e carregar um Guardrail entre um CodingAgent e um recurso.
 
 Ao mesmo tempo, a Connection estabelece um limite:
 
 - Nodes próximos no Canvas não ganham acesso uns aos outros;
 - mencionar um Node em uma mensagem não concede capacidade;
-- nem toda combinação entre Nodes é suportada;
-- um Guardrail pode restringir uma capacidade concedida pela Connection;
+- nem toda combinação entre Nodes aceita uma Connection direta, embora pares não suportados possam participar do
+  mesmo grafo por rotas válidas;
+- um Guardrail restringe somente o par direto onde foi colocado e continua valendo mesmo quando há outra rota;
 - o grafo torna o contexto alcançável, mas não aprova ações automaticamente.
 
 O resultado é menos mágico e mais útil: você consegue inspecionar a estrutura antes, durante e depois do trabalho.
@@ -64,9 +64,10 @@ Cada CodingAgent pode ter um papel claro. O harness preserva suas opções nativ
 esforço quando oferece essas capacidades. Você pode manter um Spec Writer concentrado em perguntas e decisões, um
 Builder focado em implementação e um Reviewer responsável por desafiar o resultado.
 
-Quando CodingAgents estão conectados, eles podem trocar mensagens assíncronas. Você continua enxergando essas
-conversas no painel de Messages e pode intervir quando necessário. Ao conectá-los a Specifications, Files, Sticky
-Notes e Terminals, o grafo deixa claro quais recursos participam daquele trabalho.
+CodingAgents que pertencem ao mesmo componente alcançável podem trocar mensagens assíncronas, mesmo sem uma
+Connection direta entre eles. Você continua enxergando essas conversas no painel de Messages e pode intervir quando
+necessário. Specifications, Files, Sticky Notes e Terminals alcançáveis deixam claro quais recursos participam
+daquele trabalho.
 
 É o mesmo harness — agora com contexto e capacidades visíveis.
 
@@ -127,10 +128,10 @@ caminhos entre janelas.
 
 O File não vira um attachment descartável. Ele continua sendo a fonte real no filesystem.
 
-### Trigger: uma causa visível de atividade
+### Schedule: uma causa visível de atividade
 
-Um Trigger agenda uma ação no tempo. Ele pode entregar um comando a um Terminal, como um cron do sistema operacional,
-ou enviar um prompt claro a um CodingAgent com sessão ativa.
+Schedule é a fonte de Trigger disponível no Kavor. Ele agenda uma ação no tempo: pode entregar um comando a um
+Terminal, como um cron do sistema operacional, ou enviar um prompt claro a um CodingAgent com sessão ativa.
 
 Seu valor cresce quando o alvo já está conectado a outros Nodes. Um Trigger pode acordar um agente responsável por
 inspecionar um File, executar verificações em um Terminal, escrever um relatório em uma Sticky Note e pedir uma
@@ -139,7 +140,7 @@ revisão independente a outro CodingAgent.
 É assim que um horário no calendário pode dar origem a um pequeno sistema autônomo ou semiautônomo. O Trigger inicia
 a atividade; o grafo fornece contexto, ferramentas, memória e colaboração.
 
-O Trigger não decide sozinho o que vale a pena fazer, não amplia permissões, não inicia uma sessão que você manteve
+O Schedule não decide sozinho o que vale a pena fazer, não amplia permissões, não inicia uma sessão que você manteve
 desligada e possui apenas um alvo direto: um CodingAgent ou um Terminal.
 
 ## Quando os Nodes formam um grafo
@@ -200,4 +201,6 @@ bastante para preservar intenção, execução, evidência e decisão.
 - [Feche seu primeiro loop](./first-loop.md) com uma Specification, dois CodingAgents e uma Sticky Note.
 - Veja [como escolher CodingAgents e papéis](./agents-and-roles.md) para separar formulação, implementação, revisão e
   entrega.
+- Aprenda a usar [Schedule para dar um relógio ao seu grafo](./schedule.md).
+- Entenda [como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md).
 - Volte para [O que é o Kavor?](./what-is-kavor.md) para revisar o modelo completo do produto.

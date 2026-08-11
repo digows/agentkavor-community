@@ -3,7 +3,7 @@ id: docs-home
 title: Документация Kavor
 description: Узнайте, как Kavor сохраняет инженерную работу вокруг coding agents видимой, долговечной и подконтрольной вам.
 kind: landing
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/ru/docs
 ---
 
@@ -16,13 +16,15 @@ Specifications, файлы, CodingAgents, Terminals, доказательств�
 
 - [Что такое Kavor?](./what-is-kavor.md) объясняет модель и основные термины.
 - [Замкните первый цикл](./first-loop.md) со Specification, двумя CodingAgents и общими доказательствами.
+- Узнайте, [как CodingAgents видят и строят Canvas](./coding-agents-and-canvas.md).
+- [Добавьте графу часы с Schedule](./schedule.md).
 - [Примечания к выпускам](./release-notes/index.md) содержат историю всех публичных версий Kavor.
 
 ## Первый замкнутый цикл за пять минут
 
 1. Скачайте и откройте Kavor, затем выберите каталог, который станет корнем Workspace.
 2. Добавьте на Canvas по одному Node: Specification, CodingAgent и Terminal.
-3. Соедините Specification и Terminal с CodingAgent, чтобы доступный контекст и возможности оставались видимыми.
+3. Соедините Specification, Terminal и CodingAgent в одну компоненту, чтобы контекст и capabilities были достижимы.
 4. Попросите CodingAgent реализовать Specification, проверьте доказательства и решите, что принять.
 
 Начните с этого небольшого замкнутого цикла. Добавляйте ревьюеров, Files и Sticky Notes только тогда, когда они нужны работе.

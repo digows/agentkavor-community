@@ -3,7 +3,7 @@ id: agents-and-roles
 title: How to choose CodingAgents and define roles in Kavor
 description: Learn how to split work across CodingAgents, preserve shared context, and choose provider, model, and effort for each responsibility.
 kind: guide
-lastReviewedAt: 2026-08-06
+lastReviewedAt: 2026-08-11
 canonicalUrl: https://agentkavor.com/en/docs/agents-and-roles
 ---
 
@@ -18,8 +18,9 @@ assumptions of the author, and release preparation competes for attention with d
 outside the session.
 
 Kavor lets you divide those responsibilities across CodingAgents without turning the work into isolated chats. The
-participants form a graph around durable resources such as Specifications, Files, and Sticky Notes. Connections make
-context and capabilities visible; messages support handoffs and discussion; and the final decision remains yours.
+participants form a graph around durable resources such as Specifications, Files, and Sticky Notes. Connections form
+reachable context: any CodingAgent can work with Nodes in its component and message other reachable CodingAgents.
+Messages support handoffs and discussion, and the final decision remains yours.
 
 [![Spec Writer, Builder, Reviewer, and Shipper connected on a Kavor Canvas](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/en/videos/agents-and-roles)
 
@@ -69,9 +70,9 @@ durable Nodes:
 - the **Terminal** provides the environment where commands and checks run;
 - **CodingAgents** own distinct responsibilities around those resources.
 
-This shared memory is not one conversation history growing forever. It is an explicit set of resources that
-participants can read and update when Connections and Guardrails allow it. When a session ends, the Specification,
-Files, notes, and evidence remain in the Workspace.
+This shared memory is not one conversation history growing forever. It is an explicit set of resources participants
+can read and update through Connection paths. A direct Guardrail still governs its exact CodingAgent-resource pair
+even when another route exists. When a session ends, the Specification, Files, notes, and evidence remain.
 
 An implementation, review, and release graph can be pictured like this:
 
@@ -85,7 +86,8 @@ Durable context: Files · Sticky Note · Terminal · Specification outputs
 ~~~
 
 This diagram shows responsibility boundaries, not Connection direction. Connections do not execute a sequence
-automatically; they make relationships, context, and capabilities inspectable on the Canvas.
+automatically; they form a reachable component and make relationships, limits, and capabilities inspectable. Every
+agent does not need a direct Connection to every resource.
 
 ## Split the context window too
 
@@ -128,7 +130,8 @@ quality of the evidence it produces.
 
 ## Use conversations for handoffs and parallel work
 
-CodingAgents in the same workflow do not need to work in silence. Use Kavor messages when an agent needs to:
+CodingAgents in the same graph do not need to work in silence or have a direct Connection. Any reachable pair can
+exchange messages. Use Kavor messages when an agent needs to:
 
 - hand an implementation over for review;
 - ask the Specification author for clarification;
@@ -208,7 +211,7 @@ For every CodingAgent, confirm:
 
 - can I describe its role in one sentence?
 - does it have an observable result and a stopping condition?
-- does the graph provide only the context and capabilities it needs?
+- does the reachable component provide the context and capabilities it needs without accidental resources?
 - do provider, model, and effort match the ambiguity and risk?
 - is it clear whom the agent should contact and why?
 - will decisions and evidence be preserved outside the conversation?
@@ -217,6 +220,6 @@ For every CodingAgent, confirm:
 A good Canvas is not the one with the most agents. It is the one that makes responsibility, context, handoffs,
 evidence, and decisions clear to every participant—including you.
 
-Build this structure in [Close your first loop in Kavor](./first-loop.md), or review the concepts in
+Build this structure in [Close your first loop in Kavor](./first-loop.md), learn [how CodingAgents see and build the
+Canvas](./coding-agents-and-canvas.md), or review the concepts in
 [What is Kavor?](./what-is-kavor.md).
-
