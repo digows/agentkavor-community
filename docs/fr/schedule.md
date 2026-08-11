@@ -23,7 +23,7 @@ La cible donne son sens au payload :
 Le reste appartient à la cible. Workspace, répertoire, provider ou shell, Git mode, permissions, Guardrails et
 contexte du graphe restent inchangés.
 
-![Un Schedule terminé connecté à un CodingAgent ayant reçu un prompt de revue, avec une Sticky Note partageant l’intention de la boucle](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![Un Schedule terminé connecté à un CodingAgent ayant reçu un prompt de revue, avec une Sticky Note partageant l’intention de la boucle](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *Schedule lance l’activité ; le CodingAgent utilise le contexte accessible pour exécuter et expliquer le résultat.*
 

@@ -23,7 +23,7 @@ The target gives the payload meaning:
 Everything else belongs to the target. Workspace, directory, provider or shell, Git mode, permissions, Guardrails,
 and graph context remain exactly as they were.
 
-![A completed Schedule connected to a CodingAgent that received a review prompt, with a Sticky Note sharing the loop's intent](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![A completed Schedule connected to a CodingAgent that received a review prompt, with a Sticky Note sharing the loop's intent](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *A Schedule starts the activity; the CodingAgent uses reachable context to execute and explain the result.*
 

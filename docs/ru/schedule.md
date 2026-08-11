@@ -23,7 +23,7 @@ Schedule делает причину активности видимой: вы �
 Остальное принадлежит цели. Workspace, каталог, provider или shell, Git mode, permissions, Guardrails и контекст
 графа остаются прежними.
 
-![Завершённый Schedule соединён с CodingAgent, получившим prompt на ревью, а Sticky Note передаёт замысел цикла](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![Завершённый Schedule соединён с CodingAgent, получившим prompt на ревью, а Sticky Note передаёт замысел цикла](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *Schedule запускает активность; CodingAgent использует достижимый контекст, чтобы выполнить работу и объяснить результат.*
 
