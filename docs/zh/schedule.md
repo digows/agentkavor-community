@@ -21,7 +21,7 @@ Schedule 是一种可见的活动起因：你决定何时发生、连接一个�
 
 其余行为属于目标。Workspace、目录、provider 或 shell、Git mode、权限、Guardrails 和图谱上下文都保持不变。
 
-![一个已完成的 Schedule 连接到收到审查提示的 CodingAgent，并通过 Sticky Note 共享循环意图](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![一个已完成的 Schedule 连接到收到审查提示的 CodingAgent，并通过 Sticky Note 共享循环意图](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *Schedule 发起活动；CodingAgent 使用可达上下文执行工作并解释结果。*
 

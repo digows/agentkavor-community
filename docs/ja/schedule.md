@@ -23,7 +23,7 @@ payload の意味はターゲットが決めます。
 それ以外はターゲット側の責務です。Workspace、directory、provider または shell、Git mode、permissions、Guardrails、
 graph context は変わりません。
 
-![レビュー用 prompt を受け取った CodingAgent に完了済み Schedule が接続され、Sticky Note で loop の意図を共有している状態](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![レビュー用 prompt を受け取った CodingAgent に完了済み Schedule が接続され、Sticky Note で loop の意図を共有している状態](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *Schedule が活動を始め、CodingAgent は到達可能な context を使って実行し、結果を説明します。*
 
