@@ -51,7 +51,7 @@ test('keeps navigation documents in one authoritative section', async () => {
   })
 })
 
-test('requires accessible documentation images from the canonical media origin', async () => {
+test('requires accessible documentation images from an approved canonical media origin', async () => {
   await withCorpus(async (sourceDirectory) => {
     const pagePath = join(sourceDirectory, 'en', 'what-is-kavor.md')
     const source = await readFile(pagePath, 'utf8')
@@ -66,6 +66,12 @@ test('requires accessible documentation images from the canonical media origin',
       'https://tracking.example/kavor-working-demo-poster.jpg',
     ))
     await assert.rejects(validateDocumentation(sourceDirectory), /outside the approved canonical media origin/)
+
+    await writeFile(pagePath, source.replace(
+      'https://agentkavor.com/kavor-working-demo-poster.jpg',
+      'https://media.agentkavor.com/releases/1.3.0/example/overview.0123456789ab.jpg',
+    ))
+    await assert.doesNotReject(validateDocumentation(sourceDirectory))
   })
 })
 
