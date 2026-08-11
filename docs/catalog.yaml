@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-08-07.1
+releaseId: docs-2026-08-11.1
 sourceRepository: digows/agentkavor-community
-currentProductVersion: 1.2.0
-previousReleaseId: docs-2026-08-06.1
+currentProductVersion: 1.3.0
+previousReleaseId: docs-2026-08-07.1
 locales:
   - slug: en
     languageTag: en
@@ -43,7 +43,7 @@ documents:
     path: index.md
     status: published
     introducedIn: 1.0.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -54,7 +54,7 @@ documents:
     path: what-is-kavor.md
     status: published
     introducedIn: 1.0.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -65,7 +65,7 @@ documents:
     path: nodes.md
     status: published
     introducedIn: 1.2.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -76,7 +76,7 @@ documents:
     path: connections.md
     status: published
     introducedIn: 1.2.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -87,7 +87,7 @@ documents:
     path: first-loop.md
     status: published
     introducedIn: 1.2.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -98,7 +98,7 @@ documents:
     path: agents-and-roles.md
     status: published
     introducedIn: 1.2.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -109,11 +109,27 @@ documents:
     path: release-notes/index.md
     status: published
     introducedIn: 1.0.0
-    lastVerifiedIn: 1.2.0
+    lastVerifiedIn: 1.3.0
     owner: Kavor
     searchable: true
     agentReadable: true
     translationStatus: complete
+  - id: release-notes-1.3.0
+    kind: release-note
+    slug: release-notes/1.3.0
+    path: release-notes/1.3.0.md
+    status: published
+    introducedIn: 1.3.0
+    lastVerifiedIn: 1.3.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.3.0
+    publishedAt: 2026-08-11T04:11:13Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.3.0
+    sourceBodySha256: 6810479d91ed6eb3fbe3d82ab1b487848cde4df7770e55002aa6f78f9fd4c5e7
   - id: release-notes-1.2.0
     kind: release-note
     slug: release-notes/1.2.0
