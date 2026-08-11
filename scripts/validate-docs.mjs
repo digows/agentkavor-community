@@ -192,6 +192,8 @@ function validateCatalog(catalog) {
   ensureUnique(catalog.documents.map((document) => document.id), 'Document IDs')
   ensureUnique(catalog.documents.map((document) => document.slug), 'Document slugs')
   ensureUnique(catalog.documents.map((document) => document.path), 'Document paths')
+  ensureUnique(catalog.navigation.map((section) => section.id), 'Navigation section IDs')
+  ensureUnique(catalog.navigation.flatMap((section) => section.documents), 'Navigation document IDs')
   const documentIds = new Set(catalog.documents.map((document) => document.id))
   for (const section of catalog.navigation) {
     assert(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(section.id), 'Navigation section IDs must be stable kebab-case identifiers.')
