@@ -23,7 +23,7 @@ O alvo dá significado ao payload:
 O restante pertence ao alvo. Workspace, diretório, provider ou shell, Git mode, permissões, Guardrails e contexto do
 grafo continuam exatamente como já estavam.
 
-![Um Schedule concluído conectado a um CodingAgent que recebeu o prompt de revisão, com uma Sticky Note compartilhando a intenção do loop](https://agentkavor.com/kavor-schedule-trigger-demo.jpg)
+![Um Schedule concluído conectado a um CodingAgent que recebeu o prompt de revisão, com uma Sticky Note compartilhando a intenção do loop](https://media.agentkavor.com/releases/1.3.0/schedule-trigger/overview.e6db5dc413e3.jpg)
 
 *Um Schedule inicia a atividade; o CodingAgent usa o contexto alcançável para executar e explicar o resultado.*
 
