@@ -11,7 +11,7 @@ disposable chat sessions.
 [Join the Discussions](https://github.com/digows/agentkavor-community/discussions) ·
 [Follow Building Kavor](building-kavor/README.md)
 
-![Kavor coordinating coding agents, Specifications, terminals, and Connections on one Canvas](assets/kavor-overview.png)
+[![Kavor workflow coordinating coding agents, a Specification, terminals, Connections, and reviewed work on one Canvas](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/en/videos/overview)
 
 ## Why Kavor
 
@@ -33,9 +33,7 @@ Kavor provides a user-owned control plane for that work:
 
 ## See Kavor in action
 
-[![A 38-second Kavor workflow showing connected coding agents, a Specification, terminals, and reviewed work](assets/kavor-demo.gif)](assets/kavor-demo.mp4)
-
-[Watch the full-quality 38-second demonstration](assets/kavor-demo.mp4).
+[Watch the 38-second Kavor overview](https://agentkavor.com/en/videos/overview).
 
 ## Building Kavor
 
