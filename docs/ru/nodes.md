@@ -28,7 +28,7 @@ Node уже полезен сам по себе. Когда вы создаёт�
 Эта последовательность показывает, как работа приобретает структуру. Connections — не сохранённые стрелки и не
 автоматизация, запускающая следующий блок. Это видимые отношения между Nodes.
 
-![CodingAgents, Specification, Sticky Note, Terminal, File и Trigger, соединённые на Canvas в Kavor](https://agentkavor.com/kavor-nodes-and-connections-article.jpg)
+![CodingAgents, Specification, Sticky Note, Terminal, File и Trigger, соединённые на Canvas в Kavor](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 *Canvas может объединить долговечный замысел, общую память, выполнение, файлы и запланированную причину действия,
 не скрывая участников и их Connections.*

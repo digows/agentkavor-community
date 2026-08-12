@@ -19,7 +19,7 @@ Kavor 允许你把这些职责分配给不同 CodingAgents，同时避免把工�
 Specifications、Files 和 Sticky Notes 等持久资源形成图。Connections 让上下文与能力保持可见；
 消息支持 handoff 与讨论；最终决定仍由你掌控。
 
-[![Spec Writer、Builder、Reviewer 和 Shipper 连接在 Kavor Canvas 上](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/zh/videos/agents-and-roles)
+[![Spec Writer、Builder、Reviewer 和 Shipper 连接在 Kavor Canvas 上](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/zh/videos/agents-and-roles)
 
 [观看四个角色组成工作图 →](https://agentkavor.com/zh/videos/agents-and-roles)
 

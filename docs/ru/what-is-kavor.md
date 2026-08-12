@@ -25,7 +25,7 @@ Specifications, Files, Sticky Notes, Terminals и CodingAgents. Connections ме
 Specification и доказательства остаются в Workspace после завершения любой отдельной сессии агента. Вы можете
 проверить граф, вмешаться и решить, что будет принято.
 
-[![Canvas Kavor с подключёнными CodingAgents, Specifications, Files, Sticky Notes и Terminals](https://agentkavor.com/kavor-working-demo-poster.jpg)](https://agentkavor.com/ru/videos/overview)
+[![Canvas Kavor с подключёнными CodingAgents, Specifications, Files, Sticky Notes и Terminals](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/ru/videos/overview)
 
 [Посмотрите реальный Workspace Kavor за 38 секунд →](https://agentkavor.com/ru/videos/overview)
 

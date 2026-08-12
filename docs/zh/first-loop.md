@@ -14,7 +14,7 @@ canonicalUrl: https://agentkavor.com/zh/docs/first-loop
 在本教程中，Claude Code 实现 Specification，Codex 审查结果，二者把证据保存在同一个 Sticky Note 中，
 最后由你决定工作何时完成。
 
-[![Canvas 上连接的 Specification、Claude Code、Codex 和 Sticky Note](https://agentkavor.com/kavor-small-loop-demo-poster.jpg)](https://agentkavor.com/zh/videos/small-loop)
+[![Canvas 上连接的 Specification、Claude Code、Codex 和 Sticky Note](https://media.agentkavor.com/demos/first-loop/canvas.24845dea72ff.jpg)](https://agentkavor.com/zh/videos/small-loop)
 
 [用 1 分 29 秒观看完整闭环 →](https://agentkavor.com/zh/videos/small-loop)
 

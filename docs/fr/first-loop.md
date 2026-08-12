@@ -15,7 +15,7 @@ un changement que vous pouvez examiner.
 Dans ce tutoriel, Claude Code implémente une Specification, Codex examine le résultat, tous deux conservent les
 preuves dans une Sticky Note, et vous décidez quand le travail est terminé.
 
-[![Specification, Claude Code, Codex et Sticky Note connectés sur le Canvas](https://agentkavor.com/kavor-small-loop-demo-poster.jpg)](https://agentkavor.com/fr/videos/small-loop)
+[![Specification, Claude Code, Codex et Sticky Note connectés sur le Canvas](https://media.agentkavor.com/demos/first-loop/canvas.24845dea72ff.jpg)](https://agentkavor.com/fr/videos/small-loop)
 
 [Regardez la boucle complète en 1 minute et 29 secondes →](https://agentkavor.com/fr/videos/small-loop)
 

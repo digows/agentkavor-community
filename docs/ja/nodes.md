@@ -28,7 +28,7 @@ Nodeは単体でもすでに有用です。**Connection**を作成すると、�
 この並びは、仕事がどのように構造を得るかを示しています。Connectionsは永続化された矢印でも、次の箱を
 実行する自動化でもありません。Nodes間の関係を目に見える形で表したものです。
 
-![KavorのCanvas上で接続されたCodingAgents、Specification、Sticky Note、Terminal、File、Trigger](https://agentkavor.com/kavor-nodes-and-connections-article.jpg)
+![KavorのCanvas上で接続されたCodingAgents、Specification、Sticky Note、Terminal、File、Trigger](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 *Canvasでは、参加者やConnectionsを隠すことなく、永続的な意図、共有メモリ、実行、ファイル、予定された
 きっかけを組み合わせられます。*

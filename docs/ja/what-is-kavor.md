@@ -28,7 +28,7 @@ Terminals、CodingAgents など、作業のリソースと参加者を表す Nod
 準備できます。個々の Agent セッションが終わっても、Specification と証拠は Workspace に残ります。グラフを
 確認し、介入し、何を受け入れるかを決められます。
 
-[![CodingAgents、Specifications、Files、Sticky Notes、Terminals が接続された Kavor Canvas](https://agentkavor.com/kavor-working-demo-poster.jpg)](https://agentkavor.com/ja/videos/overview)
+[![CodingAgents、Specifications、Files、Sticky Notes、Terminals が接続された Kavor Canvas](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/ja/videos/overview)
 
 [実際の Kavor Workspace を 38 秒で見る →](https://agentkavor.com/ja/videos/overview)
 

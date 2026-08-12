@@ -28,7 +28,7 @@ Um CodingAgent pode implementar uma Specification, outro pode revisar o resultad
 release. A Specification e as evidências permanecem no Workspace quando qualquer sessão individual termina. Você
 pode inspecionar o grafo, intervir e decidir o que será aceito.
 
-[![Canvas do Kavor com CodingAgents, Specifications, Files, Sticky Notes e Terminals conectados](https://agentkavor.com/kavor-working-demo-poster.jpg)](https://agentkavor.com/pt-br/videos/overview)
+[![Canvas do Kavor com CodingAgents, Specifications, Files, Sticky Notes e Terminals conectados](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/pt-br/videos/overview)
 
 [Veja um Workspace real do Kavor em 38 segundos →](https://agentkavor.com/pt-br/videos/overview)
 

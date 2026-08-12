@@ -15,7 +15,7 @@ canonicalUrl: https://agentkavor.com/ja/docs/first-loop
 このチュートリアルでは、Claude Code が Specification を実装し、Codex が結果をレビューします。
 両者は証拠を Sticky Note に残し、作業をいつ完了するかはあなたが決めます。
 
-[![Canvas 上で接続された Specification、Claude Code、Codex、Sticky Note](https://agentkavor.com/kavor-small-loop-demo-poster.jpg)](https://agentkavor.com/ja/videos/small-loop)
+[![Canvas 上で接続された Specification、Claude Code、Codex、Sticky Note](https://media.agentkavor.com/demos/first-loop/canvas.24845dea72ff.jpg)](https://agentkavor.com/ja/videos/small-loop)
 
 [1 分 29 秒でループ全体を見る →](https://agentkavor.com/ja/videos/small-loop)
 

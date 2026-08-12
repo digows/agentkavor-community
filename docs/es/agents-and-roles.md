@@ -22,7 +22,7 @@ participantes forman un grafo alrededor de recursos duraderos, como Specificatio
 Connections hacen visibles el contexto y las capacidades; los mensajes permiten handoffs y discusiones; y la decisión
 final sigue bajo tu control.
 
-[![Spec Writer, Builder, Reviewer y Shipper conectados en un Canvas de Kavor](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/es/videos/agents-and-roles)
+[![Spec Writer, Builder, Reviewer y Shipper conectados en un Canvas de Kavor](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/es/videos/agents-and-roles)
 
 [Mira cómo cuatro papeles forman un grafo de trabajo →](https://agentkavor.com/es/videos/agents-and-roles)
 

@@ -28,7 +28,7 @@ Voici le modèle :
 Cette séquence décrit la manière dont le travail acquiert une structure. Les Connections ne sont ni des flèches
 persistées ni une automatisation qui exécute la case suivante. Ce sont des relations visibles entre des Nodes.
 
-![CodingAgents, Specification, Sticky Note, Terminal, File et Trigger connectés sur le Canvas de Kavor](https://agentkavor.com/kavor-nodes-and-connections-article.jpg)
+![CodingAgents, Specification, Sticky Note, Terminal, File et Trigger connectés sur le Canvas de Kavor](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 *Un Canvas peut associer intention durable, mémoire partagée, exécution, fichiers et cause planifiée sans masquer les
 participants ni leurs Connections.*

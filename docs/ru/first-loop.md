@@ -15,7 +15,7 @@ canonicalUrl: https://agentkavor.com/ru/docs/first-loop
 В этом руководстве Claude Code реализует Specification, Codex проверяет результат, оба сохраняют доказательства в
 Sticky Note, а вы решаете, когда работа завершена.
 
-[![Соединённые на Canvas Specification, Claude Code, Codex и Sticky Note](https://agentkavor.com/kavor-small-loop-demo-poster.jpg)](https://agentkavor.com/ru/videos/small-loop)
+[![Соединённые на Canvas Specification, Claude Code, Codex и Sticky Note](https://media.agentkavor.com/demos/first-loop/canvas.24845dea72ff.jpg)](https://agentkavor.com/ru/videos/small-loop)
 
 [Посмотрите весь цикл за 1 минуту 29 секунд →](https://agentkavor.com/ru/videos/small-loop)
 
