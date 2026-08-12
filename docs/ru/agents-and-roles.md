@@ -20,7 +20,7 @@ Kavor позволяет распределить эти обязанности 
 образуют граф вокруг долговечных ресурсов: Specifications, Files и Sticky Notes. Connections делают контекст и
 возможности видимыми, сообщения поддерживают handoff и обсуждения, а окончательное решение остаётся за вами.
 
-[![Spec Writer, Builder, Reviewer и Shipper соединены на Canvas в Kavor](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/ru/videos/agents-and-roles)
+[![Spec Writer, Builder, Reviewer и Shipper соединены на Canvas в Kavor](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/ru/videos/agents-and-roles)
 
 [Посмотрите, как четыре роли образуют рабочий граф →](https://agentkavor.com/ru/videos/agents-and-roles)
 

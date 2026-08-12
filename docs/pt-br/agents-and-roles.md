@@ -22,7 +22,7 @@ Connections tornam o contexto e as capacidades visíveis; qualquer CodingAgent p
 alcançáveis em seu componente e conversar com outros CodingAgents desse mesmo grafo. As mensagens permitem handoffs
 e discussões, e a decisão final continua com você.
 
-[![Spec Writer, Builder, Reviewer e Shipper conectados em um Canvas do Kavor](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/pt-br/videos/agents-and-roles)
+[![Spec Writer, Builder, Reviewer e Shipper conectados em um Canvas do Kavor](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/pt-br/videos/agents-and-roles)
 
 [Veja quatro papéis formando um grafo de trabalho →](https://agentkavor.com/pt-br/videos/agents-and-roles)
 

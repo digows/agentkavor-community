@@ -25,7 +25,7 @@ Node 单独存在时已经有价值。创建 **Connection** 后，这种价值�
 这个顺序描述工作如何获得结构。Connections 不是持久化的箭头，也不是自动执行下一个方框的流程；它们是 Nodes 之间
 可见的关系。
 
-![Kavor Canvas 上相互连接的 CodingAgents、Specification、Sticky Note、Terminal、File 和 Trigger](https://agentkavor.com/kavor-nodes-and-connections-article.jpg)
+![Kavor Canvas 上相互连接的 CodingAgents、Specification、Sticky Note、Terminal、File 和 Trigger](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 *一个 Canvas 可以同时承载持久意图、共享记忆、执行、文件和定时触发原因，并保持参与者及其 Connections 清晰可见。*
 

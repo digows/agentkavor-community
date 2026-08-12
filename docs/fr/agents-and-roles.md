@@ -22,7 +22,7 @@ isolés. Les participants forment un graphe autour de ressources durables, telle
 Notes. Les Connections rendent le contexte et les capacités visibles, les messages permettent les handoffs et les
 discussions, et la décision finale reste entre vos mains.
 
-[![Spec Writer, Builder, Reviewer et Shipper connectés sur un Canvas Kavor](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/fr/videos/agents-and-roles)
+[![Spec Writer, Builder, Reviewer et Shipper connectés sur un Canvas Kavor](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/fr/videos/agents-and-roles)
 
 [Voir quatre rôles former un graphe de travail →](https://agentkavor.com/fr/videos/agents-and-roles)
 

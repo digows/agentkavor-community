@@ -22,7 +22,7 @@ participants form a graph around durable resources such as Specifications, Files
 reachable context: any CodingAgent can work with Nodes in its component and message other reachable CodingAgents.
 Messages support handoffs and discussion, and the final decision remains yours.
 
-[![Spec Writer, Builder, Reviewer, and Shipper connected on a Kavor Canvas](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/en/videos/agents-and-roles)
+[![Spec Writer, Builder, Reviewer, and Shipper connected on a Kavor Canvas](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/en/videos/agents-and-roles)
 
 [See four roles form a working graph →](https://agentkavor.com/en/videos/agents-and-roles)
 

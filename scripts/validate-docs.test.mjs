@@ -22,7 +22,7 @@ test('validates the complete released corpus', async () => {
 
   for (const locale of ['en', 'pt-br', 'es', 'fr', 'zh', 'ja', 'ru']) {
     const source = await readFile(join('docs', locale, 'what-is-kavor.md'), 'utf8')
-    assert.match(source, /!\[[^\]]+]\(https:\/\/agentkavor\.com\/kavor-working-demo-poster\.jpg\)/)
+    assert.match(source, /!\[[^\]]+]\(https:\/\/media\.agentkavor\.com\/demos\/canvas-overview\/workspace\.8f917eaa5261\.jpg\)/)
     assert.match(source, new RegExp(`https://agentkavor\\.com/${locale}/videos/overview`))
   }
 })
@@ -56,19 +56,19 @@ test('requires accessible documentation images from an approved canonical media 
     const pagePath = join(sourceDirectory, 'en', 'what-is-kavor.md')
     const source = await readFile(pagePath, 'utf8')
     await writeFile(pagePath, source.replace(
-      '![Kavor Canvas with connected CodingAgents, Specifications, Files, Sticky Notes, and Terminals](https://agentkavor.com/kavor-working-demo-poster.jpg)',
-      '![](https://agentkavor.com/kavor-working-demo-poster.jpg)',
+      '![Kavor Canvas with connected CodingAgents, Specifications, Files, Sticky Notes, and Terminals](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)',
+      '![](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)',
     ))
     await assert.rejects(validateDocumentation(sourceDirectory), /image without alternative text/)
 
     await writeFile(pagePath, source.replace(
-      'https://agentkavor.com/kavor-working-demo-poster.jpg',
+      'https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg',
       'https://tracking.example/kavor-working-demo-poster.jpg',
     ))
     await assert.rejects(validateDocumentation(sourceDirectory), /outside the approved canonical media origin/)
 
     await writeFile(pagePath, source.replace(
-      'https://agentkavor.com/kavor-working-demo-poster.jpg',
+      'https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg',
       'https://media.agentkavor.com/releases/1.3.0/example/overview.0123456789ab.jpg',
     ))
     await assert.doesNotReject(validateDocumentation(sourceDirectory))
@@ -141,8 +141,8 @@ test('requires content changes to advance a correctly chained release ID', async
     await writeFile(
       catalogPath,
       catalog
-        .replace('releaseId: docs-2026-08-11.5', 'releaseId: docs-2026-08-11.6')
-        .replace('previousReleaseId: docs-2026-08-11.4', 'previousReleaseId: docs-2026-08-11.5'),
+        .replace('releaseId: docs-2026-08-11.6', 'releaseId: docs-2026-08-11.7')
+        .replace('previousReleaseId: docs-2026-08-11.5', 'previousReleaseId: docs-2026-08-11.6'),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
@@ -160,13 +160,13 @@ test('binds a product release to its complete approved English documentation pro
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
       version: '1.3.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-11.5',
+      expectedReleaseId: 'docs-2026-08-11.6',
     }))
     await writeFile(releaseNotesSourcePath, '# Kavor 1.3.0\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
       version: '1.3.0',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-08-11.5',
+      expectedReleaseId: 'docs-2026-08-11.6',
     }), /differ from the approved English documentation projection/)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })

@@ -21,7 +21,7 @@ Kavor では、仕事を孤立したチャットに分断せず、責任を複�
 Specifications、Files、Sticky Notes などの永続的なリソースを中心にグラフを作ります。Connections
 はコンテキストと能力を見える状態にし、メッセージは handoff と議論を支え、最終判断はあなたに残ります。
 
-[![Kavor の Canvas 上で接続された Spec Writer、Builder、Reviewer、Shipper](https://agentkavor.com/kavor-agents-and-roles-article.jpg)](https://agentkavor.com/ja/videos/agents-and-roles)
+[![Kavor の Canvas 上で接続された Spec Writer、Builder、Reviewer、Shipper](https://media.agentkavor.com/editorial/agents-and-roles/graph.6c35b0b2fdc5.jpg)](https://agentkavor.com/ja/videos/agents-and-roles)
 
 [四つの役割が仕事のグラフを作る様子を見る →](https://agentkavor.com/ja/videos/agents-and-roles)
 

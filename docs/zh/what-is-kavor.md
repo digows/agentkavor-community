@@ -24,7 +24,7 @@ Files、Sticky Notes、Terminals 和 CodingAgents。Nodes 之间的 Connections 
 一个 CodingAgent 可以实现 Specification，另一个可以审查结果，第三个可以准备发布。即使单个智能体
 会话结束，Specification 和证据仍留在 Workspace 中。你可以检查整个图、进行干预并决定接受什么。
 
-[![Kavor Canvas，其中连接了 CodingAgents、Specifications、Files、Sticky Notes 和 Terminals](https://agentkavor.com/kavor-working-demo-poster.jpg)](https://agentkavor.com/zh/videos/overview)
+[![Kavor Canvas，其中连接了 CodingAgents、Specifications、Files、Sticky Notes 和 Terminals](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/zh/videos/overview)
 
 [用 38 秒观看真实的 Kavor Workspace →](https://agentkavor.com/zh/videos/overview)
 

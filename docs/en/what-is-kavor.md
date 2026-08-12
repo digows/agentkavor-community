@@ -26,7 +26,7 @@ One CodingAgent can implement a Specification, another can review the result, an
 The Specification and evidence remain in the Workspace after any individual agent session ends. You can inspect the
 graph, intervene, and decide what is accepted.
 
-[![Kavor Canvas with connected CodingAgents, Specifications, Files, Sticky Notes, and Terminals](https://agentkavor.com/kavor-working-demo-poster.jpg)](https://agentkavor.com/en/videos/overview)
+[![Kavor Canvas with connected CodingAgents, Specifications, Files, Sticky Notes, and Terminals](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)](https://agentkavor.com/en/videos/overview)
 
 [Watch a real Kavor Workspace in 38 seconds →](https://agentkavor.com/en/videos/overview)
 
