@@ -3,12 +3,16 @@ name: Documentation
 on:
   pull_request_target:
     paths:
+      - README.md
+      - assets/**
       - docs/**
       - CONTRIBUTING.md
   push:
     branches:
       - main
     paths:
+      - README.md
+      - assets/**
       - docs/**
       - scripts/validate-docs.mjs
       - scripts/validate-docs.test.mjs
