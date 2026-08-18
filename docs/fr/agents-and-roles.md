@@ -231,6 +231,6 @@ Pour chaque CodingAgent, vérifiez :
 Un bon Canvas n’est pas celui qui contient le plus d’agents. C’est celui qui rend responsabilités, contexte, handoffs,
 preuves et décisions clairs pour tous les participants, vous compris.
 
-Construisez cette structure dans [Boucler votre premier cycle avec Kavor](./first-loop.md) ou révisez les concepts dans
+Lisez le guide consacré au [CodingAgent](./coding-agent.md), construisez cette structure dans
+[Boucler votre premier cycle avec Kavor](./first-loop.md) ou révisez les concepts dans
 [Qu’est-ce que Kavor ?](./what-is-kavor.md).
-

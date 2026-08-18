@@ -223,6 +223,6 @@ Para cada CodingAgent, confirma:
 Un buen Canvas no es el que contiene más agentes. Es el que deja claras la responsabilidad, el contexto, los
 handoffs, las evidencias y las decisiones para todos los participantes, incluido tú.
 
-Monta esta estructura en [Cierra tu primer loop en Kavor](./first-loop.md) o repasa los conceptos en
+Lee la guía dedicada de [CodingAgent](./coding-agent.md), monta esta estructura en
+[Cierra tu primer loop en Kavor](./first-loop.md) o repasa los conceptos en
 [¿Qué es Kavor?](./what-is-kavor.md).
-

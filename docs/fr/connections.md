@@ -140,5 +140,7 @@ graphe n'en a probablement pas besoin.
 ## Pour aller plus loin
 
 - Lisez [le guide central des Nodes](./nodes.md) pour comprendre la responsabilité de chaque participant.
+- Approfondissez avec les guides consacrés au [CodingAgent](./coding-agent.md), à la
+  [Specification](./specification.md) et au [Terminal](./terminal.md).
 - [Bouclez votre premier cycle](./first-loop.md) avec intention, implémentation, révision et décision humaine.
 - Découvrez [comment choisir les CodingAgents et leurs rôles](./agents-and-roles.md) avant d'élargir le graphe.

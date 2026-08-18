@@ -203,6 +203,6 @@ Shipper 负责准备交付证据，但不能替代你决定是否发布。
 好的 Canvas 并不是 Agent 最多的 Canvas，而是让所有参与者（包括你）都能清楚看到职责、上下文、
 handoff、证据与决策的 Canvas。
 
-在[用 Kavor 完成第一个闭环](./first-loop.md)中搭建这个结构，或在[什么是 Kavor？](./what-is-kavor.md)
+阅读 [CodingAgent 专题指南](./coding-agent.md)，在[用 Kavor 完成第一个闭环](./first-loop.md)中搭建这个结构，
+或在[什么是 Kavor？](./what-is-kavor.md)
 中复习相关概念。
-

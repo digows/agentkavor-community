@@ -218,6 +218,6 @@ Spec Writer、Implementer、Reviewer、Shipper を分けます。Reviewer に明
 良い Canvas は Agent が最も多い Canvas ではありません。責任、コンテキスト、handoff、証拠、意思決定が、
 あなたを含むすべての参加者に明確な Canvas です。
 
+[CodingAgent の専用ガイド](./coding-agent.md)を読み、
 [最初のループを Kavor で完結させる](./first-loop.md)でこの構成を作るか、
 [Kavor とは？](./what-is-kavor.md)で概念を確認してください。
-

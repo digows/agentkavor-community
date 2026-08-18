@@ -152,5 +152,7 @@ de um Guardrail próprio.
 ## Continue
 
 - Leia [o guia central de Nodes](./nodes.md) para entender a responsabilidade de cada participante.
+- Aprofunde-se nos guias dedicados de [CodingAgent](./coding-agent.md), [Specification](./specification.md) e
+  [Terminal](./terminal.md).
 - [Feche seu primeiro loop](./first-loop.md) com intenção, implementação, revisão e decisão humana.
 - Veja [como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md).
