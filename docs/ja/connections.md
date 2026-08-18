@@ -136,5 +136,7 @@ Canvas上の近さ、メッセージ内での言及、同じWorkspaceへの参�
 ## 次に読む
 
 - 各参加者の責任を理解するには、[Nodesの中心ガイド](./nodes.md)を読んでください。
+- [CodingAgent](./coding-agent.md)、[Specification](./specification.md)、
+  [Terminal](./terminal.md)の専用ガイドで詳しく学んでください。
 - 意図、実装、レビュー、人間の判断を含む[最初のループを完了](./first-loop.md)してください。
 - グラフを広げる前に、[CodingAgentsと役割の選び方](./agents-and-roles.md)を確認してください。

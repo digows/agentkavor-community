@@ -136,5 +136,7 @@ grafo no la necesita.
 ## Continúa
 
 - Lee la [guía central de Nodes](./nodes.md) para entender la responsabilidad de cada participante.
+- Profundiza con las guías de [CodingAgent](./coding-agent.md), [Specification](./specification.md) y
+  [Terminal](./terminal.md).
 - [Cierra tu primer loop](./first-loop.md) con intención, implementación, revisión y decisión humana.
 - Aprende [cómo elegir CodingAgents y papeles](./agents-and-roles.md) antes de ampliar el grafo.

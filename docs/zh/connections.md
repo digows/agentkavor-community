@@ -124,5 +124,7 @@ Node 不会获得任何能力。
 ## 继续阅读
 
 - 阅读 [Nodes 中央指南](./nodes.md)，了解每个参与者的责任。
+- 继续阅读 [CodingAgent](./coding-agent.md)、[Specification](./specification.md) 和
+  [Terminal](./terminal.md) 专题指南。
 - [闭合你的第一个 loop](./first-loop.md)，串联意图、实现、评审和人的决定。
 - 扩展图之前，先了解[如何选择 CodingAgents 和角色](./agents-and-roles.md)。

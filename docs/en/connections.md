@@ -121,5 +121,7 @@ own Guardrail.
 ## Continue
 
 - Read the [central Nodes guide](./nodes.md).
+- Go deeper with the dedicated [CodingAgent](./coding-agent.md), [Specification](./specification.md), and
+  [Terminal](./terminal.md) guides.
 - [Close your first loop](./first-loop.md) with intent, implementation, review, and human decision.
 - See [how CodingAgents see and build the Canvas](./coding-agents-and-canvas.md).
