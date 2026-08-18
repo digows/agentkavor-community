@@ -142,7 +142,7 @@ test('requires content changes to advance a correctly chained release ID', async
       catalogPath,
       catalog
         .replace('releaseId: docs-2026-08-18.1', 'releaseId: docs-2026-08-18.2')
-        .replace('previousReleaseId: docs-2026-08-11.6', 'previousReleaseId: docs-2026-08-18.1'),
+        .replace('previousReleaseId: docs-2026-08-15.1', 'previousReleaseId: docs-2026-08-18.1'),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
