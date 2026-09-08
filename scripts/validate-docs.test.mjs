@@ -141,8 +141,8 @@ test('requires content changes to advance a correctly chained release ID', async
     await writeFile(
       catalogPath,
       catalog
-        .replace('releaseId: docs-2026-09-03.1', 'releaseId: docs-2026-09-03.2')
-        .replace('previousReleaseId: docs-2026-09-02.1', 'previousReleaseId: docs-2026-09-03.1'),
+        .replace('releaseId: docs-2026-09-08.1', 'releaseId: docs-2026-09-08.2')
+        .replace('previousReleaseId: docs-2026-09-03.1', 'previousReleaseId: docs-2026-09-08.1'),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
@@ -160,13 +160,13 @@ test('binds a product release to its complete approved English documentation pro
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
       version: '1.6.2',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-09-03.1',
+      expectedReleaseId: 'docs-2026-09-08.1',
     }))
     await writeFile(releaseNotesSourcePath, '# Kavor 1.6.2\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
       version: '1.6.2',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-09-03.1',
+      expectedReleaseId: 'docs-2026-09-08.1',
     }), /differ from the approved English documentation projection/)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })

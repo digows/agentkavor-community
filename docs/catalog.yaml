@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-09-03.1
+releaseId: docs-2026-09-08.1
 sourceRepository: digows/agentkavor-community
 currentProductVersion: 1.6.2
-previousReleaseId: docs-2026-09-02.1
+previousReleaseId: docs-2026-09-03.1
 locales:
   - slug: en
     languageTag: en
