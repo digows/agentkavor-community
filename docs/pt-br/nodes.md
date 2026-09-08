@@ -224,6 +224,9 @@ bastante para preservar intenção, execução, evidência e decisão.
 - [Feche seu primeiro loop](./first-loop.md) com uma Specification, dois CodingAgents e uma Sticky Note.
 - Veja [como escolher CodingAgents e papéis](./agents-and-roles.md) para separar formulação, implementação, revisão e
   entrega.
+- Use uma [Sticky Note como memória de trabalho compartilhada](./sticky-note.md).
+- Entenda como um [File transforma uma fonte canônica em contexto e escopo](./file.md).
+- Desenvolva, depure e teste junto com um agente no [WebBrowser](./web-browser.md).
 - Aprenda a usar [Schedule para dar um relógio ao seu grafo](./schedule.md).
 - Entenda [como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md).
 - Volte para [O que é o Kavor?](./what-is-kavor.md) para revisar o modelo completo do produto.

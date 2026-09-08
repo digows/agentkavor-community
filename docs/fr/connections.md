@@ -156,6 +156,7 @@ graphe n'en a probablement pas besoin.
 
 - Lisez [le guide central des Nodes](./nodes.md) pour comprendre la responsabilité de chaque participant.
 - Approfondissez avec les guides consacrés au [CodingAgent](./coding-agent.md), à la
-  [Specification](./specification.md) et au [Terminal](./terminal.md).
+  [Specification](./specification.md), au [Terminal](./terminal.md), à la [Sticky Note](./sticky-note.md), au
+  [File](./file.md) et au [WebBrowser](./web-browser.md).
 - [Bouclez votre premier cycle](./first-loop.md) avec intention, implémentation, révision et décision humaine.
 - Découvrez [comment choisir les CodingAgents et leurs rôles](./agents-and-roles.md) avant d'élargir le graphe.

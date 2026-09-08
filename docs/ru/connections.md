@@ -152,6 +152,7 @@ Node также нельзя соединить с самим собой. Пер
 
 - Прочитайте [центральное руководство по Nodes](./nodes.md), чтобы понять ответственность каждого участника.
 - Изучите отдельные руководства по [CodingAgent](./coding-agent.md), [Specification](./specification.md) и
-  [Terminal](./terminal.md).
+  [Terminal](./terminal.md), а также по [Sticky Note](./sticky-note.md), [File](./file.md) и
+  [WebBrowser](./web-browser.md).
 - [Замкните первый цикл](./first-loop.md) с замыслом, реализацией, проверкой и решением человека.
 - Узнайте, [как выбирать CodingAgents и роли](./agents-and-roles.md), прежде чем расширять граф.
