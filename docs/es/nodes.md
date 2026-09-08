@@ -223,4 +223,7 @@ completo para preservar intención, ejecución, evidencia y decisión.
 - Consulta la [matriz de Connections soportadas](./connections.md) para conocer el contrato exacto de cada combinación.
 - [Cierra tu primer loop](./first-loop.md) con una Specification, dos CodingAgents y una Sticky Note.
 - Aprende [cómo elegir CodingAgents y papeles](./agents-and-roles.md) para formulación, implementación, revisión y entrega.
+- Usa una [Sticky Note como memoria de trabajo compartida](./sticky-note.md).
+- Entiende cómo un [File convierte una fuente canónica en contexto y alcance](./file.md).
+- Desarrolla, depura y prueba junto a un agente en [WebBrowser](./web-browser.md).
 - Vuelve a [¿Qué es Kavor?](./what-is-kavor.md) para revisar el modelo completo del producto.

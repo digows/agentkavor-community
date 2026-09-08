@@ -1,6 +1,6 @@
 ---
 id: web-browser
-title: WebBrowser: desenvolva e teste na frente do agente
+title: "WebBrowser: desenvolva e teste na frente do agente"
 description: Use o WebBrowser compartilhado do Kavor para desenvolver aplicações web, reproduzir bugs, depurar páginas e provar fluxos E2E.
 kind: guide
 lastReviewedAt: 2026-09-08

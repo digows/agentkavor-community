@@ -1,6 +1,6 @@
 ---
 id: file
-title: File: contexto e escopo no Canvas
+title: "File: contexto e escopo no Canvas"
 description: Use um File para manter uma fonte canônica visível, delimitar o contexto de um CodingAgent e levar seu caminho a um Terminal.
 kind: guide
 lastReviewedAt: 2026-09-08

@@ -1,0 +1,106 @@
+---
+id: sticky-note
+title: "Sticky Note: shared working memory"
+description: Use a Sticky Note to record status, findings, and attention points with your CodingAgents without turning every working note into a Specification.
+kind: guide
+lastReviewedAt: 2026-09-08
+canonicalUrl: https://agentkavor.com/en/docs/sticky-note
+---
+
+# A Sticky Note is small, but it keeps the work visible
+
+A Sticky Note starts as a post-it for humans. Connected to a CodingAgent, it becomes shared working memory: you
+and the agent can record what matters during a turn without depending on a conversation that will soon be buried.
+
+[![CodingAgents and a Sticky Note connected on the Kavor Canvas](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/en/videos/connections)
+
+*Shared notes keep observations, open decisions, and next steps visible beside the graph.*
+
+## What a Sticky Note does
+
+A Sticky Note is useful even without an agent. Write a question, hypothesis, reminder, or short list of things you
+want to watch. Its value grows when the content becomes part of the same graph of work.
+
+With a Connection to a CodingAgent, the agent can read and update the note with you. Use it to keep:
+
+- a **done / doing / next** summary;
+- an open decision while forming a Specification;
+- an attention point you want to review later;
+- findings discovered during implementation;
+- findings from an independent review;
+- a handoff checklist shared by graph participants.
+
+The note is deliberately informal. It makes work transparent in both directions: you see what the agent noticed,
+and the agent gets an explicit surface for preserving what should remain visible.
+
+## Three ways to use it
+
+### 1. Memory for your turn
+
+Before you start, write the goal and the questions that cannot disappear. During the work, add short facts, links,
+or provisional decisions. At the end, leave the next steps clear for when you return to the Workspace.
+
+A simple format works well:
+
+- **Status:** done, doing, next.
+- **Attention:** what needs your decision or inspection.
+- **Evidence:** the check, file, or observation that supports the note.
+
+### 2. A second hand for the CodingAgent
+
+Connect the Sticky Note to the agent and ask it to record only facts that will help with your next decision:
+
+> Keep the Sticky Note as a short turn summary. Record changes, evidence, risks, and questions that need my decision. Do not turn hypotheses into final decisions.
+
+The agent can append separate blocks or replace the content when you ask for a complete reorganization. The content
+remains editable by the human, and every change must respect the note's latest version.
+
+### 3. A bridge between implementation and review
+
+A Builder can record what changed and which checks ran. A Reviewer can add findings and risks. You can follow both
+without searching through two separate sessions.
+
+```text
+Specification — Builder — Reviewer
+                         │
+                    Sticky Note
+```
+
+The drawing above represents Nodes in the same graph. A Connection between CodingAgents is not an automatic workflow
+sequence; it makes participants reachable and enables message exchange.
+
+## Markdown, editing, and conflicts
+
+A Sticky Note accepts Markdown for headings, lists, tasks, emphasis, code, and other common working-note elements.
+Raw HTML is not accepted. A note holds up to 64,000 Unicode code points and offers four colors for visual grouping;
+color does not change the authority of the content.
+
+Kavor saves changes automatically and signals when another participant changed the note before your save. Instead of
+silently discarding the concurrent change, the interface lets you resolve the conflict. A write can append a new
+block or replace the complete body.
+
+## What it should not be
+
+Do not use a Sticky Note as a substitute for everything:
+
+- a stable decision with scope and acceptance criteria belongs in a [Specification](./specification.md);
+- source code and other canonical artifacts belong in a [File](./file.md);
+- commands and execution evidence belong in the [Terminal](./terminal.md);
+- a message coordinates participants, but should not be the only record of an important decision.
+
+The best note is short enough to read and rich enough that the next step does not depend on one session's memory.
+
+## Guardrail and reachability
+
+A Sticky Note is available to a CodingAgent only through a valid path of [Connections](./connections.md). Visual
+proximity on the Canvas or mentioning the Node in a message does not grant access.
+
+You can place the sticky_note_read_only Guardrail on the direct Connection between the agent and the note. The agent
+can still consult it, but cannot append or replace it through Kavor operations. The Guardrail restricts that direct pair;
+it does not create a Connection or turn the note into a Workspace-wide policy.
+
+## Continue
+
+- [Understand the Node model](./nodes.md).
+- [Choose the smallest set of Connections](./connections.md) for the work.
+- [Close your first loop](./first-loop.md) with a Specification, CodingAgents, Terminal, and Sticky Note.

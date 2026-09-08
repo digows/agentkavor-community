@@ -218,4 +218,7 @@ Canvasが大きければ自動的に優れているわけではありません�
 - [サポートされるConnectionsのマトリクス](./connections.md)で、各組み合わせが何を可能にするかを確認します。
 - Specification、2つのCodingAgents、Sticky Noteを使って[最初のループを完了](./first-loop.md)します。
 - 設計、実装、レビュー、出荷を分けるために、[CodingAgentsと役割の選び方](./agents-and-roles.md)を確認します。
+- [Sticky Noteを共有ワーキングメモリとして使う方法](./sticky-note.md)を読みます。
+- [Fileがcanonical sourceをコンテキストとスコープにする仕組み](./file.md)を理解します。
+- [WebBrowser](./web-browser.md)でagentと一緒に開発、debug、testします。
 - 製品モデル全体を振り返るには、[Kavorとは？](./what-is-kavor.md)に戻ります。

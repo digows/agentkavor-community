@@ -1,6 +1,6 @@
 ---
 id: sticky-note
-title: Sticky Note: memória de trabalho compartilhada
+title: "Sticky Note: memória de trabalho compartilhada"
 description: Use uma Sticky Note para registrar status, descobertas e pontos de atenção junto com seus CodingAgents sem transformar tudo em uma Specification.
 kind: guide
 lastReviewedAt: 2026-09-08

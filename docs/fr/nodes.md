@@ -230,4 +230,7 @@ complet pour préserver l'intention, l'exécution, les preuves et la décision.
 - [Bouclez votre premier cycle](./first-loop.md) avec une Specification, deux CodingAgents et une Sticky Note.
 - Découvrez [comment choisir les CodingAgents et leurs rôles](./agents-and-roles.md) afin de séparer formulation,
   implémentation, révision et livraison.
+- Utilisez une [Sticky Note comme mémoire de travail partagée](./sticky-note.md).
+- Découvrez comment un [File transforme une source canonique en contexte et portée](./file.md).
+- Développez, déboguez et testez avec un agent dans [WebBrowser](./web-browser.md).
 - Revenez à [Qu'est-ce que Kavor ?](./what-is-kavor.md) pour revoir le modèle complet du produit.

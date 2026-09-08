@@ -191,4 +191,7 @@ CodingAgent 可以协助分析结果，而你始终能看到整个过程。
 - 查看[受支持的 Connections 矩阵](./connections.md)，了解每种组合的精确合同。
 - 使用 Specification、两个 CodingAgents 和一个 Sticky Note [闭合你的第一个 loop](./first-loop.md)。
 - 阅读[如何选择 CodingAgents 和角色](./agents-and-roles.md)，分离构思、实现、评审和交付。
+- 使用 [Sticky Note 作为共享工作记忆](./sticky-note.md)。
+- 了解 [File 如何把规范来源变成上下文和范围](./file.md)。
+- 在 [WebBrowser](./web-browser.md) 中与 agent 一起开发、调试和测试。
 - 返回[什么是 Kavor？](./what-is-kavor.md)，复习完整产品模型。

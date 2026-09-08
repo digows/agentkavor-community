@@ -219,6 +219,9 @@ intent, execution, evidence, and decision.
 - [Close your first loop](./first-loop.md) with a Specification, two CodingAgents, and a Sticky Note.
 - Learn [how to choose CodingAgents and roles](./agents-and-roles.md) for formulation, implementation, review, and
   delivery.
+- Use a [Sticky Note as shared working memory](./sticky-note.md).
+- Learn how a [File turns a canonical source into context and scope](./file.md).
+- Develop, debug, and test with an agent in [WebBrowser](./web-browser.md).
 - Learn to use [Schedule to give your graph a clock](./schedule.md).
 - Understand [how CodingAgents see and build the Canvas](./coding-agents-and-canvas.md).
 - Return to [What is Kavor?](./what-is-kavor.md) for the complete product model.
