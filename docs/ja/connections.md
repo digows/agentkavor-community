@@ -3,7 +3,7 @@ id: connections
 title: KavorでサポートされるConnectionsのマトリクス
 description: サポートされるNodesの組み合わせ、付与される能力、必要なパラメーター、利用可能なGuardrailsを確認できます。
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/connections
 ---
 
@@ -38,11 +38,17 @@ Connectionsは双方向の関係です。Kavorは2つのendpointsを正規順序
 | **CodingAgent + Sticky Note** | バージョン管理された非公式のMarkdownメモリを読み書きする。書き込みごとにappendまたはreplaceを選ぶ。 | なし | `sticky_note_read_only` | 未解決の判断、進捗、調査結果、handoffsを見える形で残す。 |
 | **CodingAgent + Terminal** | 許可されている場合に、outputの読み取り、コマンド実行、対応づけられた実行の追跡や中断、foregroundプロセスとの対話を行う。 | なし | `terminal_read_only` | 診断、テスト、ログ確認、または監督下のSSHセッション支援。 |
 | **CodingAgent + File** | filesystem上の正規sourceをグラフ内で明示し、許可されている場合に読み取り、レビュー、変更する。 | なし | `file_read_only` | モジュール、PDF、画像、報告書、設定を具体的な対象にする。 |
+| **CodingAgent + WebBrowser** | そのWebBrowserのライブページへ、Agentが仲介されたアクセスを行えるようにする。 | なし | なし | 人とAgentが同じ可視状態で移動、入力、検証、証拠取得を行う。 |
 | **CodingAgent + CodingAgent** | 非同期メッセージ、返信、独立レビュー、並行作業のための到達可能なグラフを構成する。 | なし | なし | BuilderがReviewerにレビューを依頼する。 |
 | **Specification + Terminal** | Specificationの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | SpecificationのMarkdownを検証、確認、比較する。 |
 | **File + Terminal** | Fileの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | ウィンドウ間でパスをコピーせずにscriptやSQLファイルを使う。 |
 | **Trigger + CodingAgent** | 設定した時刻に、アクティブなセッションを持つCodingAgentへpromptを届ける。 | なし | なし | Maintainerを起こして障害を分析し、報告を書き、レビューを依頼する。 |
 | **Trigger + Terminal** | 設定した時刻に、Terminalのアクティブなセッションへコマンドを届ける。 | なし | なし | テスト、データベース検証、メンテナンスscriptを実行する。 |
+
+CodingAgent + WebBrowserには固有の契約があります。Connectionは、そのNodeの実際のページを、仲介された移動、
+操作、待機、取得に利用できるようにします。汎用Guardrailを継承せず、認証、サイト権限、人間の判断を迂回しません。
+専用ブラウザープロファイルが無効な開発用証明書を受け入れるのは明示的なブラウザー動作であり、Connectionが作る
+権限ではありません。
 
 ## Guardrailsは制限する。アクセスを付与するものではない
 
@@ -94,9 +100,10 @@ Sticky Noteへ直接接続することはなく、1回の発火を複数の対�
 グラフの残りの部分は、対象の権限を広げることなく、対象ができることを増やせます。Triggerによって起こされた
 CodingAgentは、同じGuardrailsとセッション制限のもとで、すでに到達可能なNodesと作業できます。
 
-配信にはKavorが実行中で、対象のセッションがアクティブであることが必要です。Triggerは、人間が停止したままに
-したセッションを開始せず、仕事の目的を判断せず、外部への作用をexactly-once操作に変えません。各
-TriggerFiringは、確認可能な永続的結果を保持します。
+配信にはKavorが実行中で、マシンが起動し、対象のセッションが開いていることが必要です。起動時には、実行中の
+Triggersの対象で、開いたままにする設定のセッションを、ユーザーの他のWorkspacesも含めて復元します。Triggerは
+意図的に閉じたセッションを開始せず、外部への作用をexactly-once操作に変えません。各TriggerFiringは確認可能な
+永続的結果を保持します。
 
 ## 存在しない組み合わせ
 
@@ -111,6 +118,12 @@ Kavorは、マトリクスにないすべてのペアを拒否します。たと
 - File + File
 - Sticky Note + Terminal
 - Sticky Note + Sticky Note
+- WebBrowser + Specification
+- WebBrowser + Sticky Note
+- WebBrowser + Terminal
+- WebBrowser + File
+- WebBrowser + Trigger
+- WebBrowser + WebBrowser
 - Terminal + Terminal
 
 Nodeを自分自身に接続することもできません。同じ2つのendpointsを逆にしても、関係には永続化された方向がないため、
@@ -127,6 +140,7 @@ Canvas上の近さ、メッセージ内での言及、同じWorkspaceへの参�
 - 人間とagentが作業メモリを共有する必要がありますか？Sticky Noteを接続します。
 - agentがプロセスを実行または監視する必要がありますか？Terminalを接続します。
 - 正規sourceを明示する必要がありますか？Fileを接続します。
+- 人とAgentにライブページが必要ですか？WebBrowserを接続します。
 - 別の視点が実装やレビューを改善しますか？別のCodingAgentを接続します。
 - 時間が本当に活動を始めるべきですか？Triggerは最後に追加します。
 

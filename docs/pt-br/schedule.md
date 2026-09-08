@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule no Kavor: dê um relógio ao seu grafo"
 description: Agende prompts e comandos com recorrência, preview, pausa, Run now e histórico durável sem ampliar permissões.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/schedule
 ---
 
@@ -158,7 +158,11 @@ horário nominal, entrega, resultado e diagnóstico disponível.
 ## Quando a máquina dorme ou o Kavor não está aberto
 
 Schedules dependem do runtime local. O Kavor precisa estar em execução, a máquina precisa estar acordada, o usuário
-precisa estar autenticado e a sessão do alvo precisa estar ativa.
+precisa estar autenticado e a sessão do alvo precisa estar aberta.
+
+Ao iniciar o aplicativo, o Kavor restaura as sessões marcadas para permanecer abertas quando elas são alvo de
+Triggers em execução. A restauração considera todos os Workspaces do usuário, não somente o que está visível. Triggers
+pausados não restauram sessões, e uma sessão fechada deliberadamente continua fechada.
 
 Se uma ou várias ocorrências passam durante uma indisponibilidade, o Kavor registra somente a ocorrência perdida mais
 recente daquele Schedule, em vez de criar milhares de linhas depois de uma ausência longa. Ele não executa o trabalho
@@ -181,6 +185,7 @@ idempotente.
 - um Schedule possui no máximo um alvo direto;
 - o alvo precisa ser um CodingAgent ou Terminal;
 - o Schedule não inicia uma sessão que você fechou deliberadamente;
+- somente alvos marcados para permanecer abertos são restaurados na inicialização, e apenas para Triggers em execução;
 - ele não amplia o grafo, permissões ou Guardrails do alvo;
 - ele não substitui critérios de aceite nem decide se o resultado está correto;
 - ele faz no máximo uma tentativa automática de entrega por tentativa registrada;
@@ -196,7 +201,7 @@ de um Schedule. Modele responsabilidades no grafo e mantenha a decisão humana e
 - `Next occurrences` corresponde ao horário que você espera?
 - a zona exibida é a correta para esta máquina?
 - existe exatamente uma Connection de alvo?
-- a sessão do alvo deve permanecer ativa naquele horário?
+- a sessão do alvo está marcada para permanecer aberta naquele horário?
 - o grafo contém somente o contexto e as capacidades necessários?
 - repetir o trabalho é seguro caso um efeito externo já tenha acontecido?
 - você sabe onde consultar o resultado e o histórico?

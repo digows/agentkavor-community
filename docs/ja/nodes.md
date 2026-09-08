@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: KavorのNodes
-description: CodingAgent、Specification、Sticky Note、Terminal、File、Triggerが単体でできることと、接続によって得られる能力を解説します。
+description: CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Triggerが単体でできることと、接続によって得られる能力を解説します。
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/nodes
 ---
 
@@ -51,7 +51,7 @@ Connectionは、実務的な問いに答えます。**この2つのNodesは、�
 
 結果は、魔法のように見せることより実用性を優先します。作業の前、最中、後に、その構造を確認できます。
 
-## 6つのNodes
+## 7つのNodes
 
 ### CodingAgent：愛用のハーネスをグラフの参加者にする
 
@@ -123,6 +123,28 @@ script、SQLファイル、設定ファイルなどを、視覚的にコマン�
 
 Fileは使い捨てのattachmentにはなりません。filesystem上の実体が、そのまま正規のsourceです。
 
+### WebBrowser：人とAgentに開かれたWeb
+
+WebBrowserは、実際のChromiumページをCanvasに配置します。Workspaceを離れずに、ページを移動し、タブを保持し、
+起きていることを確認できます。
+
+CodingAgentに接続すると、単なる視覚的な参照ではなくなります。Agentは、人間が見ているものと同じライブページを
+観察し、移動、クリック、フィールド入力、状態待機、証拠の取得を行えます。Connectionはブラウザーを到達可能に
+しますが、認証、権限、人間の判断を迂回しません。
+
+ブラウザープロファイルはKavor専用で、WebBrowsers間で共有されます。Nodeを削除しても、Settingsでブラウザーデータを
+消去するまでcookiesやセッションが残る場合があります。開発用途を支えるため、このプロファイルは自己署名、期限切れ、
+プライベート証明書を受け入れます。悪意あるネットワークが任意の証明書を提示できるため、特にサービスへログインするときは
+このリスクを意識してください。
+
+同じウィンドウでWorkspaceを切り替えても、Kavorはライブページを保持します。戻るとWebBrowserは再読み込みせずに現れ、
+接続されたCodingAgentはWorkspaceが画面外でもその状態を操作し続けられます。タブを閉じる、Nodeを削除する、または
+セッションを終了すると、この継続性は終わります。
+
+[![Kavor Canvas上でCodingAgentに接続されたWebBrowser](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/ja/videos/web-browser-node)
+
+[人とCodingAgentが同じページで作業する様子を見る →](https://agentkavor.com/ja/videos/web-browser-node)
+
 ### Trigger：活動を始める目に見えるきっかけ
 
 Triggerは、時間に基づいて操作を予定します。OSのcronのようにTerminalへコマンドを届けることも、アクティブな
@@ -184,8 +206,9 @@ Canvasが大きければ自動的に優れているわけではありません�
 4. 具体的なスコープを明示する必要があるならFileを接続します。
 5. タスクに実行や証拠が必要ならTerminalを接続します。
 6. 人間とagentが作業メモリを共有する必要があるならSticky Noteを使います。
-7. 独立レビューや並行作業が本当に結果を改善する場合に、別のCodingAgentを追加します。
-8. 時間が活動の正当な原因である場合に、Triggerを追加します。
+7. ライブページの観察や操作が必要ならWebBrowserを接続します。
+8. 独立レビューや並行作業が本当に結果を改善する場合に、別のCodingAgentを追加します。
+9. 時間が活動の正当な原因である場合に、Triggerを追加します。
 
 目的はCanvasを埋めることではありません。理解できるほど小さく、意図、実行、証拠、判断を保てるほど十分な
 システムを作ることです。

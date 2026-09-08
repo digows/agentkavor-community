@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor Schedule：为你的图谱加上时钟"
 description: 在不扩大权限的前提下，通过预览、暂停、Run now 和持久历史来安排周期性提示与命令。
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/schedule
 ---
 
@@ -129,7 +129,10 @@ Kavor 为该时刻保存持久尝试，并与目标已接受的消息一起协�
 
 ## 机器休眠或 Kavor 未运行时
 
-Schedule 依赖本地 runtime：Kavor 必须运行、机器保持唤醒、用户已认证且目标会话处于活动状态。
+Schedule 依赖本地 runtime：Kavor 必须运行、机器保持唤醒、用户已认证且目标会话处于打开状态。
+
+应用启动时，Kavor 会恢复被标记为保持打开、同时作为运行中 Triggers 目标的会话。这包括用户的其他
+Workspaces，而不仅是当前可见的 Workspace。暂停的 Triggers 不会恢复任何会话；被明确关闭的会话保持关闭。
 
 若停机期间错过多个时刻，Kavor 只为该 Schedule 记录最近一次 `Missed`，不会在长时间离线后创建成千上万条记录，
 也不会在恢复时突然执行旧任务。界面会显示 `Missed`，并提供等同于 `Run now` 的明确操作。
@@ -146,6 +149,7 @@ Schedule 依赖本地 runtime：Kavor 必须运行、机器保持唤醒、用户
 
 - Schedule 最多有一个直接目标，且必须是 CodingAgent 或 Terminal；
 - 不会启动你主动关闭的会话；
+- 启动时只恢复被标记为保持打开的目标，而且仅针对运行中的 Triggers；
 - 不会扩大目标的图谱、权限或 Guardrails；
 - 不替代验收标准，也不判断结果是否正确；
 - 每个已记录尝试最多进行一次自动交付；
@@ -160,7 +164,7 @@ Schedule 依赖本地 runtime：Kavor 必须运行、机器保持唤醒、用户
 - `Next occurrences` 是否符合预期时间？
 - 时区是否正确？
 - 是否恰好有一条目标 Connection？
-- 目标会话是否应在该时刻保持活动？
+- 目标会话是否被标记为在该时刻保持打开？
 - 图谱是否只包含必要上下文与能力？
 - 若外部效果已发生，重复执行是否安全？
 - 你是否知道在哪里查看结果与历史？

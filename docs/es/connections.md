@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections soportadas en Kavor
 description: Consulta las combinaciones soportadas entre Nodes, las capacidades concedidas, los parámetros necesarios y los Guardrails disponibles.
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/es/docs/connections
 ---
 
@@ -38,11 +38,17 @@ un objetivo. Esas direcciones pertenecen a la operación, no a la Connection per
 | **CodingAgent + Sticky Note** | Leer y escribir memoria informal en Markdown con control de versión; cada escritura elige append o replace. | Ninguno | `sticky_note_read_only` | Decisiones abiertas, progreso, findings y handoffs visibles. |
 | **CodingAgent + Terminal** | Leer output, ejecutar comandos, seguir o interrumpir una ejecución correlacionada e interactuar con el proceso en foreground cuando esté permitido. | Ninguno | `terminal_read_only` | Diagnóstico, tests, logs o asistencia en una sesión SSH supervisada. |
 | **CodingAgent + File** | Hacer explícita en el grafo una fuente canónica del filesystem para leerla, revisarla o modificarla cuando esté permitido. | Ninguno | `file_read_only` | Delimitar un módulo, PDF, imagen, informe o configuración. |
+| **CodingAgent + WebBrowser** | Dar al agente acceso mediado a las páginas vivas de ese WebBrowser. | Ninguno | Ninguno | Persona y agente navegando, completando, verificando y capturando evidencia en el mismo estado visible. |
 | **CodingAgent + CodingAgent** | Formar un grafo alcanzable para mensajes asíncronos, respuestas, revisión independiente y trabajo paralelo. | Ninguno | Ninguno | Un Builder solicitando revisión a un Reviewer. |
 | **Specification + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica de la Specification. | Nombre obligatorio de variable de entorno | Ninguno | Validar, inspeccionar o comparar el Markdown de una Specification. |
 | **File + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica del File. | Nombre obligatorio de variable de entorno | Ninguno | Ejecutar un script o usar un archivo SQL sin copiar su ruta entre ventanas. |
 | **Trigger + CodingAgent** | Entregar en un horario configurado un prompt a un CodingAgent con sesión activa. | Ninguno | Ninguno | Despertar a un Maintainer para analizar fallos, escribir un informe y pedir revisión. |
 | **Trigger + Terminal** | Entregar en un horario configurado un comando a la sesión activa de un Terminal. | Ninguno | Ninguno | Ejecutar tests, una verificación de base de datos o un script de mantenimiento. |
+
+CodingAgent + WebBrowser posee un contrato propio: la Connection permite navegar, interactuar, esperar y capturar
+las páginas reales de ese Node mediante operaciones controladas. No hereda un Guardrail genérico ni evita
+autenticación, permisos del sitio o decisiones humanas. El perfil dedicado acepta certificados de desarrollo no
+válidos; es un comportamiento explícito del navegador, no un permiso creado por la Connection.
 
 ## Los Guardrails restringen; no conceden acceso
 
@@ -94,9 +100,10 @@ Specification, File o Sticky Note ni distribuye el mismo disparo a varios objeti
 El resto del grafo puede ampliar lo que el objetivo puede hacer sin ampliar sus permisos. Un CodingAgent despertado
 por un Trigger puede trabajar con Nodes ya alcanzables bajo los mismos Guardrails y límites de sesión.
 
-Para que la entrega ocurra, Kavor debe estar en ejecución y la sesión del objetivo activa. Un Trigger no inicia una
-sesión que dejaste apagada, no decide el objetivo del trabajo ni convierte efectos externos en operaciones exactamente
-una vez. Cada TriggerFiring conserva su resultado duradero para inspección.
+Para que la entrega ocurra, Kavor debe estar en ejecución, la máquina despierta y la sesión del objetivo abierta. Al
+iniciar, Kavor restaura las sesiones marcadas para permanecer abiertas cuando son objetivo de Triggers en ejecución,
+incluso en otros Workspaces del usuario. Un Trigger no inicia una sesión cerrada deliberadamente ni convierte efectos
+externos en operaciones exactly-once. Cada TriggerFiring conserva su resultado duradero para inspección.
 
 ## Combinaciones que no existen
 
@@ -111,6 +118,12 @@ Kavor rechaza cualquier par ausente de la matriz. Esto incluye, entre otros:
 - File + File;
 - Sticky Note + Terminal;
 - Sticky Note + Sticky Note;
+- WebBrowser + Specification;
+- WebBrowser + Sticky Note;
+- WebBrowser + Terminal;
+- WebBrowser + File;
+- WebBrowser + Trigger;
+- WebBrowser + WebBrowser;
 - Terminal + Terminal.
 
 Un Node tampoco puede conectarse consigo mismo. Invertir los mismos endpoints no crea otra Connection, pues la relación
@@ -127,6 +140,7 @@ Antes de conectar dos Nodes, pregunta qué capacidad concreta falta:
 - ¿humano y agente necesitan memoria de trabajo compartida? Conecta una Sticky Note;
 - ¿el agente necesita ejecutar u observar un proceso? Conecta un Terminal;
 - ¿una fuente canónica debe quedar explícita? Conecta un File;
+- ¿persona y agente necesitan una página viva? Conecta un WebBrowser;
 - ¿otro punto de vista mejoraría la implementación o revisión? Conecta otro CodingAgent;
 - ¿el tiempo debe iniciar realmente la actividad? Añade un Trigger al final.
 

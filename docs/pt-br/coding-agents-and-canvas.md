@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Como CodingAgents enxergam e constroem o Canvas
 description: Entenda contexto alcançável, mensagens entre agentes e edição atômica do Canvas com limites controlados por você.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agents-and-canvas
 ---
 
@@ -22,8 +22,9 @@ conteúdo, e poder trabalhar com um recurso não significa poder remover qualque
 
 ## O grafo é o contexto compartilhado
 
-Em cada nova interação, o Kavor entrega ao CodingAgent o estado atual de seu componente alcançável: Nodes, Connections,
-Guardrails e os fatos necessários para entender o trabalho.
+Em cada nova interação, o Kavor entrega ao CodingAgent um contexto compacto para o pedido atual: sua identidade, o
+estado necessário do componente alcançável, Guardrails ativos e referências para consultar o restante sob demanda.
+Quando a estrutura muda durante o trabalho, o Kavor informa que o estado deve ser lido novamente.
 
 O agente pode operar qualquer Node ligado a ele por um caminho de Connections válidas, a qualquer distância. Por
 exemplo:
@@ -47,10 +48,14 @@ Kavor favorece contexto útil, não um dump permanente do Workspace.
 - Specifications informam lifecycle, caminho e outputs recentes, enquanto o Markdown canônico continua no Workspace;
 - Terminals informam estado e comando em foreground, e o output é consultado quando necessário;
 - Files informam a fonte canônica, cujo conteúdo continua no filesystem;
-- CodingAgents informam estado e fatos de trabalho; mensagens anteriores são consultadas quando úteis.
+- CodingAgents informam estado e fatos de trabalho; mensagens e turnos concluídos da sessão provider-native são
+  consultados quando úteis.
 
 Conteúdo grande ou vivo não é despejado inteiro na janela de contexto. O agente recebe uma referência clara para
 consultá-lo. Isso preserva espaço para raciocínio e mantém Files, Specifications e Terminals em suas fontes reais.
+
+A leitura da sessão de outro CodingAgent é passiva e paginada. Ela não envia input ao provider nem acorda o peer.
+Quando o outro agente precisa receber o contexto, agir ou responder, use uma mensagem.
 
 ## Mensagens também seguem o grafo
 
@@ -93,7 +98,7 @@ estruturais iniciadas pelo agente e entra em vigor imediatamente, sem reiniciar 
 
 Com a opção ligada, o CodingAgent pode, dentro de seu escopo:
 
-- criar Nodes ativos, incluindo CodingAgent, Specification, Sticky Note, Terminal, File e Schedule;
+- criar Nodes ativos, incluindo CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser e Schedule;
 - criar uma Specification canônica e materializá-la no Canvas;
 - adicionar Connections suportadas;
 - alterar parâmetros de Connections com Terminal;
@@ -117,6 +122,10 @@ isolado crie recursos novos e conecte a si mesmo no mesmo lote.
 
 O primeiro vínculo com um Node preexistente fora do grafo continua sendo seu. O agente não pode usar a visão de
 layout do Workspace para se anexar a um recurso que você nunca tornou alcançável.
+
+Uma Connection direta entre CodingAgent e WebBrowser dá acesso mediado às páginas vivas daquele navegador. A página
+pode continuar ativa enquanto você troca de Workspace e voltar no mesmo estado; alcance do grafo, autenticação e
+limites humanos continuam valendo.
 
 ## As mudanças são atômicas
 

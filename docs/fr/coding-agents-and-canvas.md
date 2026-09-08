@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Comment les CodingAgents voient et construisent le Canvas
 description: Comprenez le contexte accessible, les messages entre agents et l’édition atomique du Canvas dans les limites que vous contrôlez.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agents-and-canvas
 ---
 
@@ -22,8 +22,9 @@ supprimer n’importe quel élément du Workspace.
 
 ## Le graphe est le contexte partagé
 
-À chaque interaction, Kavor transmet au CodingAgent l’état de son composant accessible : Nodes, Connections,
-Guardrails et faits nécessaires pour comprendre le travail.
+À chaque interaction, Kavor transmet au CodingAgent un contexte compact pour la demande actuelle : identité, état
+nécessaire du composant accessible, Guardrails actifs et références pour consulter le reste à la demande. Si la
+structure change pendant le travail, Kavor signale qu'elle doit être relue.
 
 L’agent peut utiliser tout Node relié par un chemin de Connections valides, quelle que soit la distance :
 
@@ -45,10 +46,14 @@ Kavor privilégie un contexte utile, pas une copie permanente du Workspace.
 - les Specifications exposent lifecycle, chemin et outputs récents, tandis que le Markdown canonique reste dans le Workspace ;
 - les Terminals exposent l’état et la commande foreground ; l’output est lu au besoin ;
 - les Files exposent leur source canonique ; le contenu reste dans le filesystem ;
-- les CodingAgents exposent état et faits de travail ; les anciens messages sont consultés si nécessaire.
+- les CodingAgents exposent état et faits de travail ; les messages et tours terminés des sessions provider-native
+  sont consultés si nécessaire.
 
 Le contenu volumineux ou vivant n’est pas continuellement copié dans la fenêtre de contexte. Une référence claire
 préserve l’espace de raisonnement et les sources réelles.
+
+La lecture de la session d'un autre CodingAgent est passive et paginée. Elle n'envoie aucune entrée au provider et ne
+réveille pas le peer. Lorsque l'autre agent doit recevoir le contexte, agir ou répondre, utilisez un message.
 
 ## Les messages suivent aussi le graphe
 
@@ -83,7 +88,7 @@ modifications structurelles initiées par l’agent et s’applique immédiateme
 
 Lorsqu’elle est active, l’agent peut, dans sa portée :
 
-- créer des Nodes actifs : CodingAgent, Specification, Sticky Note, Terminal, File et Schedule ;
+- créer des Nodes actifs : CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser et Schedule ;
 - créer une Specification canonique et la matérialiser dans le Canvas ;
 - ajouter des Connections prises en charge et modifier les paramètres Terminal ;
 - retirer des Connections ;
@@ -102,6 +107,10 @@ ressource et s’y connecter dans le même lot.
 
 Le premier lien vers un Node préexistant hors du graphe reste votre décision. La vue du layout n’autorise pas l’agent
 à s’attacher à une ressource que vous n’avez jamais rendue accessible.
+
+Une Connection directe CodingAgent + WebBrowser donne un accès médiatisé aux pages actives de ce navigateur. La page
+peut rester active pendant un changement de Workspace et revenir dans le même état ; l'accessibilité du graphe,
+l'authentification et les limites humaines restent applicables.
 
 ## Les changements sont atomiques
 

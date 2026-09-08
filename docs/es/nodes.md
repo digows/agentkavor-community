@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: Nodes de Kavor
-description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File y Trigger por separado y qué obtienen al conectarse.
+description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser y Trigger por separado y qué obtienen al conectarse.
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/es/docs/nodes
 ---
 
@@ -52,7 +52,7 @@ Al mismo tiempo, una Connection establece un límite:
 
 El resultado es menos mágico y más útil: puedes inspeccionar la estructura antes, durante y después del trabajo.
 
-## Los seis Nodes
+## Los siete Nodes
 
 ### CodingAgent: tu harness favorito como participante del grafo
 
@@ -127,6 +127,28 @@ entre ventanas.
 
 El File no se convierte en un attachment descartable. Sigue siendo la fuente real en el filesystem.
 
+### WebBrowser: la web abierta a la persona y al agente
+
+Un WebBrowser coloca páginas reales de Chromium en el Canvas. Puedes navegar, mantener pestañas y seguir lo que
+ocurre sin salir del Workspace.
+
+Conectado a un CodingAgent, deja de ser solo una referencia visual. El agente puede observar y operar las mismas
+páginas vivas que ves: navegar, hacer clic, completar campos, esperar estados y capturar evidencia. La Connection
+hace alcanzable el navegador; no evita autenticación, permisos ni decisiones humanas.
+
+El perfil del navegador está dedicado a Kavor y es compartido por sus WebBrowsers. Cookies y sesiones pueden
+sobrevivir a la eliminación de un Node hasta que borres los datos en Settings. Como este perfil sirve al desarrollo,
+acepta certificados autofirmados, caducados y privados. Una red hostil puede presentar cualquier certificado a este
+perfil; ten presente esa exposición, especialmente al iniciar sesión en servicios.
+
+Al cambiar de Workspace en la misma ventana, Kavor conserva la página viva. Al volver, el WebBrowser aparece sin
+recargarse y un CodingAgent conectado puede seguir operando ese estado mientras el Workspace no está visible. Cerrar
+la pestaña, eliminar el Node o finalizar la sesión termina esa continuidad.
+
+[![WebBrowser conectado a un CodingAgent en el Canvas de Kavor](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/es/videos/web-browser-node)
+
+[Mira a una persona y un CodingAgent trabajando en la misma página →](https://agentkavor.com/es/videos/web-browser-node)
+
 ### Trigger: una causa visible de actividad
 
 Un Trigger programa una acción en el tiempo. Puede entregar un comando a un Terminal, como un cron del sistema
@@ -189,8 +211,9 @@ Un Canvas más grande no es automáticamente mejor. Empieza por la estructura m�
 4. conecta un File cuando el alcance concreto deba quedar explícito;
 5. conecta un Terminal cuando la tarea requiera ejecución o evidencia;
 6. usa una Sticky Note cuando humano y agente necesiten memoria de trabajo compartida;
-7. añade otro CodingAgent cuando una revisión independiente o trabajo paralelo mejore realmente el resultado;
-8. añade un Trigger cuando el tiempo sea una causa legítima de actividad.
+7. conecta un WebBrowser cuando el trabajo necesite observar u operar una página viva;
+8. añade otro CodingAgent cuando una revisión independiente o trabajo paralelo mejore realmente el resultado;
+9. añade un Trigger cuando el tiempo sea una causa legítima de actividad.
 
 El objetivo no es llenar el Canvas. Es construir un sistema lo bastante pequeño para entenderse y lo bastante
 completo para preservar intención, ejecución, evidencia y decisión.

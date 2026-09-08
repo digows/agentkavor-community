@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent en Kavor: tu harness favorito como parte de un grafo"
 description: Elige un provider, conserva su experiencia nativa y conecta el CodingAgent con el contexto, las herramientas y los participantes adecuados.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/es/docs/coding-agent
 ---
 
@@ -39,7 +39,9 @@ comparten el mismo contrato.
 ## Qué puede hacer por sí solo
 
 Sin ninguna Connection, un CodingAgent sigue siendo una sesión provider-native dentro del Workspace. Puedes
-conversar, usar las herramientas del harness y mantener el trabajo delimitado por la raíz de ese Workspace.
+conversar, usar las herramientas del harness y elegir su directorio de trabajo. Ese directorio puede estar fuera de
+la raíz del Workspace cuando el papel necesita otro repositorio o worktree; la asociación sigue explícita en la
+sesión.
 
 El Node ya ayuda a separar contextos: una sesión puede investigar mientras otra implementa. Sin un grafo, sin
 embargo, el contexto compartido aún depende de lo que introduzcas en cada conversación.
@@ -59,6 +61,7 @@ Las Connections directas con un CodingAgent tienen papeles específicos:
 | **CodingAgent + Sticky Note** | Añade memoria informal compartida para decisiones abiertas, progreso y findings. Puede incluir `sticky_note_read_only`. |
 | **CodingAgent + File** | Hace explícita una fuente canónica del filesystem. Puede incluir `file_read_only`. |
 | **CodingAgent + Terminal** | Permite ejecutar comandos, observar procesos y consultar evidencias del shell. Puede incluir `terminal_read_only`. |
+| **CodingAgent + WebBrowser** | Permite observar y operar las páginas reales de ese WebBrowser en el mismo estado visible para la persona. |
 | **CodingAgent + CodingAgent** | Une participantes en un mismo componente. Los CodingAgents alcanzables pueden intercambiar mensajes asíncronos y consultar el contexto necesario para coordinarse. |
 | **Trigger + CodingAgent** | Selecciona esa sesión activa como objetivo directo de un prompt programado. Un Trigger no inicia una sesión que cerraste. |
 
@@ -90,6 +93,27 @@ razonamiento mejore una responsabilidad concreta.
 
 No añadas un provider solo para aumentar el número de agentes. Define primero el papel, el resultado esperado y la
 condición de parada; después elige el harness que mejor sirva al trabajo.
+
+### Trabajar con una página viva
+
+Conecta un WebBrowser cuando la tarea dependa de una interfaz web real. Tú sigues viendo y usando las mismas pestañas;
+el CodingAgent puede navegar, interactuar, esperar cambios y capturar evidencia sin reconstruir la página desde texto
+copiado al chat.
+
+El WebBrowser puede seguir activo cuando cambias de Workspace y volver en el mismo estado. Así el agente continúa un
+trabajo ya autorizado sin recargar la página en cada cambio de contexto visual.
+
+[![CodingAgent y WebBrowser conectados en el Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/es/videos/web-browser-node)
+
+### Consultar la sesión actual de otro CodingAgent
+
+Un CodingAgent alcanzable puede recorrer de forma pasiva y paginada los turnos terminados de la sesión
+provider-native actual de otro CodingAgent. La lectura recupera razonamiento, evidencia y contexto que todavía no se
+convirtieron en mensaje u output duradero.
+
+No envía entrada al provider, no activa la sesión consultada y no sustituye un mensaje cuando el otro agente debe
+actuar, decidir o responder. Si la sesión cambia durante la paginación, la continuación anterior se rechaza; el
+lector debe iniciar otra consulta para no mezclar historiales diferentes.
 
 ## Un grafo práctico
 
@@ -127,6 +151,7 @@ Para un Reviewer:
 
 - Un CodingAgent no recibe acceso por proximidad visual; debe existir un camino de Connections.
 - Referenciar un Node en un mensaje no concede acceso.
+- Leer pasivamente la sesión de otro CodingAgent no lo activa ni transfiere una decisión duradera a la Specification.
 - Un Guardrail restringe el par directo al que pertenece; no es una política global del Workspace.
 - Los mensajes coordinan el trabajo, pero no deben ser el único lugar de una decisión duradera.
 - Los providers no ofrecen necesariamente los mismos modelos, permisos, eventos u operaciones de sesión.

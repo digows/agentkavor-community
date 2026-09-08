@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: Kavor Nodes
-description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File 和 Trigger 各自的作用，以及它们连接后获得的能力。
+description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Trigger 各自的作用，以及它们连接后获得的能力。
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/nodes
 ---
 
@@ -46,7 +46,7 @@ Connection 回答一个实际问题：**这两个 Nodes 能一起做什么？**
 
 结果少了“魔法”，却更加实用：你能在工作前、工作中和工作后检查结构。
 
-## 六种 Nodes
+## 七种 Nodes
 
 ### CodingAgent：让你喜欢的 harness 成为图中的参与者
 
@@ -108,6 +108,25 @@ File 就是文件。价值在于让它的规范来源在图中变得可见而明
 
 File 不会变成一次性 attachment；它仍是 filesystem 中的真实来源。
 
+### WebBrowser：向人与智能体开放的 Web
+
+WebBrowser 把真实 Chromium 页面放到 Canvas 上。你可以浏览、保留标签页并跟踪页面变化，而不必离开
+Workspace。
+
+连接到 CodingAgent 后，它不再只是视觉参考。智能体可以观察并操作你看到的同一实时页面：导航、点击、
+填写字段、等待状态并捕获证据。Connection 让浏览器可达；它不会绕过身份验证、权限或人的决定。
+
+浏览器 profile 专供 Kavor 使用，并由其 WebBrowsers 共享。删除 Node 后，cookies 和会话仍可能保留，直到你在
+Settings 中清除浏览器数据。为了支持开发，此 profile 接受自签名、过期和私有证书。因此恶意网络可以向它
+提供任意证书；尤其在登录服务时，请明确意识到这种暴露。
+
+在同一窗口切换 Workspace 时，Kavor 会保留实时页面。返回后，WebBrowser 无需重新加载即可恢复显示，连接的
+CodingAgent 在 Workspace 不可见时也能继续操作该状态。关闭标签页、删除 Node 或结束会话会终止这种连续性。
+
+[![WebBrowser 在 Kavor Canvas 上连接到 CodingAgent](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/zh/videos/web-browser-node)
+
+[查看人与 CodingAgent 如何在同一页面上协作 →](https://agentkavor.com/zh/videos/web-browser-node)
+
 ### Trigger：可见的活动起因
 
 Trigger 在时间上安排一个操作。它可以像操作系统 cron 一样把命令交给 Terminal，也可以向已有活动会话的 CodingAgent
@@ -161,8 +180,9 @@ CodingAgent 可以协助分析结果，而你始终能看到整个过程。
 4. 当具体范围必须明确时，连接 File；
 5. 当任务需要执行或证据时，连接 Terminal；
 6. 当人和 agent 需要共享工作记忆时，使用 Sticky Note；
-7. 当独立评审或并行工作确实改善结果时，加入另一个 CodingAgent；
-8. 当时间确实是活动起因时，最后加入 Trigger。
+7. 当工作需要观察或操作实时页面时，连接 WebBrowser；
+8. 当独立评审或并行工作确实改善结果时，加入另一个 CodingAgent；
+9. 当时间确实是活动起因时，最后加入 Trigger。
 
 目标不是填满 Canvas，而是建立一个足够小、易于理解，同时足够完整、能保留意图、执行、证据和决定的系统。
 

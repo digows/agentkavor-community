@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections suportadas no Kavor
 description: Consulte os pares de Nodes que podem ser conectados, seu papel estrutural, parâmetros, Guardrails e limites.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/connections
 ---
 
@@ -41,15 +41,21 @@ operação realizada, não à Connection desenhada no Canvas.
 | **CodingAgent + Sticky Note** | Coloca a memória informal no grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `sticky_note_read_only` | Decisões abertas, progresso, findings e handoffs visíveis. |
 | **CodingAgent + Terminal** | Coloca o shell ao alcance do grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `terminal_read_only` | Diagnóstico, testes, logs ou assistência em uma sessão SSH supervisionada. |
 | **CodingAgent + File** | Coloca uma fonte canônica do filesystem no grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `file_read_only` | Delimitar um módulo, PDF, imagem, relatório ou configuração. |
+| **CodingAgent + WebBrowser** | Entrega ao agente acesso mediado às páginas vivas daquele WebBrowser. | Nenhum | Nenhum | Humano e agente navegando, preenchendo, verificando e capturando evidências no mesmo estado visível. |
 | **CodingAgent + CodingAgent** | Une participantes em um componente. Qualquer CodingAgent alcançável pode trocar mensagens com outro. | Nenhum | Nenhum | Builder solicitando uma revisão ao Reviewer. |
 | **Specification + Terminal** | Exporta o caminho absoluto canônico da Specification para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Validar, inspecionar ou comparar o Markdown da Specification. |
 | **File + Terminal** | Exporta o caminho absoluto canônico do File para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Executar um script ou usar um arquivo SQL sem copiar seu caminho entre janelas. |
 | **Trigger + CodingAgent** | Seleciona um CodingAgent com sessão ativa como alvo do prompt do Schedule. | Nenhum | Nenhum | Acordar um Maintainer para analisar falhas, escrever um relatório e pedir revisão. |
 | **Trigger + Terminal** | Seleciona uma sessão ativa de Terminal como alvo do comando do Schedule. | Nenhum | Nenhum | Rodar testes, uma verificação de banco ou um script de manutenção. |
 
-As quatro Connections entre CodingAgent e recurso não são a única maneira de alcançar o recurso. Elas são a maneira
+As Connections entre CodingAgent e recurso não são a única maneira de alcançar o recurso. Elas são a maneira
 mais explícita de colocá-lo no grafo daquele agente e a única superfície onde um Guardrail específico para esse par
 pode existir.
+
+CodingAgent + WebBrowser possui um contrato próprio: a Connection disponibiliza as páginas reais daquele Node para
+operações mediadas de navegação, interação, espera e captura. Ela não herda um Guardrail genérico nem contorna
+autenticação, permissões do site ou decisões humanas. O perfil dedicado do WebBrowser aceita certificados de
+desenvolvimento inválidos; esse é um comportamento explícito do navegador, não uma permissão criada pela Connection.
 
 ## Guardrails restringem um par direto
 
@@ -102,9 +108,10 @@ Um CodingAgent acordado pelo Schedule pode trabalhar com todos os Nodes de seu c
 limites e Guardrails que já possuía. O Schedule adiciona o momento e o payload, não novas permissões.
 
 Para que a entrega aconteça, o Kavor precisa estar em execução, a máquina precisa estar acordada e a sessão do alvo
-precisa estar ativa. O Schedule não inicia uma sessão deliberadamente fechada, não distribui um disparo para vários
-alvos e não promete efeito externo exatamente uma vez. Remover sua Connection de alvo pausa o Trigger e registra o
-motivo.
+precisa estar aberta. Na inicialização, o Kavor restaura as sessões marcadas para permanecer abertas quando elas são
+alvo de Triggers em execução, inclusive em outros Workspaces do usuário. O Schedule não inicia uma sessão
+deliberadamente fechada, não distribui um disparo para vários alvos e não promete efeito externo exatamente uma vez.
+Remover sua Connection de alvo pausa o Trigger e registra o motivo.
 
 Leia [Schedule: dê um relógio ao seu grafo](./schedule.md) para configurar recorrência, usar `Run now` e interpretar o
 histórico durável.
@@ -122,6 +129,12 @@ O Kavor rejeita qualquer par que não apareça na matriz. Isso inclui:
 - File + File;
 - Sticky Note + Terminal;
 - Sticky Note + Sticky Note;
+- WebBrowser + Specification;
+- WebBrowser + Sticky Note;
+- WebBrowser + Terminal;
+- WebBrowser + File;
+- WebBrowser + Trigger;
+- WebBrowser + WebBrowser;
 - Terminal + Terminal.
 
 Um Node também não pode ser conectado a si mesmo. Inverter os mesmos endpoints não cria outra Connection, pois a
@@ -142,6 +155,7 @@ Antes de criar uma Connection, pergunte o que falta ao componente:
 - memória de trabalho entre humano e agente: adicione uma Sticky Note;
 - execução ou evidência: adicione um Terminal;
 - uma fonte canônica explícita: adicione um File;
+- uma página viva para humano e agente: adicione um WebBrowser;
 - outra perspectiva: adicione um CodingAgent;
 - tempo como causa legítima da atividade: adicione um Schedule por último.
 

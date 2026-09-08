@@ -3,7 +3,7 @@ id: what-is-kavor
 title: Что такое Kavor?
 description: Познакомьтесь с локальной визуальной системой Kavor для координации coding agents и долговечного инженерного контекста.
 kind: guide
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ru/docs/what-is-kavor
 ---
 
@@ -18,8 +18,9 @@ Coding agents удешевили реализацию. Но по-прежнем�
 ## Как работает Kavor
 
 Workspace начинается с выбранного вами каталога. На Canvas добавляются Nodes для ресурсов и участников работы:
-Specifications, Files, Sticky Notes, Terminals и CodingAgents. Connections между Nodes передают контекст и явно
-предоставляют возможности. Guardrails ограничивают эти возможности, когда работе нужна более строгая граница.
+Specifications, Files, Sticky Notes, Terminals, WebBrowsers, Triggers и CodingAgents. Connections формируют
+достижимые компоненты. CodingAgent может работать с любым Node в своей компоненте без прямой Connection. Параметры
+и Guardrails остаются привязаны к конкретным Connections, когда нужна настройка или более строгая граница.
 
 Один CodingAgent может реализовать Specification, другой — проверить результат, а третий — подготовить выпуск.
 Specification и доказательства остаются в Workspace после завершения любой отдельной сессии агента. Вы можете
@@ -33,12 +34,25 @@ Specification и доказательства остаются в Workspace по
 
 - **Workspace** — среда Kavor с корнем в выбранном вами каталоге.
 - **Canvas** — визуальная поверхность, на которой организована работа.
-- **Node** — первоклассный элемент Canvas, например CodingAgent, Specification, File, Terminal или Sticky Note.
-- **Connection** — явная связь, которая передаёт контекст или предоставляет возможность между Nodes.
+- **Node** — первоклассный элемент Canvas, например CodingAgent, Specification, Sticky Note, Terminal, File,
+  WebBrowser или Trigger.
+- **Connection** — явная ненаправленная связь, объединяющая Nodes в достижимую компоненту.
 - **CodingAgent** — провайдер агента, работающий как участник Workspace.
 - **Specification** — долговечный контракт Markdown для намерения, ограничений и критериев приёмки.
 - **Guardrail** — принадлежащее пользователю ограничение, применяемое к Connection.
 - **Sticky Note** — общая неформальная рабочая память для решений, наблюдений и следующих шагов.
+- **WebBrowser** — настоящие страницы Chromium, которые человек и CodingAgent могут наблюдать и использовать в одном живом состоянии.
+- **Trigger** — видимая причина активности; Schedule — доступный источник действий по времени.
+
+## Веб тоже участвует в графе
+
+WebBrowser сохраняет настоящие страницы на Canvas. При соединении с CodingAgent человек и агент работают с одними
+и теми же вкладками, навигацией и видимым состоянием, не сводя веб к тексту, вставленному в разговор. При переключении
+Workspace страница может оставаться активной и вернуться в том же состоянии.
+
+[![WebBrowser Kavor соединён с CodingAgent, работающим с той же страницей](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/ru/videos/web-browser-node)
+
+[Посмотрите WebBrowser в работе →](https://agentkavor.com/ru/videos/web-browser-node)
 
 ## Что остаётся локальным
 
@@ -54,5 +68,15 @@ Kavor следует принципу local-first. Ваш Workspace, репоз�
 
 [Пройдите полное руководство по первому циклу](./first-loop.md), чтобы добавить реализацию, проверку, общие
 доказательства и решение человека.
+
+Если вы хотите, чтобы CodingAgent помог построить структуру, узнайте, [как CodingAgents видят и строят Canvas](./coding-agents-and-canvas.md).
+Чтобы запускать работу по времени, изучите [Schedule](./schedule.md).
+
+## Одно приложение, несколько Workspaces
+
+Разные Workspaces можно открыть в независимых окнах и распределить по мониторам. Каждое окно сохраняет собственный
+Canvas и сессии, а приложение продолжает использовать один общий runtime.
+
+![Несколько Workspaces Kavor открыты в разных окнах](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
 
 [Скачать Kavor](https://download.agentkavor.com/ru) или прочитать [примечания к выпускам](./release-notes/index.md).

@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: How CodingAgents see and build the Canvas
 description: Understand reachable context, agent messages, and atomic Canvas editing within limits you control.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/en/docs/coding-agents-and-canvas
 ---
 
@@ -22,8 +22,9 @@ working with a resource does not mean being able to remove anything in the Works
 
 ## The graph is shared context
 
-On each new interaction, Kavor gives the CodingAgent the current state of its reachable component: Nodes,
-Connections, Guardrails, and the facts required to understand the work.
+On each new interaction, Kavor gives the CodingAgent compact context for the current request: its identity, the
+necessary state of the reachable component, active Guardrails, and references for reading the rest on demand. When
+the structure changes during the work, Kavor reports that the state must be read again.
 
 The agent can operate any Node connected by a path of valid Connections, at any distance. For example:
 
@@ -46,10 +47,14 @@ Kavor favors useful context, not a permanent Workspace dump.
 - Specifications provide lifecycle, path, and recent outputs while canonical Markdown remains in the Workspace;
 - Terminals provide state and foreground command, while output is read when needed;
 - Files provide their canonical source, whose content remains in the filesystem;
-- CodingAgents provide state and work facts; earlier messages are read when useful.
+- CodingAgents provide state and work facts; messages and completed turns from provider-native sessions are read
+  when useful.
 
 Large or live content is not continuously copied into the context window. The agent receives a clear reference to
 consult it. This preserves reasoning space and keeps Files, Specifications, and Terminals at their real sources.
+
+Reading another CodingAgent's session is passive and paginated. It does not send provider input or wake the peer.
+When the other agent must receive context, act, or answer, use a message.
 
 ## Messages also follow the graph
 
@@ -91,7 +96,7 @@ initiated by that agent and takes effect immediately without restarting the sess
 
 When enabled, the CodingAgent can, within its scope:
 
-- create active Nodes, including CodingAgent, Specification, Sticky Note, Terminal, File, and Schedule;
+- create active Nodes, including CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser, and Schedule;
 - create a canonical Specification and materialize it on the Canvas;
 - add supported Connections;
 - change Terminal Connection parameters;
@@ -115,6 +120,10 @@ isolated agent create new resources and connect itself in the same batch.
 
 The first link to a preexisting Node outside the graph remains yours to make. The agent cannot use Workspace layout
 visibility to attach itself to a resource you never made reachable.
+
+A direct CodingAgent + WebBrowser Connection gives mediated access to that browser's live pages. The page may stay
+active while you switch Workspaces and return in the same state; graph reachability, authentication, and human
+boundaries still apply.
 
 ## Changes are atomic
 

@@ -3,7 +3,7 @@ id: connections
 title: Supported Connections matrix in Kavor
 description: Consult directly connectable Node pairs, structural roles, parameters, Guardrails, and limits.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/en/docs/connections
 ---
 
@@ -37,14 +37,20 @@ operation, not to the Connection drawn on the Canvas.
 | **CodingAgent + Sticky Note** | Places informal memory in the graph and provides the direct restriction point. | None | `sticky_note_read_only` | Visible open decisions, progress, findings, and handoffs. |
 | **CodingAgent + Terminal** | Places the shell in reach and provides the direct restriction point. | None | `terminal_read_only` | Diagnostics, tests, logs, or a supervised SSH session. |
 | **CodingAgent + File** | Places a canonical filesystem source in the graph and provides the direct restriction point. | None | `file_read_only` | Delimit a module, PDF, image, report, or configuration. |
+| **CodingAgent + WebBrowser** | Gives the agent mediated access to that WebBrowser's live pages. | None | None | Human and agent navigating, filling, verifying, and capturing evidence in the same visible state. |
 | **CodingAgent + CodingAgent** | Joins participants in one component. Any reachable CodingAgent may message another. | None | None | A Builder requesting review from a Reviewer. |
 | **Specification + Terminal** | Exports the Specification's canonical absolute path to the Terminal session. | Required environment variable name | None | Validate or compare Specification Markdown. |
 | **File + Terminal** | Exports the File's canonical absolute path to the Terminal session. | Required environment variable name | None | Run a script or SQL file without copying its path. |
 | **Trigger + CodingAgent** | Selects a CodingAgent with an active session as the target of the Schedule prompt. | None | None | Wake a Maintainer to analyze failures and request review. |
 | **Trigger + Terminal** | Selects an active Terminal session as the target of the Schedule command. | None | None | Run tests, a database check, or maintenance script. |
 
-The four CodingAgent-resource Connections are not the only way to reach a resource. They are the clearest way to put
+CodingAgent-resource Connections are not the only way to reach a resource. They are the clearest way to put
 it in that agent's graph and the only surface that can carry a Guardrail specific to that pair.
+
+CodingAgent + WebBrowser has its own contract: the Connection makes that Node's real pages available for mediated
+navigation, interaction, waiting, and capture. It does not inherit a generic Guardrail or bypass authentication,
+site permissions, or human decisions. The dedicated browser profile accepts invalid development certificates; that
+is explicit browser behavior, not permission created by the Connection.
 
 ## Guardrails restrict one direct pair
 
@@ -85,9 +91,10 @@ Terminal. The Connection selects the target; the target id is not duplicated in 
 An awakened CodingAgent works with every Node in its reachable component under the same limits and Guardrails it
 already had. Schedule adds time and a payload, not permissions.
 
-Kavor must be running, the machine awake, and the target session active. Schedule does not start a deliberately
-closed session, fan out to several targets, or promise exactly-once external effects. Removing the target Connection
-pauses the Trigger and records the reason.
+Kavor must be running, the machine awake, and the target session open. At startup, Kavor restores sessions marked to
+stay open when they are targets of running Triggers, including targets in the user's other Workspaces. Schedule does
+not start a deliberately closed session, fan out to several targets, or promise exactly-once external effects.
+Removing the target Connection pauses the Trigger and records the reason.
 
 Read [Schedule: give your graph a clock](./schedule.md) for recurrence, `Run now`, and durable history.
 
@@ -95,7 +102,8 @@ Read [Schedule: give your graph a clock](./schedule.md) for recurrence, `Run now
 
 Kavor rejects every pair absent from the matrix, including Trigger + Specification, Trigger + File, Trigger + Sticky
 Note, Specification + File, Specification + Sticky Note, File + Sticky Note, File + File, Sticky Note + Terminal,
-Sticky Note + Sticky Note, and Terminal + Terminal.
+Sticky Note + Sticky Note, WebBrowser + Specification, WebBrowser + Sticky Note, WebBrowser + Terminal, WebBrowser +
+File, WebBrowser + Trigger, WebBrowser + WebBrowser, and Terminal + Terminal.
 
 A Node cannot connect to itself, and reversing endpoints does not create another Connection. These limits do not
 prevent useful compositions: a Specification and Sticky Note can share a graph through supported CodingAgent pairs.
@@ -111,6 +119,7 @@ Before creating a Connection, ask what the component lacks:
 - shared working memory: add a Sticky Note;
 - execution or evidence: add a Terminal;
 - an explicit canonical source: add a File;
+- a live page for human and agent: add a WebBrowser;
 - another perspective: add a CodingAgent;
 - time as a legitimate cause: add Schedule last.
 
