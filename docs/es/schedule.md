@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule en Kavor: dale un reloj a tu grafo"
 description: Programa prompts y comandos recurrentes con vista previa, pausa, Run now e historial persistente sin ampliar permisos.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/es/docs/schedule
 ---
 
@@ -140,7 +140,11 @@ nominal, entrega, resultado y diagnóstico.
 ## Cuando la máquina duerme o Kavor está cerrado
 
 Schedule depende del runtime local: Kavor debe estar abierto, la máquina despierta, el usuario autenticado y la
-sesión del objetivo activa.
+sesión del objetivo abierta.
+
+Al iniciar la aplicación, Kavor restaura las sesiones marcadas para permanecer abiertas cuando son objetivo de
+Triggers en ejecución. Esto incluye otros Workspaces del usuario, no solo el visible. Triggers pausados no restauran
+nada y una sesión cerrada deliberadamente permanece cerrada.
 
 Si pasan varias ocurrencias durante la indisponibilidad, Kavor registra solo la perdida más reciente de ese Schedule.
 No ejecuta por sorpresa trabajo antiguo al volver. La interfaz muestra `Missed` y ofrece una acción explícita
@@ -160,6 +164,7 @@ actual de forma idempotente.
 
 - un Schedule tiene como máximo un objetivo directo, CodingAgent o Terminal;
 - no inicia una sesión cerrada deliberadamente;
+- solo restaura al iniciar objetivos marcados para permanecer abiertos, y solo para Triggers en ejecución;
 - no amplía el grafo, permisos ni Guardrails del objetivo;
 - no sustituye criterios de aceptación ni decide si el resultado es correcto;
 - hace como máximo un intento automático de entrega por intento registrado;
@@ -175,7 +180,7 @@ y mantén explícita la decisión humana.
 - ¿`Next occurrences` coincide con el horario esperado?
 - ¿la zona mostrada es correcta?
 - ¿existe exactamente una Connection de objetivo?
-- ¿la sesión debe permanecer activa?
+- ¿la sesión del objetivo está marcada para permanecer abierta?
 - ¿el grafo contiene solo contexto y capacidades necesarios?
 - ¿repetir es seguro si ya ocurrió un efecto externo?
 - ¿sabes dónde consultar resultado e historial?

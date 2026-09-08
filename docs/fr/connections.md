@@ -3,7 +3,7 @@ id: connections
 title: Matrice des Connections prises en charge par Kavor
 description: Consultez les combinaisons de Nodes prises en charge, les capacités accordées, les paramètres requis et les Guardrails disponibles.
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/fr/docs/connections
 ---
 
@@ -39,11 +39,18 @@ persistée.
 | **CodingAgent + Sticky Note** | Lire et écrire une mémoire informelle en Markdown avec contrôle de version ; chaque écriture choisit append ou replace. | Aucun | `sticky_note_read_only` | Décisions ouvertes, progression, constats et handoffs visibles. |
 | **CodingAgent + Terminal** | Lire l'output, exécuter des commandes, suivre ou interrompre une exécution corrélée et interagir avec le processus au premier plan lorsque cela est permis. | Aucun | `terminal_read_only` | Diagnostic, tests, logs ou assistance dans une session SSH supervisée. |
 | **CodingAgent + File** | Rendre une source canonique du filesystem explicite dans le graphe pour la lire, la réviser ou la modifier lorsque cela est permis. | Aucun | `file_read_only` | Délimiter un module, un PDF, une image, un rapport ou une configuration. |
+| **CodingAgent + WebBrowser** | Donner à l'agent un accès médiatisé aux pages actives de ce WebBrowser. | Aucun | Aucun | Humain et agent naviguant, remplissant, vérifiant et capturant des preuves dans le même état visible. |
 | **CodingAgent + CodingAgent** | Former un graphe accessible pour les messages asynchrones, les réponses, la révision indépendante et le travail parallèle. | Aucun | Aucun | Un Builder demandant une révision à un Reviewer. |
 | **Specification + Terminal** | Exporter le chemin absolu canonique de la Specification vers la session du Terminal. | Nom de variable d'environnement obligatoire | Aucun | Valider, inspecter ou comparer le Markdown de la Specification. |
 | **File + Terminal** | Exporter le chemin absolu canonique du File vers la session du Terminal. | Nom de variable d'environnement obligatoire | Aucun | Exécuter un script ou utiliser un fichier SQL sans recopier son chemin entre les fenêtres. |
 | **Trigger + CodingAgent** | Remettre à une heure configurée un prompt à un CodingAgent dont la session est active. | Aucun | Aucun | Réveiller un Maintainer pour analyser des échecs, écrire un rapport et demander une révision. |
 | **Trigger + Terminal** | Remettre à une heure configurée une commande à la session active d'un Terminal. | Aucun | Aucun | Lancer des tests, une vérification de base de données ou un script de maintenance. |
+
+CodingAgent + WebBrowser possède un contrat propre : la Connection rend les pages réelles de ce Node disponibles
+pour une navigation, une interaction, une attente et une capture médiatisées. Elle n'hérite pas d'un Guardrail
+générique et ne contourne ni l'authentification, ni les permissions du site, ni les décisions humaines. Le profil
+dédié accepte les certificats de développement invalides ; c'est un comportement explicite du navigateur, pas une
+permission créée par la Connection.
 
 ## Les Guardrails restreignent ; ils n'accordent aucun accès
 
@@ -96,9 +103,10 @@ Le reste du graphe peut étendre ce que la cible est capable de faire sans élar
 réveillé par un Trigger peut travailler avec les Nodes déjà accessibles, sous les mêmes Guardrails et les mêmes
 limites de session.
 
-Pour que la remise ait lieu, Kavor doit être en cours d'exécution et la session de la cible doit être active. Un
-Trigger ne démarre pas une session que vous avez laissée arrêtée, ne décide pas de l'objectif du travail et ne
-transforme pas les effets externes en opérations exécutées exactement une fois. Chaque TriggerFiring conserve un
+Pour que la remise ait lieu, Kavor doit être en cours d'exécution, la machine éveillée et la session de la cible
+ouverte. Au démarrage, Kavor restaure les sessions marquées pour rester ouvertes lorsqu'elles sont ciblées par des
+Triggers actifs, y compris dans les autres Workspaces de l'utilisateur. Un Trigger ne démarre pas une session fermée
+volontairement et ne transforme pas les effets externes en opérations exactly-once. Chaque TriggerFiring conserve un
 résultat durable à des fins d'inspection.
 
 ## Combinaisons inexistantes
@@ -114,6 +122,12 @@ Kavor rejette toute paire absente de la matrice. Cela inclut notamment :
 - File + File ;
 - Sticky Note + Terminal ;
 - Sticky Note + Sticky Note ;
+- WebBrowser + Specification ;
+- WebBrowser + Sticky Note ;
+- WebBrowser + Terminal ;
+- WebBrowser + File ;
+- WebBrowser + Trigger ;
+- WebBrowser + WebBrowser ;
 - Terminal + Terminal.
 
 Un Node ne peut pas non plus être connecté à lui-même. Inverser les deux mêmes endpoints ne crée pas une autre
@@ -131,6 +145,7 @@ Avant de connecter deux Nodes, demandez-vous quelle capacité concrète manque :
 - l'humain et l'agent doivent conserver une mémoire de travail ? Connectez une Sticky Note ;
 - l'agent doit exécuter ou observer un processus ? Connectez un Terminal ;
 - une source canonique doit être explicite ? Connectez un File ;
+- l'humain et l'agent ont besoin d'une page active ? Connectez un WebBrowser ;
 - un autre point de vue améliorerait l'implémentation ou la révision ? Connectez un autre CodingAgent ;
 - le temps doit-il réellement déclencher l'activité ? Ajoutez un Trigger en dernier.
 

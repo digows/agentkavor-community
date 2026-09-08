@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents 如何查看和构建 Canvas
 description: 了解可达上下文、agent 消息，以及在你控制的边界内进行 Canvas 原子编辑。
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agents-and-canvas
 ---
 
@@ -20,7 +20,8 @@ Canvas 不只是给人看的图。对 CodingAgent 来说，它是实时上下文
 
 ## 图谱就是共享上下文
 
-每次新交互时，Kavor 都会向 CodingAgent 提供其可达组件的当前状态：Nodes、Connections、Guardrails 和理解工作所需事实。
+每次新交互时，Kavor 都会向 CodingAgent 提供当前请求所需的精简上下文：身份、可达组件的必要状态、活动
+Guardrails，以及按需读取其余内容的引用。工作期间结构发生变化时，Kavor 会提示重新读取状态。
 
 agent 可以操作任何由有效 Connections 路径连接的 Node，无论距离多远：
 
@@ -41,9 +42,12 @@ Kavor 优先提供有用上下文，而不是永久复制整个 Workspace。
 - Specifications 提供 lifecycle、路径和近期 outputs，规范 Markdown 仍留在 Workspace；
 - Terminals 提供状态和 foreground 命令，output 按需读取；
 - Files 提供规范来源，内容仍在 filesystem；
-- CodingAgents 提供状态与工作事实，旧消息按需读取。
+- CodingAgents 提供状态与工作事实，消息和 provider-native 会话中已完成的 turns 按需读取。
 
 大型或持续变化的内容不会不断复制进 context window。agent 得到清晰引用，从而保留推理空间并维护真实信息源。
+
+读取另一个 CodingAgent 的会话是被动且分页的，不会向 provider 发送输入或唤醒 peer。当另一个智能体需要接收
+上下文、行动或回答时，请使用消息。
 
 ## 消息也遵循图谱
 
@@ -72,7 +76,7 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 
 启用后，agent 可以在其范围内：
 
-- 创建活动 Nodes，包括 CodingAgent、Specification、Sticky Note、Terminal、File 和 Schedule；
+- 创建活动 Nodes，包括 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Schedule；
 - 创建规范 Specification 并将其呈现在 Canvas；
 - 添加受支持 Connections，修改 Terminal Connection 参数；
 - 删除 Connections；
@@ -88,6 +92,9 @@ CodingAgent 可以结构性修改其可达组件中的 Nodes 与 Connections，�
 立即连接 Node，不在 Canvas 留下垃圾；孤立 agent 也可在一个批次中创建资源并连接自己。
 
 与图谱外已有 Node 建立第一条链接仍由你决定。agent 不能利用 Workspace layout 视图附着到你从未使其可达的资源。
+
+直接 CodingAgent + WebBrowser Connection 提供对该浏览器实时页面的受控访问。切换 Workspace 时页面可以保持
+活动，并在返回时恢复相同状态；图谱可达性、身份验证和人的边界仍然适用。
 
 ## 变更是原子的
 

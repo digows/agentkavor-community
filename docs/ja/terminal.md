@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor の Terminal：人と agent に見える実行環境"
 description: Canvas 上の本物の shell を使い、正規パスでコンテキストを接続し、監督を失わずに CodingAgent の支援を受けます。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/terminal
 ---
 
@@ -133,7 +133,8 @@ Guardrail はそのペアに属します。Terminal 全体をグローバルに�
 - 破壊的コマンドには正確な範囲と適切な許可が必要です。
 - Connection の変数にはパスが入り、内容や secret は入りません。
 - 変数変更を環境に反映するには Terminal セッションを再起動します。
-- Schedule はアクティブなセッションにだけ届け、Kavor が閉じている間のコマンドを自動回復しません。
+- Schedule は開いているセッションにだけ届けます。起動時、open のままにする設定で実行中 Trigger の対象になっている
+  Terminal は Kavor が復元できますが、application が閉じている間に逃したコマンドは自動回復しません。
 - 調査用に開始したプロセスは、人のために残す必要がなければ終了します。
 - 複数 Terminals は実際の責任を表すときに役立ち、目的のない複製は運用状態を分散させます。
 

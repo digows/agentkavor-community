@@ -3,7 +3,7 @@ id: connections
 title: Kavor 支持的 Connections 矩阵
 description: 查看支持的 Node 组合、授予的能力、必需参数及可用 Guardrails。
 kind: guide
-lastReviewedAt: 2026-08-07
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/connections
 ---
 
@@ -35,11 +35,16 @@ Connections 是双向关系。Kavor 以规范顺序存储两个 endpoints，但�
 | **CodingAgent + Sticky Note** | 读取和写入带版本控制的非正式 Markdown 记忆；每次写入选择 append 或 replace。 | 无 | `sticky_note_read_only` | 让待定决定、进度、findings 和 handoffs 保持可见。 |
 | **CodingAgent + Terminal** | 读取 output、运行命令、跟踪或中断关联执行，并在允许时与 foreground 进程交互。 | 无 | `terminal_read_only` | 诊断、tests、日志或协助受监督的 SSH 会话。 |
 | **CodingAgent + File** | 让 filesystem 中的规范来源在图中明确，以便在允许时读取、评审或修改。 | 无 | `file_read_only` | 界定模块、PDF、图片、报告或配置。 |
+| **CodingAgent + WebBrowser** | 让智能体通过受控操作访问该 WebBrowser 的实时页面。 | 无 | 无 | 人与智能体在同一可见状态中导航、填写、验证并捕获证据。 |
 | **CodingAgent + CodingAgent** | 为异步消息、回复、独立评审和并行工作形成可达图。 | 无 | 无 | Builder 向 Reviewer 请求评审。 |
 | **Specification + Terminal** | 把 Specification 的规范绝对路径导出到 Terminal 会话。 | 必填环境变量名 | 无 | 验证、检查或比较 Specification Markdown。 |
 | **File + Terminal** | 把 File 的规范绝对路径导出到 Terminal 会话。 | 必填环境变量名 | 无 | 无需在窗口间复制路径即可运行脚本或使用 SQL 文件。 |
 | **Trigger + CodingAgent** | 在配置时间向已有活动会话的 CodingAgent 发送 prompt。 | 无 | 无 | 唤醒 Maintainer 分析失败、编写报告并请求评审。 |
 | **Trigger + Terminal** | 在配置时间向活动 Terminal 会话发送命令。 | 无 | 无 | 运行 tests、数据库检查或维护脚本。 |
+
+CodingAgent + WebBrowser 有独立契约：Connection 通过受控操作提供该 Node 的真实页面，用于导航、交互、等待和
+捕获。它不会继承通用 Guardrail，也不会绕过身份验证、网站权限或人的决定。专用浏览器 profile 接受无效的开发
+证书；这是明确的浏览器行为，而不是 Connection 创建的权限。
 
 ## Guardrails 只限制，不授予访问权
 
@@ -85,8 +90,9 @@ Trigger 最多只有一个直接目标：CodingAgent 或 Terminal。它不能直
 图的其余部分可以扩展目标能做的事情，却不会扩大权限。被 Trigger 唤醒的 CodingAgent 可以在相同 Guardrails 和会话限制
 下使用已经可达的 Nodes。
 
-要成功送达，Kavor 必须正在运行，目标会话也必须处于活动状态。Trigger 不会启动你关闭的会话，不会决定工作目标，也不
-会把外部效果变成 exactly-once 操作。每个 TriggerFiring 都会保存持久结果以供检查。
+要成功送达，Kavor 必须正在运行、机器保持唤醒且目标会话处于打开状态。启动时，Kavor 会恢复被标记为保持打开、
+同时作为运行中 Triggers 目标的会话，包括用户其他 Workspaces 中的目标。Trigger 不会启动被明确关闭的会话，也不会
+把外部效果变成 exactly-once 操作。每个 TriggerFiring 都会保存持久结果以供检查。
 
 ## 不存在的组合
 
@@ -101,6 +107,12 @@ Kavor 会拒绝矩阵中未列出的任何组合，其中包括：
 - File + File；
 - Sticky Note + Terminal；
 - Sticky Note + Sticky Note；
+- WebBrowser + Specification；
+- WebBrowser + Sticky Note；
+- WebBrowser + Terminal；
+- WebBrowser + File；
+- WebBrowser + Trigger；
+- WebBrowser + WebBrowser；
 - Terminal + Terminal。
 
 Node 也不能连接自身。反转相同的两个 endpoints 不会创建另一条 Connection，因为持久关系没有方向。
@@ -116,6 +128,7 @@ Node 不会获得任何能力。
 - 人和 agent 是否需要共享工作记忆？连接 Sticky Note；
 - agent 是否需要执行或观察进程？连接 Terminal；
 - 规范来源是否必须明确？连接 File；
+- 人与智能体是否需要一个实时页面？连接 WebBrowser；
 - 另一个视角是否会改善实现或评审？连接另一个 CodingAgent；
 - 时间是否真的应该启动活动？最后加入 Trigger。
 

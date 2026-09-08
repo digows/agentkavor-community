@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents が Canvas を見て構築する仕組み
 description: 到達可能な context、agent 間 message、人が制御する境界内での Canvas の atomic editing を理解します。
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agents-and-canvas
 ---
 
@@ -21,8 +21,9 @@ Node の位置が見えても内容を読めるとは限らず、resource と働
 
 ## graph が共有 context になる
 
-新しい interaction ごとに Kavor は、CodingAgent の到達可能 component の現在状態を渡します。Nodes、Connections、Guardrails と、
-作業理解に必要な facts が含まれます。
+新しい interaction ごとに Kavor は、現在の request に必要な compact context を CodingAgent へ渡します。identity、
+到達可能 component の必要な状態、有効な Guardrails、残りを on-demand で読む reference が含まれます。作業中に
+structure が変わると、Kavor は状態を読み直す必要があることを伝えます。
 
 agent は、有効な Connections path でつながる Node を距離に関係なく操作できます。
 
@@ -44,9 +45,12 @@ Kavor は Workspace 全体の恒久 dump ではなく、有用な context を優
 - Specifications は lifecycle、path、最近の outputs を示し、canonical Markdown は Workspace に残る。
 - Terminals は state と foreground command を示し、output は必要時に読む。
 - Files は canonical source を示し、内容は filesystem に残る。
-- CodingAgents は state と作業 facts を示し、以前の messages は必要時に読む。
+- CodingAgents は state と作業 facts を示し、messages と provider-native session の完了 turns は必要時に読む。
 
 大きい、または live な内容を context window に継続コピーしません。明確な reference により reasoning space と本物の source を保ちます。
+
+別の CodingAgent の session 読み取りは受動的で、ページングされます。provider input を送らず、peer を起こしません。
+相手が context を受け取る、行動する、回答する必要がある場合は message を使います。
 
 ## message も graph に従う
 
@@ -80,7 +84,7 @@ Workspace の整理を支援するため、CodingAgent は Canvas 上すべて�
 
 有効な場合、scope 内で次が可能です。
 
-- CodingAgent、Specification、Sticky Note、Terminal、File、Schedule を含む active Nodes の作成。
+- CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Schedule を含む active Nodes の作成。
 - canonical Specification の作成と Canvas への materialization。
 - supported Connections の追加、Terminal Connection parameter の変更。
 - Connections の削除。
@@ -98,6 +102,9 @@ CodingAgent が structural に変更できるのは、到達可能 component の
 
 graph 外の既存 Node への最初の link は人が作ります。Workspace layout visibility を使って、到達可能にしていない resource に agent 自身を
 接続することはできません。
+
+CodingAgent + WebBrowser の直接 Connection は、そのブラウザーの live pages へ仲介された access を与えます。Workspace を
+切り替えてもページは active のまま残り、同じ状態で戻れます。graph reachability、認証、人間の境界は引き続き適用されます。
 
 ## change は atomic
 

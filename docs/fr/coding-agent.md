@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent dans Kavor : votre harness préféré au sein d'un graphe"
 description: Choisissez un provider, conservez son expérience native et reliez le CodingAgent au contexte, aux outils et aux participants appropriés.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent
 ---
 
@@ -39,7 +39,8 @@ lieu de prétendre qu'ils partagent tous le même contrat.
 ## Ce qu'il peut faire seul
 
 Sans Connection, un CodingAgent reste une session provider-native dans le Workspace. Vous pouvez dialoguer, utiliser
-les outils du harness et maintenir le travail dans les limites de la racine de ce Workspace.
+les outils du harness et choisir son répertoire de travail. Ce répertoire peut se trouver hors de la racine du
+Workspace lorsque le rôle exige un autre dépôt ou worktree ; l'association reste explicite dans la session.
 
 Le Node aide déjà à séparer les contextes : une session peut enquêter pendant qu'une autre implémente. Sans graphe,
 le contexte partagé dépend toutefois encore de ce que vous fournissez dans chaque conversation.
@@ -59,6 +60,7 @@ Les Connections directes impliquant un CodingAgent ont des rôles précis :
 | **CodingAgent + Sticky Note** | Ajoute une mémoire informelle partagée pour décisions ouvertes, progression et findings. Elle peut porter `sticky_note_read_only`. |
 | **CodingAgent + File** | Rend explicite une source canonique du filesystem. Elle peut porter `file_read_only`. |
 | **CodingAgent + Terminal** | Permet d'exécuter des commandes, suivre des processus et consulter les preuves du shell. Elle peut porter `terminal_read_only`. |
+| **CodingAgent + WebBrowser** | Permet d'observer et d'utiliser les pages réelles de ce WebBrowser dans le même état visible par l'humain. |
 | **CodingAgent + CodingAgent** | Réunit les participants dans un même composant. Les CodingAgents accessibles peuvent échanger des messages asynchrones et consulter le contexte nécessaire à leur coordination. |
 | **Trigger + CodingAgent** | Sélectionne cette session active comme cible directe d'un prompt planifié. Un Trigger ne démarre pas une session que vous avez fermée. |
 
@@ -90,6 +92,27 @@ ou une autre approche de raisonnement améliore une responsabilité concrète.
 
 N'ajoutez pas un provider uniquement pour augmenter le nombre d'agents. Définissez d'abord le rôle, le résultat
 attendu et la condition d'arrêt, puis choisissez le harness qui sert le mieux le travail.
+
+### Travailler avec une page active
+
+Connectez un WebBrowser lorsque la tâche dépend d'une véritable interface web. Vous continuez à voir et utiliser les
+mêmes onglets ; le CodingAgent peut naviguer, interagir, attendre des changements et capturer des preuves sans
+reconstruire la page à partir de texte copié dans le chat.
+
+Le WebBrowser peut rester actif lorsque vous changez de Workspace et revenir dans le même état. L'agent poursuit
+ainsi un travail déjà autorisé sans recharger la page à chaque changement de contexte visuel.
+
+[![CodingAgent et WebBrowser connectés sur le Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/fr/videos/web-browser-node)
+
+### Consulter la session actuelle d'un autre CodingAgent
+
+Un CodingAgent accessible peut parcourir passivement, page par page, les tours terminés de la session provider-native
+actuelle d'un autre CodingAgent. Cette lecture récupère le raisonnement, les preuves et le contexte qui ne sont pas
+encore devenus un message ou un output durable.
+
+Elle n'envoie aucune entrée au provider, n'active pas la session consultée et ne remplace pas un message lorsque
+l'autre agent doit agir, décider ou répondre. Si la session change pendant la pagination, l'ancienne continuation
+est refusée ; le lecteur doit recommencer pour ne pas mélanger des historiques différents.
 
 ## Un graphe pratique
 
@@ -127,6 +150,8 @@ Pour un Reviewer :
 
 - Un CodingAgent n'obtient pas d'accès par proximité visuelle ; un chemin de Connections doit exister.
 - Référencer un Node dans un message ne lui accorde pas l'accès.
+- La lecture passive de la session d'un autre CodingAgent ne l'active pas et ne transfère pas une décision durable
+  dans la Specification.
 - Un Guardrail limite la paire directe à laquelle il appartient ; ce n'est pas une politique globale du Workspace.
 - Les messages coordonnent le travail, mais ne doivent pas être le seul lieu d'une décision durable.
 - Les providers ne proposent pas nécessairement les mêmes modèles, permissions, événements ou opérations de session.

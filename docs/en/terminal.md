@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal in Kavor: visible execution for human and agent"
 description: Use a real shell on the Canvas, connect context through canonical paths, and let a CodingAgent assist without losing supervision.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/en/docs/terminal
 ---
 
@@ -139,7 +139,8 @@ operating-system permissions.
 - Destructive commands still require exact scope and appropriate authorization.
 - A variable supplied by a Connection contains a path, not content or a secret.
 - Changes to those variables require restarting the Terminal session before they enter the environment.
-- Schedule delivers only to an active session and does not automatically recover commands missed while Kavor was
+- Schedule delivers only to an open session. At startup, Kavor can restore a Terminal marked to stay open when it is
+  the target of a running Trigger, but it does not automatically recover commands missed while the application was
   closed.
 - A process started for an investigation should be stopped when it does not need to remain for the human.
 - Multiple Terminals help when they represent real responsibilities; duplicating them without purpose only

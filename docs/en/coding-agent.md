@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent in Kavor: your favorite harness as part of a graph"
 description: Choose a provider, preserve its native experience, and connect the CodingAgent to the right context, tools, and participants.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent
 ---
 
@@ -38,7 +38,8 @@ pretending they all share one contract.
 ## What it can do on its own
 
 Without any Connection, a CodingAgent is still a provider-native session inside the Workspace. You can talk to it,
-use the tools the harness provides, and keep the work bounded by that Workspace root.
+use the tools the harness provides, and choose its working directory. That directory may be outside the Workspace
+root when the role needs another repository or worktree; its association remains explicit in the session.
 
 The Node already helps separate contexts: one session can investigate while another implements. Without a graph,
 however, shared context still depends on what you put into each conversation.
@@ -58,6 +59,7 @@ Direct Connections involving a CodingAgent have specific roles:
 | **CodingAgent + Sticky Note** | Adds shared informal memory for open decisions, progress, and findings. It may carry `sticky_note_read_only`. |
 | **CodingAgent + File** | Makes a canonical filesystem source explicit in the work. It may carry `file_read_only`. |
 | **CodingAgent + Terminal** | Allows commands, process observation, and shell evidence. It may carry `terminal_read_only`. |
+| **CodingAgent + WebBrowser** | Allows the agent to observe and operate that WebBrowser's real pages in the same state visible to the human. |
 | **CodingAgent + CodingAgent** | Joins participants in one component. Reachable CodingAgents can exchange asynchronous messages and inspect the context needed to coordinate. |
 | **Trigger + CodingAgent** | Selects that active session as the direct target of a scheduled prompt. A Trigger does not start a session you closed. |
 
@@ -89,6 +91,26 @@ approach improves a concrete responsibility.
 
 Do not add a provider just to increase the number of agents. Define the role, expected result, and stopping condition
 first; then choose the harness that best serves the work.
+
+### Work with a live page
+
+Connect a WebBrowser when the task depends on a real web interface. You keep seeing and using the same tabs while the
+CodingAgent can navigate, interact, wait for changes, and capture evidence without reconstructing the page from text
+pasted into chat.
+
+The WebBrowser can stay alive when you switch Workspaces and return in the same state. This lets the agent continue
+already authorized work without reloading the page at every visual context switch.
+
+[![CodingAgent and WebBrowser connected on the Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/en/videos/web-browser-node)
+
+### Inspect another CodingAgent's current session
+
+A reachable CodingAgent can passively page through completed turns from another CodingAgent's current provider-native
+session. This recovers reasoning, evidence, and context that has not yet become a message or durable output.
+
+The read does not send provider input, activate the inspected session, or replace a message when the other agent
+needs to act, decide, or answer. If that session changes during pagination, the old continuation is rejected; the
+reader must start again instead of mixing different histories.
 
 ## A practical graph
 
@@ -125,6 +147,8 @@ For a Reviewer:
 
 - A CodingAgent does not receive access from visual proximity; a path of Connections must exist.
 - Referencing a Node in a message does not grant access to it.
+- Passively reading another CodingAgent's session does not activate it or transfer a durable decision into the
+  Specification.
 - A Guardrail restricts the direct pair it belongs to; it is not a global Workspace policy.
 - Messages coordinate work, but must not be the only place where a durable decision lives.
 - Providers do not necessarily expose the same models, permissions, events, or session operations.

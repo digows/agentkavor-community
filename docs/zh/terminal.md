@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor 中的 Terminal：让人和 agent 都看得见执行过程"
 description: 在 Canvas 上使用真实 shell，通过规范路径连接上下文，并让 CodingAgent 在不失去监督的前提下协助工作。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/terminal
 ---
 
@@ -126,7 +126,8 @@ Guardrail 属于这一对。它不会让整个 Terminal 全局只读，也不会
 - 破坏性命令仍需准确范围和适当授权。
 - Connection 提供的变量包含路径，不是内容或 secret。
 - 这些变量改变后，必须重启 Terminal 会话才能进入环境。
-- Schedule 只向活动会话交付，不会自动恢复 Kavor 关闭时错过的命令。
+- Schedule 只向打开的会话交付。启动时，如果 Terminal 被标记为保持打开且是运行中 Trigger 的目标，Kavor 可以
+  恢复它，但不会自动恢复应用关闭期间错过的命令。
 - 仅为调查启动的进程，在不需要继续为人保留时应停止。
 - 多个 Terminals 只有在代表真实职责时才有帮助；无目的复制只会分散运行状态。
 

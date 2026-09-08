@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor の Schedule：グラフに時計を与える"
 description: 権限を広げず、プレビュー、Pause、Run now、永続履歴を使って繰り返しのプロンプトやコマンドを予約します。
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/schedule
 ---
 
@@ -134,8 +134,12 @@ Kavor は occurrence の永続 attempt を保存し、ターゲットが受理�
 
 ## machine が sleep 中、または Kavor が閉じている場合
 
-Schedule は local runtime に依存します。Kavor が起動し、machine が awake、user が authenticated、target session が active である
+Schedule は local runtime に依存します。Kavor が起動し、machine が awake、user が authenticated、target session が open である
 必要があります。
+
+application startup では、open のままにする設定で、実行中の Triggers の target になっている sessions を Kavor が復元します。
+対象は visible な Workspace だけでなく、user の他の Workspaces も含みます。paused Triggers は復元を行わず、意図的に閉じた session は
+閉じたままです。
 
 停止中に複数 occurrence が過ぎても、その Schedule の直近の missed occurrence だけを記録します。長時間後に大量の行を作らず、
 復帰時に古い作業を突然実行しません。UI は `Missed` と、`Run now` 相当の明示操作を表示します。
@@ -154,6 +158,7 @@ task が recurrence より長い可能性があるなら interval を広げる�
 
 - Schedule の直接ターゲットは最大 1 つで、CodingAgent または Terminal。
 - 意図的に閉じた session は開始しない。
+- startup で復元するのは open のままにする設定の target だけで、実行中の Triggers に限る。
 - ターゲットの graph、permissions、Guardrails を広げない。
 - acceptance criteria の代わりにならず、結果の正しさを判断しない。
 - 記録された attempt ごとの自動 delivery は最大 1 回。
@@ -169,7 +174,7 @@ fan-out、段階的承認、compensation、transactional orchestration が必要
 - `Next occurrences` は期待時刻か。
 - 表示 zone は正しいか。
 - target Connection は正確に 1 つか。
-- その時刻に target session を active に保つべきか。
+- その時刻に target session が open のままになる設定か。
 - graph は必要な context と capability だけを含むか。
 - external effect 済みでも繰り返しは安全か。
 - result と history の確認場所が分かるか。

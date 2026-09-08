@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule dans Kavor : donnez une horloge à votre graphe"
 description: Planifiez des prompts et commandes récurrents avec aperçu, pause, Run now et historique durable, sans étendre les permissions.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/fr/docs/schedule
 ---
 
@@ -143,7 +143,11 @@ la livraison, le résultat et le diagnostic.
 ## Quand la machine dort ou que Kavor est fermé
 
 Schedule dépend du runtime local : Kavor doit fonctionner, la machine être éveillée, l’utilisateur authentifié et la
-session de la cible active.
+session de la cible ouverte.
+
+Au démarrage de l'application, Kavor restaure les sessions marquées pour rester ouvertes lorsqu'elles sont ciblées
+par des Triggers actifs. Cela inclut les autres Workspaces de l'utilisateur, pas seulement celui qui est visible. Les
+Triggers en pause ne restaurent rien et une session volontairement fermée reste fermée.
 
 Si plusieurs occurrences passent pendant l’indisponibilité, Kavor ne conserve que la plus récente occurrence manquée
 de ce Schedule. Il n’exécute pas d’ancien travail par surprise au retour. L’interface affiche `Missed` et propose une
@@ -163,6 +167,7 @@ courant idempotente dans la cible.
 
 - un Schedule a au maximum une cible directe, CodingAgent ou Terminal ;
 - il ne démarre pas une session que vous avez volontairement fermée ;
+- seules les cibles marquées pour rester ouvertes sont restaurées au démarrage, et seulement pour les Triggers actifs ;
 - il n’étend ni le graphe, ni les permissions, ni les Guardrails de la cible ;
 - il ne remplace pas les critères d’acceptation et ne juge pas la correction du résultat ;
 - il effectue au maximum une tentative automatique de livraison par tentative enregistrée ;
@@ -178,7 +183,7 @@ responsabilités dans le graphe et gardez la décision humaine explicite.
 - `Next occurrences` correspond-il à l’heure attendue ?
 - le fuseau affiché est-il correct ?
 - existe-t-il exactement une Connection de cible ?
-- la session de la cible doit-elle rester active ?
+- la session de la cible est-elle marquée pour rester ouverte ?
 - le graphe ne contient-il que le contexte et les capacités nécessaires ?
 - répéter est-il sûr si un effet externe a déjà eu lieu ?
 - savez-vous où consulter résultat et historique ?

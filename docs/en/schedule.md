@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule in Kavor: give your graph a clock"
 description: Schedule recurring prompts and commands with preview, pause, Run now, and durable history without expanding permissions.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/en/docs/schedule
 ---
 
@@ -156,7 +156,11 @@ nominal time, delivery, result, and available diagnostic.
 ## When the machine sleeps or Kavor is closed
 
 Schedules depend on the local runtime. Kavor must be running, the machine awake, the user authenticated, and the
-target session active.
+target session open.
+
+At application startup, Kavor restores sessions marked to stay open when they are targets of running Triggers. This
+includes the user's other Workspaces, not only the visible one. Paused Triggers restore nothing, and a deliberately
+closed session stays closed.
 
 If one or more occurrences pass during downtime, Kavor records only the most recent missed occurrence for that
 Schedule instead of creating thousands of rows after a long absence. It does not unexpectedly run old work on
@@ -178,6 +182,7 @@ recurrence, increase the interval or make the target reconcile current state ide
 - a Schedule has at most one direct target;
 - the target must be a CodingAgent or Terminal;
 - Schedule does not start a session you deliberately closed;
+- only targets marked to stay open are restored at startup, and only for running Triggers;
 - it does not expand the target's graph, permissions, or Guardrails;
 - it does not replace acceptance criteria or decide whether the result is correct;
 - it makes at most one automatic delivery attempt per recorded attempt;
@@ -193,7 +198,7 @@ a Schedule. Model responsibilities in the graph and keep the human decision expl
 - does `Next occurrences` match the expected time?
 - is the displayed zone correct for this machine?
 - is there exactly one target Connection?
-- should the target session remain active at that time?
+- is the target session marked to stay open at that time?
 - does the graph contain only the necessary context and capabilities?
 - is repeating the work safe if an external effect already happened?
 - do you know where to inspect the result and history?

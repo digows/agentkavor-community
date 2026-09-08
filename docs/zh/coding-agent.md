@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -35,7 +35,8 @@ Kavor 保留每种 harness 的真实能力，而不会假装它们拥有完全�
 ## 它单独能做什么
 
 即使没有任何 Connection，CodingAgent 仍是 Workspace 内的 provider-native 会话。你可以与它对话、使用
-harness 提供的工具，并让工作受该 Workspace 根目录约束。
+harness 提供的工具，并选择其工作目录。当某个角色需要其他仓库或 worktree 时，该目录可以位于 Workspace 根目录
+之外；它与会话的关联仍然明确。
 
 Node 已经可以帮助拆分上下文：一个会话调查问题，另一个会话负责实现。不过，没有图时，共享上下文仍
 取决于你在每段对话中提供什么。
@@ -54,6 +55,7 @@ CodingAgent 可以使用其组件中通过有效 Connections 可达的任何 Nod
 | **CodingAgent + Sticky Note** | 增加共享的非正式记忆，用于未决事项、进度和 findings。可带有 `sticky_note_read_only`。 |
 | **CodingAgent + File** | 让 filesystem 中的规范来源在工作中变得明确。可带有 `file_read_only`。 |
 | **CodingAgent + Terminal** | 允许执行命令、观察进程和读取 shell 证据。可带有 `terminal_read_only`。 |
+| **CodingAgent + WebBrowser** | 允许智能体在与人所见相同的状态中观察和操作该 WebBrowser 的真实页面。 |
 | **CodingAgent + CodingAgent** | 让参与者进入同一组件。可达的 CodingAgents 可以交换异步消息，并读取协调所需的上下文。 |
 | **Trigger + CodingAgent** | 把该活动会话选为定时 prompt 的直接目标。Trigger 不会启动已经关闭的会话。 |
 
@@ -81,6 +83,24 @@ Implementer 问“如何满足契约？”，Reviewer 问“结果是否真正�
 不同 providers 可以参与同一张图。当另一种界面、模型或推理方式能改善某项具体职责时再进行组合。
 
 不要只为增加 agent 数量而加入 provider。先定义角色、预期结果和停止条件，再选择最适合工作的 harness。
+
+### 使用实时页面
+
+当任务依赖真实 Web 界面时，连接 WebBrowser。你继续查看和使用同一组标签页；CodingAgent 可以导航、交互、
+等待变化并捕获证据，而不必从粘贴到 chat 的文本中重建页面。
+
+切换 Workspaces 时，WebBrowser 可以保持活动，并在返回时恢复同一状态。这样，智能体无需在每次视觉上下文切换时
+重新加载页面，即可继续已经授权的工作。
+
+[![CodingAgent 与 WebBrowser 连接在 Canvas 上](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/zh/videos/web-browser-node)
+
+### 查看另一个 CodingAgent 的当前会话
+
+可达的 CodingAgent 可以被动、分页地读取另一个 CodingAgent 当前 provider-native 会话中已完成的 turns。这能恢复
+尚未成为消息或持久 output 的推理、证据和上下文。
+
+读取不会向 provider 发送输入，不会激活被查看的会话；当另一个智能体需要行动、决定或回答时，它也不能替代消息。
+如果会话在分页期间发生变化，旧 continuation 会被拒绝；读取者必须重新开始，避免混合不同历史。
 
 ## 一个实用图
 
@@ -114,6 +134,7 @@ Specification — Implementer — Reviewer
 
 - CodingAgent 不会因视觉上靠近某个 Node 而获得访问；必须存在 Connection 路径。
 - 在消息中引用 Node 不会授予访问权限。
+- 被动读取另一个 CodingAgent 的会话不会激活它，也不会把持久决策转移到 Specification。
 - Guardrail 只限制它所属的直接配对，不是 Workspace 全局策略。
 - 消息负责协调，但不应成为持久决策的唯一保存位置。
 - Providers 不一定提供相同的模型、权限、事件或会话操作。

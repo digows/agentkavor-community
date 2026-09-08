@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor の CodingAgent：使い慣れた harness をグラフの一員にする"
 description: provider を選び、ネイティブな体験を保ったまま、CodingAgent を適切なコンテキスト、ツール、参加者に接続します。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-09-08
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent
 ---
 
@@ -37,7 +37,8 @@ toolbar から CodingAgent を追加するときは、最初に provider を選�
 ## 単独でできること
 
 Connection がなくても、CodingAgent は Workspace 内の provider-native セッションです。対話し、harness
-のツールを使い、その Workspace root の範囲内で作業できます。
+のツールを使い、作業ディレクトリを選べます。役割に別のリポジトリや worktree が必要な場合、そのディレクトリは
+Workspace root の外部でもかまいません。セッションとの関連付けは明示されたままです。
 
 Node はすでにコンテキストの分離に役立ちます。一つのセッションが調査し、別のセッションが実装できます。
 ただしグラフがなければ、共有コンテキストは各会話に何を渡すかに依存します。
@@ -57,6 +58,7 @@ CodingAgent を含む直接 Connections には固有の役割があります。
 | **CodingAgent + Sticky Note** | 未決事項、進捗、findings のための共有された非公式メモリを加えます。`sticky_note_read_only` を設定できます。 |
 | **CodingAgent + File** | filesystem 上の正規ソースを明示します。`file_read_only` を設定できます。 |
 | **CodingAgent + Terminal** | コマンド実行、プロセス観察、shell の証拠確認を可能にします。`terminal_read_only` を設定できます。 |
+| **CodingAgent + WebBrowser** | 人間に見えているものと同じ状態で、その WebBrowser の実際のページを観察し操作できます。 |
 | **CodingAgent + CodingAgent** | 参加者を同じコンポーネントに結びます。到達可能な CodingAgents は非同期メッセージを交換し、調整に必要なコンテキストを確認できます。 |
 | **Trigger + CodingAgent** | そのアクティブなセッションを、スケジュールされた prompt の直接の対象にします。Trigger は閉じたセッションを起動しません。 |
 
@@ -87,6 +89,25 @@ Implementer は「契約をどう満たすか」を問い、Reviewer は「結�
 
 Agent の数を増やすためだけに provider を追加しないでください。まず役割、期待する結果、停止条件を決め、
 その作業に最適な harness を選びます。
+
+### ライブページで作業する
+
+タスクが実際の Web インターフェースに依存する場合は WebBrowser を接続します。人間は同じタブを見て使い続け、
+CodingAgent は chat に貼られたテキストからページを再構築せずに、移動、操作、変化の待機、証拠取得を行えます。
+
+Workspace を切り替えても WebBrowser は動作を続け、戻ったときに同じ状態を表示できます。Agent は視覚的な
+コンテキスト切り替えのたびにページを再読み込みせず、すでに許可された作業を継続できます。
+
+[![Canvas 上で接続された CodingAgent と WebBrowser](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/ja/videos/web-browser-node)
+
+### 別の CodingAgent の現在のセッションを確認する
+
+到達可能な CodingAgent は、別の CodingAgent の現在の provider-native セッションで完了した turns を、受動的に
+ページングして確認できます。メッセージや永続的な output になっていない推論、証拠、コンテキストを取得できます。
+
+この読み取りは provider へ入力を送らず、対象セッションを起動しません。相手が行動、判断、回答する必要がある場合の
+メッセージの代わりにもなりません。ページング中にセッションが変わると古い continuation は拒否されるため、異なる
+履歴を混ぜずに最初から読み直します。
 
 ## 実用的なグラフ
 
@@ -123,6 +144,7 @@ Reviewer 向け：
 
 - CodingAgent は視覚的に近いだけではアクセスを得ません。Connections の経路が必要です。
 - メッセージで Node を参照してもアクセスは付与されません。
+- 別の CodingAgent のセッションを受動的に読んでも、その Agent は起動せず、永続的な決定は Specification へ移りません。
 - Guardrail は所属する直接ペアを制限し、Workspace 全体のポリシーにはなりません。
 - メッセージは作業を調整しますが、永続的な決定の唯一の保存先にしてはいけません。
 - Providers が同じモデル、権限、イベント、セッション操作を提供するとは限りません。
