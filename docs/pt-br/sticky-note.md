@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: memória de trabalho compartilhada"
 description: Use uma Sticky Note para registrar status, descobertas e pontos de atenção junto com seus CodingAgents sem transformar tudo em uma Specification.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/pt-br/docs/sticky-note
 ---
 
@@ -13,7 +13,9 @@ Uma Sticky Note começa como um post-it para humanos. Conectada a um CodingAgent
 compartilhada: você e o agente podem registrar o que importa durante o turno sem depender de uma conversa que vai
 ficar para trás.
 
-[![CodingAgents e uma Sticky Note conectados no Canvas do Kavor](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/pt-br/videos/connections)
+![Uma Specification, um CodingAgent e uma Sticky Note compartilhando observações no Canvas do Kavor](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Veja o agente trabalhando com a Specification e as notas →](https://agentkavor.com/pt-br/videos/spec-agent-notes)
 
 *Uma nota compartilhada mantém observações, decisões abertas e próximos passos visíveis junto do grafo.*
 
@@ -75,6 +77,44 @@ Specification — Builder — Reviewer
 
 O desenho acima representa Nodes no mesmo grafo. A Connection entre CodingAgents não é uma sequência automática de
 workflow; ela torna os participantes alcançáveis e permite a troca de mensagens.
+
+## Exemplo: uma nota que ajuda você a retomar o trabalho
+
+Ao investigar uma falha de login, você não precisa transformar toda observação em uma decisão de arquitetura. Use
+uma nota para preservar a descoberta, a evidência e a pergunta ainda aberta:
+
+```markdown
+## Feito
+- Reproduzida a falha após a sessão expirar.
+- O login com uma sessão nova continua funcionando.
+
+## Fazendo
+- Comparando a resposta de sessão expirada com o tratamento do cliente.
+
+## Atenção do humano
+- Decidir se o cliente deve renovar a sessão ou pedir novo login.
+- Hipótese: o retry repete o request com a credencial antiga. Ainda não confirmado.
+
+## Evidência
+- Terminal Checks: comando de reprodução e resposta observada.
+- File do cliente: ponto em que o retry é iniciado.
+
+## Próximo
+- Confirmar a hipótese antes de editar o cliente.
+```
+
+Peça ao agente:
+
+> Acrescente descobertas verificadas e perguntas à nota. Preserve minhas observações. Quando uma hipótese for
+> confirmada ou descartada, atualize seu estado com a evidência. Se a decisão definir o escopo de uma correção, leve-a
+> para a Specification correspondente e deixe aqui uma referência curta.
+
+Para uma revisão, um bloco separado pode registrar **cenário, comportamento observado, evidência e próximo passo**.
+Isso permite distinguir o que o Builder concluiu do que o Reviewer verificou.
+
+Use uma atualização pontual ou um novo bloco quando só houver uma descoberta. Peça uma reorganização do corpo
+quando a nota acumular status antigos; mantenha decisões ainda abertas e suas observações. O resultado deve permitir
+retomar o turno sem reler todas as conversas.
 
 ## Markdown, edição e conflitos
 

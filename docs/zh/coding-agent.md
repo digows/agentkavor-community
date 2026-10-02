@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -14,7 +14,9 @@ CodingAgent 是运行在 provider 原生界面中的编程 agent，如今它也�
 Kavor 不会用通用聊天界面替换每一种 harness。它保留 provider 的原生体验，并在其周围增加清晰结构：
 明确的职责、可达的上下文、工具、其他 CodingAgents，以及你可以检查的边界。
 
-[![在 Canvas 中添加 CodingAgent 前，Kavor toolbar 中的 provider 选择器。](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)](https://agentkavor.com/zh/videos/coding-agent-provider-selector)
+![在 Canvas 中添加 CodingAgent 前，Kavor toolbar 中的 provider 选择器](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)
+
+[观看如何选择 CodingAgent 的 provider →](https://agentkavor.com/zh/videos/coding-agent-provider-selector)
 
 ## CodingAgent 拥有什么
 
@@ -62,7 +64,7 @@ CodingAgent 可以使用其组件中通过有效 Connections 可达的任何 Nod
 可达性不会覆盖直接契约。如果 CodingAgent 与资源之间的那条直接 Connection 带有 Guardrail，即使图中存在
 另一条路径，该限制仍然约束这一对。
 
-## 三种实用模式
+## 实用模式
 
 ### 按契约实现
 
@@ -92,7 +94,9 @@ Implementer 问“如何满足契约？”，Reviewer 问“结果是否真正�
 切换 Workspaces 时，WebBrowser 可以保持活动，并在返回时恢复同一状态。这样，智能体无需在每次视觉上下文切换时
 重新加载页面，即可继续已经授权的工作。
 
-[![CodingAgent 与 WebBrowser 连接在 Canvas 上](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/zh/videos/web-browser-node)
+![CodingAgent 与 WebBrowser 连接在 Canvas 上](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
+
+[观看 CodingAgent 与 WebBrowser 如何协作 →](https://agentkavor.com/zh/videos/web-browser-node)
 
 ### 查看另一个 CodingAgent 的当前会话
 
@@ -129,6 +133,29 @@ Specification — Implementer — Reviewer
 
 > 将实现和证据与 Specification 标准比较。寻找错误行为、遗漏场景、回归和运行风险。提出修改前先记录具体
 > findings，不要仅因为现有测试通过就批准工作。
+
+## 示例：Reviewer 能够验证的交接
+
+假设要修复一个注册表单。Specification 要求无效邮箱地址显示提示并阻止提交，同时有效地址的流程仍能正常工作。
+使用上面的图，让 Builder 和 Reviewer 保持在独立会话中。
+
+给 Builder 的请求：
+
+> 实现 Specification 定义的校验。保持有效地址流程的行为。在 Terminal 中执行相关测试，记录修改的文件、命令和结果。
+> 然后将 Specification 的 handle 以及用于审查的确切 commit 或 diff 发给 Reviewer。说明未完成事项，并在发布前停止。
+
+有用的交接应标明交付结果，而不是复制整段对话：
+
+> 实现位于 Specification outputs 中标明的 commit。无效、空值和有效邮箱地址的测试已在 Terminal Checks 中通过。
+> 请审查该 commit 的标准和失败路径。记录 findings，并注明文件、场景和证据；完成后回复。本次审查不要修改代码。
+
+给 Reviewer 的请求：
+
+> 阅读契约并检查所引用的交付结果。验证每条标准，复现相关场景，并把结论加入 Sticky Note。区分已证实的缺陷和假设。
+> 如果发现阻塞，说明哪个行为失败，并交回 Builder 修复。
+
+预期结果是一项可明确识别的改动、一次独立审查，以及你基于证据作出的决定。如果 Builder 仍在修改交付内容，
+请等结果稳定，或明确界定哪些内容已准备好供审查。两个智能体查看不同版本的代码，就不是在评估同一份交付。
 
 ## 重要限制
 

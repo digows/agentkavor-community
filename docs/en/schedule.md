@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule in Kavor: give your graph a clock"
 description: Schedule recurring prompts and commands with preview, pause, Run now, and durable history without expanding permissions.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/schedule
 ---
 
@@ -97,6 +97,43 @@ pnpm test -- --runInBand
 
 The payload does not replace Connections. Naming a Sticky Note, File, or Specification does not grant access unless
 the Node belongs to the CodingAgent's reachable component.
+
+## Complete example: a daily check with a report
+
+You want to catch failures early and find a useful summary when you open the project. Connect a Schedule to the
+Maintainer. In the agent's graph, keep a Specification defining the routine, Terminal Checks, and Sticky Note Daily
+report. Add a Reviewer if the routine genuinely needs another assessment.
+
+In the Specification, define the checks and what should happen when they fail. Start with diagnosis and reporting;
+authorize corrections separately once the cause and scope are clear.
+
+Use a payload such as:
+
+> Run the checks authorized in the Specification using Terminal Checks. Read the project's scripts to choose the
+> right commands. Record the time, commands, results, and outstanding items in Sticky Note Daily report. Do not change
+> code or publish anything. If a check cannot run, record why. Finish with a concrete next action and stop.
+
+Configure `Daily`, choose a time when the machine will be awake, and inspect `Next occurrences`. Before `Resume`, use
+`Run now` while the Schedule is paused and verify:
+
+1. the prompt reached the correct Maintainer;
+2. checks ran in the expected Terminal;
+3. the note distinguishes passed, failed, and not run;
+4. history shows the attempt's observed result.
+
+An illustrative report:
+
+```markdown
+## Daily check
+- Tests: passed; command and summary recorded in Terminal Checks.
+- Build: failed; import error identified in the referenced file.
+- Next action: review the import before authorizing a correction.
+- Code changes: none.
+```
+
+After testing, use `Resume`. If the machine is off at the next occurrence, inspect `Missed` and decide when to run
+manually; do not expect retroactive execution. If the routine takes longer than its interval, adjust recurrence
+rather than expecting an unlimited queue.
 
 ## Recurrence without hiding the calendar
 

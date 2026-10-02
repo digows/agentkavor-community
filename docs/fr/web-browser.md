@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser : développez et testez devant votre agent"
 description: Utilisez le WebBrowser partagé de Kavor pour développer des applications web, reproduire des bugs, déboguer des pages et prouver des flux E2E.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/web-browser
 ---
 
@@ -14,6 +14,8 @@ attendre, déboguer et tester la page que vous voyez également.
 
 Consultez la [démonstration de WebBrowser dans Kavor](https://agentkavor.com/fr/videos/web-browser-node) dans un autre
 onglet pendant votre lecture.
+
+![Un CodingAgent connecté au WebBrowser partageant la même page visible avec l'humain](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 ## Le browser comme outil de développement
 
@@ -48,6 +50,39 @@ Enregistrez le résultat et les risques restants dans une [Sticky Note](./sticky
 Un prompt de départ peut être :
 
 > Ouvre l'application connectée dans WebBrowser. Observe d'abord la page et reproduis le parcours sans modifier le code. Décris ensuite la cause probable, propose le plus petit changement et valide le parcours complet avec des preuves visuelles et de console.
+
+## Trois exemples pour développer avec des preuves
+
+### Reproduire un bug de formulaire
+
+Avec le serveur dans le Terminal et l'application ouverte dans WebBrowser, demandez :
+
+> Reproduis l'envoi avec un e-mail invalide, puis avec une adresse valide. Avant de modifier le code, note l'état des
+> champs, le message affiché et si une requête a eu lieu. Après la correction autorisée, répète les deux parcours et
+> teste aussi la correction de l'adresse sans recharger la page.
+
+Le résultat attendu associe comportement visible et requêtes observées. Une capture du message ne prouve pas à elle
+seule que l'envoi a été bloqué ; le réseau aide à vérifier ce critère.
+
+### Comprendre pourquoi la page est vide
+
+> Observe la page, consulte les erreurs de console et identifie la requête liée au contenu absent. Distingue panne
+> réseau, réponse inattendue et erreur de rendu. Note l'URL pertinente, le status et les preuves disponibles. Si tu ne
+> peux pas observer le corps de la réponse, indique cette limite.
+
+Le résultat attendu utilise des indices permettant de distinguer les causes avant de modifier le code. L'absence de
+contenu ne suffit pas à conclure à une panne du backend.
+
+### Vérifier la récupération après une panne réseau
+
+Dans une application de test sous votre contrôle, demandez un scénario temporaire :
+
+> Simule une réponse d'erreur uniquement pour la requête de chargement définie dans la Specification. Vérifie le
+> message d'échec et l'option de réessai. Supprime ensuite la règle temporaire et confirme que le parcours normal
+> récupère. Conserve les résultats et termine le test avec les règles réseau nettoyées.
+
+Le résultat attendu couvre échec et récupération dans un scénario isolé. Utilisez des endpoints et données de test ;
+la simulation doit être assez précise pour ne pas modifier les requêtes étrangères au scénario.
 
 ## Le même browser pour l'humain
 

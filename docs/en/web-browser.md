@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: develop and test in front of your agent"
 description: Use Kavor's shared WebBrowser to develop web applications, reproduce bugs, debug pages, and prove end-to-end flows.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/web-browser
 ---
 
@@ -14,6 +14,8 @@ debug, and test the page you are also seeing.
 
 See the [WebBrowser demonstration in Kavor](https://agentkavor.com/en/videos/web-browser-node) in another tab while
 you read this guide.
+
+![A CodingAgent connected to the WebBrowser sharing the same visible page with the human](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 ## The browser as a development tool
 
@@ -57,6 +59,39 @@ Ask the agent to:
 A useful starting prompt is:
 
 > Open the connected application in WebBrowser. First observe the page and reproduce the flow without changing code. Then describe the likely cause, propose the smallest change, and validate the complete path with visual and console evidence.
+
+## Three examples of development with evidence
+
+### Reproduce a form bug
+
+With the server in the Terminal and the application open in WebBrowser, ask:
+
+> Reproduce submission with an invalid email and then a valid address. Before editing code, record the fields' state,
+> displayed message, and whether a request occurred. After the authorized correction, repeat both paths and test
+> correcting the address without reloading the page.
+
+Expect visible behavior together with observed requests. A screenshot of the message alone does not prove submission
+was blocked; network evidence helps verify that criterion.
+
+### Find out why the page is blank
+
+> Observe the page, inspect console errors, and identify the request related to missing content. Distinguish a network
+> failure, an unexpected response, and a rendering error. Record the relevant URL, status, and available evidence.
+> If you cannot observe the response body, report that limitation.
+
+Expect an investigation using signals that distinguish causes before changing code. Missing content alone does not
+establish that the backend failed.
+
+### Verify recovery from a network failure
+
+In a test application you control, request a temporary scenario:
+
+> Simulate an error response only for the loading request defined in the Specification. Verify the failure message
+> and retry option. Then remove the temporary rule and confirm that the normal flow recovers. Preserve the results
+> and end the test with network rules cleared.
+
+Expect coverage of failure and recovery in an isolated scenario. Use test endpoints and data; the simulation must be
+specific enough to leave unrelated requests unchanged.
 
 ## The same browser for the human
 

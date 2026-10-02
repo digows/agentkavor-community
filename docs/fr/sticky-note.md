@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note : mémoire de travail partagée"
 description: Utilisez une Sticky Note pour noter l'état, les constats et les points d'attention avec vos CodingAgents sans transformer chaque note en Specification.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/sticky-note
 ---
 
@@ -13,7 +13,9 @@ Une Sticky Note commence comme un post-it pour les humains. Connectée à un Cod
 travail partagée : vous et l'agent pouvez noter ce qui compte pendant le travail, sans dépendre d'une conversation
 qui sera bientôt enfouie.
 
-[![CodingAgents et une Sticky Note connectés sur le Canvas de Kavor](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/fr/videos/connections)
+![Une Specification, un CodingAgent et une Sticky Note partageant des observations sur le Canvas de Kavor](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Voyez l'agent travailler avec la Specification et les notes →](https://agentkavor.com/fr/videos/spec-agent-notes)
 
 *Une note partagée garde les observations, les décisions ouvertes et les prochaines étapes visibles près du graphe.*
 
@@ -65,6 +67,44 @@ Vous pouvez suivre les deux sans rechercher l'information dans deux sessions dis
 
 Une Connection entre CodingAgents n'est pas une séquence automatique de workflow : elle rend les participants
 atteignables et permet l'échange de messages.
+
+## Exemple : une note qui vous aide à reprendre le travail
+
+Lorsque vous enquêtez sur un échec de connexion, chaque observation n'a pas besoin de devenir une décision
+d'architecture. Utilisez une note pour préserver la découverte, la preuve et la question encore ouverte :
+
+```markdown
+## Fait
+- Échec reproduit après expiration de la session.
+- La connexion avec une nouvelle session fonctionne toujours.
+
+## En cours
+- Comparaison de la réponse de session expirée avec son traitement côté client.
+
+## Attention de l'humain
+- Décider si le client doit renouveler la session ou demander une nouvelle connexion.
+- Hypothèse : le retry répète la requête avec l'ancien identifiant d'authentification. Pas encore confirmé.
+
+## Preuves
+- Terminal Checks : commande de reproduction et réponse observée.
+- File du client : endroit où le retry est lancé.
+
+## Prochaine étape
+- Confirmer l'hypothèse avant de modifier le client.
+```
+
+Demandez à l'agent :
+
+> Ajoute les découvertes vérifiées et les questions à la note. Préserve mes observations. Lorsqu'une hypothèse est
+> confirmée ou écartée, actualise son état avec les preuves. Si la décision définit le périmètre d'une correction,
+> reporte-la dans la Specification correspondante et laisse ici une courte référence.
+
+Pour une revue, un bloc séparé peut consigner **scénario, comportement observé, preuve et prochaine étape**. Cela
+permet de distinguer ce que le Builder a conclu de ce que le Reviewer a vérifié.
+
+Utilisez une mise à jour ciblée ou un nouveau bloc lorsqu'il n'y a qu'une découverte. Demandez une réorganisation
+du corps lorsque la note accumule des statuts anciens ; conservez les décisions encore ouvertes et vos observations.
+Le résultat doit permettre de reprendre le travail sans relire toutes les conversations.
 
 ## Markdown, édition et conflits
 

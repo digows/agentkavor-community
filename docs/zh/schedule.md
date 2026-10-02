@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor Schedule：为你的图谱加上时钟"
 description: 在不扩大权限的前提下，通过预览、暂停、Run now 和持久历史来安排周期性提示与命令。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/schedule
 ---
 
@@ -90,6 +90,38 @@ pnpm test -- --runInBand
 
 payload 不能替代 Connections。仅在文字中提到 Sticky Note、File 或 Specification 不会授予访问权；该 Node 必须属于
 CodingAgent 的可达组件。
+
+## 完整示例：带报告的每日检查
+
+你希望尽早发现失败，并在打开项目时获得有用的摘要。搭建一个连接到 Maintainer 的 Schedule。在智能体的图中保留一份定义
+例行工作范围的 Specification、一个 Terminal Checks 和一条 Sticky Note Daily report。只有确实需要另一份评估时，才添加 Reviewer。
+
+在 Specification 中定义哪些检查属于例行工作，以及失败时应如何处理。先从诊断和报告开始；当原因和范围明确后，再单独授权修复。
+
+可以使用这样的 payload：
+
+> 使用 Terminal Checks 执行 Specification 授权的检查。阅读项目脚本，选择正确命令。在 Sticky Note Daily report 中记录
+> 时间、命令、结果和未完成事项。不要修改代码，也不要发布任何内容。如果某项检查无法执行，记录原因。完成后，留下具体的下一步并停止。
+
+设置 `Daily`，选择机器会保持唤醒的时间，并检查 `Next occurrences`。使用 `Resume` 前，在 Schedule 暂停状态下执行 `Run now`，确认：
+
+1. 提示到达了正确的 Maintainer；
+2. 检查在预期的 Terminal 中执行；
+3. 笔记区分了通过、失败和未执行；
+4. 历史显示了该次尝试实际观察到的结果。
+
+报告示例：
+
+```markdown
+## 每日检查
+- 测试：通过；命令和摘要已记录在 Terminal Checks 中。
+- Build：失败；在指定文件中发现 import 错误。
+- 下一步：先审查 import，再授权修复。
+- 代码改动：无。
+```
+
+测试后，使用 `Resume`。如果下次执行时间机器处于关机状态，请查看 `Missed` 并决定何时手动执行；不要期待 Kavor 补跑例行工作。
+如果工作耗时超过间隔，请调整周期，不要期待无限队列。
 
 ## 不隐藏日历的周期设置
 

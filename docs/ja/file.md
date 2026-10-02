@@ -3,7 +3,7 @@ id: file
 title: "File：Canvas上のコンテキストとスコープ"
 description: Fileでcanonical sourceを見える形にし、CodingAgentのコンテキストを限定し、そのパスをTerminalへ渡します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/file
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/ja/docs/file
 Fileは使い捨ての添付ではありません。Canvas上でcanonicalなfilesystem sourceを表し、仕事が読む、レビューする、
 編集する、入力として使う対象を明確にします。
 
-[![Kavor Canvas上でPDFを表示するFile Nodeと、それを使うCodingAgent](https://agentkavor.com/kavor-pdf-canvas-agent-demo-poster.jpg)](https://agentkavor.com/ja/videos/pdf-canvas-agent)
+![PDFを表示したFile NodeとCodingAgentがKavor Canvasでつながる様子](https://media.agentkavor.com/demos/pdf-canvas-agent/poster.7306bdccc7f5.jpg)
+
+[PDFがCanvasの作業に参加する様子を見る →](https://agentkavor.com/ja/videos/pdf-canvas-agent)
 
 *Fileを見える状態に保ちながら、その周りにagents、判断、実行を配置できます。*
 
@@ -66,6 +68,47 @@ CodingAgentが変更と適切な場所への証拠記録を行います。
 
 SQLやscriptのFileをTerminalに接続し、変数名を決め、shellから実行します。agentも接続されていれば、人が
 プロセスを見ながら出力の解釈を手伝えます。
+
+## 例：一つのNode、三種類の入力
+
+### コードをレビューの焦点にする
+
+HTTPクライアントをFileとして追加し、Reviewerを接続してfindings用のSticky Noteを到達可能にします：
+
+> HTTPクライアントのFileを、特にtimeout、retry、エラー処理についてレビューしてください。分析の焦点として
+> 使い、結論が他のファイルに依存するなら調査を広げる前に依存先を示してください。コードや再現で裏付けた
+> findingsだけを記録し、修正は実装しないでください。
+
+期待するのはシナリオと該当コードへの参照を持つ範囲の明確なレビューです。Fileは焦点を示しますが、harnessの
+ネイティブツールに対するsandboxではありません。依頼で範囲を定め、Kavorの操作には適切なGuardrailを使います。
+
+### PDFや画像を参照にする
+
+要件のPDFや参考画像をSpecification、CodingAgentと同じグラフに置きます：
+
+> Fileの資料とSpecificationを比較してください。明示された要件、解釈、質問を分け、相違ごとにページや
+> 観察した要素を示してSticky Noteに質問を残してください。読めない内容は作らないでください。
+
+期待するのは要約だけでなく検証できる比較です。解釈できる範囲は形式とharnessのツールに依存します。
+Kavorのpreviewはあなたが資料を見続けられるようにします。
+
+### スクリプトをTerminalの入力にする
+
+小さなNode.jsスクリプト用のFileを作り、TerminalへのConnectionを`CHECK_SCRIPT`という名前に設定します：
+
+```javascript
+console.log('Canvas file connection is working');
+```
+
+Connection設定後にTerminalのセッションを開始して実行します：
+
+```sh
+test -n "$CHECK_SCRIPT" && node "$CHECK_SCRIPT"
+```
+
+期待する出力は`Canvas file connection is working`です。変数はスクリプトのパスを持ちます。空ならConnectionの
+名前を確認し、セッションを再起動して設定を受け取ります。この例はPOSIX shellとNode.jsを必要とします。
+PowerShellでは`$env:CHECK_SCRIPT`で変数を読み、`node $env:CHECK_SCRIPT`を実行してください。
 
 ## 重要な制限
 

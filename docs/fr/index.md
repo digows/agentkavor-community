@@ -1,50 +1,56 @@
 ---
 id: docs-home
 title: Documentation de Kavor
-description: Découvrez comment Kavor garde le travail d'ingénierie autour des coding agents visible, durable et sous votre contrôle.
+description: Montez votre première boucle dans Kavor et trouvez des guides pour spécifier, implémenter, revoir, tester et planifier le travail avec des CodingAgents.
 kind: landing
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs
 ---
 
 # Construisez avec des agents sans perdre l'ingénierie
 
-Kavor est le système local-first autour des coding agents. Utilisez un Workspace visuel pour relier questions,
-contexte, Specifications, fichiers, CodingAgents, Terminals, WebBrowsers, preuves et décisions qui rendent le travail durable.
+Une tâche commence par une intention. Dans Kavor, vous gardez autour d'elle les agents, le contexte et les preuves
+nécessaires pour aboutir à une livraison que vous pouvez revoir. Le Canvas rend ce travail visible ; les Connections
+permettent à vos CodingAgents de travailler avec les ressources et participants accessibles.
 
-## Commencer ici
+![Specifications, CodingAgents, Files, Sticky Notes et Terminals organisés dans un véritable Workspace Kavor](https://media.agentkavor.com/demos/canvas-overview/workspace.8f917eaa5261.jpg)
 
-- [Qu'est-ce que Kavor ?](./what-is-kavor.md) explique le modèle et le vocabulaire central.
-- [Fermez votre première boucle](./first-loop.md) avec une Specification, deux CodingAgents et des preuves partagées.
-- [Comprenez comment les CodingAgents voient et construisent le Canvas](./coding-agents-and-canvas.md).
-- [Voyez un CodingAgent et un WebBrowser travailler sur la même page](https://agentkavor.com/fr/videos/web-browser-node).
-- [Utilisez Schedule pour donner une horloge à votre graphe](./schedule.md).
-- [Notes de version](./release-notes/index.md) recense chaque version publique de Kavor.
+[Voyez ce Workspace en action →](https://agentkavor.com/fr/videos/overview)
 
-## Votre première boucle en cinq minutes
+## Commencez par une petite livraison
 
-1. Téléchargez et ouvrez Kavor, puis choisissez le répertoire racine de votre Workspace.
-2. Ajoutez une Specification, un CodingAgent et un Terminal au Canvas.
-3. Reliez Specification, Terminal et CodingAgent dans un composant afin que contexte et capacités soient accessibles.
-4. Demandez au CodingAgent d'implémenter la Specification, examinez les preuves et décidez ce que vous acceptez.
+Si c'est votre premier Canvas, choisissez un changement que vous savez vérifier : corriger une validation, ajouter
+un test ou implémenter une petite fonctionnalité. Le tutoriel réunit une Specification, un Implementer, un Reviewer
+et une Sticky Note pour garder intention, implémentation, revue et décision dans la même boucle.
 
-Commencez par cette petite boucle fermée. Ajoutez des réviseurs, des Files, des Sticky Notes et des WebBrowsers
-uniquement lorsque le travail en bénéficie.
+**[Montez votre première boucle →](./first-loop.md)**
 
-## Travaillez dans plusieurs Workspaces
+La structure grandit selon les besoins de la tâche. Vous pouvez commencer avec quelques Nodes et ajouter un Terminal
+pour les vérifications, un File comme référence ou un WebBrowser pour tester l'application. Si vous préférez d'abord
+comprendre le modèle, lisez [Qu'est-ce que Kavor ?](./what-is-kavor.md).
 
-Chaque fenêtre Kavor peut garder un Workspace différent ouvert. Vous pouvez ainsi répartir vos projets entre
-fenêtres et écrans sans mélanger Canvas, sessions ou contexte. Kavor conserve un runtime partagé tandis que chaque
-fenêtre préserve le travail que vous y avez placé.
+## Que voulez-vous faire ?
 
-![Deux Workspaces Kavor ouverts dans des fenêtres indépendantes sur un écran large](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+| Votre tâche | Où poursuivre |
+| --- | --- |
+| Transformer une idée en contrat implémentable | [Specification](./specification.md) : questions, périmètre, critères et preuves. |
+| Répartir implémentation et revue entre agents | [CodingAgents et rôles](./agents-and-roles.md) : responsabilités, contexte et handoffs. |
+| Garder les décisions ouvertes et la progression visibles | [Sticky Note](./sticky-note.md) : mémoire de travail partagée. |
+| Travailler à partir de code, d'un PDF, d'une image ou d'un autre fichier | [File](./file.md) : source canonique, référence et entrée pour l'exécution. |
+| Exécuter des vérifications ou enquêter sur un processus | [Terminal](./terminal.md) : commandes, logs et collaboration dans le même shell. |
+| Reproduire et corriger un problème d'application web | [WebBrowser](./web-browser.md) : page active, console, réseau et preuves visuelles. |
+| Lancer une routine à une heure définie | [Schedule](./schedule.md) : prompts ou commandes, récurrence et résultats. |
 
-## Plateformes et téléchargement
+## Comprenez les éléments du Canvas
 
-Kavor est gratuit et disponible pour Windows, macOS et Linux.
-[Téléchargez Kavor](https://download.agentkavor.com/fr) ou consultez les [notes de version](./release-notes/index.md).
+- [Nodes](./nodes.md) présente le rôle de chaque élément et leur combinaison.
+- [Connections](./connections.md) est la référence des paires prises en charge, paramètres et Guardrails.
+- [CodingAgent](./coding-agent.md) explique la session de votre harness et ce qu'elle gagne dans le graphe.
+- [Comment les CodingAgents voient et construisent le Canvas](./coding-agents-and-canvas.md) explique comment demander
+  à l'agent lui-même de vous aider à comprendre et monter votre structure.
 
-## Obtenir de l'aide et façonner Kavor
+## Poursuivez avec la communauté
 
-Posez une question, partagez un workflow réel ou proposez la prochaine connexion de Kavor dans la
+Kavor est gratuit et disponible pour Windows, macOS et Linux. [Téléchargez Kavor](https://download.agentkavor.com/fr),
+consultez les [notes de version](./release-notes/index.md) ou partagez une question et un workflow réel dans la
 [Kavor Community](https://github.com/digows/agentkavor-community/discussions).

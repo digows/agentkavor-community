@@ -3,7 +3,7 @@ id: specification
 title: "Kavor 中的 Specification：认真思考一次，更好地实现"
 description: 用持久 Markdown 组织意图、决策和标准，管理多个 roots，并引导 Specification lifecycle。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/specification
 ---
 
@@ -15,7 +15,9 @@ Specification 把意图转化为持久契约，让人和 CodingAgents 都能阅�
 它可以定义架构、集成、领域建模、feature、模块或一组有边界的修复。篇幅可以变化，职责不变：说明在工作
 被视为完成之前，哪些条件必须成立。
 
-![Kavor Workspace Settings，其中配置了四个 Specification roots。](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+![Specification、CodingAgent 和 Sticky Note 在同一个 Canvas 中保留契约和观察记录](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[观看 Specification、智能体和笔记如何协作 →](https://agentkavor.com/zh/videos/spec-agent-notes)
 
 ## 真相来源是一份文件
 
@@ -93,6 +95,8 @@ Reviewer 对照结果与标准。
 存在多个 roots 时，Specifications 面板先按 root、再按实际 filesystem 文件夹分组。Canvas 不会创建平行
 分类法；组织方式仍是你拥有的文件结构。
 
+![Kavor Workspace Settings 中配置了四个 Specification roots](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+
 ### 一个简单的 roots 布局
 
 ```text
@@ -142,6 +146,38 @@ Spec Writer — Specification — Implementer — Reviewer
 
 Spec Writer 记录决策。Implementer 只执行 Ready 契约。Reviewer 对照结果与标准。Terminal 提供证据。是否
 把工作视为 Done 仍由人决定。
+
+## 示例：一份可以开始实现的小型 Specification
+
+假设一个表单接受了无效邮箱地址。与其只说“改善校验”，不如记录一份契约，让实现和审查不必猜测你的意图：
+
+```markdown
+# 注册邮箱校验
+
+## 问题
+表单会提交无效地址，直到服务器响应后才显示失败。
+
+## 目标
+在提交前提示错误，并保持有效地址的流程正常工作。
+
+## 范围之外
+重新设计表单、更改身份验证或更换校验库。
+
+## 验收标准
+- 字段为空时显示提示，不发起注册请求。
+- 地址无效时显示提示，不发起注册请求。
+- 地址有效时，只发起一次请求，并携带预期数据。
+- 用户可以修正地址并重试。
+
+## 验证
+测试这三个场景，并在应用中复现流程。
+```
+
+“校验正常工作”不足以支持独立审查。“无效地址不会发起请求”则定义了 Reviewer 能够观察的行为。
+这个例子仅作说明：移到 Ready 前，请按产品的实际契约调整校验规则。
+
+完成后，请 Builder 在 Specification outputs 中记录 commit 或产出的文件。请 Reviewer 说明验证了哪些标准、
+使用了什么命令或交互，以及还有哪些未完成事项。交付结果的持久引用和标准的验证证据，才能支持移到 Done 的决定。
 
 ## 应避免什么
 

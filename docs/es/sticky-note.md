@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: memoria de trabajo compartida"
 description: Usa una Sticky Note para registrar estado, hallazgos y puntos de atención con tus CodingAgents sin convertir cada nota de trabajo en una Specification.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/sticky-note
 ---
 
@@ -13,7 +13,9 @@ Una Sticky Note empieza como un post-it para humanos. Conectada a un CodingAgent
 compartida: tú y el agente pueden registrar lo importante durante el turno sin depender de una conversación que pronto
 quedará enterrada.
 
-[![CodingAgents y una Sticky Note conectados en el Canvas de Kavor](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/es/videos/connections)
+![Una Specification, un CodingAgent y una Sticky Note comparten observaciones en el Canvas de Kavor](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Mira el agente trabajando con la Specification y las notas →](https://agentkavor.com/es/videos/spec-agent-notes)
 
 *Una nota compartida mantiene visibles las observaciones, decisiones abiertas y próximos pasos junto al grafo.*
 
@@ -64,6 +66,44 @@ puedes seguir ambos sin buscar la información en dos sesiones distintas.
 
 La Connection entre CodingAgents no es una secuencia automática de workflow; hace alcanzables a los participantes y
 permite intercambiar mensajes.
+
+## Ejemplo: una nota que te ayuda a retomar el trabajo
+
+Al investigar un fallo de login, no necesitas convertir cada observación en una decisión de arquitectura. Usa una
+nota para conservar el hallazgo, la evidencia y la pregunta que sigue abierta:
+
+```markdown
+## Hecho
+- Reproducido el fallo después de expirar la sesión.
+- El login con una sesión nueva sigue funcionando.
+
+## Haciendo
+- Comparando la respuesta de sesión expirada con el tratamiento del cliente.
+
+## Atención del humano
+- Decidir si el cliente debe renovar la sesión o pedir un nuevo login.
+- Hipótesis: el retry repite el request con la credencial antigua. Todavía no confirmado.
+
+## Evidencia
+- Terminal Checks: comando de reproducción y respuesta observada.
+- File del cliente: punto donde empieza el retry.
+
+## Siguiente
+- Confirmar la hipótesis antes de editar el cliente.
+```
+
+Pide al agente:
+
+> Añade hallazgos verificados y preguntas a la nota. Conserva mis observaciones. Cuando una hipótesis se confirme o
+> se descarte, actualiza su estado con la evidencia. Si la decisión define el alcance de una corrección, llévala a la
+> Specification correspondiente y deja aquí una referencia breve.
+
+Para una revisión, un bloque separado puede registrar **escenario, comportamiento observado, evidencia y próximo
+paso**. Así puedes distinguir lo que el Builder completó de lo que el Reviewer verificó.
+
+Usa una actualización puntual o un bloque nuevo cuando solo haya un hallazgo. Pide una reorganización del cuerpo
+cuando la nota acumule estados antiguos; conserva las decisiones abiertas y tus observaciones. El resultado debe
+permitir retomar el turno sin releer todas las conversaciones.
 
 ## Markdown, edición y conflictos
 

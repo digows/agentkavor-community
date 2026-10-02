@@ -3,7 +3,7 @@ id: file
 title: "File: контекст и область на Canvas"
 description: Используйте File, чтобы держать канонический источник на виду, ограничивать контекст CodingAgent и передавать его путь в Terminal.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ru/docs/file
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/ru/docs/file
 File не является одноразовым вложением. Он представляет канонический источник filesystem на Canvas и явно показывает,
 какой материал нужно читать, проверять, изменять или использовать как входные данные.
 
-[![PDF в File Node, используемый CodingAgent на Canvas Kavor](https://agentkavor.com/kavor-pdf-canvas-agent-demo-poster.jpg)](https://agentkavor.com/ru/videos/pdf-canvas-agent)
+![PDF в File Node, используемый CodingAgent на Canvas Kavor](https://media.agentkavor.com/demos/pdf-canvas-agent/poster.7306bdccc7f5.jpg)
+
+[Посмотрите, как PDF участвует в работе на Canvas →](https://agentkavor.com/ru/videos/pdf-canvas-agent)
 
 *File оставляет материал видимым, пока вы располагаете вокруг него агентов, решения и выполнение.*
 
@@ -67,6 +69,48 @@ CodingAgent выполняет изменение и сохраняет дока
 
 Соедините SQL- или script-File с Terminal, задайте имя переменной и выполните команду из shell. Подключённый агент
 может помогать интерпретировать вывод, пока вы наблюдаете процесс.
+
+## Примеры: один Node, три вида входных данных
+
+### Код как фокус проверки
+
+Добавьте HTTP-клиент как File, подключите Reviewer и оставьте Sticky Note достижимой для findings. Попросите:
+
+> Проверь File HTTP-клиента, особенно timeout, retry и обработку ошибок. Используй его как фокус анализа. Если вывод
+> зависит от другого файла, укажи зависимость до расширения расследования. Записывай только findings, подтверждённые
+> кодом или воспроизведением, и не исправляй код.
+
+Ожидается локализованная проверка со сценарием и ссылкой на код. File явно задаёт фокус, но не является sandbox для
+нативных инструментов harness. Ограничьте область в запросе и используйте нужный Guardrail для операций Kavor.
+
+### PDF или изображение как источник
+
+Поместите PDF требований или изображение в один граф со Specification и CodingAgent:
+
+> Сравни материал File со Specification. Раздели явные требования, интерпретации и вопросы. Для каждого расхождения
+> укажи страницу или наблюдаемый элемент и запиши вопрос в Sticky Note. Не придумывай содержание, которое не можешь
+> прочитать.
+
+Ожидается проверяемое сравнение, а не просто пересказ. Интерпретация зависит от формата и инструментов harness;
+preview Kavor оставляет источник видимым для вас.
+
+### Скрипт как вход Terminal
+
+Создайте File для небольшого скрипта Node.js и настройте его Connection к Terminal с именем `CHECK_SCRIPT`:
+
+```javascript
+console.log('Canvas file connection is working');
+```
+
+Запустите сессию Terminal после настройки Connection и выполните:
+
+```sh
+test -n "$CHECK_SCRIPT" && node "$CHECK_SCRIPT"
+```
+
+Ожидается `Canvas file connection is working`. Переменная содержит путь скрипта. Если она пуста, проверьте имя в
+Connection и перезапустите сессию для получения настройки. Пример использует POSIX shell и требует Node.js; в
+PowerShell прочитайте `$env:CHECK_SCRIPT` и выполните `node $env:CHECK_SCRIPT`.
 
 ## Важные ограничения
 

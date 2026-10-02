@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note：共有ワーキングメモリ"
 description: Sticky Noteを使い、すべてをSpecificationにせず、CodingAgentsと状態、発見、注意点を共有します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/sticky-note
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/ja/docs/sticky-note
 Sticky Noteは、人のための付箋として始まります。CodingAgentに接続すると共有ワーキングメモリになり、人と
 agentがターン中に重要な情報を記録できます。すぐに埋もれる会話だけに頼る必要はありません。
 
-[![Kavor Canvas上で接続されたCodingAgentsとSticky Note](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/ja/videos/connections)
+![Specification、CodingAgent、Sticky NoteがKavor Canvas上で観察を共有する様子](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[エージェントがSpecificationとメモを扱う様子を見る →](https://agentkavor.com/ja/videos/spec-agent-notes)
 
 *共有メモは、観察、未決定事項、次の手順をグラフのそばに見える形で保ちます。*
 
@@ -60,6 +62,43 @@ Builderは変更内容と実行したチェックを記録できます。Reviewe
 
 CodingAgents間のConnectionは自動workflow順序ではありません。参加者を到達可能にし、メッセージ交換を可能に
 します。
+
+## 例：作業を再開しやすいメモ
+
+ログインの失敗を調べるとき、すべての観察をアーキテクチャの決定にする必要はありません。発見、証拠、
+まだ答えのない質問をメモに残します：
+
+```markdown
+## 完了
+- セッション期限切れ後の失敗を再現した。
+- 新しいセッションでのログインは引き続き動く。
+
+## 作業中
+- 期限切れの応答とクライアントの処理を比較している。
+
+## 人の判断が必要
+- セッションを更新するか、再ログインを求めるか決める。
+- 仮説：retryが古い認証情報でrequestを繰り返している。未確認。
+
+## 証拠
+- Terminal Checks：再現コマンドと観察した応答。
+- クライアントのFile：retryを開始する箇所。
+
+## 次
+- クライアントを編集する前に仮説を確認する。
+```
+
+エージェントに依頼します：
+
+> 検証した発見と質問をメモに追加し、私の観察を保ってください。仮説が確認または否定されたら証拠を付けて
+> 状態を更新してください。決定が修正の範囲を定めるなら、対応するSpecificationへ移し、ここには短い参照を
+> 残してください。
+
+レビュー用の別ブロックには**シナリオ、観察した動作、証拠、次の行動**を記録できます。Builderの結論と
+Reviewerが確認した内容を区別できます。
+
+一つの発見なら部分更新か新しいブロックを使います。古い状態がたまったら本文の整理を依頼し、未決事項と
+あなたの観察は維持します。すべての会話を読み直さずに作業を再開できることが期待する結果です。
 
 ## Markdown、編集、競合
 

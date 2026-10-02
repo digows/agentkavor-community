@@ -3,7 +3,7 @@ id: file
 title: "File: contexto e escopo no Canvas"
 description: Use um File para manter uma fonte canônica visível, delimitar o contexto de um CodingAgent e levar seu caminho a um Terminal.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/pt-br/docs/file
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/pt-br/docs/file
 Um File não é um anexo descartável. Ele representa uma fonte canônica do filesystem dentro do Canvas, tornando claro
 qual material o trabalho deve ler, revisar, editar ou usar como entrada.
 
-[![Um PDF exibido em um File Node e usado por um CodingAgent no Canvas do Kavor](https://agentkavor.com/kavor-pdf-canvas-agent-demo-poster.jpg)](https://agentkavor.com/pt-br/videos/pdf-canvas-agent)
+![Um PDF exibido em um File Node e usado por um CodingAgent no Canvas do Kavor](https://media.agentkavor.com/demos/pdf-canvas-agent/poster.7306bdccc7f5.jpg)
+
+[Veja um PDF participando do trabalho no Canvas →](https://agentkavor.com/pt-br/videos/pdf-canvas-agent)
 
 *O File mantém o material visível enquanto você organiza agentes, decisões e execução ao redor dele.*
 
@@ -74,6 +76,50 @@ o CodingAgent faz a mudança e registra evidências nos lugares apropriados.
 
 Conecte um File de SQL ou script a um Terminal, nomeie a variável e execute o comando a partir do shell. Se um agente
 também estiver conectado, ele pode ajudar a interpretar a saída enquanto você acompanha o processo.
+
+## Exemplos: a mesma peça, três tipos de entrada
+
+### Código como foco de uma revisão
+
+Adicione o arquivo do cliente HTTP como File, conecte um Reviewer e mantenha uma Sticky Note alcançável para os
+findings. Peça:
+
+> Revise o File do cliente HTTP, especialmente timeout, retry e tratamento de erros. Use-o como foco da análise.
+> Caso uma conclusão dependa de outro arquivo, identifique a dependência antes de ampliar a investigação. Registre
+> somente findings sustentados por código ou reprodução e não implemente correções.
+
+O resultado esperado é uma revisão localizada, com cenário e referência ao trecho relevante. O File explicita o
+foco; não constitui um sandbox para as ferramentas nativas do harness. Delimite o escopo no pedido e use o Guardrail
+adequado para as operações do Kavor.
+
+### PDF ou imagem como referência
+
+Mantenha um PDF de requisitos ou uma imagem de referência no mesmo grafo que a Specification e o CodingAgent:
+
+> Compare o material do File com a Specification. Separe requisitos explícitos, interpretações e dúvidas. Para cada
+> divergência, indique a página ou elemento observado e registre a pergunta na Sticky Note. Não invente conteúdo que
+> não conseguir ler.
+
+Você espera uma comparação verificável, não apenas um resumo. A capacidade de interpretação depende do formato e
+das ferramentas disponíveis no harness; o preview do Kavor mantém a referência visível para você.
+
+### Um script como entrada do Terminal
+
+Crie um File para um pequeno script Node.js e configure sua Connection ao Terminal com o nome `CHECK_SCRIPT`:
+
+```javascript
+console.log('Canvas file connection is working');
+```
+
+Inicie a sessão do Terminal após configurar a Connection e execute:
+
+```sh
+test -n "$CHECK_SCRIPT" && node "$CHECK_SCRIPT"
+```
+
+O resultado esperado é `Canvas file connection is working`. A variável contém o caminho do script. Se estiver
+vazia, confira o nome na Connection e reinicie a sessão para receber a configuração. Este exemplo usa um shell POSIX
+e exige Node.js instalado; em PowerShell, consulte a variável com `$env:CHECK_SCRIPT` e execute `node $env:CHECK_SCRIPT`.
 
 ## Limites que importam
 

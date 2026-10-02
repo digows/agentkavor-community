@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent in Kavor: your favorite harness as part of a graph"
 description: Choose a provider, preserve its native experience, and connect the CodingAgent to the right context, tools, and participants.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent
 ---
 
@@ -15,7 +15,9 @@ the Canvas.
 Kavor does not replace each harness with a generic chat. It preserves the provider experience and adds structure
 around it: an explicit responsibility, reachable context, tools, other CodingAgents, and boundaries you can inspect.
 
-[![Kavor toolbar provider selector before adding a CodingAgent to the Canvas.](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)](https://agentkavor.com/en/videos/coding-agent-provider-selector)
+![Kavor toolbar provider selector before adding a CodingAgent to the Canvas](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)
+
+[See how to select a CodingAgent provider →](https://agentkavor.com/en/videos/coding-agent-provider-selector)
 
 ## What a CodingAgent owns
 
@@ -66,7 +68,7 @@ Direct Connections involving a CodingAgent have specific roles:
 Reachability does not erase direct contracts. If the exact Connection between a CodingAgent and a resource has a
 Guardrail, that restriction still governs the pair even when another route exists through the graph.
 
-## Three useful patterns
+## Useful patterns
 
 ### Implement from a contract
 
@@ -101,7 +103,9 @@ pasted into chat.
 The WebBrowser can stay alive when you switch Workspaces and return in the same state. This lets the agent continue
 already authorized work without reloading the page at every visual context switch.
 
-[![CodingAgent and WebBrowser connected on the Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/en/videos/web-browser-node)
+![CodingAgent and WebBrowser connected on the Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
+
+[See a CodingAgent working with WebBrowser →](https://agentkavor.com/en/videos/web-browser-node)
 
 ### Inspect another CodingAgent's current session
 
@@ -142,6 +146,34 @@ For a Reviewer:
 > Compare the implementation and evidence with the Specification criteria. Look for incorrect behavior, missing
 > scenarios, regressions, and operational risks. Record concrete findings before suggesting changes, and do not
 > approve the work merely because existing tests passed.
+
+## Example: a handoff the Reviewer can verify
+
+Imagine a fix to a registration form. The Specification requires an invalid email address to show a message,
+submission to be blocked, and a valid email address to keep working. Use the graph above and keep Builder and Reviewer
+in separate sessions.
+
+Request to the Builder:
+
+> Implement the validation defined in the Specification. Preserve the valid path's behavior. Run the relevant tests
+> in the Terminal and record changed files, commands, and results. Then send the Reviewer the Specification handle
+> and the exact commit or diff to review. Report outstanding items and stop before publishing.
+
+A useful handoff identifies the deliverable instead of copying the entire conversation:
+
+> The implementation is in the commit referenced in the Specification outputs. The invalid, empty, and valid email
+> tests passed in Terminal Checks. Review the criteria and failure paths in that commit. Record findings with the
+> file, scenario, and evidence; reply when finished. Do not change code during this review.
+
+Request to the Reviewer:
+
+> Read the contract and examine the referenced deliverable. Verify each criterion, reproduce the relevant scenarios,
+> and add your conclusions to the Sticky Note. Distinguish a demonstrated defect from a hypothesis. If you find a
+> blocker, explain which behavior fails and send it back to the Builder for correction.
+
+The expected result is an identifiable change, an independent review, and your evidence-based decision. If the
+Builder is still changing the deliverable, wait for it to stabilize or explicitly define what is ready for review.
+Two agents looking at different code revisions are not assessing the same deliverable.
 
 ## Limits that matter
 

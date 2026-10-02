@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: shared working memory"
 description: Use a Sticky Note to record status, findings, and attention points with your CodingAgents without turning every working note into a Specification.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/sticky-note
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/en/docs/sticky-note
 A Sticky Note starts as a post-it for humans. Connected to a CodingAgent, it becomes shared working memory: you
 and the agent can record what matters during a turn without depending on a conversation that will soon be buried.
 
-[![CodingAgents and a Sticky Note connected on the Kavor Canvas](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/en/videos/connections)
+![A Specification, a CodingAgent, and a Sticky Note sharing observations on the Kavor Canvas](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[See the agent working with the Specification and notes →](https://agentkavor.com/en/videos/spec-agent-notes)
 
 *Shared notes keep observations, open decisions, and next steps visible beside the graph.*
 
@@ -68,6 +70,44 @@ Specification — Builder — Reviewer
 
 The drawing above represents Nodes in the same graph. A Connection between CodingAgents is not an automatic workflow
 sequence; it makes participants reachable and enables message exchange.
+
+## Example: a note that helps you resume work
+
+When investigating a login failure, you do not need to turn every observation into an architectural decision. Use a
+note to preserve the finding, the evidence, and the question that remains open:
+
+```markdown
+## Done
+- Reproduced the failure after the session expired.
+- Login with a new session still works.
+
+## Doing
+- Comparing the expired-session response with the client's handling.
+
+## Human attention
+- Decide whether the client should renew the session or ask for a new login.
+- Hypothesis: the retry repeats the request with the old credential. Not yet confirmed.
+
+## Evidence
+- Terminal Checks: reproduction command and observed response.
+- Client File: the point where the retry starts.
+
+## Next
+- Confirm the hypothesis before editing the client.
+```
+
+Ask the agent:
+
+> Add verified findings and questions to the note. Preserve my observations. When a hypothesis is confirmed or
+> ruled out, update its status with the evidence. If the decision defines the scope of a fix, take it to the
+> corresponding Specification and leave a short reference here.
+
+For a review, a separate block can record **scenario, observed behavior, evidence, and next step**. This distinguishes
+what the Builder completed from what the Reviewer verified.
+
+Use a targeted update or a new block when there is only one finding. Ask for the body to be reorganized when old
+statuses accumulate; preserve open decisions and your observations. The result should let you resume the turn without
+rereading every conversation.
 
 ## Markdown, editing, and conflicts
 

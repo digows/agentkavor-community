@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent dans Kavor : votre harness préféré au sein d'un graphe"
 description: Choisissez un provider, conservez son expérience native et reliez le CodingAgent au contexte, aux outils et aux participants appropriés.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent
 ---
 
@@ -16,7 +16,9 @@ Kavor ne remplace pas chaque harness par un chat générique. Il conserve l'exp�
 structure autour d'elle : responsabilité explicite, contexte accessible, outils, autres CodingAgents et limites que
 vous pouvez inspecter.
 
-[![Sélecteur de provider dans la toolbar Kavor avant l'ajout d'un CodingAgent au Canvas.](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)](https://agentkavor.com/fr/videos/coding-agent-provider-selector)
+![Sélecteur de provider dans la toolbar Kavor avant l'ajout d'un CodingAgent au Canvas.](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)
+
+[Voyez le choix du provider en vidéo →](https://agentkavor.com/fr/videos/coding-agent-provider-selector)
 
 ## Ce que possède un CodingAgent
 
@@ -67,7 +69,7 @@ Les Connections directes impliquant un CodingAgent ont des rôles précis :
 L'accessibilité n'efface pas les contrats directs. Si la Connection exacte entre un CodingAgent et une ressource
 possède un Guardrail, cette restriction continue de régir la paire même si un autre chemin existe dans le graphe.
 
-## Trois schémas utiles
+## Schémas utiles
 
 ### Implémenter à partir d'un contrat
 
@@ -102,7 +104,9 @@ reconstruire la page à partir de texte copié dans le chat.
 Le WebBrowser peut rester actif lorsque vous changez de Workspace et revenir dans le même état. L'agent poursuit
 ainsi un travail déjà autorisé sans recharger la page à chaque changement de contexte visuel.
 
-[![CodingAgent et WebBrowser connectés sur le Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/fr/videos/web-browser-node)
+![CodingAgent et WebBrowser connectés sur le Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
+
+[Voyez le CodingAgent et le WebBrowser travailler ensemble →](https://agentkavor.com/fr/videos/web-browser-node)
 
 ### Consulter la session actuelle d'un autre CodingAgent
 
@@ -145,6 +149,36 @@ Pour un Reviewer :
 > Compare l'implémentation et les preuves aux critères de la Specification. Recherche les comportements incorrects,
 > scénarios manquants, régressions et risques opérationnels. Enregistre des findings concrets avant de proposer des
 > changements et n'approuve pas seulement parce que les tests existants ont réussi.
+
+## Exemple : un handoff que le Reviewer peut vérifier
+
+Imaginez une correction du formulaire d'inscription. La Specification exige qu'un e-mail invalide affiche un
+message, que l'envoi soit bloqué et qu'un e-mail valide continue de fonctionner. Utilisez le graphe ci-dessus et
+gardez Builder et Reviewer dans des sessions distinctes.
+
+Demande au Builder :
+
+> Implémente la validation définie dans la Specification. Préserve le comportement du parcours valide. Exécute les
+> tests pertinents dans le Terminal et consigne les fichiers modifiés, commandes et résultats. Envoie ensuite au
+> Reviewer le handle de la Specification et le commit ou diff exact à revoir. Signale les points en suspens et
+> arrête-toi avant de publier.
+
+Un handoff utile identifie la livraison plutôt que de copier toute la conversation :
+
+> L'implémentation se trouve dans le commit indiqué dans les outputs de la Specification. Les tests d'e-mail invalide,
+> vide et valide ont réussi dans le Terminal Checks. Examine les critères et les parcours d'échec dans ce commit.
+> Consigne les findings avec fichier, scénario et preuve ; réponds lorsque tu as terminé. Ne modifie pas le code
+> pendant cette revue.
+
+Demande au Reviewer :
+
+> Lis le contrat et examine la livraison référencée. Vérifie chaque critère, reproduis les scénarios pertinents et
+> ajoute tes conclusions à la Sticky Note. Distingue un défaut démontré d'une hypothèse. Si tu trouves un blocage,
+> explique quel comportement échoue et renvoie le travail au Builder pour correction.
+
+Le résultat attendu est un changement identifiable, une revue indépendante et votre décision fondée sur des preuves.
+Si le Builder modifie encore la livraison, attendez qu'il stabilise le résultat ou délimitez explicitement ce qui est
+prêt à être revu. Deux agents examinant des révisions différentes du code n'évaluent pas la même livraison.
 
 ## Limites importantes
 

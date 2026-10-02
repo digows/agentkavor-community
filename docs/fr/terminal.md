@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal dans Kavor : une exécution visible pour l'humain et l'agent"
 description: Utilisez un vrai shell sur le Canvas, reliez le contexte par des chemins canoniques et laissez le CodingAgent aider sans perdre la supervision.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/terminal
 ---
 
@@ -14,6 +14,8 @@ outils habituels ; Kavor ajoute contexte, observabilité et collaboration autour
 
 Le but n'est pas de cacher l'exécution derrière un bouton, mais de permettre à l'humain et au CodingAgent de
 travailler dans le même environnement visible, chacun sous des limites claires.
+
+![Terminals, Files, Specifications et CodingAgents reliés dans un Canvas de travail](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## Ce que possède un Terminal
 
@@ -126,6 +128,39 @@ Pour la surveillance :
 > Suis uniquement le tail nécessaire de ce Terminal. Préviens-moi lorsqu'une nouvelle preuve apparaît ; ne considère
 > pas l'absence de nouvelles lignes comme un succès et ne laisse pas tourner un watcher lancé uniquement pour ton
 > enquête après sa fin.
+
+## Exemple : enquêter sur une panne sans tout redémarrer
+
+Une application web tourne dans Terminal App, mais un formulaire ne termine pas son envoi. Gardez ce processus ouvert
+et utilisez un autre Terminal, Checks, pour les vérifications. Reliez le CodingAgent aux ressources nécessaires :
+
+> Observe l'écran actuel de Terminal App et reproduis l'erreur dans le WebBrowser connecté. Rapproche l'heure de
+> l'action des logs. Ne redémarre pas le serveur et n'interromps pas mon processus. Utilise Terminal Checks si tu as
+> besoin d'une commande distincte, et note ce que chaque vérification confirme ou écarte.
+
+Pour un projet Node.js, une vérification simple dans Terminal Checks peut confirmer l'environnement :
+
+```sh
+node --version
+```
+
+Pour enquêter sur l'application, l'agent doit choisir les commandes réelles du projet après avoir lu ses scripts et
+conventions. Une commande générique empruntée à une autre stack ne prouve rien sur la panne.
+
+Le résultat attendu relie l'action, la sortie observée et une cause démontrée ou une hypothèse délimitée. « La requête
+a atteint le serveur mais a renvoyé une erreur de validation » est plus utile que « le serveur semble défectueux ».
+Après une correction autorisée, répétez le même parcours pour comparer les résultats.
+
+### Suivre un processus que vous avez lancé
+
+Vous pouvez aussi lancer un build et demander au CodingAgent de ne suivre que la sortie pertinente :
+
+> Suis le build dans ce Terminal. Utilise la sortie récente et ne consulte davantage d'historique que si nécessaire.
+> Rapporte le résultat observable et les messages qui étayent ta conclusion. N'envoie pas de commandes et ne termine
+> pas le processus pendant son exécution.
+
+La demande coordonne la collaboration ; `terminal_read_only` peut restreindre les opérations Kavor à l'observation.
+Vous continuez à utiliser le shell tandis que l'agent aide à interpréter l'état visible.
 
 ## Guardrail en lecture seule
 

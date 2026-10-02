@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule dans Kavor : donnez une horloge à votre graphe"
 description: Planifiez des prompts et commandes récurrents avec aperçu, pause, Run now et historique durable, sans étendre les permissions.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/schedule
 ---
 
@@ -96,6 +96,44 @@ pnpm test -- --runInBand
 
 Le payload ne remplace pas les Connections. Citer une Sticky Note, un File ou une Specification ne donne pas accès si
 le Node n’appartient pas au composant accessible du CodingAgent.
+
+## Exemple complet : une vérification quotidienne avec rapport
+
+Vous voulez détecter les pannes tôt et trouver un résumé utile en ouvrant le projet. Reliez un Schedule au Maintainer.
+Dans son graphe, gardez une Specification définissant la routine, Terminal Checks et Sticky Note Daily report. Ajoutez
+un Reviewer si la routine a réellement besoin d'une autre évaluation.
+
+Dans la Specification, définissez les vérifications et la réponse à leurs échecs. Commencez par le diagnostic et le
+rapport ; autorisez séparément les corrections quand la cause et le périmètre sont clairs.
+
+Un payload possible :
+
+> Exécute les vérifications autorisées par la Specification dans Terminal Checks. Lis les scripts du projet pour
+> choisir les bonnes commandes. Note l'heure, les commandes, résultats et points en attente dans Sticky Note Daily
+> report. Ne modifie pas le code et ne publie rien. Si une vérification ne peut pas tourner, note pourquoi. Termine par
+> une prochaine action concrète, puis arrête-toi.
+
+Configurez `Daily`, choisissez une heure où la machine sera éveillée et vérifiez `Next occurrences`. Avant `Resume`,
+utilisez `Run now` avec le Schedule en pause et vérifiez :
+
+1. le prompt est arrivé au bon Maintainer ;
+2. les vérifications ont tourné dans le Terminal prévu ;
+3. la note distingue réussite, échec et non-exécution ;
+4. l'historique montre le résultat observé de la tentative.
+
+Exemple de rapport :
+
+```markdown
+## Vérification quotidienne
+- Tests : réussis ; commande et résumé consignés dans Terminal Checks.
+- Build : échoué ; erreur d'import identifiée dans le fichier référencé.
+- Prochaine action : revoir l'import avant d'autoriser une correction.
+- Modifications du code : aucune.
+```
+
+Après le test, utilisez `Resume`. Si la machine est éteinte à l'occurrence suivante, consultez `Missed` et décidez
+quand lancer manuellement ; n'attendez pas d'exécution rétroactive. Si la routine dure plus que l'intervalle, revoyez
+la récurrence plutôt que d'attendre une file illimitée.
 
 ## La récurrence sans masquer le calendrier
 

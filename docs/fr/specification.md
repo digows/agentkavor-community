@@ -3,7 +3,7 @@ id: specification
 title: "Specification dans Kavor : réfléchissez soigneusement une fois, implémentez mieux"
 description: Structurez intention, décisions et critères dans un Markdown durable, organisez plusieurs roots et guidez le lifecycle de la Specification.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/fr/docs/specification
 ---
 
@@ -16,7 +16,9 @@ Elle peut définir une architecture, une intégration, un modèle de domaine, un
 délimité de corrections. Sa taille varie, pas sa responsabilité : expliquer ce qui doit être vrai avant de considérer
 le travail terminé.
 
-![Workspace Settings de Kavor avec quatre roots de Specification configurées.](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+![Une Specification, un CodingAgent et une Sticky Note gardant contrat et observations sur le même Canvas](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Voyez la Specification, l'agent et les notes travailler ensemble →](https://agentkavor.com/fr/videos/spec-agent-notes)
 
 ## La source de vérité est un fichier
 
@@ -99,6 +101,8 @@ configurées quittent la liste active et peuvent revenir si la root est ajoutée
 Avec plusieurs roots, le panneau Specifications regroupe d'abord par root, puis par dossiers réels du filesystem. Le
 Canvas ne crée pas une taxonomie parallèle : l'organisation reste votre structure de fichiers.
 
+![Workspace Settings de Kavor avec quatre roots de Specification configurées](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+
 ### Un agencement simple
 
 ```text
@@ -152,6 +156,42 @@ Spec Writer — Specification — Implementer — Reviewer
 
 Le Spec Writer consigne les décisions. L'Implementer exécute uniquement un contrat Ready. Le Reviewer compare
 résultat et critères. Le Terminal fournit les preuves. La décision de passer à Done reste humaine.
+
+## Exemple : une petite Specification prête à être implémentée
+
+Prenez un formulaire qui accepte une adresse e-mail invalide. Plutôt que de demander seulement « améliore la
+validation », consignez un contrat qui permette d'implémenter et de revoir sans deviner ce que vous vouliez :
+
+```markdown
+# Validation de l'e-mail d'inscription
+
+## Problème
+Le formulaire envoie des adresses invalides et n'affiche l'échec qu'après la réponse du serveur.
+
+## Objectif
+Signaler l'erreur avant l'envoi et garder le parcours valide fonctionnel.
+
+## Hors périmètre
+Redessiner le formulaire, modifier l'authentification ou changer de bibliothèque de validation.
+
+## Critères d'acceptation
+- Un champ vide affiche un message et ne déclenche pas la requête d'inscription.
+- Une adresse invalide affiche un message et ne déclenche pas la requête d'inscription.
+- Une adresse valide déclenche une seule requête avec les données attendues.
+- L'utilisateur peut corriger l'adresse et réessayer.
+
+## Vérification
+Tests des trois scénarios et reproduction du parcours dans l'application.
+```
+
+« La validation fonctionne » ne permet pas une revue indépendante. « Une adresse invalide ne déclenche pas la
+requête » définit quelque chose que le Reviewer peut observer. Cet exemple est illustratif : adaptez les règles de
+validation au contrat réel de votre produit avant de passer à Ready.
+
+Une fois le travail terminé, demandez au Builder de consigner le commit ou les fichiers produits dans les outputs
+de la Specification. Demandez au Reviewer d'indiquer quels critères il a vérifiés, par quelle commande ou interaction,
+et quels points restent en suspens. Une référence durable à la livraison et des preuves des critères étayent la
+décision de passer à Done.
 
 ## Ce qu'il faut éviter
 

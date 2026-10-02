@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor の Schedule：グラフに時計を与える"
 description: 権限を広げず、プレビュー、Pause、Run now、永続履歴を使って繰り返しのプロンプトやコマンドを予約します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/schedule
 ---
 
@@ -94,6 +94,43 @@ pnpm test -- --runInBand
 
 payload は Connections の代わりにはなりません。Sticky Note、File、Specification の名前を書くだけではアクセスは付与されず、
 その Node が CodingAgent の到達可能 component に属している必要があります。
+
+## 完全な例：毎日の検証とレポート
+
+失敗を早く見つけ、プロジェクトを開くと有用な要約があるようにしたいとします。ScheduleをMaintainerに
+接続し、グラフには作業範囲を定めるSpecification、Terminal Checks、Sticky Note Daily reportを置きます。
+別の評価が本当に必要ならReviewerを追加します。
+
+Specificationに検証内容と失敗時の対応を定義します。診断とレポートから始め、原因と範囲が明確になってから
+修正を別途許可します。
+
+payloadの例：
+
+> Specificationで許可された検証をTerminal Checksで実行してください。プロジェクトのscriptsを読み、
+> 適切なコマンドを選んでください。Sticky Note Daily reportに時刻、コマンド、結果、未解決事項を記録し、
+> コードの変更や公開はしないでください。検証できない場合は理由を残し、具体的な次の行動を書いて止まってください。
+
+`Daily`を設定し、マシンが起きている時刻を選び、`Next occurrences`を確認します。`Resume`の前に
+Scheduleを停止したまま`Run now`を使い、次を確認します：
+
+1. 正しいMaintainerにpromptが届いた。
+2. 想定したTerminalで検証が実行された。
+3. メモで成功、失敗、未実行を区別している。
+4. 履歴に試行の観察結果が表示されている。
+
+説明用のレポート：
+
+```markdown
+## 毎日の検証
+- テスト：成功。Terminal Checksにコマンドと要約を記録した。
+- Build：失敗。指定ファイルでimportエラーを確認した。
+- 次の行動：修正を許可する前にimportをレビューする。
+- コード変更：なし。
+```
+
+テスト後に`Resume`を使います。次の時刻にマシンが停止していたら`Missed`を確認し、手動実行する時期を
+決めます。過去の実行が自動的に取り戻されるとは考えないでください。処理が間隔より長いなら、無制限の
+キューを期待せず繰り返し設定を見直します。
 
 ## calendar を隠さない recurrence
 

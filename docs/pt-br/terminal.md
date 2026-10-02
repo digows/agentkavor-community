@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal no Kavor: execução visível para humano e agente"
 description: Use um shell real no Canvas, conecte contexto por caminhos canônicos e permita assistência do CodingAgent sem perder supervisão.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/pt-br/docs/terminal
 ---
 
@@ -14,6 +14,8 @@ conhecidas; o Kavor acrescenta contexto, observabilidade e colaboração ao redo
 
 O objetivo não é esconder execução atrás de um botão. É permitir que humano e CodingAgent trabalhem no mesmo
 ambiente visível, cada um sob limites claros.
+
+![Um Canvas com Terminals, Files, Specifications e CodingAgents conectados em um grafo de trabalho](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## O que o Terminal possui
 
@@ -125,6 +127,39 @@ Para monitoramento:
 
 > Acompanhe somente o tail necessário deste Terminal. Avise quando houver evidência nova; não trate ausência de novas
 > linhas como sucesso e não deixe um watcher iniciado apenas para sua investigação rodando depois de concluir.
+
+## Exemplo: investigue uma falha sem reiniciar tudo
+
+Uma aplicação web roda no Terminal App, mas um formulário não conclui o envio. Mantenha esse processo aberto e use
+outro Terminal, Checks, para as verificações. Conecte o CodingAgent aos recursos necessários e peça:
+
+> Observe a tela atual do Terminal App e reproduza o erro no WebBrowser conectado. Correlacione o horário da ação com
+> os logs. Não reinicie o servidor nem interrompa meu processo. Use o Terminal Checks se precisar de um comando
+> separado e registre o que cada verificação confirmou ou descartou.
+
+Se o projeto for Node.js, uma verificação simples no Terminal Checks pode confirmar o ambiente:
+
+```sh
+node --version
+```
+
+Para investigar a aplicação, o agente deve escolher os comandos reais do projeto depois de consultar seus scripts
+e convenções. Um comando genérico copiado de outra stack não comprova nada sobre a falha.
+
+O resultado esperado é uma relação entre ação, saída observada e causa demonstrada ou hipótese delimitada. Por
+exemplo: “o request chegou ao servidor, mas retornou erro de validação” é mais útil do que “o servidor parece ruim”.
+Depois de uma correção autorizada, repita o mesmo caminho para comparar os resultados.
+
+### Acompanhar um processo que você iniciou
+
+Você também pode iniciar um build e pedir ao CodingAgent para acompanhar apenas a saída relevante:
+
+> Acompanhe o build neste Terminal. Use a saída recente e consulte mais histórico apenas quando necessário. Informe
+> o resultado que conseguir observar e as mensagens que justificam sua conclusão. Não envie comandos nem encerre o
+> processo enquanto ele estiver executando.
+
+O pedido coordena a colaboração; um Guardrail `terminal_read_only` pode restringir as operações do Kavor à
+observação. Você continua usando o shell, enquanto o agente ajuda a interpretar o estado visível.
 
 ## Guardrail de somente leitura
 

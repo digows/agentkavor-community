@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal in Kavor: visible execution for human and agent"
 description: Use a real shell on the Canvas, connect context through canonical paths, and let a CodingAgent assist without losing supervision.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/terminal
 ---
 
@@ -14,6 +14,8 @@ Kavor adds context, observability, and collaboration around that session.
 
 The goal is not to hide execution behind a button. It is to let a human and a CodingAgent work in the same visible
 environment, each under clear boundaries.
+
+![A Canvas with Terminals, Files, Specifications, and CodingAgents connected in a working graph](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## What a Terminal owns
 
@@ -123,6 +125,39 @@ For monitoring:
 
 > Follow only the necessary tail from this Terminal. Notify me when new evidence appears; do not treat a lack of new
 > lines as success, and do not leave a watcher started only for your investigation running after you finish.
+
+## Example: investigate a failure without restarting everything
+
+A web application runs in Terminal App, but a form cannot complete submission. Keep that process open and use a
+second Terminal, Checks, for verification. Connect the CodingAgent to the necessary resources and ask:
+
+> Observe Terminal App's current screen and reproduce the error in the connected WebBrowser. Correlate the action's
+> time with the logs. Do not restart the server or interrupt my process. Use Terminal Checks if you need a separate
+> command, and record what each check confirmed or ruled out.
+
+For a Node.js project, a simple check in Terminal Checks can confirm the environment:
+
+```sh
+node --version
+```
+
+To investigate the application, the agent should choose the project's actual commands after reading its scripts and
+conventions. A generic command copied from another stack proves nothing about the failure.
+
+Expect a relationship between the action, observed output, and a demonstrated cause or bounded hypothesis. For
+example, “the request reached the server but returned a validation error” is more useful than “the server looks bad”.
+After an authorized correction, repeat the same path to compare results.
+
+### Follow a process you started
+
+You can also start a build and ask the CodingAgent to follow only the relevant output:
+
+> Follow the build in this Terminal. Use recent output and inspect more history only when needed. Report the result
+> you can observe and the messages supporting your conclusion. Do not send commands or terminate the process while
+> it is running.
+
+The request coordinates collaboration; a `terminal_read_only` Guardrail can restrict Kavor operations to observation.
+You keep using the shell while the agent helps interpret the visible state.
 
 ## Read-only Guardrail
 
