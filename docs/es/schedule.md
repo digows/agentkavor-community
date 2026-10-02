@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule en Kavor: dale un reloj a tu grafo"
 description: Programa prompts y comandos recurrentes con vista previa, pausa, Run now e historial persistente sin ampliar permisos.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/schedule
 ---
 
@@ -96,6 +96,44 @@ pnpm test -- --runInBand
 
 El payload no sustituye Connections. Mencionar una Sticky Note, File o Specification no concede acceso si el Node no
 pertenece al componente alcanzable del CodingAgent.
+
+## Ejemplo completo: una verificación diaria con informe
+
+Quieres detectar fallas temprano y encontrar un resumen útil al abrir el proyecto. Conecta un Schedule al Maintainer.
+En el grafo del agente, mantén una Specification con el alcance de la rutina, Terminal Checks y Sticky Note Daily
+report. Añade un Reviewer si la rutina realmente necesita otra evaluación.
+
+Define en la Specification qué comprobaciones pertenecen a la rutina y qué hacer si fallan. Empieza con diagnóstico
+e informe; autoriza las correcciones por separado cuando la causa y el alcance estén claros.
+
+Un payload útil:
+
+> Ejecuta las verificaciones autorizadas en la Specification usando Terminal Checks. Lee los scripts del proyecto
+> para elegir los comandos correctos. Registra hora, comandos, resultados y pendientes en Sticky Note Daily report.
+> No cambies código ni publiques nada. Si una verificación no puede ejecutarse, registra el motivo. Termina con una
+> próxima acción concreta y detente.
+
+Configura `Daily`, elige una hora en que la máquina estará despierta y comprueba `Next occurrences`. Antes de `Resume`,
+usa `Run now` con el Schedule pausado y verifica:
+
+1. el prompt llegó al Maintainer correcto;
+2. las comprobaciones corrieron en el Terminal esperado;
+3. la nota distingue pasó, falló y no ejecutado;
+4. el historial muestra el resultado observado de la tentativa.
+
+Un informe ilustrativo:
+
+```markdown
+## Verificación diaria
+- Tests: pasaron; comando y resumen registrados en Terminal Checks.
+- Build: falló; error de import identificado en el archivo indicado.
+- Próxima acción: revisar el import antes de autorizar una corrección.
+- Cambios de código: ninguno.
+```
+
+Después de probar, usa `Resume`. Si la máquina está apagada en la siguiente ocurrencia, consulta `Missed` y decide
+cuándo ejecutar manualmente; no esperes ejecución retroactiva. Si la rutina dura más que el intervalo, revisa la
+recurrencia en lugar de esperar una cola ilimitada.
 
 ## Recurrencia sin ocultar el calendario
 

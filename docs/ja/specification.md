@@ -3,7 +3,7 @@ id: specification
 title: "Kavor の Specification：一度丁寧に考え、より良く実装する"
 description: 意図、決定、基準を永続的な Markdown にまとめ、複数の roots を整理し、Specification の lifecycle を導きます。
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/specification
 ---
 
@@ -15,7 +15,9 @@ Specification は意図を永続的な契約に変えます。人と CodingAgent
 アーキテクチャ、連携、ドメインモデリング、feature、モジュール、または範囲を限定した修正群を定義できます。
 長さは変わっても、責任は同じです。作業を完了とみなす前に、何が真であるべきかを説明します。
 
-![四つの Specification roots が設定された Kavor Workspace Settings。](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+![Specification、CodingAgent、Sticky Noteが一つのCanvasで契約と観察を共有する様子](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Specification、エージェント、メモの協働を見る →](https://agentkavor.com/ja/videos/spec-agent-notes)
 
 ## 信頼できる情報源はファイル
 
@@ -96,6 +98,8 @@ Specifications はアクティブ一覧から外れ、その root を再追加�
 複数 roots がある場合、Specifications パネルは root、次に実際の filesystem フォルダーでグループ化します。
 Canvas は別の分類体系を作りません。整理はあなたが所有するファイル構造のままです。
 
+![四つの Specification roots が設定された Kavor Workspace Settings。](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+
 ### シンプルな roots の構成
 
 ```text
@@ -147,6 +151,40 @@ Spec Writer — Specification — Implementer — Reviewer
 
 Spec Writer が決定を記録し、Implementer は Ready の契約だけを実行します。Reviewer は結果と基準を比較し、
 Terminal が証拠を提供します。Done とみなす判断は人に残ります。
+
+## 例：実装に進める小さなSpecification
+
+フォームが不正なメールアドレスを受け付けるとします。「入力検証を改善して」だけでなく、意図を推測せず
+実装とレビューができる契約を記録します：
+
+```markdown
+# 登録メールアドレスの検証
+
+## 問題
+フォームは不正なアドレスを送信し、サーバーの応答後に初めてエラーを表示する。
+
+## 目的
+送信前にエラーを伝え、有効な入力の経路を維持する。
+
+## 範囲外
+フォームの再設計、認証の変更、検証ライブラリの交換。
+
+## 受け入れ基準
+- 空の欄ではメッセージを表示し、登録requestを送らない。
+- 不正なアドレスではメッセージを表示し、登録requestを送らない。
+- 有効なアドレスでは期待するデータで一つのrequestを送る。
+- ユーザーはアドレスを修正し、再試行できる。
+
+## 検証
+三つのシナリオのテストと、アプリ上でのフロー再現。
+```
+
+「検証が動く」では独立したレビューができません。「不正なアドレスではrequestを送らない」なら観察できます。
+これは説明用の例です。Readyにする前に実際の製品契約に合わせて検証ルールを調整してください。
+
+完了時にはBuilderにcommitや作成ファイルをSpecificationのoutputsへ記録してもらいます。Reviewerには
+検証した基準、使用したコマンドや操作、残る課題を示してもらいます。成果への永続的な参照と基準の証拠が
+Doneへ進める判断を支えます。
 
 ## 避けること
 

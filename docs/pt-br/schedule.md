@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule no Kavor: dê um relógio ao seu grafo"
 description: Agende prompts e comandos com recorrência, preview, pausa, Run now e histórico durável sem ampliar permissões.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/pt-br/docs/schedule
 ---
 
@@ -97,6 +97,44 @@ pnpm test -- --runInBand
 
 O payload não substitui Connections. Mencionar uma Sticky Note, File ou Specification não concede acesso se o Node
 não estiver no componente alcançável do CodingAgent.
+
+## Exemplo completo: uma verificação diária com relatório
+
+Você quer encontrar falhas cedo e receber um resumo útil ao abrir o projeto. Monte um Schedule conectado ao
+Maintainer. No grafo do agente, mantenha uma Specification com o escopo da rotina, um Terminal Checks e uma Sticky
+Note Daily report. Acrescente um Reviewer se a rotina realmente precisar de outra avaliação.
+
+Na Specification, defina quais verificações pertencem à rotina e o que deve acontecer quando falharem. Comece com
+diagnóstico e relatório; autorize correções separadamente quando houver uma causa e um escopo claros.
+
+Use um payload como:
+
+> Execute as verificações autorizadas na Specification usando o Terminal Checks. Leia os scripts do projeto para
+> escolher os comandos corretos. Registre na Sticky Note Daily report o horário, os comandos, os resultados e as
+> pendências. Não altere o código nem publique nada. Se uma verificação não puder rodar, registre o motivo. Ao terminar,
+> deixe uma próxima ação concreta e pare.
+
+Configure `Daily`, escolha um horário em que a máquina estará acordada e confira `Next occurrences`. Antes de
+usar `Resume`, execute `Run now` com o Schedule pausado e confira:
+
+1. o prompt chegou ao Maintainer correto;
+2. as verificações ocorreram no Terminal esperado;
+3. a nota distingue passou, falhou e não executado;
+4. o histórico mostra o resultado observado da tentativa.
+
+Um relatório ilustrativo pode ser:
+
+```markdown
+## Verificação diária
+- Testes: passaram; comando e resumo registrados no Terminal Checks.
+- Build: falhou; erro de import identificado no arquivo indicado.
+- Próxima ação: revisar o import antes de autorizar uma correção.
+- Alterações de código: nenhuma.
+```
+
+Depois do teste, use `Resume`. Se a máquina estiver desligada no horário seguinte, consulte `Missed` e decida quando
+executar manualmente; não espere que o Kavor rode a rotina retroativamente. Se a rotina demorar mais do que o
+intervalo, reveja a recorrência em vez de esperar uma fila ilimitada.
 
 ## Recorrência sem esconder o calendário
 

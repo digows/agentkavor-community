@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor の Terminal：人と agent に見える実行環境"
 description: Canvas 上の本物の shell を使い、正規パスでコンテキストを接続し、監督を失わずに CodingAgent の支援を受けます。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/terminal
 ---
 
@@ -14,6 +14,8 @@ Terminal は Canvas 上の本物の shell です。使い慣れたコマンド�
 
 目的は実行をボタンの後ろに隠すことではありません。人と CodingAgent が、明確な境界の下で同じ見える環境を
 使うことです。
+
+![Terminals、Files、Specifications、CodingAgentsがCanvasの作業グラフでつながる様子](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## Terminal が持つもの
 
@@ -118,6 +120,39 @@ Maintainer は Specification を契約、File を明示的なソース、Termina
 
 > この Terminal の必要な tail だけを追ってください。新しい証拠が出たら知らせ、行が増えないことを成功と
 > みなさず、調査専用に開始した watcher を終了後も残さないでください。
+
+## 例：すべてを再起動せずに失敗を調べる
+
+WebアプリがTerminal Appで動いていますが、フォームの送信が完了しません。そのプロセスを開いたままにし、
+検証には別のTerminal Checksを使います。CodingAgentを必要なリソースに接続して依頼します：
+
+> Terminal Appの現在の画面を観察し、接続したWebBrowserでエラーを再現してください。操作時刻とlogsを
+> 照合し、サーバーを再起動したり私のプロセスを止めたりしないでください。別のコマンドが必要ならTerminal
+> Checksを使い、各検証が何を確認し何を除外したか記録してください。
+
+Node.jsプロジェクトなら、Terminal Checksで簡単に環境を確認できます：
+
+```sh
+node --version
+```
+
+アプリの調査では、scriptsと規約を確認してから実際のプロジェクトのコマンドを選びます。他のstackから
+コピーした一般的なコマンドは、その失敗の証拠にはなりません。
+
+期待するのは操作、観察した出力、実証した原因または範囲を限定した仮説の関係です。「requestはサーバーに
+届いたが検証エラーが返った」は「サーバーがおかしそう」より役立ちます。許可された修正後に同じ経路を
+繰り返して比較します。
+
+### あなたが開始したプロセスを見守る
+
+buildを開始し、関連する出力だけをCodingAgentに追ってもらうこともできます：
+
+> このTerminalのbuildを追ってください。最近の出力を使い、必要なときだけ過去の履歴を確認してください。
+> 観察できる結果と結論を支えるメッセージを報告し、実行中にコマンドを送ったりプロセスを終了したり
+> しないでください。
+
+依頼は協働を調整します。`terminal_read_only`はKavorの操作を観察に制限できます。あなたがshellを使いながら、
+エージェントは見えている状態の解釈を助けます。
 
 ## 読み取り専用 Guardrail
 

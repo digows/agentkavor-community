@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note：共享工作记忆"
 description: 使用 Sticky Note 与 CodingAgents 记录状态、发现和注意事项，而不必把每条工作笔记都变成 Specification。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/sticky-note
 ---
 
@@ -12,7 +12,9 @@ canonicalUrl: https://agentkavor.com/zh/docs/sticky-note
 Sticky Note 最初只是给人使用的便利贴。连接 CodingAgent 后，它会成为共享工作记忆：你和 agent 可以在工作
 过程中记录重要信息，不必依赖很快就会被埋没的对话。
 
-[![Kavor Canvas 上连接的 CodingAgents 和 Sticky Note](https://agentkavor.com/kavor-connections-demo-poster.jpg)](https://agentkavor.com/zh/videos/connections)
+![Specification、CodingAgent 和 Sticky Note 在 Kavor Canvas 上共享观察记录](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[观看智能体如何与 Specification 和笔记协作 →](https://agentkavor.com/zh/videos/spec-agent-notes)
 
 *共享笔记让观察、开放决定和下一步始终显示在图旁边。*
 
@@ -61,6 +63,40 @@ Builder 可以记录改动和执行过的检查。Reviewer 可以加入 findings
 寻找这些信息。
 
 CodingAgents 之间的 Connection 不是自动 workflow 顺序；它让参与者可达，并允许交换消息。
+
+## 示例：帮助你恢复工作的笔记
+
+调查登录失败时，无需把每条观察都变成架构决策。用一条笔记保留发现、证据和尚未解决的问题：
+
+```markdown
+## 已完成
+- 已复现会话过期后的失败。
+- 新会话中的登录仍能正常工作。
+
+## 进行中
+- 正在比较会话过期的响应与客户端的处理方式。
+
+## 需要人来处理
+- 决定客户端应续期会话，还是要求重新登录。
+- 假设：retry 使用旧凭据重复发起请求。尚未确认。
+
+## 证据
+- Terminal Checks：复现命令和观察到的响应。
+- 客户端 File：发起 retry 的位置。
+
+## 下一步
+- 在编辑客户端前确认假设。
+```
+
+请智能体：
+
+> 将已验证的发现和问题加入笔记。保留我的观察记录。假设得到确认或被排除后，用证据更新其状态。
+> 如果某项决定定义了修复范围，将其移入对应的 Specification，并在这里留下一条简短引用。
+
+审查时，可以用独立区块记录**场景、观察到的行为、证据和下一步**，以区分 Builder 的结论与 Reviewer 验证过的内容。
+
+只有一项新发现时，局部更新或新增一个区块即可。笔记积累了过时状态后，再要求整理正文；保留仍未解决的决策和你的观察。
+整理后的结果应让你无需重读所有对话就能继续工作。
 
 ## Markdown、编辑与冲突
 

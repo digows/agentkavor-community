@@ -3,7 +3,7 @@ id: specification
 title: "Specification en Kavor: piensa con cuidado una vez, implementa mejor"
 description: Estructura intención, decisiones y criterios en Markdown duradero, organiza varias roots y guía el lifecycle de la Specification.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/specification
 ---
 
@@ -16,7 +16,9 @@ Puede definir una arquitectura, integración, modelado de dominio, feature, mód
 correcciones. Su tamaño varía; su responsabilidad no: explicar qué debe ser cierto antes de considerar terminado el
 trabajo.
 
-![Workspace Settings de Kavor con cuatro roots de Specification configuradas.](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+![Una Specification, un CodingAgent y una Sticky Note mantienen el contrato y las observaciones en el mismo Canvas](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[Mira la Specification, el agente y las notas trabajando juntos →](https://agentkavor.com/es/videos/spec-agent-notes)
 
 ## La fuente de verdad es un archivo
 
@@ -99,6 +101,8 @@ Con más de una root, el panel de Specifications agrupa primero por root y luego
 filesystem. El Canvas no crea una taxonomía paralela: la organización sigue siendo la estructura de archivos que ya
 posees.
 
+![Workspace Settings de Kavor con cuatro roots de Specification configuradas](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+
 ### Un diseño sencillo de roots
 
 ```text
@@ -152,6 +156,41 @@ Spec Writer — Specification — Implementer — Reviewer
 
 El Spec Writer registra decisiones. El Implementer ejecuta únicamente el contrato Ready. El Reviewer compara
 resultado y criterios. El Terminal aporta evidencias. La decisión de tratar el trabajo como Done sigue siendo humana.
+
+## Ejemplo: una pequeña Specification lista para implementar
+
+Considera un formulario que acepta un correo electrónico inválido. En lugar de pedir solo «mejora la validación»,
+registra un contrato que permita implementar y revisar sin adivinar qué querías:
+
+```markdown
+# Validación del correo de registro
+
+## Problema
+El formulario envía direcciones inválidas y solo muestra el fallo después de la respuesta del servidor.
+
+## Objetivo
+Informar del error antes del envío y mantener el camino válido funcionando.
+
+## Fuera del alcance
+Rediseñar el formulario, cambiar la autenticación o sustituir la biblioteca de validación.
+
+## Criterios de aceptación
+- Un campo vacío muestra un mensaje y no envía el request de registro.
+- Una dirección inválida muestra un mensaje y no envía el request de registro.
+- Una dirección válida envía un único request con los datos esperados.
+- El usuario puede corregir la dirección e intentarlo de nuevo.
+
+## Verificación
+Tests de los tres escenarios y una reproducción del flujo en la aplicación.
+```
+
+«La validación funciona» no permite una revisión independiente. «Una dirección inválida no envía el request» define
+algo que el Reviewer puede observar. El ejemplo es ilustrativo: adapta las reglas de validación al contrato real de tu
+producto antes de mover a Ready.
+
+Al terminar, pide al Builder que registre el commit o los archivos producidos en los outputs de la Specification.
+Pide al Reviewer que indique qué criterios verificó, mediante qué comando o interacción y qué pendientes quedan. Una
+referencia duradera a la entrega y evidencias de los criterios sustentan la decisión de mover a Done.
 
 ## Qué evitar
 

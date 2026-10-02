@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor の CodingAgent：使い慣れた harness をグラフの一員にする"
 description: provider を選び、ネイティブな体験を保ったまま、CodingAgent を適切なコンテキスト、ツール、参加者に接続します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent
 ---
 
@@ -15,7 +15,9 @@ CodingAgent は、provider 本来のインターフェースで動くコーデ�
 Kavor は各 harness を汎用チャットに置き換えません。provider の体験を保ち、その周囲に明示的な責任、
 到達可能なコンテキスト、ツール、他の CodingAgents、確認できる境界を加えます。
 
-[![CodingAgent を Canvas に追加する前に Kavor toolbar で provider を選択する画面。](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)](https://agentkavor.com/ja/videos/coding-agent-provider-selector)
+![CodingAgent を Canvas に追加する前に Kavor toolbar で provider を選択する画面。](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)
+
+[デモを見る →](https://agentkavor.com/ja/videos/coding-agent-provider-selector)
 
 ## CodingAgent が持つもの
 
@@ -65,7 +67,7 @@ CodingAgent を含む直接 Connections には固有の役割があります。
 到達可能性は直接契約を消しません。CodingAgent とリソースの正確な Connection に Guardrail がある場合、
 別の経路が存在しても、その制限はそのペアに適用され続けます。
 
-## 三つの実用的なパターン
+## 実用的なパターン
 
 ### 契約から実装する
 
@@ -98,7 +100,9 @@ CodingAgent は chat に貼られたテキストからページを再構築せ�
 Workspace を切り替えても WebBrowser は動作を続け、戻ったときに同じ状態を表示できます。Agent は視覚的な
 コンテキスト切り替えのたびにページを再読み込みせず、すでに許可された作業を継続できます。
 
-[![Canvas 上で接続された CodingAgent と WebBrowser](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/ja/videos/web-browser-node)
+![Canvas 上で接続された CodingAgent と WebBrowser](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
+
+[デモを見る →](https://agentkavor.com/ja/videos/web-browser-node)
 
 ### 別の CodingAgent の現在のセッションを確認する
 
@@ -139,6 +143,33 @@ Reviewer 向け：
 > 実装と証拠を Specification の基準と比較してください。誤動作、欠けたシナリオ、回帰、運用リスクを
 > 探してください。変更を提案する前に具体的な findings を記録し、既存テストが通っただけで承認しないで
 > ください。
+
+## 例：Reviewerが検証できる引き継ぎ
+
+登録フォームの修正を考えます。Specificationは、不正なメールアドレスでメッセージを表示し、送信を
+止め、有効なアドレスでは従来どおり動くことを求めます。上のグラフでBuilderとReviewerを別のセッションにします。
+
+Builderへの依頼：
+
+> Specificationで定義した入力検証を実装してください。有効な入力の動作を維持し、Terminalで関連テストを
+> 実行して変更ファイル、コマンド、結果を記録してください。その後、Specificationのhandleとレビュー対象の
+> 正確なcommitまたはdiffをReviewerに送ってください。未解決事項を示し、公開前に止まってください。
+
+良い引き継ぎは会話全体をコピーする代わりに、成果を特定します：
+
+> 実装はSpecificationのoutputsに記録したcommitにあります。不正、空、有効なメールアドレスのテストは
+> Terminal Checksで通りました。このcommitの基準と失敗経路をレビューしてください。ファイル、シナリオ、
+> 証拠を付けてfindingsを記録し、完了時に返信してください。このレビューではコードを変更しないでください。
+
+Reviewerへの依頼：
+
+> 契約と指定された成果を確認してください。各基準を検証し、関連するシナリオを再現してSticky Noteに
+> 結論を追加してください。実証した欠陥と仮説を区別し、阻害要因があればどの動作が失敗するか説明して
+> Builderに修正を戻してください。
+
+期待する成果は、特定できる変更、独立したレビュー、証拠に基づくあなたの判断です。Builderがまだ変更中なら、
+安定した成果を待つか、レビューできる範囲を明示してください。別のコードrevisionを見る二人は同じ成果を
+評価していません。
 
 ## 重要な制限
 

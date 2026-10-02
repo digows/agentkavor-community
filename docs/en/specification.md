@@ -3,7 +3,7 @@ id: specification
 title: "Specification in Kavor: think carefully once, implement better"
 description: Structure intent, decisions, and criteria in durable Markdown, organize multiple roots, and guide the Specification lifecycle.
 kind: guide
-lastReviewedAt: 2026-08-18
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/en/docs/specification
 ---
 
@@ -15,7 +15,9 @@ and review without depending on the memory of a single conversation.
 It can define architecture, an integration, domain modeling, a feature, a module, or a bounded set of fixes. Its size
 can vary; its responsibility does not: explain what must be true before the work is considered complete.
 
-![Kavor Workspace Settings with four configured Specification roots.](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+![A Specification, a CodingAgent, and a Sticky Note keeping the contract and observations on the same Canvas](https://media.agentkavor.com/demos/spec-agent-notes/poster.463994b8b377.jpg)
+
+[See the Specification, agent, and notes working together →](https://agentkavor.com/en/videos/spec-agent-notes)
 
 ## The source of truth is a file
 
@@ -96,6 +98,8 @@ roots leave the active listing and can return when the root is added again.
 When more than one root exists, the Specifications panel groups first by root and then by actual filesystem folders.
 The Canvas does not create a parallel taxonomy: organization remains the file structure you already own.
 
+![Kavor Workspace Settings with four configured Specification roots](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
+
 ### A simple root layout
 
 ```text
@@ -149,6 +153,41 @@ Spec Writer — Specification — Implementer — Reviewer
 
 The Spec Writer records decisions. The Implementer executes only a Ready contract. The Reviewer compares results
 and criteria. The Terminal provides evidence. The decision to treat the work as Done remains human.
+
+## Example: a small Specification ready to implement
+
+Consider a form that accepts an invalid email address. Instead of asking only to “improve validation,” record a
+contract that allows implementation and review without guessing what you meant:
+
+```markdown
+# Registration email validation
+
+## Problem
+The form submits invalid addresses and only shows the failure after the server responds.
+
+## Objective
+Show the error before submission and keep the valid path working.
+
+## Out of scope
+Redesigning the form, changing authentication, or replacing the validation library.
+
+## Acceptance criteria
+- An empty field shows a message and does not send the registration request.
+- An invalid address shows a message and does not send the registration request.
+- A valid address sends a single request with the expected data.
+- The user can correct the address and try again.
+
+## Verification
+Tests for the three scenarios and a reproduction of the flow in the application.
+```
+
+“Validation works” does not allow an independent review. “An invalid address does not send the request” defines
+something the Reviewer can observe. This example is illustrative: adapt the validation rules to your product's real
+contract before moving to Ready.
+
+When finished, ask the Builder to record the commit or produced files in the Specification outputs. Ask the Reviewer
+to state which criteria were verified, through which command or interaction, and what remains outstanding. A durable
+reference to the deliverable and evidence for the criteria support the decision to move to Done.
 
 ## What to avoid
 

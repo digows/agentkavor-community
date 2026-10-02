@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser：在 agent 面前开发和测试"
 description: 使用 Kavor 共享的 WebBrowser 开发 Web 应用、复现 bug、调试页面并验证 E2E 流程。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/web-browser
 ---
 
@@ -11,6 +11,8 @@ canonicalUrl: https://agentkavor.com/zh/docs/web-browser
 
 WebBrowser 是 Canvas 中的实时 Chromium 表面。连接的 CodingAgent 可以观察、交互、等待、调试并测试你正在
 查看的页面。
+
+![CodingAgent 连接到 WebBrowser，让人和智能体看到同一个页面](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 阅读本指南时，可以在另一个标签页打开 [Kavor 的 WebBrowser 演示](https://agentkavor.com/zh/videos/web-browser-node)。
 
@@ -41,6 +43,33 @@ WebBrowser 是 Canvas 中的实时 Chromium 表面。连接的 CodingAgent 可�
 可以从这样的提示开始：
 
 > 打开连接的应用。先观察页面并在不修改代码的情况下复现流程。然后说明可能原因，提出最小修改，并用视觉和 console 证据验证完整路径。
+
+## 三个以证据为基础的开发示例
+
+### 复现表单 bug
+
+服务器在 Terminal 中运行、应用在 WebBrowser 中打开后，请求：
+
+> 先使用无效邮箱地址提交，再使用有效地址提交。编辑代码前，记录字段状态、显示的提示，以及是否发起了请求。
+> 完成授权的修复后，重复这两条路径，并测试不刷新页面就修正地址的流程。
+
+预期结果同时包含可见行为和观察到的请求。只有提示消息的 screenshot，不能证明提交被阻止；网络信息有助于验证这条标准。
+
+### 查明页面为何变空
+
+> 观察页面，查看 console 错误，找出与缺失内容相关的请求。区分网络失败、非预期响应和渲染错误。
+> 记录相关 URL、状态和可用证据。如果无法观察响应正文，请说明这个限制。
+
+预期结果是在修改代码前，先调查能够区分不同原因的信号。仅凭内容缺失，不足以认定 backend 失败。
+
+### 验证网络失败后的恢复
+
+在你控制的测试应用中，可以请求一个临时场景：
+
+> 只为 Specification 定义的加载请求模拟错误响应。检查失败提示和重试选项。然后移除临时规则，确认正常流程能够恢复。
+> 保留结果，并在清理网络规则后结束测试。
+
+预期结果应在隔离场景中覆盖失败和恢复。使用测试 endpoints 和数据；模拟必须足够具体，以免改变不属于该场景的请求。
 
 ## 也给人使用的 browser
 

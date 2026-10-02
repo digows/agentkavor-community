@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: desenvolva e teste na frente do agente"
 description: Use o WebBrowser compartilhado do Kavor para desenvolver aplicações web, reproduzir bugs, depurar páginas e provar fluxos E2E.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/pt-br/docs/web-browser
 ---
 
@@ -11,6 +11,8 @@ canonicalUrl: https://agentkavor.com/pt-br/docs/web-browser
 
 O WebBrowser é uma superfície Chromium viva dentro do Canvas. Um CodingAgent conectado pode observar, interagir,
 aguardar, depurar e testar a página que você também está vendo.
+
+![Um CodingAgent conectado ao WebBrowser que mantém a mesma página visível para humano e agente](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 Veja a [demonstração do WebBrowser no Kavor](https://agentkavor.com/pt-br/videos/web-browser-node) em outra aba para
 acompanhar o comportamento visual enquanto lê este guia.
@@ -58,6 +60,39 @@ Peça ao agente para:
 Um prompt inicial pode ser:
 
 > Abra a aplicação no WebBrowser conectado. Primeiro observe a página e reproduza o fluxo sem alterar código. Depois descreva a causa provável, proponha a menor mudança e valide o caminho completo com evidência visual e de console.
+
+## Três exemplos para desenvolver com evidência
+
+### Reproduzir um bug de formulário
+
+Com o servidor no Terminal e a aplicação aberta no WebBrowser, peça:
+
+> Reproduza o envio com um e-mail inválido e depois com um endereço válido. Antes de editar código, registre o estado
+> dos campos, a mensagem exibida e se houve request. Após a correção autorizada, repita os dois caminhos e teste
+> também corrigir o endereço sem recarregar a página.
+
+O resultado esperado combina comportamento visível e requests observados. Um screenshot da mensagem sozinho não
+prova que o envio foi bloqueado; a rede ajuda a verificar esse critério.
+
+### Descobrir por que a página ficou vazia
+
+> Observe a página, consulte os erros do console e identifique a requisição relacionada ao conteúdo ausente.
+> Diferencie falha de rede, resposta inesperada e erro ao renderizar. Registre o URL relevante, o status e a evidência
+> disponível. Se não conseguir observar o corpo da resposta, informe essa limitação.
+
+O resultado esperado é uma investigação com sinais discriminantes antes de alterar código. A ausência de conteúdo
+não basta para concluir que o backend falhou.
+
+### Validar recuperação de uma falha de rede
+
+Em uma aplicação de teste sob seu controle, você pode pedir um cenário temporário:
+
+> Simule uma resposta de erro apenas na requisição de carregamento definida na Specification. Verifique a mensagem
+> de falha e a opção de tentar novamente. Depois remova a regra temporária e confirme que o fluxo normal se recupera.
+> Preserve os resultados e encerre o teste com as regras de rede limpas.
+
+O resultado esperado cobre falha e recuperação, com o cenário isolado. Use endpoints e dados de teste; a simulação
+deve ser específica o suficiente para não alterar requisições que não pertencem ao cenário.
 
 ## O mesmo browser para o humano
 

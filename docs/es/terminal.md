@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal en Kavor: ejecución visible para humano y agente"
 description: Usa un shell real en el Canvas, conecta contexto mediante rutas canónicas y permite la asistencia del CodingAgent sin perder supervisión.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/terminal
 ---
 
@@ -14,6 +14,8 @@ conocidas; Kavor añade contexto, observabilidad y colaboración alrededor de es
 
 El objetivo no es ocultar la ejecución detrás de un botón. Es permitir que humano y CodingAgent trabajen en el mismo
 entorno visible, cada uno bajo límites claros.
+
+![Terminals, Files, Specifications y CodingAgents conectados en un Canvas de trabajo](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## Qué posee un Terminal
 
@@ -124,6 +126,39 @@ Para monitorización:
 
 > Sigue solo el tail necesario de este Terminal. Avísame cuando aparezca evidencia nueva; no trates la ausencia de
 > nuevas líneas como éxito ni dejes ejecutándose un watcher iniciado únicamente para tu investigación.
+
+## Ejemplo: investigar una falla sin reiniciar todo
+
+Una aplicación web corre en Terminal App, pero un formulario no completa el envío. Mantén ese proceso abierto y usa
+otro Terminal, Checks, para las verificaciones. Conecta el CodingAgent a los recursos necesarios y pide:
+
+> Observa la pantalla actual de Terminal App y reproduce el error en el WebBrowser conectado. Correlaciona la hora de
+> la acción con los logs. No reinicies el servidor ni interrumpas mi proceso. Usa Terminal Checks si necesitas un
+> comando separado y registra lo que cada verificación confirmó o descartó.
+
+En un proyecto Node.js, una comprobación sencilla en Terminal Checks puede confirmar el entorno:
+
+```sh
+node --version
+```
+
+Para investigar la aplicación, el agente debe elegir sus comandos reales después de leer los scripts y convenciones
+del proyecto. Un comando genérico de otra stack no demuestra nada sobre la falla.
+
+Espera una relación entre acción, salida observada y causa demostrada o hipótesis delimitada. “El request llegó al
+servidor, pero devolvió un error de validación” es más útil que “el servidor parece malo”. Después de una corrección
+autorizada, repite el mismo camino y compara los resultados.
+
+### Seguir un proceso que tú iniciaste
+
+También puedes iniciar un build y pedir al CodingAgent que siga solo la salida relevante:
+
+> Sigue el build en este Terminal. Usa la salida reciente y consulta más historial solo cuando haga falta. Informa
+> el resultado que puedas observar y los mensajes que respaldan tu conclusión. No envíes comandos ni termines el
+> proceso mientras se ejecuta.
+
+La petición coordina la colaboración; `terminal_read_only` puede restringir las operaciones de Kavor a la observación.
+Tú sigues usando el shell y el agente ayuda a interpretar el estado visible.
 
 ## Guardrail de solo lectura
 

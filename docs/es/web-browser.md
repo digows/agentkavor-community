@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: desarrolla y prueba delante de tu agente"
 description: Usa el WebBrowser compartido de Kavor para desarrollar aplicaciones web, reproducir bugs, depurar páginas y demostrar flujos E2E.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/web-browser
 ---
 
@@ -14,6 +14,8 @@ esperar, depurar y probar la página que tú también estás viendo.
 
 Consulta la [demostración de WebBrowser en Kavor](https://agentkavor.com/es/videos/web-browser-node) en otra pestaña
 mientras lees esta guía.
+
+![Un CodingAgent conectado al WebBrowser que comparte la misma página visible con la persona](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 ## El browser como herramienta de desarrollo
 
@@ -47,6 +49,39 @@ resultado y los riesgos restantes en una [Sticky Note](./sticky-note.md).
 Un prompt inicial puede ser:
 
 > Abre la aplicación conectada en WebBrowser. Primero observa la página y reproduce el flujo sin cambiar código. Después describe la causa probable, propone el cambio mínimo y valida el recorrido completo con evidencia visual y de consola.
+
+## Tres ejemplos para desarrollar con evidencia
+
+### Reproducir un bug de formulario
+
+Con el servidor en el Terminal y la aplicación abierta en WebBrowser, pide:
+
+> Reproduce el envío con un e-mail inválido y luego con uno válido. Antes de editar código, registra el estado de los
+> campos, el mensaje mostrado y si hubo request. Después de la corrección autorizada, repite ambos caminos y prueba
+> corregir la dirección sin recargar la página.
+
+Espera comportamiento visible y requests observados. Un screenshot del mensaje no demuestra por sí solo que se
+bloqueó el envío; la red ayuda a verificar ese criterio.
+
+### Descubrir por qué la página quedó vacía
+
+> Observa la página, consulta los errores del console e identifica la petición relacionada con el contenido ausente.
+> Distingue falla de red, respuesta inesperada y error de renderizado. Registra el URL relevante, el status y la
+> evidencia disponible. Si no puedes observar el cuerpo de la respuesta, indica esa limitación.
+
+Espera señales que permitan distinguir las causas antes de cambiar código. El contenido ausente no basta para
+concluir que falló el backend.
+
+### Validar la recuperación de una falla de red
+
+En una aplicación de pruebas bajo tu control, pide un escenario temporal:
+
+> Simula una respuesta de error solo en la petición de carga definida en la Specification. Verifica el mensaje de
+> falla y la opción de reintentar. Después elimina la regla temporal y confirma que el flujo normal se recupera.
+> Conserva los resultados y termina la prueba con las reglas de red limpias.
+
+Espera cobertura de falla y recuperación en un escenario aislado. Usa endpoints y datos de prueba; la simulación debe
+ser suficientemente específica para no cambiar peticiones ajenas al escenario.
 
 ## El mismo browser para la persona
 

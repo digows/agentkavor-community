@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor 中的 Terminal：让人和 agent 都看得见执行过程"
 description: 在 Canvas 上使用真实 shell，通过规范路径连接上下文，并让 CodingAgent 在不失去监督的前提下协助工作。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/zh/docs/terminal
 ---
 
@@ -13,6 +13,8 @@ Terminal 是 Canvas 上的真实 shell。你仍然输入命令、跟踪 logs、�
 增加上下文、可观察性和协作。
 
 目标不是把执行藏在按钮后面，而是让人和 CodingAgent 在同一个可见环境中工作，并各自受到清晰边界约束。
+
+![Terminals、Files、Specifications 和 CodingAgents 在 Canvas 中连接成工作图](https://media.agentkavor.com/editorial/nodes-and-connections/graph.b499a1b842e8.jpg)
 
 ## Terminal 拥有什么
 
@@ -111,6 +113,34 @@ Maintainer 把 Specification 作为契约，把 File 作为明确来源，并用
 
 > 只跟踪此 Terminal 必要的 tail。出现新证据时通知我；不要把没有新行视为成功，也不要在调查结束后留下
 > 仅为调查启动的 watcher。
+
+## 示例：无需重启一切即可调查失败
+
+Web 应用在 Terminal App 中运行，但表单无法完成提交。保持这个进程运行，使用另一个 Terminal——Checks——执行检查。
+将 CodingAgent 连接到所需资源，并请求：
+
+> 观察 Terminal App 的当前屏幕，在连接的 WebBrowser 中复现错误。将操作时间与日志对应起来。不要重启服务器，
+> 也不要中断我的进程。如果需要单独执行命令，请使用 Terminal Checks，并记录每项检查确认或排除了什么。
+
+如果是 Node.js 项目，Terminal Checks 中的一项简单检查可以确认环境：
+
+```sh
+node --version
+```
+
+调查应用时，智能体应先查看项目脚本和约定，再选择项目实际使用的命令。从其他技术栈复制的通用命令不能证明这次失败的原因。
+
+预期结果是把操作、观察到的输出与已证实的原因或边界明确的假设联系起来。例如，“请求到达了服务器，但返回校验错误”
+比“服务器似乎有问题”更有用。完成授权的修复后，重复相同路径，以比较结果。
+
+### 跟踪你启动的进程
+
+你也可以启动 build，然后让 CodingAgent 只跟踪相关输出：
+
+> 跟踪这个 Terminal 中的 build。使用近期输出，仅在必要时查看更多历史。报告你能观察到的结果，以及支持结论的消息。
+> 进程运行期间，不要发送命令，也不要结束进程。
+
+请求用于协调协作；`terminal_read_only` Guardrail 可以将 Kavor 操作限制为观察。你继续使用 shell，智能体则帮助解释可见状态。
 
 ## 只读 Guardrail
 

@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser：agentの前で開発してテストする"
 description: Kavorの共有WebBrowserでWebアプリを開発し、bugを再現し、ページをdebugし、E2Eフローを証明します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/ja/docs/web-browser
 ---
 
@@ -14,6 +14,8 @@ WebBrowserはCanvas内のライブChromium surfaceです。接続されたCoding
 
 このガイドを読みながら、別タブで[KavorのWebBrowserデモ](https://agentkavor.com/ja/videos/web-browser-node)を
 確認できます。
+
+![人と同じページを共有するWebBrowserに接続したCodingAgent](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
 
 ## 開発ツールとしてのbrowser
 
@@ -43,6 +45,39 @@ agentには、操作前の観察、失敗する経路の再現、console・netwo
 開始promptの例です。
 
 > 接続されたアプリをWebBrowserで開いてください。最初にコードを変更せずページを観察してフローを再現し、原因候補と最小変更を説明してから、視覚情報とconsoleの証拠で全経路を検証してください。
+
+## 証拠に基づいて開発する三つの例
+
+### フォームのbugを再現する
+
+Terminalでサーバーを動かし、WebBrowserでアプリを開いて依頼します：
+
+> 不正なメールアドレスと有効なアドレスで送信を再現してください。コードを編集する前に、欄の状態、
+> 表示されたメッセージ、requestの有無を記録してください。許可された修正後に両経路を繰り返し、ページを
+> 再読み込みせずアドレスを直す経路も検証してください。
+
+期待するのは表示された動作と観察したrequestsです。メッセージのscreenshotだけでは送信が止まったと
+証明できません。networkで基準を確認します。
+
+### ページが空になった理由を調べる
+
+> ページを観察し、consoleのエラーと欠けた内容に関連するrequestを確認してください。networkの失敗、
+> 想定外の応答、renderingのエラーを区別し、関連URL、status、利用できる証拠を記録してください。
+> 応答本文を観察できない場合は、その制限を示してください。
+
+コードを変更する前に原因を区別できる手掛かりを得ることが期待する結果です。内容がないだけではbackendの
+故障と断定できません。
+
+### networkの失敗から回復できるか検証する
+
+あなたが管理するテストアプリで一時的なシナリオを依頼します：
+
+> Specificationで定義した読み込みrequestだけにエラー応答をシミュレートしてください。失敗メッセージと
+> 再試行を確認し、その後一時ルールを削除して通常の経路が回復することを確認してください。結果を残し、
+> networkルールを解除してテストを終えてください。
+
+隔離したシナリオで失敗と回復を確認します。テスト用のendpointsとデータを使い、関係ないrequestsを変更しない
+十分に具体的なシミュレーションにしてください。
 
 ## 人も使う同じbrowser
 

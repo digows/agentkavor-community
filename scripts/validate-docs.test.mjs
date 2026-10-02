@@ -3,6 +3,7 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import test from 'node:test'
+import { parse as parseYaml } from 'yaml'
 import { validateDocumentation, validateDocumentationReleaseTransition, validateProductReleaseProjection } from './validate-docs.mjs'
 
 async function withCorpus(callback) {
@@ -138,11 +139,13 @@ test('requires content changes to advance a correctly chained release ID', async
 
     const catalogPath = join(proposedSourceDirectory, 'catalog.yaml')
     const catalog = await readFile(catalogPath, 'utf8')
+    const { releaseId } = parseYaml(catalog)
+    const nextReleaseId = releaseId.replace(/\.(\d+)$/, (_, sequence) => `.${Number(sequence) + 1}`)
     await writeFile(
       catalogPath,
       catalog
-        .replace('releaseId: docs-2026-09-08.2', 'releaseId: docs-2026-09-08.3')
-        .replace('previousReleaseId: docs-2026-09-08.1', 'previousReleaseId: docs-2026-09-08.2'),
+        .replace(/^releaseId: .*$/m, `releaseId: ${nextReleaseId}`)
+        .replace(/^previousReleaseId: .*$/m, `previousReleaseId: ${releaseId}`),
     )
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
@@ -154,19 +157,20 @@ test('binds a product release to its complete approved English documentation pro
   const temporaryDirectory = await mkdtemp(join(tmpdir(), 'kavor-product-release-test-'))
   const releaseNotesSourcePath = join(temporaryDirectory, 'v1.6.2.md')
   try {
+    const { releaseId } = parseYaml(await readFile(resolve('docs/catalog.yaml'), 'utf8'))
     const publicSource = await readFile(resolve('docs/en/release-notes/1.6.2.md'), 'utf8')
     const frontmatterEnd = publicSource.indexOf('\n---\n', 4)
     await writeFile(releaseNotesSourcePath, publicSource.slice(frontmatterEnd + 5).replace(/^\n+/, ''))
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
       version: '1.6.2',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-09-08.2',
+      expectedReleaseId: releaseId,
     }))
     await writeFile(releaseNotesSourcePath, '# Kavor 1.6.2\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
       version: '1.6.2',
       releaseNotesSourcePath,
-      expectedReleaseId: 'docs-2026-09-08.2',
+      expectedReleaseId: releaseId,
     }), /differ from the approved English documentation projection/)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })

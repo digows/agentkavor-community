@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent en Kavor: tu harness favorito como parte de un grafo"
 description: Elige un provider, conserva su experiencia nativa y conecta el CodingAgent con el contexto, las herramientas y los participantes adecuados.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-01
 canonicalUrl: https://agentkavor.com/es/docs/coding-agent
 ---
 
@@ -16,7 +16,9 @@ Kavor no sustituye cada harness por un chat genérico. Conserva la experiencia d
 su alrededor: responsabilidad explícita, contexto alcanzable, herramientas, otros CodingAgents y límites que puedes
 inspeccionar.
 
-[![Selector de provider en la toolbar de Kavor antes de añadir un CodingAgent al Canvas.](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)](https://agentkavor.com/es/videos/coding-agent-provider-selector)
+![Selector de provider en la toolbar de Kavor antes de añadir un CodingAgent al Canvas](https://media.agentkavor.com/demos/coding-agent-provider-selector/poster.22c2dccb70c5.jpg)
+
+[Mira cómo seleccionar el provider de un CodingAgent →](https://agentkavor.com/es/videos/coding-agent-provider-selector)
 
 ## Qué posee un CodingAgent
 
@@ -68,7 +70,7 @@ Las Connections directas con un CodingAgent tienen papeles específicos:
 El alcance no elimina los contratos directos. Si la Connection exacta entre un CodingAgent y un recurso tiene un
 Guardrail, la restricción sigue rigiendo ese par aunque exista otra ruta en el grafo.
 
-## Tres patrones útiles
+## Patrones útiles
 
 ### Implementar a partir de un contrato
 
@@ -103,7 +105,9 @@ copiado al chat.
 El WebBrowser puede seguir activo cuando cambias de Workspace y volver en el mismo estado. Así el agente continúa un
 trabajo ya autorizado sin recargar la página en cada cambio de contexto visual.
 
-[![CodingAgent y WebBrowser conectados en el Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)](https://agentkavor.com/es/videos/web-browser-node)
+![CodingAgent y WebBrowser conectados en el Canvas](https://media.agentkavor.com/releases/1.6.0/web-browser/poster.05d724ba99c7.png)
+
+[Mira un CodingAgent trabajando con WebBrowser →](https://agentkavor.com/es/videos/web-browser-node)
 
 ### Consultar la sesión actual de otro CodingAgent
 
@@ -146,6 +150,35 @@ Para un Reviewer:
 > Compara la implementación y las evidencias con los criterios de la Specification. Busca comportamiento incorrecto,
 > escenarios ausentes, regresiones y riesgos operativos. Registra findings concretos antes de sugerir cambios y no
 > apruebes el trabajo solo porque los tests existentes pasaron.
+
+## Ejemplo: un handoff que el Reviewer puede verificar
+
+Imagina una corrección en el formulario de registro. La Specification exige que un correo electrónico inválido
+muestre un mensaje, que el envío se bloquee y que un correo válido siga funcionando. Usa el grafo anterior y mantén
+Builder y Reviewer en sesiones separadas.
+
+Petición al Builder:
+
+> Implementa la validación definida en la Specification. Conserva el comportamiento del camino válido. Ejecuta los
+> tests relevantes en el Terminal y registra los archivos modificados, comandos y resultados. Después envía al
+> Reviewer el handle de la Specification y el commit o diff exacto para revisar. Informa de los pendientes y detente
+> antes de publicar.
+
+Un handoff útil identifica la entrega en lugar de copiar toda la conversación:
+
+> La implementación está en el commit indicado en los outputs de la Specification. Los tests de correo inválido,
+> vacío y válido pasaron en el Terminal Checks. Revisa los criterios y los caminos de fallo en ese commit. Registra
+> findings con archivo, escenario y evidencia; responde cuando termines. No cambies el código en esta revisión.
+
+Petición al Reviewer:
+
+> Lee el contrato y examina la entrega referenciada. Verifica cada criterio, reproduce los escenarios relevantes y
+> añade tus conclusiones a la Sticky Note. Distingue un defecto demostrado de una hipótesis. Si encuentras un bloqueo,
+> explica qué comportamiento falla y devuélvelo al Builder para corregirlo.
+
+El resultado esperado es un cambio identificable, una revisión independiente y una decisión tuya basada en evidencia.
+Si el Builder todavía está modificando la entrega, espera a que estabilice el resultado o delimita explícitamente qué
+está listo para revisión. Dos agentes mirando revisiones diferentes del código no están evaluando la misma entrega.
 
 ## Límites importantes
 
