@@ -3,7 +3,7 @@ id: nodes
 title: Nodes do Kavor
 description: Entenda o que CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser e Trigger fazem sozinhos e o que ganham quando conectados.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/nodes
 ---
 
@@ -100,6 +100,9 @@ em aberto durante uma Specification, registrar algo que merece sua atenção dur
 Sticky Notes funcionam bem como memória informal e visível. Quando uma decisão se torna um contrato durável para
 implementação e manutenção futura, ela deve ser promovida para uma Specification, não ficar escondida para sempre
 em uma nota.
+
+Compartilhar contexto não autoriza o agente a reorganizar suas anotações ou as de outro participante. Diga qual nota
+ele deve manter e o que deve preservar; veja as regras e exemplos no [guia de Sticky Note](./sticky-note.md).
 
 ### Terminal: execução que continua visível
 
@@ -200,6 +203,53 @@ comando agendado à sessão ativa. Um CodingAgent conectado ao Terminal pode aju
 você mantém visibilidade sobre o processo.
 
 Esse grafo automatiza uma causa e uma execução sem fingir que o sistema conhece sozinho o significado de sucesso.
+
+## Reaproveite um grafo sem reconstruir cada Node
+
+Quando um pequeno conjunto funciona bem — por exemplo, Builder, Reviewer e Sticky Note — você pode copiar sua
+estrutura para outra tarefa ou mover o conjunto para outro Workspace. Selecione todos os Nodes que devem viajar
+juntos: somente as Connections entre Nodes da seleção fazem parte da captura.
+
+### Copiar ou mover
+
+1. Selecione os Nodes no Canvas, com o foco fora de um editor, Terminal ou página do WebBrowser.
+2. Use `⌘C` no macOS ou `Ctrl+C` no Windows/Linux para copiar. Para mover, use `⌘X` ou `Ctrl+X`.
+   O menu de contexto também oferece `Copy Node` / `Copy Nodes` e `Cut Node` / `Cut Nodes`.
+3. Fique no mesmo Canvas ou abra o Workspace de destino, inclusive em outra janela do Kavor.
+4. Posicione o ponteiro onde o grupo deve aparecer e use `⌘V` ou `Ctrl+V`. Sem um ponto do ponteiro no Canvas, a
+   colagem usa o centro da área visível. O menu de contexto oferece a colagem no ponto em que foi aberto.
+5. Confira os Nodes, as Connections e os recursos no destino antes de retomar o trabalho.
+
+A disposição relativa do grupo é preservada. Uma cópia pode ser colada mais de uma vez; um recorte é consumido
+quando a movimentação é concluída. Recortar não remove o grupo imediatamente: no Canvas de origem, `Esc` cancela
+o recorte ainda não colado. Você também pode usar Undo/Redo para uma colagem concluída; se os Nodes forem alterados
+depois, o Kavor pode recusar um undo que sobrescreveria essas mudanças.
+
+### Estrutura não é sessão nem backup
+
+O clipboard de grafos existe somente enquanto o processo do Kavor está aberto. Reiniciar o aplicativo perde a
+captura, e substituir o conteúdo do clipboard por outra cópia também pode invalidá-la. Ele não é um formato de
+exportação para compartilhar entre máquinas.
+
+Algumas diferenças importam antes de copiar um loop inteiro:
+
+- **Connections externas:** ligações com Nodes fora da seleção não são copiadas. Ao mover para outro Workspace,
+  essas ligações deixam de existir na origem; confira se selecionou todo o contexto necessário.
+- **CodingAgent e Terminal:** copiar não clona uma conversa, processo ou histórico de execução. Mover entre
+  Workspaces encerra as sessões de origem. O CodingAgent não leva a associação Git/worktree e começa no contexto
+  do Workspace de destino; verifique seu diretório e configuração antes de trabalhar.
+- **File:** a colagem referencia o mesmo arquivo físico; não duplica seus bytes. Quando esse arquivo já está
+  materializado no destino, o Kavor reutiliza o Node existente. Editar a fonte continua afetando o mesmo arquivo.
+- **Specification em outro Workspace:** o Markdown aparece como File, não como uma nova Specification com o mesmo
+  lifecycle. A Specification e seus metadados continuam no Workspace que os possui.
+- **Trigger:** uma cópia nasce pausada. Confira alvo e payload antes de usar `Resume`. Um Trigger com entrega ainda
+  não resolvida não pode ser movido para outro Workspace; espere um estado final antes de tentar novamente.
+
+Se uma colagem falhar porque a seleção recortada mudou ou uma fonte deixou de existir, confira a origem e faça uma
+nova captura. Não use uma cópia de grafo como evidência de que o trabalho dos agentes foi concluído.
+
+Para colar arquivos ou imagens **na entrada de uma sessão**, em vez de colar Nodes no Canvas, use o procedimento do
+[Terminal](./terminal.md#cole-arquivos-e-imagens-na-entrada-da-sessão).
 
 ## Comece pelo trabalho, não pela quantidade de Nodes
 

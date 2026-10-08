@@ -3,7 +3,7 @@ id: nodes
 title: KavorのNodes
 description: CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Triggerが単体でできることと、接続によって得られる能力を解説します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/ja/docs/nodes
 ---
 
@@ -96,6 +96,9 @@ CodingAgentに接続すると、もう1人の書き手が加わります。Speci
 
 Sticky Notesは、非公式で目に見える作業メモリに適しています。判断が、実装や将来の保守に使う永続的な契約に
 なったなら、いつまでもメモに隠さずSpecificationへ昇格させるべきです。
+
+コンテキストを共有しても、あなたや他の参加者のメモをagentが勝手に整理してよいわけではありません。
+維持するメモと保存すべき内容を指定してください。詳しくは[Sticky Noteガイド](./sticky-note.md)を参照してください。
 
 ### Terminal：見える状態を保つ実行環境
 
@@ -195,6 +198,48 @@ SQLやscriptを含むFileが、環境変数を通じてTerminalへパスを提�
 分析を支援できます。
 
 このグラフは、原因と実行を自動化しますが、システムが成功の意味を単独で理解しているとは装いません。
+
+## 各Nodeを作り直さずにグラフを再利用する
+
+Builder、Reviewer、Sticky Noteのような小さな構成は、別の作業用にコピーしたり、別のWorkspaceへ移動できます。
+一緒に移すNodesをすべて選択してください。選択したNodes同士のConnectionsだけがキャプチャされます。
+
+### コピーまたは移動
+
+1. Canvas上でNodesを選択し、エディター、Terminal、WebBrowserページの外にフォーカスを置きます。
+2. コピーはmacOSで`⌘C`、Windows/Linuxで`Ctrl+C`、移動は`⌘X`または`Ctrl+X`です。
+   コンテキストメニューの`Copy Node` / `Copy Nodes`、`Cut Node` / `Cut Nodes`も使えます。
+3. 同じCanvasにとどまるか、移動先のWorkspaceを開きます。別のKavorウィンドウでも構いません。
+4. グループを配置したい場所にポインターを置き、`⌘V`または`Ctrl+V`を使います。Canvas上のポインター位置が
+   なければ表示領域の中央に貼り付けます。メニューからの貼り付けはメニューを開いた位置を使います。
+5. 作業を再開する前に、移動先のNodes、Connections、リソースを確認します。
+
+相対配置は保たれます。コピーは繰り返し貼り付けられますが、カットは移動完了時に消費されます。
+カットだけでは即座に削除されません。貼り付け前なら元のCanvasで`Esc`を押してキャンセルできます。
+完了した貼り付けにはUndo/Redoも使えますが、その後のNode変更を上書きする取り消しは拒否される場合があります。
+
+### 構造はセッションやバックアップではない
+
+グラフのクリップボードはKavorプロセスの実行中だけ存在します。アプリを再起動すると失われ、別のコピーで
+クリップボードを置き換えた場合も無効になることがあります。別のマシンへ共有するエクスポート形式ではありません。
+
+- **外部Connections：** 選択外のNodesへの接続はコピーされません。別のWorkspaceへ移動すると元の接続は
+  削除されます。必要なコンテキスト全体を選択してください。
+- **CodingAgentとTerminal：** コピーは会話、プロセス、実行履歴を複製しません。Workspace間の移動は元の
+  セッションを閉じます。CodingAgentはGit/worktreeの関連付けを引き継がず、移動先のWorkspaceのコンテキストで
+  開始します。作業前にディレクトリと設定を確認してください。
+- **File：** 同じ物理ファイルを参照し、バイトを複製しません。移動先にすでに実体化されたNodeがあれば再利用します。
+  ソースの編集は同じファイルに影響します。
+- **別のWorkspaceのSpecification：** Markdownは同じlifecycleの新しいSpecificationではなくFileとして現れます。
+  Specificationとメタデータは所有元のWorkspaceに残ります。
+- **Trigger：** コピーは一時停止状態で作られます。`Resume`前にターゲットとpayloadを確認してください。
+  未解決のdeliveryがあるTriggerは別のWorkspaceへ移せません。最終状態になってから再試行します。
+
+カットした選択が変わったりソースがなくなって貼り付けに失敗した場合は、元の状態を確認して再キャプチャしてください。
+グラフをコピーできたことは、agentの作業完了の証拠ではありません。
+
+CanvasのNodesではなく**セッションの入力に**ファイルや画像を貼る場合は、
+[Terminalの手順](./terminal.md#セッション入力にファイルと画像を貼り付ける)を使ってください。
 
 ## Nodesの数ではなく、仕事から始める
 

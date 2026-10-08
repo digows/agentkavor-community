@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule no Kavor: dê um relógio ao seu grafo"
 description: Agende prompts e comandos com recorrência, preview, pausa, Run now e histórico durável sem ampliar permissões.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/schedule
 ---
 
@@ -199,8 +199,9 @@ Schedules dependem do runtime local. O Kavor precisa estar em execução, a máq
 precisa estar autenticado e a sessão do alvo precisa estar aberta.
 
 Ao iniciar o aplicativo, o Kavor restaura as sessões marcadas para permanecer abertas quando elas são alvo de
-Triggers em execução. A restauração considera todos os Workspaces do usuário, não somente o que está visível. Triggers
-pausados não restauram sessões, e uma sessão fechada deliberadamente continua fechada.
+Triggers em execução. Isso vale para uma inicialização normal, não apenas para o início em segundo plano. A
+restauração considera todos os Workspaces do usuário, não somente o que está visível. Triggers pausados não restauram
+sessões, e uma sessão fechada deliberadamente continua fechada.
 
 Se uma ou várias ocorrências passam durante uma indisponibilidade, o Kavor registra somente a ocorrência perdida mais
 recente daquele Schedule, em vez de criar milhares de linhas depois de uma ausência longa. Ele não executa o trabalho

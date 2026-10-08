@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor の Schedule：グラフに時計を与える"
 description: 権限を広げず、プレビュー、Pause、Run now、永続履歴を使って繰り返しのプロンプトやコマンドを予約します。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/ja/docs/schedule
 ---
 
@@ -182,6 +182,8 @@ application startup では、open のままにする設定で、実行中の Tri
 復帰時に古い作業を突然実行しません。UI は `Missed` と、`Run now` 相当の明示操作を表示します。
 
 自動 catch-up や external effect の retry はありません。
+
+セッションの復元はバックグラウンド起動だけでなく、通常のアプリ起動でも行われます。
 
 ## ターゲットがすでに busy の場合
 

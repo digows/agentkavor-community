@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor の Terminal：人と agent に見える実行環境"
 description: Canvas 上の本物の shell を使い、正規パスでコンテキストを接続し、監督を失わずに CodingAgent の支援を受けます。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/ja/docs/terminal
 ---
 
@@ -76,6 +76,35 @@ markdownlint "$SPECIFICATION_FILE"
 
 `CHECK_SQL`、`SPECIFICATION_FILE`、`IMPORT_SCRIPT` のように責任を表す名前を使ってください。`FILE` の
 ような一般名はグラフが大きくなると意味を失います。
+
+## セッション入力にファイルと画像を貼り付ける
+
+パスを手入力せずにファイルやスクリーンショットを使えます。TerminalやCodingAgentのterminal画面への貼り付けは、
+コマンド行にバイナリを入れるのではなく、セッション用に準備したファイル参照を挿入します。
+
+1. OSのファイルマネージャーでファイルをコピーするか、PNG/JPEG画像をクリップボードへコピーします。
+2. 開いているTerminalまたはCodingAgentセッションの入力にフォーカスを置きます。
+3. コンテキストメニューの`Paste`か、その画面の貼り付けショートカットを使います。
+4. 挿入されたパスを確認し、コマンドや依頼を完成させてから送信します。
+
+たとえば、問題のあるフォームのスクリーンショットをCodingAgentの入力へ貼り付けて、次のように依頼します。
+
+> 参照した画像とフォームの実装を比較してください。接続されたWebBrowserで問題を再現し、コードを変える前に
+> 観察した差異を説明してください。
+
+Kavorは参照を渡しますが、画像の解釈はproviderの能力に依存します。貼り付けはTerminal内のinline表示ではなく、
+harnessが画像を分析した証拠にもなりません。
+
+クリップボードに画像そのものがある場合、Kavorはアプリのローカルプロファイルにコピーを保存し、そのパスを挿入します。
+20 MBを超える画像は受け付けません。既存ファイルへの参照ならそのパスを使い、ファイルや画像がなければテキストを
+テキストとして貼り付けます。
+
+この操作はCanvasにFileやConnectionを作らず、環境変数も提供しません。グラフに明示して残すリソースには
+[File](./file.md)を、Connectionでshellへ渡すパスには前の節の手順を使ってください。
+providerへ送る前に機密情報を確認してください。
+
+Terminal、エディター、ページ内のショートカットはその画面のものです。**Nodes**をコピーまたは移動する場合は
+Canvasへフォーカスを移し、[グラフの手順](./nodes.md#各nodeを作り直さずにグラフを再利用する)に従ってください。
 
 ## 三つの実用的なパターン
 

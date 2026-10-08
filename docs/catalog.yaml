@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-10-08.1
+releaseId: docs-2026-10-08.2
 sourceRepository: digows/agentkavor-community
 currentProductVersion: 1.7.0
-previousReleaseId: docs-2026-10-01.1
+previousReleaseId: docs-2026-10-08.1
 locales:
   - slug: en
     languageTag: en
@@ -159,7 +159,7 @@ documents:
     path: nodes.md
     status: published
     introducedIn: 1.2.0
-    lastVerifiedIn: 1.3.0
+    lastVerifiedIn: 1.7.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -192,7 +192,7 @@ documents:
     path: terminal.md
     status: published
     introducedIn: 1.4.0
-    lastVerifiedIn: 1.4.0
+    lastVerifiedIn: 1.7.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -203,7 +203,7 @@ documents:
     path: sticky-note.md
     status: published
     introducedIn: 1.0.0
-    lastVerifiedIn: 1.6.2
+    lastVerifiedIn: 1.7.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -236,7 +236,7 @@ documents:
     path: coding-agent.md
     status: published
     introducedIn: 1.4.0
-    lastVerifiedIn: 1.4.0
+    lastVerifiedIn: 1.7.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -258,7 +258,7 @@ documents:
     path: schedule.md
     status: published
     introducedIn: 1.3.0
-    lastVerifiedIn: 1.3.0
+    lastVerifiedIn: 1.7.0
     owner: Kavor
     searchable: true
     agentReadable: true

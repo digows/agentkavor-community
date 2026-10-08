@@ -3,7 +3,7 @@ id: nodes
 title: Kavor Nodes
 description: Understand what CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser, and Trigger do on their own and what they gain when connected.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/en/docs/nodes
 ---
 
@@ -95,6 +95,9 @@ done, what are you doing, and what comes next?” without burying that state in 
 
 Sticky Notes work well as informal, visible memory. When a decision becomes a durable contract for implementation and
 future maintenance, promote it to a Specification instead of leaving it hidden in a note forever.
+
+Sharing context does not authorize an agent to reorganize your notes or another participant's entries. Say which
+note it should maintain and what it must preserve; see the [Sticky Note guide](./sticky-note.md).
 
 ### Terminal: execution that stays visible
 
@@ -195,6 +198,48 @@ delivers the scheduled command to the active session. A CodingAgent connected to
 result while you retain visibility into the process.
 
 This graph automates a cause and an execution without pretending the system understands success on its own.
+
+## Reuse a graph without rebuilding every Node
+
+A small set such as Builder, Reviewer, and Sticky Note can be copied for another task or moved to another Workspace.
+Select every Node that should travel together: only Connections between selected Nodes are captured.
+
+### Copy or move
+
+1. Select the Nodes on the Canvas, with focus outside an editor, Terminal, or WebBrowser page.
+2. Copy with `⌘C` on macOS or `Ctrl+C` on Windows/Linux; move with `⌘X` or `Ctrl+X`. The context menu also offers
+   `Copy Node` / `Copy Nodes` and `Cut Node` / `Cut Nodes`.
+3. Stay on the same Canvas or open the destination Workspace, including in another Kavor window.
+4. Position the pointer where the group should appear and use `⌘V` or `Ctrl+V`. Without a pointer location on the
+   Canvas, paste uses the visible area's center. Context-menu paste uses the point where the menu opened.
+5. Check the destination's Nodes, Connections, and resources before resuming work.
+
+Relative placement is preserved. A copy can be pasted repeatedly; a cut is consumed when the move completes.
+Cutting does not immediately remove the group: `Esc` on the source Canvas cancels an unpasted cut. Undo/Redo also
+works for completed pastes, but Kavor may refuse an undo that would overwrite subsequent Node changes.
+
+### Structure is not a session or a backup
+
+The graph clipboard exists only while the Kavor process runs. Restarting loses the capture; replacing the clipboard
+with another copy can also invalidate it. It is not an export format for sharing between machines.
+
+- **External Connections:** links to Nodes outside the selection are not copied. Moving to another Workspace
+  removes those links at the source; select all the context you need.
+- **CodingAgent and Terminal:** copying does not clone a conversation, process, or execution history. Moving between
+  Workspaces closes source sessions. A CodingAgent leaves its Git/worktree association behind and starts in the
+  destination Workspace's context; check its directory and settings before working.
+- **File:** paste references the same physical file, not a duplicate of its bytes. An existing destination
+  materialization is reused. Editing the source still affects the same file.
+- **Specification in another Workspace:** its Markdown appears as a File, not a new Specification with the same
+  lifecycle. The Specification and metadata remain in their owning Workspace.
+- **Trigger:** a copy starts paused. Check target and payload before `Resume`. An unsettled delivery prevents moving
+  a Trigger to another Workspace; wait for a final state before retrying.
+
+If paste fails because a cut selection changed or a source disappeared, check the origin and capture again.
+A copied graph is not evidence that the agents' work is complete.
+
+To paste files or images **into session input**, rather than Nodes on the Canvas, follow the
+[Terminal procedure](./terminal.md#paste-files-and-images-into-session-input).
 
 ## Start with the work, not the number of Nodes
 

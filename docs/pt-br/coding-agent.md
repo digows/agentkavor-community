@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent no Kavor: seu harness favorito como parte de um grafo"
 description: Escolha um provider, preserve sua experiência nativa e conecte o CodingAgent ao contexto, às ferramentas e aos participantes certos.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent
 ---
 
@@ -48,6 +48,15 @@ O Node já ajuda a separar contextos: uma sessão pode investigar o problema enq
 grafo, o contexto compartilhado continua dependendo do que você fornecer dentro de cada conversa.
 
 É a Connection que transforma a sessão isolada em participante de um sistema de trabalho.
+
+### Fornecer um arquivo ou uma captura na entrada
+
+Na sessão aberta, você também pode colar arquivos do clipboard do sistema ou imagens PNG/JPEG. O Kavor insere uma
+referência ao arquivo, sem criar um File ou uma Connection no Canvas. Confira o caminho e escreva o pedido antes de
+enviá-lo; interpretar a imagem continua dependendo das capacidades do harness.
+
+O [guia do Terminal](./terminal.md#cole-arquivos-e-imagens-na-entrada-da-sessão) explica o procedimento, os limites e a
+diferença entre uma referência colada e um recurso mantido no grafo.
 
 ## O que ele ganha no grafo
 

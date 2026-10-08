@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal in Kavor: visible execution for human and agent"
 description: Use a real shell on the Canvas, connect context through canonical paths, and let a CodingAgent assist without losing supervision.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/en/docs/terminal
 ---
 
@@ -81,6 +81,35 @@ the new configuration waits for that session to restart. `TERM` and `COLORTERM` 
 
 Use names that express responsibility, such as `CHECK_SQL`, `SPECIFICATION_FILE`, or `IMPORT_SCRIPT`. A generic
 variable such as `FILE` loses meaning as the graph grows.
+
+## Paste files and images into session input
+
+Use a file or screenshot without typing its path. Paste in a Terminal or a CodingAgent's terminal surface inserts a
+file reference prepared for the session, not binary content inside the command line.
+
+1. Copy a file from the operating system's file manager or a PNG/JPEG image to the clipboard.
+2. Focus the input of an open Terminal or CodingAgent session.
+3. Use the context menu's `Paste` action or the surface's paste shortcut.
+4. Check the inserted path and finish the command or request before submitting it.
+
+For example, paste a screenshot of a broken form into the CodingAgent's input, then ask:
+
+> Use the referenced image to compare the form with its implementation. Reproduce the issue in the connected
+> WebBrowser and describe the observed difference before changing code.
+
+Kavor supplies the reference; image interpretation depends on the provider. Pasting an image does not display it
+inline in the Terminal or prove that the harness analyzed it.
+
+For image bytes in the clipboard, Kavor saves a local copy in the application profile and inserts its path. Images
+larger than 20 MB are rejected. Existing-file references use their paths. Without files or images, text is pasted as
+text.
+
+This does not create a File, a Connection, or an environment variable. Use [File](./file.md) for a resource that should
+remain explicit in the graph, or the previous section for paths supplied to the shell through Connections. Check
+sensitive content before sending it to the provider.
+
+Shortcuts inside a Terminal, editor, or page belong to that surface. To copy or move **Nodes**, focus the Canvas and
+follow the [graph procedure](./nodes.md#reuse-a-graph-without-rebuilding-every-node).
 
 ## Three useful patterns
 

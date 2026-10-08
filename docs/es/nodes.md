@@ -3,7 +3,7 @@ id: nodes
 title: Nodes de Kavor
 description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser y Trigger por separado y qué obtienen al conectarse.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/es/docs/nodes
 ---
 
@@ -98,6 +98,9 @@ hecho, qué estás haciendo y qué viene después?” sin enterrar ese estado en
 
 Las Sticky Notes funcionan bien como memoria informal y visible. Cuando una decisión se convierte en un contrato
 duradero para implementación y mantenimiento futuro, debe promoverse a una Specification.
+
+Compartir contexto no autoriza al agente a reorganizar tus notas ni las de otro participante. Indica qué nota debe
+mantener y qué debe conservar; consulta la [guía de Sticky Note](./sticky-note.md).
 
 ### Terminal: ejecución que permanece visible
 
@@ -200,6 +203,49 @@ programado a la sesión activa. Un CodingAgent conectado al Terminal puede ayuda
 mantienes visibilidad sobre el proceso.
 
 Este grafo automatiza una causa y una ejecución sin fingir que el sistema conoce por sí solo el significado del éxito.
+
+## Reutiliza un grafo sin reconstruir cada Node
+
+Un conjunto pequeño, como Builder, Reviewer y Sticky Note, puede copiarse para otra tarea o moverse a otro Workspace.
+Selecciona todos los Nodes que deben viajar juntos: solo se capturan Connections entre Nodes seleccionados.
+
+### Copiar o mover
+
+1. Selecciona los Nodes en el Canvas, con el foco fuera de un editor, Terminal o página del WebBrowser.
+2. Copia con `⌘C` en macOS o `Ctrl+C` en Windows/Linux; mueve con `⌘X` o `Ctrl+X`. El menú contextual también
+   ofrece `Copy Node` / `Copy Nodes` y `Cut Node` / `Cut Nodes`.
+3. Permanece en el mismo Canvas o abre el Workspace de destino, incluso en otra ventana de Kavor.
+4. Coloca el puntero donde debe aparecer el grupo y usa `⌘V` o `Ctrl+V`. Sin un punto del puntero en el Canvas,
+   se pega en el centro del área visible. El menú contextual pega en el punto donde se abrió.
+5. Comprueba los Nodes, Connections y recursos del destino antes de continuar.
+
+Se conserva la disposición relativa. Una copia puede pegarse varias veces; un corte se consume al completar el
+movimiento. Cortar no elimina inmediatamente el grupo: `Esc` en el Canvas de origen cancela un corte aún no pegado.
+Undo/Redo permite revertir una operación completada, pero Kavor puede rechazar un undo que sobrescriba cambios
+posteriores en los Nodes.
+
+### La estructura no es una sesión ni un backup
+
+El portapapeles de grafos existe solo mientras el proceso de Kavor está abierto. Reiniciar pierde la captura; otra
+copia que sustituya el portapapeles también puede invalidarla. No es un formato para exportar entre máquinas.
+
+- **Connections externas:** no se copian enlaces a Nodes fuera de la selección. Al mover a otro Workspace se eliminan
+  esos enlaces en el origen; selecciona todo el contexto necesario.
+- **CodingAgent y Terminal:** copiar no clona conversación, proceso ni historial de ejecución. Mover entre Workspaces
+  cierra las sesiones de origen. El CodingAgent no lleva su asociación Git/worktree y comienza en el contexto del
+  destino; comprueba directorio y configuración.
+- **File:** se referencia el mismo archivo físico, sin duplicar sus bytes. Si ya está materializado en el destino,
+  se reutiliza ese Node. Editar la fuente sigue afectando al mismo archivo.
+- **Specification en otro Workspace:** su Markdown aparece como File, no como una nueva Specification con el mismo
+  lifecycle. La Specification y sus metadatos siguen en el Workspace propietario.
+- **Trigger:** una copia nace pausada. Comprueba objetivo y payload antes de `Resume`. Una entrega aún no resuelta
+  impide mover el Trigger a otro Workspace; espera un estado final antes de intentarlo de nuevo.
+
+Si el pegado falla porque cambió la selección cortada o desapareció una fuente, comprueba el origen y captura otra
+vez. Un grafo copiado no demuestra que el trabajo de los agentes haya terminado.
+
+Para pegar archivos o imágenes **en la entrada de una sesión**, no Nodes en el Canvas, sigue el
+[procedimiento de Terminal](./terminal.md#pega-archivos-e-imágenes-en-la-entrada-de-la-sesión).
 
 ## Empieza por el trabajo, no por la cantidad de Nodes
 

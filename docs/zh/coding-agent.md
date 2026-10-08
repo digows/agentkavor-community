@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -44,6 +44,14 @@ Node 已经可以帮助拆分上下文：一个会话调查问题，另一个会
 取决于你在每段对话中提供什么。
 
 Connection 会把孤立会话变成工作系统中的参与者。
+
+### 在输入中提供文件或截图
+
+在已打开的会话中，可以粘贴操作系统剪贴板里的文件或 PNG/JPEG 图像。Kavor 插入文件引用，
+不会在 Canvas 中创建 File 或 Connection。请检查路径，写好请求后再发送；图像理解仍取决于 harness 的能力。
+
+[Terminal 指南](./terminal.md#把文件和图像粘贴到会话输入中)说明步骤、限制，
+以及粘贴的引用与长期保留在图中的资源之间的区别。
 
 ## 它从图中获得什么
 

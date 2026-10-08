@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule en Kavor: dale un reloj a tu grafo"
 description: Programa prompts y comandos recurrentes con vista previa, pausa, Run now e historial persistente sin ampliar permisos.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/es/docs/schedule
 ---
 
@@ -189,6 +189,8 @@ No ejecuta por sorpresa trabajo antiguo al volver. La interfaz muestra `Missed` 
 equivalente a `Run now`.
 
 No hay catch-up automático ni retry de efectos externos.
+
+La restauración de sesiones también se aplica al inicio normal de la aplicación, no solo al inicio en segundo plano.
 
 ## Cuando el objetivo ya está ocupado
 

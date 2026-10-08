@@ -3,7 +3,7 @@ id: nodes
 title: Les Nodes de Kavor
 description: Découvrez ce que CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser et Trigger font seuls, et ce qu'ils gagnent lorsqu'ils sont connectés.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/fr/docs/nodes
 ---
 
@@ -100,6 +100,9 @@ pendant l'implémentation ou répondre à « qu'as-tu déjà fait, que fais-tu e
 Les Sticky Notes sont adaptées à une mémoire informelle et visible. Lorsqu'une décision devient un contrat durable
 pour l'implémentation et la maintenance future, elle doit être promue en Specification au lieu de rester cachée pour
 toujours dans une note.
+
+Partager le contexte n'autorise pas un agent à réorganiser vos notes ou celles d'un autre participant. Précisez quelle
+note il doit maintenir et ce qu'il doit préserver ; consultez le [guide Sticky Note](./sticky-note.md).
 
 ### Terminal : une exécution qui reste visible
 
@@ -203,6 +206,49 @@ remet la commande planifiée à la session active. Un CodingAgent connecté au T
 résultat, tandis que vous gardez le processus sous les yeux.
 
 Ce graphe automatise une cause et une exécution sans prétendre que le système connaît à lui seul le sens du succès.
+
+## Réutiliser un graphe sans reconstruire chaque Node
+
+Un petit ensemble, par exemple Builder, Reviewer et Sticky Note, peut être copié pour une autre tâche ou déplacé vers
+un autre Workspace. Sélectionnez tous les Nodes à transférer : seules leurs Connections internes sont capturées.
+
+### Copier ou déplacer
+
+1. Sélectionnez les Nodes sur le Canvas, avec le focus hors d'un éditeur, Terminal ou page WebBrowser.
+2. Copiez avec `⌘C` sur macOS ou `Ctrl+C` sur Windows/Linux ; déplacez avec `⌘X` ou `Ctrl+X`. Le menu contextuel
+   propose aussi `Copy Node` / `Copy Nodes` et `Cut Node` / `Cut Nodes`.
+3. Restez sur le même Canvas ou ouvrez le Workspace de destination, y compris dans une autre fenêtre Kavor.
+4. Placez le pointeur à l'endroit voulu et utilisez `⌘V` ou `Ctrl+V`. Sans position du pointeur sur le Canvas,
+   le collage utilise le centre de la zone visible. Le menu contextuel colle à son point d'ouverture.
+5. Vérifiez les Nodes, Connections et ressources de destination avant de reprendre.
+
+La disposition relative est conservée. Une copie est réutilisable ; une coupe est consommée au déplacement.
+Couper ne retire pas immédiatement le groupe : `Esc` sur le Canvas source annule une coupe non collée. Undo/Redo
+permet aussi de revenir sur un collage terminé, mais Kavor peut refuser une annulation qui écraserait des
+modifications ultérieures des Nodes.
+
+### Une structure n'est ni une session ni une sauvegarde
+
+Le presse-papiers de graphes existe seulement pendant l'exécution du processus Kavor. Un redémarrage perd la capture ;
+une autre copie remplaçant le presse-papiers peut aussi l'invalider. Ce n'est pas un format d'export entre machines.
+
+- **Connections externes :** les liens vers des Nodes non sélectionnés ne sont pas copiés. Un déplacement vers un
+  autre Workspace les retire à la source ; sélectionnez tout le contexte nécessaire.
+- **CodingAgent et Terminal :** copier ne clone ni conversation, ni processus, ni historique d'exécution. Déplacer
+  entre Workspaces ferme les sessions source. Le CodingAgent ne conserve pas son association Git/worktree et démarre
+  dans le contexte du Workspace de destination ; vérifiez répertoire et configuration.
+- **File :** le collage référence le même fichier physique, sans dupliquer ses octets. Si celui-ci est déjà
+  matérialisé à destination, son Node est réutilisé. Modifier la source affecte toujours le même fichier.
+- **Specification dans un autre Workspace :** son Markdown apparaît comme File, pas comme une nouvelle Specification
+  au même lifecycle. La Specification et ses métadonnées restent dans leur Workspace propriétaire.
+- **Trigger :** une copie est créée en pause. Vérifiez cible et payload avant `Resume`. Une livraison non résolue
+  empêche de déplacer le Trigger vers un autre Workspace ; attendez un état final avant de réessayer.
+
+Si le collage échoue parce que la sélection coupée a changé ou qu'une source n'existe plus, vérifiez l'origine et
+effectuez une nouvelle capture. Copier le graphe ne prouve pas que les agents ont terminé leur travail.
+
+Pour coller des fichiers ou images **dans la saisie d'une session**, plutôt que des Nodes sur le Canvas, suivez la
+[procédure Terminal](./terminal.md#coller-des-fichiers-et-images-dans-la-saisie-dune-session).
 
 ## Commencez par le travail, pas par le nombre de Nodes
 

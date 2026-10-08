@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: shared working memory"
 description: Use a Sticky Note to record status, findings, and attention points with your CodingAgents without turning every working note into a Specification.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/en/docs/sticky-note
 ---
 
@@ -57,6 +57,12 @@ Connect the Sticky Note to the agent and ask it to record only facts that will h
 The agent can append separate blocks or replace the content when you ask for a complete reorganization. The content
 remains editable by the human, and every change must respect the note's latest version.
 
+If the note already contains your observations, specify what the agent may update. A populated note is not an
+invitation to reorganize it unprompted. A more bounded instruction is:
+
+> Maintain this Sticky Note during the investigation. Preserve my notes and the Reviewer's entries. Add only your
+> verified findings and update only items identified with your name. Ask my permission before reorganizing the body.
+
 ### 3. A bridge between implementation and review
 
 A Builder can record what changed and which checks ran. A Reviewer can add findings and risks. You can follow both
@@ -108,6 +114,30 @@ what the Builder completed from what the Reviewer verified.
 Use a targeted update or a new block when there is only one finding. Ask for the body to be reorganized when old
 statuses accumulate; preserve open decisions and your observations. The result should let you resume the turn without
 rereading every conversation.
+
+## Sharing a note does not mean taking ownership
+
+A path of Connections makes the note reachable for reading and authorized writes. It does not ask every agent in
+the graph to start reporting there automatically.
+
+Without your request, automatic reporting is limited to a Sticky Note **directly connected to that CodingAgent**
+that was empty when it first encountered it. The agent uses a short list, identifying each entry with its name:
+
+```markdown
+- [x] Builder — done: reproduced the expired-session failure.
+- [ ] Builder — doing: checking the client's retry handling.
+- [ ] Builder — will: verify the fix against the Specification.
+```
+
+The agent updates only its own entries at meaningful work boundaries. It must not complete, rewrite, or remove
+your entries or a peer's. A populated note requires an explicit maintenance request; reachability through another
+route or a colleague's Connection does not authorize proactive reporting.
+
+If you clear a note the agent was already writing to, it should leave it empty until you ask it to resume.
+Shared memory must not take away your control over what stays on the Canvas.
+
+These are collaboration instructions, not a technical block on every possible edit. To prevent writes through
+Kavor operations, use `sticky_note_read_only` on the direct Connection.
 
 ## Markdown, editing, and conflicts
 

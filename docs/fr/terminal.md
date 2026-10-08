@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal dans Kavor : une exécution visible pour l'humain et l'agent"
 description: Utilisez un vrai shell sur le Canvas, reliez le contexte par des chemins canoniques et laissez le CodingAgent aider sans perdre la supervision.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/fr/docs/terminal
 ---
 
@@ -82,6 +82,35 @@ réservées par l'émulateur.
 
 Utilisez des noms qui expriment la responsabilité, tels que `CHECK_SQL`, `SPECIFICATION_FILE` ou `IMPORT_SCRIPT`.
 Une variable générique comme `FILE` perd son sens lorsque le graphe grandit.
+
+## Coller des fichiers et images dans la saisie d'une session
+
+Utilisez un fichier ou une capture sans saisir son chemin. Le collage dans Terminal ou la surface terminal d'un
+CodingAgent insère une référence préparée pour la session, pas des données binaires dans la ligne de commande.
+
+1. Copiez un fichier depuis le gestionnaire de fichiers du système ou une image PNG/JPEG dans le presse-papiers.
+2. Donnez le focus à la saisie d'une session Terminal ou CodingAgent ouverte.
+3. Utilisez `Paste` dans le menu contextuel ou le raccourci de collage de la surface.
+4. Vérifiez le chemin inséré et terminez la commande ou la demande avant de l'envoyer.
+
+Par exemple, collez une capture d'un formulaire défectueux dans la saisie du CodingAgent, puis demandez :
+
+> Utilisez l'image référencée pour comparer le formulaire à son implémentation. Reproduisez le problème dans le
+> WebBrowser connecté et décrivez la différence observée avant de modifier le code.
+
+Kavor fournit la référence ; l'interprétation de l'image dépend du provider. Coller une image ne l'affiche pas inline
+dans Terminal et ne prouve pas que le harness l'a analysée.
+
+Si le presse-papiers contient l'image elle-même, Kavor enregistre une copie locale dans le profil de l'application et
+insère son chemin. Les images de plus de 20 MB sont refusées. Pour des références à des fichiers existants, leurs
+chemins sont utilisés. Sans fichier ni image, le texte reste collé comme texte.
+
+Cela ne crée ni File, ni Connection, ni variable d'environnement. Utilisez [File](./file.md) pour une ressource
+explicite dans le graphe, ou la section précédente pour les chemins fournis au shell par une Connection. Vérifiez
+le contenu sensible avant de l'envoyer au provider.
+
+Les raccourcis dans Terminal, un éditeur ou une page appartiennent à cette surface. Pour copier ou déplacer des
+**Nodes**, donnez le focus au Canvas et suivez la [procédure de graphe](./nodes.md#réutiliser-un-graphe-sans-reconstruire-chaque-node).
 
 ## Trois schémas utiles
 
