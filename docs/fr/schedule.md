@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule dans Kavor : donnez une horloge à votre graphe"
 description: Planifiez des prompts et commandes récurrents avec aperçu, pause, Run now et historique durable, sans étendre les permissions.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/fr/docs/schedule
 ---
 
@@ -192,6 +192,9 @@ de ce Schedule. Il n’exécute pas d’ancien travail par surprise au retour. L
 action explicite équivalente à `Run now`.
 
 Il n’y a ni catch-up automatique ni retry des effets externes.
+
+La restauration des sessions s'applique aussi au démarrage normal de l'application, pas uniquement au démarrage
+en arrière-plan.
 
 ## Quand la cible est déjà occupée
 

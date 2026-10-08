@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule in Kavor: give your graph a clock"
 description: Schedule recurring prompts and commands with preview, pause, Run now, and durable history without expanding permissions.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/en/docs/schedule
 ---
 
@@ -205,6 +205,8 @@ return. The interface shows `Missed` and offers an explicit action equivalent to
 
 There is no automatic catch-up or retry of external effects. This prevents an old command from running out of context
 without your knowledge.
+
+Session restoration applies to a normal application startup too, not only to a background start.
 
 ## When the target is already busy
 

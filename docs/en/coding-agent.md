@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent in Kavor: your favorite harness as part of a graph"
 description: Choose a provider, preserve its native experience, and connect the CodingAgent to the right context, tools, and participants.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent
 ---
 
@@ -47,6 +47,15 @@ The Node already helps separate contexts: one session can investigate while anot
 however, shared context still depends on what you put into each conversation.
 
 A Connection turns the isolated session into a participant in a system of work.
+
+### Provide a file or screenshot in the input
+
+In an open session, you can paste operating-system clipboard files or PNG/JPEG images. Kavor inserts a file reference
+without creating a File or Connection on the Canvas. Check the path and write your request before submitting it;
+interpreting the image still depends on the harness.
+
+The [Terminal guide](./terminal.md#paste-files-and-images-into-session-input) explains the procedure, limits, and
+difference between a pasted reference and a resource kept in the graph.
 
 ## What it gains from the graph
 

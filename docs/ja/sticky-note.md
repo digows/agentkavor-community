@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note：共有ワーキングメモリ"
 description: Sticky Noteを使い、すべてをSpecificationにせず、CodingAgentsと状態、発見、注意点を共有します。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/ja/docs/sticky-note
 ---
 
@@ -55,6 +55,12 @@ Sticky Noteをagentに接続し、次の判断に役立つ事実だけを記録�
 agentは別ブロックを追加でき、全体の整理を頼まれた場合は内容を置き換えられます。人は引き続き編集でき、
 すべての変更はメモの最新versionを基準にします。
 
+すでにあなたの観察があるメモでは、agentが更新してよい部分を指定してください。内容があることは、
+依頼せずに整理してよいという意味ではありません。たとえば次のように範囲を限定します。
+
+> 調査中はこのSticky Noteを維持してください。私とReviewerのメモは残し、自分の確認済みの発見だけを追加し、
+> 自分の名前が付いた項目だけを更新してください。本文全体の整理には先に私の許可を求めてください。
+
 ### 3. 実装とレビューの橋
 
 Builderは変更内容と実行したチェックを記録できます。Reviewerはfindingsとリスクを追加できます。2つのsessionを
@@ -99,6 +105,30 @@ Reviewerが確認した内容を区別できます。
 
 一つの発見なら部分更新か新しいブロックを使います。古い状態がたまったら本文の整理を依頼し、未決事項と
 あなたの観察は維持します。すべての会話を読み直さずに作業を再開できることが期待する結果です。
+
+## メモの共有は所有権の移譲ではない
+
+Connectionsの経路によりメモを読み、許可された書き込みができます。しかし、グラフ内の全agentへ自動で報告を
+始めるよう依頼したわけではありません。
+
+あなたからの依頼がない場合、自動報告は**そのCodingAgentに直接接続され**、初めて見た時点で空だった
+Sticky Noteに限ります。短いリストを使い、各項目に自分の名前を付けます。
+
+```markdown
+- [x] Builder — done: reproduced the expired-session failure.
+- [ ] Builder — doing: checking the client's retry handling.
+- [ ] Builder — will: verify the fix against the Specification.
+```
+
+agentは作業状態が有意に変わったとき、自分の項目だけを更新します。あなたや別のagentの項目を完了扱いにしたり、
+書き換えたり削除してはいけません。内容があるメモの維持には明示的な依頼が必要です。別の経路や同僚のConnectionは
+自主的な報告の許可ではありません。
+
+agentが書いていたメモをあなたが空にしたら、報告の再開を依頼するまで空のままにします。
+共有メモリを使っても、Canvasに残す内容の制御はあなたのものです。
+
+これはCodingAgentへの協働指示であり、あらゆる編集を技術的に禁止するものではありません。
+Kavor操作による書き込みを禁止するには、直接のConnectionに`sticky_note_read_only`を使います。
 
 ## Markdown、編集、競合
 

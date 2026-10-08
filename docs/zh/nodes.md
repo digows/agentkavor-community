@@ -3,7 +3,7 @@ id: nodes
 title: Kavor Nodes
 description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Trigger 各自的作用，以及它们连接后获得的能力。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/zh/docs/nodes
 ---
 
@@ -83,6 +83,9 @@ Sticky Note 是 Canvas 上的便利贴。你可以像使用普通速记一样记
 
 Sticky Notes 适合作为非正式、可见的记忆。当一项决定成为实现和未来维护所需的持久合同，应把它提升为 Specification，
 而不是永远留在便签里。
+
+共享上下文不代表智能体可以自行整理你或其他参与者的笔记。请明确它应维护哪张便签、保留哪些内容；
+规则和示例见[Sticky Note 指南](./sticky-note.md)。
 
 ### Terminal：始终可见的执行
 
@@ -169,6 +172,47 @@ Workspace 后可以查看结果、消息和证据。
 CodingAgent 可以协助分析结果，而你始终能看到整个过程。
 
 这个图自动化的是“原因”和“执行”，不会假装系统能自行理解成功的含义。
+
+## 复用图，而不必重建每个 Node
+
+一个有效的小组合，例如 Builder、Reviewer 和 Sticky Note，可以复制到另一项任务，也可以移动到另一个 Workspace。
+请选择所有应一起转移的 Nodes：只捕获所选 Nodes 之间的 Connections。
+
+### 复制或移动
+
+1. 在 Canvas 上选择 Nodes，将焦点移出编辑器、Terminal 和 WebBrowser 页面。
+2. macOS 使用 `⌘C` 复制，Windows/Linux 使用 `Ctrl+C`；移动使用 `⌘X` 或 `Ctrl+X`。
+   上下文菜单也提供 `Copy Node` / `Copy Nodes` 和 `Cut Node` / `Cut Nodes`。
+3. 留在同一 Canvas，或打开目标 Workspace，也可以在另一个 Kavor 窗口中打开。
+4. 将指针放在希望出现组合的位置，使用 `⌘V` 或 `Ctrl+V`。如果 Canvas 中没有指针位置，
+   则粘贴到可见区域中心。通过上下文菜单粘贴时使用菜单打开的位置。
+5. 继续工作前，检查目标中的 Nodes、Connections 和资源。
+
+相对布局保持不变。复制可以多次粘贴；剪切在移动完成后消耗。剪切并不立即删除组合：
+尚未粘贴时，在源 Canvas 按 `Esc` 可以取消。已完成的粘贴支持 Undo/Redo，但如果 Nodes 随后被修改，
+Kavor 可能拒绝会覆盖这些修改的撤销。
+
+### 结构不是会话，也不是备份
+
+图剪贴板只存在于当前运行的 Kavor 进程中。应用重启会丢失捕获，其他复制替换剪贴板也可能使其失效。
+它不是用于跨机器共享的导出格式。
+
+- **外部 Connections：** 不复制指向选择范围外 Nodes 的连接。移动到另一个 Workspace 时，
+  源端这些连接会被移除；请确保选中了需要的全部上下文。
+- **CodingAgent 和 Terminal：** 复制不会克隆对话、进程或执行历史。跨 Workspace 移动会关闭源会话。
+  CodingAgent 不带走 Git/worktree 关联，而是在目标 Workspace 的上下文中开始；工作前请检查目录和配置。
+- **File：** 粘贴引用同一个实体文件，不复制其字节。如果目标已经有该文件的实体化 Node，就复用它。
+  修改源仍会影响同一个文件。
+- **另一个 Workspace 中的 Specification：** Markdown 显示为 File，而不是具有相同 lifecycle 的新
+  Specification。Specification 和元数据仍属于原来的 Workspace。
+- **Trigger：** 复制的 Trigger 初始为暂停状态。使用 `Resume` 前检查目标和 payload。
+  尚有未解决 delivery 的 Trigger 不能移到另一个 Workspace；等到最终状态后再试。
+
+如果粘贴失败是因为剪切的选择发生变化，或源已不存在，请检查源端并重新捕获。
+复制了图不等于证明智能体已经完成工作。
+
+要把文件或图像粘贴到**会话输入中**，而不是把 Nodes 粘贴到 Canvas，请使用
+[Terminal 操作步骤](./terminal.md#把文件和图像粘贴到会话输入中)。
 
 ## 从工作出发，而不是追求 Node 数量
 

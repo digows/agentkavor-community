@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor の CodingAgent：使い慣れた harness をグラフの一員にする"
 description: provider を選び、ネイティブな体験を保ったまま、CodingAgent を適切なコンテキスト、ツール、参加者に接続します。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent
 ---
 
@@ -46,6 +46,15 @@ Node はすでにコンテキストの分離に役立ちます。一つのセッ
 ただしグラフがなければ、共有コンテキストは各会話に何を渡すかに依存します。
 
 Connection によって、孤立したセッションが作業システムの参加者になります。
+
+### 入力にファイルやスクリーンショットを渡す
+
+開いているセッションでは、OSクリップボードのファイルやPNG/JPEG画像を貼り付けられます。Kavorはファイル参照を
+挿入し、CanvasにFileやConnectionを作りません。パスを確認し、依頼を書いてから送信してください。
+画像の解釈は引き続きharnessの能力に依存します。
+
+手順、制限、貼り付けた参照とグラフ上のリソースの違いは
+[Terminalガイド](./terminal.md#セッション入力にファイルと画像を貼り付ける)にあります。
 
 ## グラフから得るもの
 

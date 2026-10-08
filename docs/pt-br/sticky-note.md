@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: memória de trabalho compartilhada"
 description: Use uma Sticky Note para registrar status, descobertas e pontos de atenção junto com seus CodingAgents sem transformar tudo em uma Specification.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/sticky-note
 ---
 
@@ -61,6 +61,13 @@ Conecte a Sticky Note ao agente e peça que ele registre somente fatos úteis pa
 
 > Mantenha a Sticky Note como um resumo curto do turno. Registre mudanças feitas, evidências, riscos e perguntas que precisam da minha decisão. Não transforme hipóteses em decisões finais.
 
+Se a nota já contém suas observações, deixe explícito o que o agente pode atualizar. Ele não deve tomar uma nota
+preenchida como um convite para reorganizá-la por conta própria. Uma instrução mais delimitada é:
+
+> Mantenha esta Sticky Note durante a investigação. Preserve minhas anotações e as do Reviewer. Acrescente apenas
+> suas descobertas verificadas e atualize somente os itens identificados com seu nome. Peça minha autorização antes
+> de reorganizar o corpo inteiro.
+
 O agente pode acrescentar blocos separados ou substituir o conteúdo quando você pedir uma reorganização completa. O
 conteúdo continua editável pelo humano e cada alteração precisa respeitar a versão mais recente da nota.
 
@@ -115,6 +122,31 @@ Isso permite distinguir o que o Builder concluiu do que o Reviewer verificou.
 Use uma atualização pontual ou um novo bloco quando só houver uma descoberta. Peça uma reorganização do corpo
 quando a nota acumular status antigos; mantenha decisões ainda abertas e suas observações. O resultado deve permitir
 retomar o turno sem reler todas as conversas.
+
+## Compartilhar a nota não significa tomar posse dela
+
+Um caminho de Connections torna a nota alcançável para leitura e para escritas autorizadas. Isso não equivale a
+pedir que todo agente do grafo passe a reportar ali automaticamente.
+
+Sem um pedido seu, o relato automático se limita a uma Sticky Note **diretamente conectada ao próprio CodingAgent**
+que estava vazia quando ele a encontrou. Nesse caso, ele usa uma lista curta e identifica cada item com seu nome:
+
+```markdown
+- [x] Builder — done: reproduced the expired-session failure.
+- [ ] Builder — doing: checking the client's retry handling.
+- [ ] Builder — will: verify the fix against the Specification.
+```
+
+O agente atualiza apenas os próprios itens, em momentos que mudam o estado do trabalho. Ele não deve concluir,
+reescrever ou remover entradas suas ou de outro agente. Uma nota preenchida precisa de um pedido explícito para ser
+mantida; ser alcançável por outra rota ou estar conectada a um colega não autoriza relato proativo.
+
+Se você limpar uma nota em que o agente já estava escrevendo, ele deve respeitar essa limpeza e deixá-la vazia até
+você pedir que retome o relato. Isso permite usar a nota como memória compartilhada sem perder o controle sobre o
+que permanece no Canvas.
+
+Essas são orientações de colaboração dadas ao CodingAgent, não um bloqueio técnico de toda edição possível. Quando
+precisar impedir escritas pelas operações do Kavor, use `sticky_note_read_only` na Connection direta.
 
 ## Markdown, edição e conflitos
 

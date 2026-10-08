@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal no Kavor: execução visível para humano e agente"
 description: Use um shell real no Canvas, conecte contexto por caminhos canônicos e permita assistência do CodingAgent sem perder supervisão.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/pt-br/docs/terminal
 ---
 
@@ -83,6 +83,36 @@ aberto, a nova configuração aguarda o reinício daquela sessão. `TERM` e `COL
 
 Use nomes que expressem responsabilidade, como `CHECK_SQL`, `SPECIFICATION_FILE` ou `IMPORT_SCRIPT`. Uma variável
 genérica como `FILE` perde significado quando o grafo cresce.
+
+## Cole arquivos e imagens na entrada da sessão
+
+Você pode usar um arquivo ou uma captura de tela sem digitar seu caminho manualmente. A colagem no Terminal e na
+superfície de terminal de um CodingAgent insere uma referência ao arquivo, preparada para a sessão — não o conteúdo
+binário dentro da linha de comando.
+
+1. Copie um arquivo pelo gerenciador de arquivos do sistema, ou uma imagem PNG/JPEG para o clipboard.
+2. Dê foco à entrada de uma sessão aberta no Terminal ou CodingAgent.
+3. Use a ação `Paste` do menu de contexto ou o atalho de colagem da superfície.
+4. Confira o caminho inserido e complete o comando ou pedido antes de enviá-lo.
+
+Por exemplo, copie uma captura de um formulário com erro e cole na entrada do CodingAgent. Depois, peça:
+
+> Use a imagem referenciada para comparar o formulário com a implementação. Reproduza o problema no WebBrowser
+> conectado e descreva a diferença observada antes de alterar código.
+
+O Kavor disponibiliza a referência; a capacidade de interpretar a imagem depende do provider. Colar uma imagem não
+é o mesmo que renderizá-la inline no Terminal nem garante que o harness a tenha analisado.
+
+Quando o clipboard contém a própria imagem, o Kavor salva uma cópia local no perfil do aplicativo e insere o caminho
+desse arquivo. Imagens maiores que 20 MB não são aceitas. Quando contém referências a arquivos existentes, usa esses
+caminhos. Sem arquivos ou imagens, o texto continua sendo colado como texto.
+
+Essa ação não cria um File no Canvas, não cria uma Connection e não fornece uma variável de ambiente. Para um recurso
+que deve permanecer explícito no grafo, use [File](./file.md); para um caminho fornecido ao shell por Connection, use
+o procedimento da seção anterior. Confira conteúdo sensível antes de enviá-lo ao provider.
+
+Também é importante o foco: atalhos dentro de um Terminal, editor ou página pertencem àquela superfície. Para copiar
+ou mover **Nodes**, dê foco ao Canvas e siga o [procedimento de grafos](./nodes.md#reaproveite-um-grafo-sem-reconstruir-cada-node).
 
 ## Três padrões úteis
 

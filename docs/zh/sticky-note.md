@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note：共享工作记忆"
 description: 使用 Sticky Note 与 CodingAgents 记录状态、发现和注意事项，而不必把每条工作笔记都变成 Specification。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/zh/docs/sticky-note
 ---
 
@@ -57,6 +57,12 @@ Sticky Note 最初只是给人使用的便利贴。连接 CodingAgent 后，它�
 当你要求完整整理时，agent 可以追加独立区块或替换整个内容。人仍然可以编辑内容，每一次变更都必须基于
 笔记的最新版本。
 
+如果便签已有你的观察，请明确智能体可以更新哪些内容。有内容的便签不是让它主动重新整理的邀请。
+更明确的指令可以是：
+
+> 调查期间维护这张 Sticky Note。保留我和 Reviewer 的笔记。只添加你已经验证的发现，只更新带有你名字的条目。
+> 整理整个正文前，先征求我的许可。
+
 ### 3. 连接实现与评审
 
 Builder 可以记录改动和执行过的检查。Reviewer 可以加入 findings 和风险。你无需在两个不同的 session 中
@@ -97,6 +103,28 @@ CodingAgents 之间的 Connection 不是自动 workflow 顺序；它让参与者
 
 只有一项新发现时，局部更新或新增一个区块即可。笔记积累了过时状态后，再要求整理正文；保留仍未解决的决策和你的观察。
 整理后的结果应让你无需重读所有对话就能继续工作。
+
+## 共享便签不代表转移所有权
+
+Connections 路径允许读取便签和进行已授权的写入，但不代表要求图中的所有智能体自动开始在此报告工作。
+
+没有你的请求时，自动报告仅限于**直接连接到该 CodingAgent**、且它第一次遇到时为空的 Sticky Note。
+智能体使用简短列表，并在每项中标明自己的名字：
+
+```markdown
+- [x] Builder — done: reproduced the expired-session failure.
+- [ ] Builder — doing: checking the client's retry handling.
+- [ ] Builder — will: verify the fix against the Specification.
+```
+
+智能体只在有意义的工作状态变化时更新自己的条目，不应完成、改写或删除你或其他智能体的条目。
+维护已有内容的便签需要明确请求；通过其他路径可达，或连接到同事，都不授权主动报告。
+
+如果你清空了智能体正在写的便签，它应保持为空，直到你请求恢复报告。
+共享工作记忆不应让你失去对 Canvas 上保留内容的控制。
+
+这是给 CodingAgent 的协作指引，不是对所有可能编辑的技术性封锁。
+要阻止通过 Kavor 操作写入，请在直接 Connection 上使用 `sticky_note_read_only`。
 
 ## Markdown、编辑与冲突
 

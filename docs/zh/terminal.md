@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor 中的 Terminal：让人和 agent 都看得见执行过程"
 description: 在 Canvas 上使用真实 shell，通过规范路径连接上下文，并让 CodingAgent 在不失去监督的前提下协助工作。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/zh/docs/terminal
 ---
 
@@ -73,6 +73,33 @@ markdownlint "$SPECIFICATION_FILE"
 
 使用表达职责的名称，例如 `CHECK_SQL`、`SPECIFICATION_FILE` 或 `IMPORT_SCRIPT`。图变大后，`FILE` 这样的
 通用变量会失去含义。
+
+## 把文件和图像粘贴到会话输入中
+
+使用文件或截图时，不必手动输入路径。在 Terminal 或 CodingAgent 的 terminal 界面中粘贴，
+插入的是为会话准备的文件引用，不是命令行中的二进制内容。
+
+1. 从操作系统文件管理器复制文件，或将 PNG/JPEG 图像复制到剪贴板。
+2. 将焦点放在已打开的 Terminal 或 CodingAgent 会话输入中。
+3. 使用上下文菜单的 `Paste`，或该界面的粘贴快捷键。
+4. 检查插入的路径，补全命令或请求后再发送。
+
+例如，将出错表单的截图粘贴到 CodingAgent 输入中，然后请求：
+
+> 用引用的图像比较表单与其实现。在已连接的 WebBrowser 中复现问题，并在修改代码前描述观察到的差异。
+
+Kavor 提供引用；是否能理解图像取决于 provider。粘贴图像不等于在 Terminal 中 inline 显示图像，
+也不能证明 harness 已经分析了它。
+
+如果剪贴板里是图像本身，Kavor 在应用本地配置目录中保存副本，并插入文件路径。超过 20 MB 的图像不被接受。
+如果是现有文件引用，就使用这些路径。没有文件或图像时，文本仍按文本粘贴。
+
+这个操作不会在 Canvas 中创建 File 或 Connection，也不会提供环境变量。要让资源长期明确地参与图，
+使用 [File](./file.md)；要通过 Connection 向 shell 提供路径，使用上一节的步骤。
+发送到 provider 前，请检查敏感内容。
+
+Terminal、编辑器和页面内的快捷键属于该界面。要复制或移动 **Nodes**，先把焦点放到 Canvas，
+再按[图的操作步骤](./nodes.md#复用图而不必重建每个-node)执行。
 
 ## 三种实用模式
 

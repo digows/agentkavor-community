@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal en Kavor: ejecución visible para humano y agente"
 description: Usa un shell real en el Canvas, conecta contexto mediante rutas canónicas y permite la asistencia del CodingAgent sin perder supervisión.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/es/docs/terminal
 ---
 
@@ -82,6 +82,35 @@ emulador.
 
 Usa nombres que expresen responsabilidad, como `CHECK_SQL`, `SPECIFICATION_FILE` o `IMPORT_SCRIPT`. Una variable
 genérica como `FILE` pierde significado cuando el grafo crece.
+
+## Pega archivos e imágenes en la entrada de la sesión
+
+Usa un archivo o una captura sin escribir su ruta. Pegar en Terminal o en la superficie de terminal de CodingAgent
+inserta una referencia preparada para la sesión, no contenido binario en la línea de comandos.
+
+1. Copia un archivo desde el gestor de archivos del sistema o una imagen PNG/JPEG al portapapeles.
+2. Enfoca la entrada de una sesión abierta de Terminal o CodingAgent.
+3. Usa `Paste` en el menú contextual o el atajo de pegado de la superficie.
+4. Comprueba la ruta insertada y completa el comando o petición antes de enviarlo.
+
+Por ejemplo, pega una captura de un formulario con error en CodingAgent y pide:
+
+> Usa la imagen referenciada para comparar el formulario con su implementación. Reproduce el problema en el
+> WebBrowser conectado y describe la diferencia observada antes de modificar código.
+
+Kavor proporciona la referencia; interpretar la imagen depende del provider. Pegar no muestra la imagen inline en
+Terminal ni demuestra que el harness la haya analizado.
+
+Si el portapapeles contiene la propia imagen, Kavor guarda una copia local en el perfil de la aplicación e inserta su
+ruta. No acepta imágenes mayores de 20 MB. Si contiene referencias a archivos existentes, usa esas rutas. Sin archivos
+ni imágenes, el texto se sigue pegando como texto.
+
+Esto no crea un File, una Connection ni una variable de entorno. Usa [File](./file.md) para un recurso explícito en el
+grafo, o la sección anterior para rutas entregadas al shell por Connections. Comprueba el contenido sensible antes de
+enviarlo al provider.
+
+Los atajos dentro de Terminal, editor o página pertenecen a esa superficie. Para copiar o mover **Nodes**, enfoca el
+Canvas y sigue el [procedimiento de grafos](./nodes.md#reutiliza-un-grafo-sin-reconstruir-cada-node).
 
 ## Tres patrones útiles
 

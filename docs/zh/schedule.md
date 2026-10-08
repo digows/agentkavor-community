@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor Schedule：为你的图谱加上时钟"
 description: 在不扩大权限的前提下，通过预览、暂停、Run now 和持久历史来安排周期性提示与命令。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-08
 canonicalUrl: https://agentkavor.com/zh/docs/schedule
 ---
 
@@ -170,6 +170,8 @@ Workspaces，而不仅是当前可见的 Workspace。暂停的 Triggers 不会�
 也不会在恢复时突然执行旧任务。界面会显示 `Missed`，并提供等同于 `Run now` 的明确操作。
 
 不存在自动 catch-up，也不会自动 retry 外部效果。
+
+会话恢复同样适用于应用的正常启动，并不只适用于后台启动。
 
 ## 目标已经忙碌时
 
