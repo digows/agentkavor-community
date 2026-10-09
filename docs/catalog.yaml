@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-10-08.2
+releaseId: docs-2026-10-09.1
 sourceRepository: digows/agentkavor-community
-currentProductVersion: 1.7.0
-previousReleaseId: docs-2026-10-08.1
+currentProductVersion: 1.7.1
+previousReleaseId: docs-2026-10-08.2
 locales:
   - slug: en
     languageTag: en
@@ -51,6 +51,22 @@ navigation:
     documents:
       - release-notes
 documents:
+  - id: release-notes-1.7.1
+    kind: release-note
+    slug: release-notes/1.7.1
+    path: release-notes/1.7.1.md
+    status: published
+    introducedIn: 1.7.1
+    lastVerifiedIn: 1.7.1
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 1.7.1
+    publishedAt: 2026-10-09T22:10:22Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.7.1
+    sourceBodySha256: d1f2ea4fa034001e1c6251714204020cbf6c6b8112d9440aa798f9c1d1d7891e
   - id: release-notes-1.7.0
     kind: release-note
     slug: release-notes/1.7.0
