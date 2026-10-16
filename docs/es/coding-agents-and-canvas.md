@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Cómo CodingAgents ven y construyen el Canvas
 description: Comprende el contexto alcanzable, los mensajes entre agentes y la edición atómica del Canvas dentro de límites que tú controlas.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/es/docs/coding-agents-and-canvas
 ---
 
@@ -63,6 +63,16 @@ pedir aclaraciones, dividir investigaciones o devolver hallazgos y pedir otra ve
 
 Una decisión duradera no debe existir solo en un mensaje. Conserva contratos en la Specification, memoria de trabajo
 en una Sticky Note y resultados en outputs apropiados.
+
+### Elige la entrega según el efecto deseado
+
+- Para una revisión que puede esperar, usa **After turn**: la solicitud espera a que el destinatario esté disponible.
+- Para coordinación normal, usa **Native input**: el provider decide cómo incorporar la entrada. No garantiza ausencia de interrupciones.
+- Para un cambio explícito de dirección, **Send now** puede interrumpir si el provider y los Guardrails lo permiten. Indica qué instrucción se sustituye, qué debe detenerse y cuál es la siguiente acción. Interrumpir no deshace efectos.
+
+Una solicitud aceptada o en cola no demuestra que el otro agente la haya leído o ejecutado. Los borradores y aprobaciones humanos siguen protegidos; no evites una entrega retenida por otra ruta.
+
+La Connection directa define modo predeterminado y restricciones. Consulta la [referencia de Connections](./connections.md); enviar mensajes no equivale a leer pasivamente el historial.
 
 ## Los Guardrails siguen ligados al par directo
 

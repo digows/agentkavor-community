@@ -19,7 +19,7 @@ async function withCorpus(callback) {
 
 test('validates the complete released corpus', async () => {
   const result = await validateDocumentation(resolve('docs'))
-  assert.deepEqual(result, { locales: 7, pages: 217, releases: 16 })
+  assert.deepEqual(result, { locales: 7, pages: 224, releases: 16 })
 
   for (const locale of ['en', 'pt-br', 'es', 'fr', 'zh', 'ja', 'ru']) {
     const source = await readFile(join('docs', locale, 'what-is-kavor.md'), 'utf8')
@@ -30,7 +30,7 @@ test('validates the complete released corpus', async () => {
 
 test('accepts tutorial as a first-class documentation kind', async () => {
   const result = await validateDocumentation(resolve('docs'))
-  assert.equal(result.pages, 217)
+  assert.equal(result.pages, 224)
   for (const locale of ['en', 'pt-br', 'es', 'fr', 'zh', 'ja', 'ru']) {
     const source = await readFile(join('docs', locale, 'first-loop.md'), 'utf8')
     assert.match(source, /^kind: tutorial$/m)
@@ -116,7 +116,7 @@ test('rejects unsupported page frontmatter instead of silently projecting it', a
 test('rejects an incomplete locale', async () => {
   await withCorpus(async (sourceDirectory) => {
     await rm(join(sourceDirectory, 'ru', 'release-notes', '1.0.0.md'))
-    await assert.rejects(validateDocumentation(sourceDirectory), /must contain exactly 31 cataloged Markdown files/)
+    await assert.rejects(validateDocumentation(sourceDirectory), /must contain exactly 32 cataloged Markdown files/)
   })
 })
 

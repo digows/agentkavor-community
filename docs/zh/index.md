@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor 文档
 description: 在 Kavor 中搭建第一个闭环，查找使用 CodingAgents 编写契约、实现、审查、测试和安排定时工作的指南。
 kind: landing
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs
 ---
 
@@ -30,6 +30,7 @@ WebBrowser。如果想先理解模型，请阅读[什么是 Kavor？](./what-is-
 
 | 你的任务 | 从哪里继续 |
 | --- | --- |
+| 通过 WhatsApp 继续与 agents 对话 | [Agent Kavor 与 Channels](./agent-kavor.md)：个人对话、Workspace 群组与远程参与。 |
 | 将想法转化为可实现的契约 | [Specification](./specification.md)：问题、范围、标准和证据。 |
 | 让不同智能体分别负责实现和审查 | [CodingAgents 与角色](./agents-and-roles.md)：职责、上下文和交接。 |
 | 让未决事项和进度保持可见 | [Sticky Note](./sticky-note.md)：共享工作记忆。 |

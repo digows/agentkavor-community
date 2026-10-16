@@ -3,7 +3,7 @@ id: what-is-kavor
 title: Kavor とは？
 description: Coding Agent と永続的なエンジニアリングコンテキストを調整する、Kavor のローカルファーストな視覚システムを理解します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/what-is-kavor
 ---
 
@@ -61,6 +61,16 @@ WebBrowser は実際のページを Canvas 上に保持します。CodingAgent �
 Kavor はローカルファーストです。Workspace、リポジトリ、ファイル、ターミナル、プロバイダーセッションは、
 あなたのマシン上であなたの管理下に残ります。Connection は Kavor 内の権限を表すものであり、Workspace の
 非公開コンテンツを公開サービスへコピーする理由にはなりません。
+
+Local-first は情報が一切外に出ないという意味ではありません。harnesses は設定したサービスを使います。Channels のメッセージは Channel のサービスを、添付ファイルは Kavor 管理の一時ストレージを使います。共有前に内容を確認してください。
+
+## Agent Kavor と Channels
+
+Canvas が仕事を整理し、**Agent Kavor** は **Channels** から CodingAgents との会話を続けられるようにします。最初は WhatsApp です。個人の会話で Workspace と agent を選ぶか、プロジェクト専用グループから依頼、質問への回答、結果の受け取りができます。
+
+仕事は desktop に残り、Kavor は起動・サインイン・接続状態を保つ必要があります。Channel は Node や Connection ではなく、agent の権限も広げません。
+
+[WhatsApp で Agent Kavor を設定する →](./agent-kavor.md)
 
 ## 最初の実用的なループ
 

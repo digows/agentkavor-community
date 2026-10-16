@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections soportadas en Kavor
 description: Consulta las combinaciones soportadas entre Nodes, las capacidades concedidas, los parámetros necesarios y los Guardrails disponibles.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/es/docs/connections
 ---
 
@@ -30,6 +30,8 @@ Las Connections son relaciones bidireccionales. Kavor almacena ambos endpoints e
 expresa flujo, control ni precedencia. Un mensaje sigue teniendo remitente y destinatario; un Trigger sigue teniendo
 un objetivo. Esas direcciones pertenecen a la operación, no a la Connection persistida.
 
+La matriz enumera pares directos. Nodes sin un par directo compatible pueden compartir un componente alcanzable mediante otras Connections admitidas; la proximidad visual no concede acceso.
+
 ## Combinaciones soportadas
 
 | Par de Nodes | Qué permite la Connection | Parámetros | Guardrail disponible | Ejemplo principal |
@@ -39,7 +41,7 @@ un objetivo. Esas direcciones pertenecen a la operación, no a la Connection per
 | **CodingAgent + Terminal** | Leer output, ejecutar comandos, seguir o interrumpir una ejecución correlacionada e interactuar con el proceso en foreground cuando esté permitido. | Ninguno | `terminal_read_only` | Diagnóstico, tests, logs o asistencia en una sesión SSH supervisada. |
 | **CodingAgent + File** | Hacer explícita en el grafo una fuente canónica del filesystem para leerla, revisarla o modificarla cuando esté permitido. | Ninguno | `file_read_only` | Delimitar un módulo, PDF, imagen, informe o configuración. |
 | **CodingAgent + WebBrowser** | Dar al agente acceso mediado a las páginas vivas de ese WebBrowser. | Ninguno | Ninguno | Persona y agente navegando, completando, verificando y capturando evidencia en el mismo estado visible. |
-| **CodingAgent + CodingAgent** | Formar un grafo alcanzable para mensajes asíncronos, respuestas, revisión independiente y trabajo paralelo. | Ninguno | Ninguno | Un Builder solicitando revisión a un Reviewer. |
+| **CodingAgent + CodingAgent** | Formar un grafo alcanzable para mensajes asíncronos, respuestas, revisión independiente y trabajo paralelo. | Modo predeterminado de entrega | Bloquear After turn, Native input o Send now | Un Builder solicitando revisión a un Reviewer. |
 | **Specification + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica de la Specification. | Nombre obligatorio de variable de entorno | Ninguno | Validar, inspeccionar o comparar el Markdown de una Specification. |
 | **File + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica del File. | Nombre obligatorio de variable de entorno | Ninguno | Ejecutar un script o usar un archivo SQL sin copiar su ruta entre ventanas. |
 | **Trigger + CodingAgent** | Entregar en un horario configurado un prompt a un CodingAgent con sesión activa. | Ninguno | Ninguno | Despertar a un Maintainer para analizar fallos, escribir un informe y pedir revisión. |
@@ -61,6 +63,9 @@ elegida por el usuario sobre esa base:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Mantiene la lectura y bloquea append o replace del contenido. |
 | `terminal_read_only` | CodingAgent + Terminal | Mantiene la inspección del Terminal y bloquea operaciones que alterarían la sesión, el proceso o su entrada. |
 | `file_read_only` | CodingAgent + File | Declara que el agente no debe modificar la fuente canónica. |
+| `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Bloquea la entrega After turn entre el par. |
+| `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Bloquea la entrega Native input entre el par. |
+| `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Bloquea Send now y steering entre el par. |
 
 Los Guardrails pertenecen a la Connection directa entre el CodingAgent y el recurso. Una ruta alternativa por el
 grafo no elimina una restricción existente en ese par directo.
@@ -72,9 +77,21 @@ allí el Guardrail es un contrato visible y monitorizado, no una sandbox del sis
 Un Guardrail no crea una Connection, no hace alcanzable un Node y no aumenta permisos. Si un recurso no debe participar
 en el grafo, no crees la Connection.
 
+## Entrega entre CodingAgents
+
+La Connection directa elige el modo predeterminado para mensajes que no especifican otro. Sin configuración, es **Native input**. Los agentes pueden solicitar otro modo por mensaje cuando los Guardrails lo permiten.
+
+- **After turn:** espera a que el destinatario termine su turno y esté disponible.
+- **Native input:** utiliza la entrada normal del provider, que puede incorporar, encolar, orientar o interrumpir según sus capacidades y ajustes. No promete entrega sin interrupciones.
+- **Send now:** solicita entrada inmediata con posible interrupción. Requiere soporte del provider y no deshace cambios, comandos ni efectos ya producidos.
+
+![Connection entre CodingAgents con After turn, Native input, Send now y Guardrails de entrega](https://media.agentkavor.com/releases/2.0.0/agent-communication/delivery/master.cda7ab810311.png)
+
+Un Guardrail directo sigue vigente aunque exista otra ruta en el grafo. Ningún modo evita borradores, aprobaciones ni entregas retenidas por el humano. Aceptación y entrega no equivalen a finalización.
+
 ## Connections con variables de entorno
 
-Solo dos combinaciones tienen parámetros persistidos:
+Dos pares suministran rutas mediante variables de entorno:
 
 - **File + Terminal**;
 - **Specification + Terminal**.

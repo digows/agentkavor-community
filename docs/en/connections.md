@@ -3,7 +3,7 @@ id: connections
 title: Supported Connections matrix in Kavor
 description: Consult directly connectable Node pairs, structural roles, parameters, Guardrails, and limits.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/en/docs/connections
 ---
 
@@ -29,6 +29,8 @@ This page is the public reference for pairs Kavor allows you to connect directly
 A message still has a sender and recipient. A Schedule still delivers to a target. Those directions belong to the
 operation, not to the Connection drawn on the Canvas.
 
+The matrix lists direct pairs. Nodes without a supported direct pair can still share a reachable component through other supported Connections; visual proximity alone never grants access.
+
 ## Supported combinations
 
 | Node pair | Role of the direct Connection | Parameters | Available Guardrail | Primary example |
@@ -38,7 +40,7 @@ operation, not to the Connection drawn on the Canvas.
 | **CodingAgent + Terminal** | Places the shell in reach and provides the direct restriction point. | None | `terminal_read_only` | Diagnostics, tests, logs, or a supervised SSH session. |
 | **CodingAgent + File** | Places a canonical filesystem source in the graph and provides the direct restriction point. | None | `file_read_only` | Delimit a module, PDF, image, report, or configuration. |
 | **CodingAgent + WebBrowser** | Gives the agent mediated access to that WebBrowser's live pages. | None | None | Human and agent navigating, filling, verifying, and capturing evidence in the same visible state. |
-| **CodingAgent + CodingAgent** | Joins participants in one component. Any reachable CodingAgent may message another. | None | None | A Builder requesting review from a Reviewer. |
+| **CodingAgent + CodingAgent** | Joins participants in one component. Any reachable CodingAgent may message another. | Default delivery mode | Block After turn, Native input, or Send now | A Builder requesting review from a Reviewer. |
 | **Specification + Terminal** | Exports the Specification's canonical absolute path to the Terminal session. | Required environment variable name | None | Validate or compare Specification Markdown. |
 | **File + Terminal** | Exports the File's canonical absolute path to the Terminal session. | Required environment variable name | None | Run a script or SQL file without copying its path. |
 | **Trigger + CodingAgent** | Selects a CodingAgent with an active session as the target of the Schedule prompt. | None | None | Wake a Maintainer to analyze failures and request review. |
@@ -63,6 +65,9 @@ CodingAgent and a resource:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Preserves reading and blocks appending or replacing content. |
 | `terminal_read_only` | CodingAgent + Terminal | Preserves inspection and blocks operations that change the session, process, or input. |
 | `file_read_only` | CodingAgent + File | Declares that the agent must not change the canonical source. |
+| `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Blocks After turn delivery between the pair. |
+| `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Blocks Native input delivery between the pair. |
+| `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Blocks Send now and steering between the pair. |
 
 Another route does not erase a Guardrail on the direct pair. A restriction on another agent's Connection also does
 not become a global resource policy.
@@ -71,10 +76,21 @@ Kavor-mediated operations are rejected before effects when blocked. Files and Sp
 reachable through the harness filesystem tools; there the Guardrail is a visible, monitored contract, not an OS
 sandbox. A Guardrail does not create a Connection, expand permissions, or apply merely because a Node is nearby.
 
+## Delivery between CodingAgents
+
+The direct Connection chooses the default for messages that omit a delivery mode. Without configuration, the default is **Native input**. Agents can request another mode per message when Guardrails allow.
+
+- **After turn:** waits for the recipient to finish its turn and become available.
+- **Native input:** uses the provider's normal input behavior; it may incorporate, queue, steer, or interrupt according to its capabilities and settings. It does not promise non-interrupting delivery.
+- **Send now:** requests immediate input with possible interruption. It requires provider support and does not undo changes, commands, or other effects already produced.
+
+![CodingAgent Connection settings with After turn, Native input, Send now, and delivery Guardrails](https://media.agentkavor.com/releases/2.0.0/agent-communication/delivery/master.cda7ab810311.png)
+
+A direct Connection Guardrail still applies when another graph route exists. None of these modes bypass human drafts, approvals, or held deliveries. Acceptance and delivery do not mean task completion.
+
 ## Connections with environment variables
 
-Only **File + Terminal** and **Specification + Terminal** have persisted parameters. You choose an environment
-variable name, and the value supplied to the Terminal is the canonical absolute path, never the file contents.
+Two pairs supply paths through environment variables:
 
 ```sh
 sqlite3 app.db < "$CHECK_SQL"

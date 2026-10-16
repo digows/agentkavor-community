@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser：agentの前で開発してテストする"
 description: Kavorの共有WebBrowserでWebアプリを開発し、bugを再現し、ページをdebugし、E2Eフローを証明します。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/web-browser
 ---
 
@@ -97,6 +97,14 @@ agentと人は同じライブページを共有します。人は操作を見て
 ありません。
 
 ## 制限と注意
+
+### ライフサイクルと音声を制御する
+
+Node の設定で **Shutdown** は実行中のページを閉じ、**Start** は Browser を再開します。保存済みタブやサインインなどのサイトデータは残りますが、未送信フォームやメモリ上だけの状態は失われる場合があります。停止は cookies の消去や Node の削除ではありません。
+
+**Mute browser audio** はその Browser の全タブとポップアップを消音します。音声設定と明示的な開始・停止の意図は保存され、Workspace の切り替えや UI の再マウントで取り消されてはいけません。
+
+活動中のページは可視 Canvas の外でも agent が利用できます。全ページやプロセスを常時動かす必要はありません。画面を離れるだけで終了すると考えず、セッションを終えるときは Shutdown を使ってください。
 
 CAPTCHA、passkey、site permission、certificate、authentication promptは人の対応が必要な場合があります。
 snapshot referenceはnavigationやDOM変更後に期限切れになるため、再取得します。network ruleは一時的で、test後に

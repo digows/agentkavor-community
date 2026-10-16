@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent no Kavor: seu harness favorito como parte de um grafo"
 description: Escolha um provider, preserve sua experiência nativa e conecte o CodingAgent ao contexto, às ferramentas e aos participantes certos.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent
 ---
 
@@ -57,6 +57,12 @@ enviá-lo; interpretar a imagem continua dependendo das capacidades do harness.
 
 O [guia do Terminal](./terminal.md#cole-arquivos-e-imagens-na-entrada-da-sessão) explica o procedimento, os limites e a
 diferença entre uma referência colada e um recurso mantido no grafo.
+
+## Converse por Channels
+
+Você também pode conversar com esse mesmo CodingAgent por um Channel, começando pelo WhatsApp. O agente continua no
+desktop, usando o contexto e os limites do seu Workspace; a conversa remota não substitui o harness nem cria outro
+agente na nuvem. Veja [Agent Kavor e Channels](./agent-kavor.md) para configurar a conversa e selecionar o destinatário.
 
 ## O que ele ganha no grafo
 

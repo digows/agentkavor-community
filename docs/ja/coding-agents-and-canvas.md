@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents が Canvas を見て構築する仕組み
 description: 到達可能な context、agent 間 message、人が制御する境界内での Canvas の atomic editing を理解します。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agents-and-canvas
 ---
 
@@ -60,6 +60,16 @@ Kavor は Workspace 全体の恒久 dump ではなく、有用な context を優
 
 durable decision を message だけに残さないでください。contract は Specification、working memory は Sticky Note、result は適切な
 outputs に保存します。
+
+### 求める効果で配信を選ぶ
+
+- 待てるレビューには **After turn** を使います。依頼は宛先が利用可能になるまで待ちます。
+- 通常の協調には **Native input** を使い、入力の扱いを provider に任せます。中断しない保証ではありません。
+- 明示的な方向転換では **Send now** が provider と Guardrails の許す範囲で中断できます。置き換える指示、停止対象、次の行動を明記してください。中断は効果を元に戻しません。
+
+受理やキュー入りは相手が読んだ・実行した証明ではありません。人の下書きや承認は保護され、別経路で保留配信を回避してはいけません。
+
+既定モードと制限は直接 Connection の設定です。詳細は [Connection リファレンス](./connections.md) を参照し、メッセージと履歴の受動的読み取りを区別してください。
 
 ## Guardrails は直接 pair に残る
 

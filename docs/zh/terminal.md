@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor 中的 Terminal：让人和 agent 都看得见执行过程"
 description: 在 Canvas 上使用真实 shell，通过规范路径连接上下文，并让 CodingAgent 在不失去监督的前提下协助工作。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/terminal
 ---
 
@@ -177,6 +177,8 @@ node --version
 Guardrail 属于这一对。它不会让整个 Terminal 全局只读，也不会替代操作系统权限。
 
 ## 重要限制
+
+如果 OSC 8 超链接刚输出到指针已经停留的行，可能不会立即激活。打开前先把指针移到另一行，再移回来。此悬停限制不表示生成链接的命令失败。
 
 - Terminal output 不会自动证明外部效果正确发生。
 - CodingAgent 不应干扰尚未完成的人类输入。

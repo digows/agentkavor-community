@@ -3,7 +3,7 @@ id: connections
 title: KavorでサポートされるConnectionsのマトリクス
 description: サポートされるNodesの組み合わせ、付与される能力、必要なパラメーター、利用可能なGuardrailsを確認できます。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/connections
 ---
 
@@ -30,6 +30,8 @@ Connectionsは双方向の関係です。Kavorは2つのendpointsを正規順序
 優先順位を表しません。メッセージには送信者と受信者があり、Triggerには対象があります。これらの方向は、
 永続化されたConnectionではなく、実行される操作に属します。
 
+行列は直接の組み合わせを示します。直接接続できない Nodes も、別の対応する Connections で同じ到達可能コンポーネントに参加できます。見た目の近さだけではアクセスできません。
+
 ## サポートされる組み合わせ
 
 | Nodesのペア | Connectionが可能にすること | パラメーター | 利用可能なGuardrail | 主な例 |
@@ -39,7 +41,7 @@ Connectionsは双方向の関係です。Kavorは2つのendpointsを正規順序
 | **CodingAgent + Terminal** | 許可されている場合に、outputの読み取り、コマンド実行、対応づけられた実行の追跡や中断、foregroundプロセスとの対話を行う。 | なし | `terminal_read_only` | 診断、テスト、ログ確認、または監督下のSSHセッション支援。 |
 | **CodingAgent + File** | filesystem上の正規sourceをグラフ内で明示し、許可されている場合に読み取り、レビュー、変更する。 | なし | `file_read_only` | モジュール、PDF、画像、報告書、設定を具体的な対象にする。 |
 | **CodingAgent + WebBrowser** | そのWebBrowserのライブページへ、Agentが仲介されたアクセスを行えるようにする。 | なし | なし | 人とAgentが同じ可視状態で移動、入力、検証、証拠取得を行う。 |
-| **CodingAgent + CodingAgent** | 非同期メッセージ、返信、独立レビュー、並行作業のための到達可能なグラフを構成する。 | なし | なし | BuilderがReviewerにレビューを依頼する。 |
+| **CodingAgent + CodingAgent** | 非同期メッセージ、返信、独立レビュー、並行作業のための到達可能なグラフを構成する。 | 既定の配信モード | After turn、Native input、Send now を制限 | BuilderがReviewerにレビューを依頼する。 |
 | **Specification + Terminal** | Specificationの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | SpecificationのMarkdownを検証、確認、比較する。 |
 | **File + Terminal** | Fileの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | ウィンドウ間でパスをコピーせずにscriptやSQLファイルを使う。 |
 | **Trigger + CodingAgent** | 設定した時刻に、アクティブなセッションを持つCodingAgentへpromptを届ける。 | なし | なし | Maintainerを起こして障害を分析し、報告を書き、レビューを依頼する。 |
@@ -61,6 +63,9 @@ Connectionは、そのペアに実装された能力を基本として始まり�
 | `sticky_note_read_only` | CodingAgent + Sticky Note | 読み取りは維持し、内容のappendまたはreplaceを禁止する。 |
 | `terminal_read_only` | CodingAgent + Terminal | Terminalの確認は維持し、セッション、プロセス、入力を変更する操作を禁止する。 |
 | `file_read_only` | CodingAgent + File | agentが正規sourceを変更してはならないことを宣言する。 |
+| `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | そのペアの After turn 配信を拒否します。 |
+| `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | そのペアの Native input 配信を拒否します。 |
+| `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | そのペアの Send now と steering を拒否します。 |
 
 Guardrailsは、CodingAgentとリソース間の直接のConnectionに属します。グラフ内に別の経路があっても、その直接ペアに
 存在する制限は消えません。
@@ -72,9 +77,21 @@ Guardrailが操作を禁止している場合、Kavorを介した操作は効果
 GuardrailはConnectionを作成せず、Nodeを到達可能にせず、権限を増やしません。リソースをグラフに参加させたく
 ない場合は、Connectionを作成しないでください。
 
+## CodingAgents 間の配信
+
+直接 Connection は、モードを指定しないメッセージの既定値を選びます。未設定時は **Native input** です。Guardrails が許せばメッセージごとに別モードを指定できます。
+
+- **After turn：** 宛先のターン終了と利用可能状態を待ちます。
+- **Native input：** provider の通常の入力処理を使います。能力と設定に応じて取り込み、待機、方向調整、中断が起こり得ます。中断しない配信の保証ではありません。
+- **Send now：** 中断する可能性のある即時入力を求めます。provider の対応が必要で、すでに行われた変更、コマンド、効果を元に戻しません。
+
+![CodingAgents の Connection 設定。After turn、Native input、Send now と配信 Guardrails](https://media.agentkavor.com/releases/2.0.0/agent-communication/delivery/master.cda7ab810311.png)
+
+別のグラフ経路があっても直接 Connection の Guardrail は適用されます。どのモードも人の下書き、承認、保留配信を回避できません。受理や配信はタスク完了を意味しません。
+
 ## 環境変数を持つConnections
 
-永続化されたパラメーターを持つペアは2つだけです。
+環境変数でパスを提供する組み合わせは二つです。
 
 - **File + Terminal**
 - **Specification + Terminal**

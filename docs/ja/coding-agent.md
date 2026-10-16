@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor の CodingAgent：使い慣れた harness をグラフの一員にする"
 description: provider を選び、ネイティブな体験を保ったまま、CodingAgent を適切なコンテキスト、ツール、参加者に接続します。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent
 ---
 
@@ -55,6 +55,10 @@ Connection によって、孤立したセッションが作業システムの参
 
 手順、制限、貼り付けた参照とグラフ上のリソースの違いは
 [Terminalガイド](./terminal.md#セッション入力にファイルと画像を貼り付ける)にあります。
+
+## Channels で会話する
+
+同じ CodingAgent と Channel から会話することもできます。最初は WhatsApp に対応します。agent は desktop 上で Workspace のコンテキストと制限を使い続け、遠隔の会話で harness を置き換えたり別のクラウド agent を作ったりはしません。[Agent Kavor と Channels](./agent-kavor.md) で会話と宛先の設定を確認してください。
 
 ## グラフから得るもの
 

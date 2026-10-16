@@ -3,7 +3,7 @@ id: what-is-kavor
 title: O que é o Kavor?
 description: Entenda o sistema visual local-first do Kavor para coordenar coding agents e contexto de engenharia durável.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/pt-br/docs/what-is-kavor
 ---
 
@@ -61,6 +61,21 @@ Workspace, a página pode continuar ativa e voltar no mesmo estado quando você 
 Kavor é local-first. Seu Workspace, repositórios, arquivos, terminais e sessões dos provedores permanecem sob seu
 controle, na sua máquina. O grafo expressa autorização dentro do Kavor; ele não é motivo para copiar conteúdo privado
 do Workspace para serviços públicos.
+
+Local-first não significa que nenhuma informação sai da máquina: os harnesses usam os serviços que você configura.
+Ao usar Channels, as mensagens passam pelo serviço do Channel e anexos usam armazenamento temporário gerenciado pelo
+Kavor. Confira o conteúdo antes de compartilhá-lo.
+
+## Agent Kavor e Channels
+
+O Canvas organiza o trabalho; **Agent Kavor** permite continuar a conversa com seus CodingAgents por **Channels**.
+O primeiro disponível é o WhatsApp: escolha um Workspace e um agente na conversa pessoal ou use um grupo dedicado ao
+projeto para enviar pedidos, responder perguntas e receber resultados.
+
+O trabalho continua no seu desktop, que precisa permanecer em execução, autenticado e conectado à rede. Channel não
+é um Node nem uma Connection e não amplia as permissões do agente.
+
+[Configure o Agent Kavor pelo WhatsApp →](./agent-kavor.md)
 
 ## Um primeiro loop útil
 

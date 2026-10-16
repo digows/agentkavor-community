@@ -3,7 +3,7 @@ id: docs-home
 title: Documentação do Kavor
 description: Monte seu primeiro loop no Kavor e encontre guias para especificar, implementar, revisar, testar e agendar trabalho com CodingAgents.
 kind: landing
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/pt-br/docs
 ---
 
@@ -33,6 +33,7 @@ leia [O que é o Kavor?](./what-is-kavor.md).
 
 | Sua tarefa | Por onde seguir |
 | --- | --- |
+| Continuar a conversa com seus agentes pelo WhatsApp | [Agent Kavor e Channels](./agent-kavor.md): conversa pessoal, grupos por Workspace e participação à distância. |
 | Transformar uma ideia em um contrato implementável | [Specification](./specification.md): perguntas, escopo, critérios e evidências. |
 | Dividir implementação e revisão entre agentes | [CodingAgents e papéis](./agents-and-roles.md): responsabilidades, contexto e handoffs. |
 | Manter decisões em aberto e progresso à vista | [Sticky Note](./sticky-note.md): memória de trabalho compartilhada. |

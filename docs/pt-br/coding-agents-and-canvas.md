@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Como CodingAgents enxergam e constroem o Canvas
 description: Entenda contexto alcançável, mensagens entre agentes e edição atômica do Canvas com limites controlados por você.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agents-and-canvas
 ---
 
@@ -71,6 +71,21 @@ As mensagens são duráveis e inspecionáveis no painel `Messages`. Use-as para:
 
 Uma mensagem coordena participantes, mas não deve ser o único lugar de uma decisão durável. Preserve contratos na
 Specification, memória de trabalho em uma Sticky Note e resultados nos outputs apropriados.
+
+### Escolha a entrega pelo efeito desejado
+
+- Para uma revisão que pode esperar, use **After turn**: o pedido aguarda o destinatário ficar disponível.
+- Para coordenação normal, use **Native input**: o provider decide como incorporar a entrada. Isso não garante
+  ausência de interrupção.
+- Para uma mudança explícita de direção, **Send now** pode interromper o trabalho quando o provider e os Guardrails
+  permitem. Diga o que foi substituído, o que deve parar e qual é a próxima ação. Interromper não desfaz efeitos.
+
+Uma mensagem aceita ou enfileirada ainda não prova que o outro agente a leu ou executou. Rascunhos e aprovações
+humanas continuam protegidos; não tente contornar uma entrega retida por outro caminho.
+
+O modo padrão e as restrições são configurados na Connection direta entre os agentes. Consulte a
+[referência de Connections](./connections.md) para os controles e Guardrails, sem confundir mensagens com leitura
+passiva do histórico.
 
 ## Guardrails continuam ligados ao par direto
 

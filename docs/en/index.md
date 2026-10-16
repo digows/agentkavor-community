@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor documentation
 description: Build your first loop in Kavor and find guides to specify, implement, review, test, and schedule work with CodingAgents.
 kind: landing
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/en/docs
 ---
 
@@ -33,6 +33,7 @@ reference, or a WebBrowser to test the application. If you prefer to understand 
 
 | Your task | Where to go |
 | --- | --- |
+| Continue talking to your agents through WhatsApp | [Agent Kavor and Channels](./agent-kavor.md): personal conversation, Workspace groups, and remote participation. |
 | Turn an idea into an implementable contract | [Specification](./specification.md): questions, scope, criteria, and evidence. |
 | Split implementation and review between agents | [CodingAgents and roles](./agents-and-roles.md): responsibilities, context, and handoffs. |
 | Keep open decisions and progress in view | [Sticky Note](./sticky-note.md): shared working memory. |
