@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections suportadas no Kavor
 description: Consulte os pares de Nodes que podem ser conectados, seu papel estrutural, parâmetros, Guardrails e limites.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/pt-br/docs/connections
 ---
 
@@ -42,7 +42,7 @@ operação realizada, não à Connection desenhada no Canvas.
 | **CodingAgent + Terminal** | Coloca o shell ao alcance do grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `terminal_read_only` | Diagnóstico, testes, logs ou assistência em uma sessão SSH supervisionada. |
 | **CodingAgent + File** | Coloca uma fonte canônica do filesystem no grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `file_read_only` | Delimitar um módulo, PDF, imagem, relatório ou configuração. |
 | **CodingAgent + WebBrowser** | Entrega ao agente acesso mediado às páginas vivas daquele WebBrowser. | Nenhum | Nenhum | Humano e agente navegando, preenchendo, verificando e capturando evidências no mesmo estado visível. |
-| **CodingAgent + CodingAgent** | Une participantes em um componente. Qualquer CodingAgent alcançável pode trocar mensagens com outro. | Nenhum | Nenhum | Builder solicitando uma revisão ao Reviewer. |
+| **CodingAgent + CodingAgent** | Une participantes em um componente. Qualquer CodingAgent alcançável pode trocar mensagens com outro. | Modo padrão de entrega | Bloquear After turn, Native input ou Send now | Builder solicitando uma revisão ao Reviewer. |
 | **Specification + Terminal** | Exporta o caminho absoluto canônico da Specification para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Validar, inspecionar ou comparar o Markdown da Specification. |
 | **File + Terminal** | Exporta o caminho absoluto canônico do File para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Executar um script ou usar um arquivo SQL sem copiar seu caminho entre janelas. |
 | **Trigger + CodingAgent** | Seleciona um CodingAgent com sessão ativa como alvo do prompt do Schedule. | Nenhum | Nenhum | Acordar um Maintainer para analisar falhas, escrever um relatório e pedir revisão. |
@@ -68,6 +68,9 @@ Connection direta entre um CodingAgent e um recurso:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Mantém leitura e bloqueia append ou replace do conteúdo. |
 | `terminal_read_only` | CodingAgent + Terminal | Mantém inspeção e bloqueia operações que alterariam sessão, processo ou entrada. |
 | `file_read_only` | CodingAgent + File | Declara que a fonte canônica não deve ser alterada pelo agente. |
+| `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Impede entrega por After turn entre o par. |
+| `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Impede entrega por Native input entre o par. |
+| `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Impede Send now e steering entre o par. |
 
 Uma rota alternativa pelo grafo não apaga um Guardrail que ainda exista na Connection direta entre o agente e o
 recurso. Ao mesmo tempo, uma restrição na Connection de outro agente não vira uma política global daquele Node.
@@ -81,7 +84,7 @@ Canvas.
 
 ## Connections com variáveis de ambiente
 
-Apenas dois pares possuem parâmetros persistidos:
+Dois pares fornecem caminhos por variáveis de ambiente:
 
 - **File + Terminal**;
 - **Specification + Terminal**.
@@ -98,6 +101,22 @@ sqlite3 app.db < "$CHECK_SQL"
 O Kavor aplica o valor quando a sessão do Terminal inicia. Se a Connection ou seu parâmetro mudar enquanto o shell
 estiver aberto, a interface informa que a variável aguarda o reinício da sessão. `TERM` e `COLORTERM` são nomes
 reservados.
+
+## Entrega entre CodingAgents
+
+A Connection direta permite escolher o modo padrão para mensagens que não especificam outro modo. Sem configuração,
+o padrão é **Native input**. Os agentes podem pedir outro modo por mensagem quando os Guardrails permitem.
+
+- **After turn:** aguarda o destinatário terminar o turno e ficar disponível.
+- **Native input:** usa o comportamento normal de entrada do provider; ele pode incorporar, enfileirar, direcionar
+  ou interromper conforme suas capacidades e configurações. Não é uma promessa de entrega sem interrupção.
+- **Send now:** solicita envio imediato com possível interrupção. Exige suporte do provider e não desfaz alterações,
+  comandos ou outros efeitos já produzidos.
+
+![Configuração da Connection entre CodingAgents com After turn, Native input, Send now e Guardrails de entrega](https://media.agentkavor.com/releases/2.0.0/agent-communication/delivery/master.cda7ab810311.png)
+
+Um Guardrail na Connection direta continua valendo mesmo se houver outra rota no grafo. Nenhum desses modos contorna
+rascunhos, aprovações ou entregas retidas pelo humano. Aceitação e entrega não significam conclusão do trabalho.
 
 ## O limite especial de um Schedule
 

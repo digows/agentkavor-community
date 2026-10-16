@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser：在 agent 面前开发和测试"
 description: 使用 Kavor 共享的 WebBrowser 开发 Web 应用、复现 bug、调试页面并验证 E2E 流程。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/web-browser
 ---
 
@@ -86,6 +86,14 @@ Kavor 自己的 browser profile，并在其 WebBrowsers 之间共享；外部 Ch
 页面内容是不可信的。WebBrowser 也不是远程 browser 服务，更不是操作机器 filesystem 的通用权限。
 
 ## 限制与注意事项
+
+### 控制生命周期与音频
+
+在 Node 设置中，**Shutdown** 关闭运行中的页面，**Start** 重新打开 Browser。已保存的标签页和站点数据（如登录）会保留；未提交表单及其他内存状态可能丢失。关闭不等于清除 cookies 或删除 Node。
+
+**Mute browser audio** 将该 Browser 的全部标签页与弹窗静音。音频选择与明确的开启或关闭意图会持久保存；切换 Workspace 或重新挂载 UI 不应撤销这些设置。
+
+活动页面可在可见 Canvas 之外继续供 agent 使用。这不要求保持所有页面与进程运行：需要结束会话时使用 Shutdown，而不要假定离开屏幕就会关闭页面。
 
 CAPTCHA、passkey、网站权限、证书和身份验证提示可能需要你介入。snapshot 引用会在导航或 DOM 变化后过期，
 所以应该重新获取 snapshot。网络规则是临时的，测试结束后必须清除。开发 profile 接受自签名、过期和私有

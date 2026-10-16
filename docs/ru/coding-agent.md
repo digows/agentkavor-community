@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent в Kavor: любимый harness как часть графа"
 description: Выберите provider, сохраните его нативный интерфейс и подключите CodingAgent к нужному контексту, инструментам и участникам.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ru/docs/coding-agent
 ---
 
@@ -55,6 +55,10 @@ File или Connection на Canvas. Проверьте путь и напиши�
 
 [Руководство Terminal](./terminal.md#вставляйте-файлы-и-изображения-во-ввод-сессии) объясняет процедуру, ограничения и
 разницу между вставленной ссылкой и ресурсом, сохранённым в графе.
+
+## Общайтесь через Channels
+
+С этим же CodingAgent можно общаться через Channel, начиная с WhatsApp. Агент остаётся на desktop с контекстом и ограничениями Workspace; удалённый разговор не заменяет harness и не создаёт другого облачного агента. Настройка разговора и адресата описана в [Agent Kavor и Channels](./agent-kavor.md).
 
 ## Что он получает в графе
 

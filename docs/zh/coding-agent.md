@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -52,6 +52,10 @@ Connection 会把孤立会话变成工作系统中的参与者。
 
 [Terminal 指南](./terminal.md#把文件和图像粘贴到会话输入中)说明步骤、限制，
 以及粘贴的引用与长期保留在图中的资源之间的区别。
+
+## 通过 Channels 对话
+
+你也可以通过 Channel 与同一个 CodingAgent 对话，首先支持 WhatsApp。agent 仍在 desktop 上运行，使用 Workspace 的上下文与限制；远程对话不会替换 harness，也不会创建另一个云端 agent。参阅 [Agent Kavor 与 Channels](./agent-kavor.md) 配置对话并选择接收者。
 
 ## 它从图中获得什么
 

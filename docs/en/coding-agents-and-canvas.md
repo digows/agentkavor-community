@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: How CodingAgents see and build the Canvas
 description: Understand reachable context, agent messages, and atomic Canvas editing within limits you control.
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/en/docs/coding-agents-and-canvas
 ---
 
@@ -70,6 +70,16 @@ Messages are durable and inspectable in the `Messages` panel. Use them to:
 
 A message coordinates participants, but should not be the only home of a durable decision. Preserve contracts in the
 Specification, working memory in a Sticky Note, and results in the appropriate outputs.
+
+### Choose delivery by the intended effect
+
+- For a review that can wait, use **After turn**: the request waits until the recipient is available.
+- For routine coordination, use **Native input**: the provider decides how to incorporate input. This does not guarantee non-interruption.
+- For an explicit change of direction, **Send now** may interrupt work when provider support and Guardrails permit. State what is superseded, what must stop, and the next action. Interruption does not undo effects.
+
+An accepted or queued message does not prove the recipient read or executed it. Human drafts and approvals remain protected; do not bypass a held delivery through another route.
+
+The direct Connection owns the default mode and restrictions. Consult the [Connection reference](./connections.md) for its controls and Guardrails; messaging is distinct from passive history reads.
 
 ## Guardrails remain attached to the direct pair
 

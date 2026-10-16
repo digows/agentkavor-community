@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal in Kavor: visible execution for human and agent"
 description: Use a real shell on the Canvas, connect context through canonical paths, and let a CodingAgent assist without losing supervision.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/en/docs/terminal
 ---
 
@@ -197,6 +197,8 @@ The Guardrail belongs to the pair. It does not turn the whole Terminal into a gl
 operating-system permissions.
 
 ## Limits that matter
+
+An OSC 8 hyperlink newly printed on the line already under the pointer may not activate immediately. Move the pointer to another line and back before opening it. This hover limitation does not mean the command that printed the link failed.
 
 - Terminal output is not automatic proof that an external effect happened correctly.
 - A CodingAgent must not interfere with unfinished human input.

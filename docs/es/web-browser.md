@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: desarrolla y prueba delante de tu agente"
 description: Usa el WebBrowser compartido de Kavor para desarrollar aplicaciones web, reproducir bugs, depurar páginas y demostrar flujos E2E.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/es/docs/web-browser
 ---
 
@@ -101,6 +101,14 @@ El contenido de las páginas no es confiable. WebBrowser tampoco es un servicio 
 para operar el filesystem de la máquina.
 
 ## Límites y cuidado
+
+### Controla el ciclo de vida y el audio
+
+En los ajustes del Node, **Shutdown** cierra las páginas activas; **Start** abre Browser otra vez. Se conservan pestañas guardadas y datos de sitios, como sesiones iniciadas; pueden perderse formularios no enviados y otro estado en memoria. Apagar no equivale a borrar cookies ni eliminar el Node.
+
+**Mute browser audio** silencia todas las pestañas y popups de ese Browser. La elección de audio y la intención explícita de abierto o apagado se conservan; cambiar de Workspace o remontar la UI no debe deshacerlas.
+
+Una página activa puede seguir disponible para el agente fuera del Canvas visible. No es necesario mantener todas las páginas y procesos abiertos: usa Shutdown para terminar la sesión en vez de suponer que salir de la pantalla la cierra.
 
 CAPTCHAs, passkeys, permisos del sitio, certificados y prompts de autenticación pueden requerir tu intervención. Las
 referencias de snapshot expiran después de navegar o cambiar el DOM. Las reglas de red son temporales y deben limpiarse

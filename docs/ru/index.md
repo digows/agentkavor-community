@@ -3,7 +3,7 @@ id: docs-home
 title: Документация Kavor
 description: Соберите первый цикл в Kavor и найдите руководства по подготовке спецификаций, реализации, ревью, тестированию и планированию работы с CodingAgents.
 kind: landing
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ru/docs
 ---
 
@@ -33,6 +33,7 @@ CodingAgents работать с достижимыми ресурсами и у
 
 | Ваша задача | Куда перейти |
 | --- | --- |
+| Продолжить разговор с агентами через WhatsApp | [Agent Kavor и Channels](./agent-kavor.md): личный разговор, группы Workspace и удалённое участие. |
 | Превратить идею в контракт для реализации | [Specification](./specification.md): вопросы, область, критерии и доказательства. |
 | Разделить реализацию и ревью между агентами | [CodingAgents и роли](./agents-and-roles.md): ответственность, контекст и handoffs. |
 | Держать открытые решения и прогресс на виду | [Sticky Note](./sticky-note.md): общая рабочая память. |

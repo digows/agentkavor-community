@@ -3,7 +3,7 @@ id: connections
 title: Kavor 支持的 Connections 矩阵
 description: 查看支持的 Node 组合、授予的能力、必需参数及可用 Guardrails。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/connections
 ---
 
@@ -27,6 +27,8 @@ Connection 有三项不同责任：
 Connections 是双向关系。Kavor 以规范顺序存储两个 endpoints，但这个顺序不表达流程、控制或优先级。消息仍有发送者和
 接收者；Trigger 仍有目标。这些方向属于具体操作，而不属于持久化的 Connection。
 
+矩阵列出直接配对。没有受支持直接配对的 Nodes，仍可能通过其他受支持 Connections 共享可达组件；视觉接近从不授予访问权。
+
 ## 支持的组合
 
 | Node 组合 | Connection 允许的能力 | 参数 | 可用 Guardrail | 主要示例 |
@@ -36,7 +38,7 @@ Connections 是双向关系。Kavor 以规范顺序存储两个 endpoints，但�
 | **CodingAgent + Terminal** | 读取 output、运行命令、跟踪或中断关联执行，并在允许时与 foreground 进程交互。 | 无 | `terminal_read_only` | 诊断、tests、日志或协助受监督的 SSH 会话。 |
 | **CodingAgent + File** | 让 filesystem 中的规范来源在图中明确，以便在允许时读取、评审或修改。 | 无 | `file_read_only` | 界定模块、PDF、图片、报告或配置。 |
 | **CodingAgent + WebBrowser** | 让智能体通过受控操作访问该 WebBrowser 的实时页面。 | 无 | 无 | 人与智能体在同一可见状态中导航、填写、验证并捕获证据。 |
-| **CodingAgent + CodingAgent** | 为异步消息、回复、独立评审和并行工作形成可达图。 | 无 | 无 | Builder 向 Reviewer 请求评审。 |
+| **CodingAgent + CodingAgent** | 为异步消息、回复、独立评审和并行工作形成可达图。 | 默认投递模式 | 阻止 After turn、Native input 或 Send now | Builder 向 Reviewer 请求评审。 |
 | **Specification + Terminal** | 把 Specification 的规范绝对路径导出到 Terminal 会话。 | 必填环境变量名 | 无 | 验证、检查或比较 Specification Markdown。 |
 | **File + Terminal** | 把 File 的规范绝对路径导出到 Terminal 会话。 | 必填环境变量名 | 无 | 无需在窗口间复制路径即可运行脚本或使用 SQL 文件。 |
 | **Trigger + CodingAgent** | 在配置时间向已有活动会话的 CodingAgent 发送 prompt。 | 无 | 无 | 唤醒 Maintainer 分析失败、编写报告并请求评审。 |
@@ -56,6 +58,9 @@ Connection 从该组合已实现的能力开始。Guardrail 在此基础上记�
 | `sticky_note_read_only` | CodingAgent + Sticky Note | 保留读取，阻止 append 或 replace 内容。 |
 | `terminal_read_only` | CodingAgent + Terminal | 保留 Terminal 检查，阻止改变会话、进程或输入的操作。 |
 | `file_read_only` | CodingAgent + File | 声明 agent 不应修改规范来源。 |
+| `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | 阻止该配对间的 After turn 投递。 |
+| `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | 阻止该配对间的 Native input 投递。 |
+| `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | 阻止该配对间的 Send now 与 steering。 |
 
 Guardrail 属于 CodingAgent 与资源之间的直接 Connection。图中的替代路径不会消除这个直接组合上的限制。
 
@@ -64,9 +69,21 @@ Guardrail 属于 CodingAgent 与资源之间的直接 Connection。图中的替�
 
 Guardrail 不会创建 Connection、让 Node 可达或增加权限。如果一个资源不应参与图，就不要创建 Connection。
 
+## CodingAgents 之间的投递
+
+直接 Connection 为未指定模式的消息选择默认值。未配置时，默认是 **Native input**。Guardrails 允许时，agents 可以逐条请求其他模式。
+
+- **After turn：** 等待接收者完成回合并可用。
+- **Native input：** 使用 provider 的正常输入行为；根据能力和设置，可能接纳、排队、调整方向或中断。不保证无中断投递。
+- **Send now：** 请求立即输入，可能中断工作。需要 provider 支持，不会撤销已经产生的修改、命令或其他效果。
+
+![CodingAgent Connection 设置，包含 After turn、Native input、Send now 与投递 Guardrails](https://media.agentkavor.com/releases/2.0.0/agent-communication/delivery/master.cda7ab810311.png)
+
+即使图中存在其他路径，直接 Connection 上的 Guardrail 仍然适用。这些模式都不能绕过人的草稿、审批或暂扣投递。接受与送达不代表任务完成。
+
 ## 带环境变量的 Connections
 
-只有两种组合拥有持久参数：
+两种配对通过环境变量提供路径：
 
 - **File + Terminal**；
 - **Specification + Terminal**。

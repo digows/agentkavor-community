@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents 如何查看和构建 Canvas
 description: 了解可达上下文、agent 消息，以及在你控制的边界内进行 Canvas 原子编辑。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agents-and-canvas
 ---
 
@@ -55,6 +55,16 @@ Kavor 优先提供有用上下文，而不是永久复制整个 Workspace。
 面板检查，可用于把实现交给 Reviewer、向 Specification 作者提问、拆分独立调查或返回 findings 并请求复核。
 
 持久决策不应只存在于消息中。契约放在 Specification，工作记忆放在 Sticky Note，结果放在适当 outputs。
+
+### 按预期效果选择投递方式
+
+- 可以等待的评审使用 **After turn**：请求等待接收者可用。
+- 常规协作使用 **Native input**：由 provider 决定如何接纳输入，不保证不会中断。
+- 明确改变方向时，**Send now** 可在 provider 和 Guardrails 允许时中断工作。说明取代哪条指令、什么必须停止，以及下一步做什么。中断不会撤销已产生的效果。
+
+消息已接受或排队，不证明对方已读取或执行。人的草稿与审批仍受保护，不要通过其他路径绕过暂扣投递。
+
+直接 Connection 配置默认模式与限制。控件和 Guardrails 见 [Connection 参考](./connections.md)；消息与被动读取历史是不同操作。
 
 ## Guardrails 仍绑定直接配对
 

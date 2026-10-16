@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor の Terminal：人と agent に見える実行環境"
 description: Canvas 上の本物の shell を使い、正規パスでコンテキストを接続し、監督を失わずに CodingAgent の支援を受けます。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs/terminal
 ---
 
@@ -191,6 +191,8 @@ buildを開始し、関連する出力だけをCodingAgentに追ってもらう�
 Guardrail はそのペアに属します。Terminal 全体をグローバルに読み取り専用にせず、OS の権限も置き換えません。
 
 ## 重要な制限
+
+ポインターがすでにある行に新しく出力された OSC 8 リンクは、すぐ反応しない場合があります。別の行へポインターを移して戻してから開いてください。このホバー制限は、リンクを生成したコマンドの失敗を意味しません。
 
 - Terminal output は外部効果が正しく起きたことの自動的な証明ではありません。
 - CodingAgent は未完了の人の入力に干渉してはいけません。

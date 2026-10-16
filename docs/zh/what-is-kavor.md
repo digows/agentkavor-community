@@ -3,7 +3,7 @@ id: what-is-kavor
 title: 什么是 Kavor？
 description: 了解 Kavor 用于协调编码智能体和持久工程上下文的本地优先可视化系统。
 kind: guide
-lastReviewedAt: 2026-09-08
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/zh/docs/what-is-kavor
 ---
 
@@ -57,6 +57,16 @@ WebBrowser 在 Canvas 中保留真实页面。连接到 CodingAgent 后，人与
 
 Kavor 采用本地优先设计。你的 Workspace、代码仓库、文件、终端和提供方会话都在你的机器上由你掌控。
 Connection 表达的是 Kavor 内部的授权；它并不意味着应将 Workspace 的私有内容复制到公共服务中。
+
+Local-first 不表示没有信息离开电脑：harnesses 会使用你配置的服务。使用 Channels 时，消息经过 Channel 服务，附件使用 Kavor 管理的临时存储。共享前请检查内容。
+
+## Agent Kavor 与 Channels
+
+Canvas 组织工作；**Agent Kavor** 让你通过 **Channels** 继续与 CodingAgents 对话。首个可用的是 WhatsApp：在个人对话中选择 Workspace 和 agent，或使用项目专属群组发送请求、回答问题并接收结果。
+
+工作仍在 desktop 上进行，Kavor 必须保持运行、已登录且联网。Channel 不是 Node 或 Connection，也不会扩大 agent 权限。
+
+[通过 WhatsApp 配置 Agent Kavor →](./agent-kavor.md)
 
 ## 一个实用的起步闭环
 

@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor ドキュメント
 description: Kavorで最初のループを作り、CodingAgentsとの仕様作成、実装、レビュー、テスト、スケジュール実行のガイドを見つけましょう。
 kind: landing
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/ja/docs
 ---
 
@@ -33,6 +33,7 @@ canonicalUrl: https://agentkavor.com/ja/docs
 
 | やりたいこと | 読むガイド |
 | --- | --- |
+| WhatsApp で agents との会話を続ける | [Agent Kavor と Channels](./agent-kavor.md)：個人の会話、Workspace グループ、離れた場所からの参加。 |
 | アイデアを実装可能な契約にする | [Specification](./specification.md)：質問、範囲、基準、証拠。 |
 | 実装とレビューを別のエージェントに任せる | [CodingAgentsと役割](./agents-and-roles.md)：責任、コンテキスト、引き継ぎ。 |
 | 未決事項や進捗を見える場所に保つ | [Sticky Note](./sticky-note.md)：共有する作業メモリ。 |

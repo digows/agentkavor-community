@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: develop and test in front of your agent"
 description: Use Kavor's shared WebBrowser to develop web applications, reproduce bugs, debug pages, and prove end-to-end flows.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-16
 canonicalUrl: https://agentkavor.com/en/docs/web-browser
 ---
 
@@ -114,6 +114,14 @@ The agent and the human share the same live page. This has useful consequences:
 WebBrowser is not a remote browser service or a general permission to operate the machine's filesystem.
 
 ## Limits and care
+
+### Control lifecycle and audio
+
+In Node settings, **Shutdown** closes running pages; **Start** opens the Browser again. Saved tabs and site data such as sign-ins are preserved; unsent forms and other in-memory state can be lost. Shutting down is not clearing cookies or deleting the Node.
+
+**Mute browser audio** silences every tab and popup of that Browser. Audio choice and explicit open/shutdown intent persist; changing Workspace or remounting the UI must not undo them.
+
+An active page can remain available to the agent beyond the visible Canvas. This does not require keeping every page and process running: use Shutdown to end that session rather than assuming leaving the screen ends it.
 
 ### Observe first, then act
 
