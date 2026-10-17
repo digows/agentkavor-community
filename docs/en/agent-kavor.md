@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor: talk to your agents through Channels"
 description: Link WhatsApp, choose a CodingAgent, and participate through Self-chat or a dedicated Workspace group.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-17
 canonicalUrl: https://agentkavor.com/en/docs/agent-kavor
 ---
 
@@ -73,13 +73,55 @@ Send a clear request to the selected agent. For example:
 Follow progress and the response in the same conversation. If the agent needs a decision, answer the corresponding
 question using the offered choices or requested format. Submission confirmation is not completion confirmation.
 
+Short status notices keep their context and text on the same line without stripping formatting. That line can wrap
+naturally on a narrow screen. Full responses, questions, and long content retain their own layout.
+
 [Watch a remote request and the CodingAgent's complete response →](https://agentkavor.com/en/videos/whatsapp-agent-interaction)
 
-Exchange images, video, audio, and files, with or without text. Interpretation depends on the harness and available
-tools; Kavor does not promise automatic transcription or support for every media type in every agent.
+### Receive updates without starting another WhatsApp request
 
-Managed attachments and their temporary copies expire **seven days after a successful upload**. Reading or retrying
-does not renew that period. Send an expired attachment again; expiration does not delete your original files or message text.
+You can ask the CodingAgent, including from its desktop session, to publish a result to an already configured
+conversation. For example:
+
+> When you finish this review, send the summary to this Workspace's WhatsApp group. Do not publish to other conversations.
+
+The agent discovers enabled conversations in its Workspace and explicitly selects a destination. A Channel can have
+several conversations: this is neither a broadcast to every group nor an automatic mirror of the agent's terminal.
+
+This notice does not need to reply to an earlier WhatsApp message. A response to an incoming request, however, returns
+to its original conversation even if you later change the Workspace or default agent. Quoting a known CodingAgent
+response directs the new request to that response's author without changing the conversation's default agent.
+
+### Send audio while keeping the original
+
+You can send a recording on its own or with text. Before delivering that request to any recipient CodingAgent,
+Kavor automatically prepares a transcript and labels it as text generated from audio. The caption, original file,
+and recipient selection are preserved; the transcript may contain errors and does not replace the recording.
+
+Agents receiving the same request use the same result. Resending the exact request or recovering its context reuses
+that audio's reference rather than requesting a different transcript for each agent. The transcription limit is
+**25 MB per audio file (25,000,000 bytes)**, separate from original attachment storage.
+
+Speaking a command such as `/shutdown` does not activate Kavor's control: transcribed speech is request content, not
+command-parser input. Use the corresponding written command to operate a control.
+
+If preparation fails, you receive a notice in the original conversation and waiting agents do not receive that request.
+Follow the notice or send the request as text. An unreadable recording or one without speech may need another audio
+file; an oversized recording can be replaced with a shorter one. A service failure or usage limit does not mean the
+CodingAgent started working. If the result is unconfirmed, do not assume success or an automatic retry.
+
+Transcription uses an authenticated cloud service and requires a network connection; it is not fully offline.
+Your computer still runs your CodingAgents, and the original audio keeps the same access and expiry period.
+
+### Images, videos, and other files
+
+You can also exchange images, videos, and files, with or without text. Images require native input or a reading tool
+compatible with the selected harness and model. Videos are provided as original files on a best-effort basis, without
+promising that every agent can interpret them. Kavor does not automatically convert videos or extract frames.
+
+Managed attachments and their temporary copies expire **seven days after a successful upload**. Reading, retrying,
+and transcription do not extend that period. Send an expired attachment again; expiration does not delete your
+original files or message text.
 
 ## 4. Separate projects into Workspace groups
 
@@ -92,6 +134,14 @@ Use a group for a persistent project conversation without switching Workspace in
 
 The group has a fixed Workspace. Its default agent can change within that project; `/workspace` cannot switch the
 group to another project. New Workspaces do not receive groups automatically.
+
+In the Workspace's Channels tab, **Check group** checks whether the linked account can still access the group.
+A group unavailable to that account is not necessarily deleted. A temporary connection failure does not
+automatically remove its association either.
+
+To change the association, use **Remove group link** and confirm. This unlinks only that Workspace, preserving the
+WhatsApp group, phone pairing, accepted history, and other Workspaces. You can then choose another group or create
+one. If creation has not been confirmed, check its outcome before repeating the action.
 
 [Watch a dedicated Workspace group being created and opened →](https://agentkavor.com/en/videos/whatsapp-workspace-group)
 
@@ -111,7 +161,8 @@ your agents' work.
 - **Outdated question or selection:** check context and request a fresh selection. Do not assume an old option still
   identifies the same target.
 - **Privacy boundaries:** execution and linking credentials stay on the computer, but messages use WhatsApp services
-  and attachments use temporary Kavor-managed storage. Send only content you can share.
+  and attachments use temporary Kavor-managed storage. Incoming audio also uses cloud transcription. Send only
+  content you can share.
 - **WhatsApp boundaries:** this uses linked devices, not Meta's hosted WhatsApp Business API. Account rules,
   restrictions, and suspensions remain under Meta's control.
 
