@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent dans Kavor : votre harness préféré au sein d'un graphe"
 description: Choisissez un provider, conservez son expérience native et reliez le CodingAgent au contexte, aux outils et aux participants appropriés.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-17
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent
 ---
 
@@ -61,6 +61,15 @@ les limites et la différence entre une référence collée et une ressource con
 ## Échangez via Channels
 
 Vous pouvez aussi parler à ce même CodingAgent via un Channel, à commencer par WhatsApp. L'agent reste sur le desktop avec le contexte et les limites de son Workspace ; la conversation distante ne remplace pas le harness et ne crée pas un autre agent cloud. Consultez [Agent Kavor et Channels](./agent-kavor.md) pour configurer la conversation et son destinataire.
+
+Vous pouvez demander au CodingAgent de publier un résultat dans une conversation activée de ce Workspace, même si
+le travail a commencé sur le desktop. Cet envoi choisit une destination explicite : ce n'est ni un message à un autre
+CodingAgent ni une diffusion à tous les Channels. Une réponse à une demande humaine conserve la conversation d'origine.
+Voyez [comment recevoir des nouvelles sans lancer une autre demande WhatsApp](./agent-kavor.md#recevez-des-nouvelles-sans-lancer-une-autre-demande-whatsapp).
+
+Le même guide explique la préparation automatique de l'audio reçu, la conservation de l'original et les limites réelles
+des images et vidéos. Ces fonctions ne font pas de tous les providers des lecteurs universels et ne contournent pas
+les approbations du desktop.
 
 ## Ce qu'il gagne dans le graphe
 

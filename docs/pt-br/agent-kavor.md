@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor: converse com seus agentes por Channels"
 description: Vincule o WhatsApp, escolha um CodingAgent e participe do trabalho pelo Self-chat ou por um grupo dedicado ao Workspace.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-17
 canonicalUrl: https://agentkavor.com/pt-br/docs/agent-kavor
 ---
 
@@ -75,15 +75,59 @@ Envie um pedido claro para o agente selecionado. Por exemplo:
 Acompanhe o andamento e a resposta na mesma conversa. Se o agente precisar de uma decisão, responda à pergunta
 correspondente usando as opções ou o formato solicitado. Uma confirmação de envio não é confirmação de conclusão.
 
+Os avisos curtos de estado mantêm o contexto e o texto na mesma linha, sem retirar a formatação. Em uma tela estreita,
+essa linha pode quebrar naturalmente. Respostas completas, perguntas e conteúdo longo preservam sua própria disposição.
+
 [Veja uma solicitação remota e a resposta completa do CodingAgent →](https://agentkavor.com/pt-br/videos/whatsapp-agent-interaction)
 
-Você pode trocar imagens, vídeos, áudio e arquivos, com ou sem texto. A capacidade de interpretar cada formato
-depende do harness e das ferramentas disponíveis; o Kavor não promete transcrição automática nem compreensão de
-qualquer mídia por qualquer agente.
+### Receba avisos sem iniciar outro pedido no WhatsApp
+
+Você pode pedir ao CodingAgent, inclusive na sessão do desktop, que publique o resultado em uma conversa já
+configurada. Por exemplo:
+
+> Quando concluir esta revisão, envie o resumo no grupo de WhatsApp deste Workspace. Não publique em outras conversas.
+
+O agente descobre as conversas habilitadas do seu Workspace e escolhe explicitamente um destino. Um Channel pode
+ter várias conversas: isso não é envio para todos os grupos nem uma publicação automática de tudo que aparece no
+terminal do agente.
+
+Esse aviso não precisa responder a uma mensagem anterior do WhatsApp. Já a resposta a um pedido recebido retorna
+à conversa original, mesmo se você mudar o Workspace ou o agente padrão depois. Citar uma resposta conhecida de um
+CodingAgent dirige o novo pedido ao autor daquela resposta, sem trocar o agente padrão da conversa.
+
+### Envie áudio, mantendo o original
+
+Você pode enviar uma gravação sozinha ou acompanhada de texto. Antes de entregar esse pedido a qualquer CodingAgent
+destinatário, o Kavor prepara automaticamente uma transcrição e a identifica como texto gerado a partir do áudio.
+A legenda, o arquivo original e a seleção de destinatários são preservados; a transcrição pode conter erros e não
+substitui a gravação.
+
+Os agentes que recebem o mesmo pedido usam o mesmo resultado. Reenviar exatamente o mesmo pedido ou recuperar seu
+contexto reutiliza a referência daquele áudio, em vez de solicitar uma transcrição diferente para cada agente. O limite de
+transcrição é **25 MB por áudio (25.000.000 bytes)**, distinto do armazenamento de anexos originais.
+
+Falar um comando como `/shutdown` não aciona o controle do Kavor: a fala transcrita é conteúdo do pedido, não entrada
+do interpretador de comandos. Para operar um controle, use o comando escrito correspondente.
+
+Se a preparação falhar, você recebe um aviso na conversa original e os agentes em espera não recebem aquele pedido.
+Siga a orientação do aviso ou envie o pedido em texto. Uma gravação ilegível ou sem fala pode exigir outro áudio;
+uma gravação grande demais pode ser substituída por uma mais curta. Falha de serviço ou limite de uso não significa
+que o CodingAgent começou a trabalhar. Se o resultado não foi confirmado, não presuma sucesso nem uma nova tentativa
+automática.
+
+A transcrição usa um serviço autenticado na nuvem e precisa de rede; não é uma operação 100% offline. O computador
+continua executando seus CodingAgents, e o áudio original mantém o mesmo prazo de acesso e expiração.
+
+### Imagens, vídeos e outros arquivos
+
+Você também pode trocar imagens, vídeos e arquivos, com ou sem texto. Imagens dependem da entrada nativa ou de uma
+ferramenta de leitura compatível com o harness e o modelo escolhidos. Vídeos são fornecidos como o arquivo original,
+em melhor esforço, sem promessa de interpretação por qualquer agente. O Kavor não converte o vídeo nem extrai
+quadros automaticamente.
 
 Anexos gerenciados e suas cópias temporárias expiram **sete dias após o upload bem-sucedido**. Ler ou tentar novamente
-não renova esse prazo. Se um anexo expirou, envie-o novamente; isso não apaga seus arquivos originais nem o texto
-das mensagens.
+não renova esse prazo, e a transcrição também não o prolonga. Se um anexo expirou, envie-o novamente; isso não apaga
+seus arquivos originais nem o texto das mensagens.
 
 ## 4. Separe projetos em grupos de Workspace
 
@@ -96,6 +140,14 @@ Use um grupo quando quiser uma conversa permanente ligada a um projeto, sem troc
 
 O grupo mantém seu Workspace fixo. O agente padrão pode mudar dentro daquele projeto; `/workspace` não troca o
 projeto do grupo. Workspaces novos não ganham grupos automaticamente.
+
+Em Channels do Workspace, **Check group** confere se a conta vinculada ainda consegue acessar o grupo. Um grupo
+indisponível para essa conta não é necessariamente um grupo apagado. Uma falha temporária de conexão também não
+remove sua associação automaticamente.
+
+Para trocar a associação, use **Remove group link** e confirme. Isso desvincula somente aquele Workspace: preserva
+o grupo no WhatsApp, a vinculação do telefone, o histórico aceito e os outros Workspaces. Depois, você pode escolher
+outro grupo ou criar um novo. Se uma criação ainda não foi confirmada, confira seu resultado antes de repetir a ação.
 
 [Veja a criação e a abertura de um grupo dedicado ao Workspace →](https://agentkavor.com/pt-br/videos/whatsapp-workspace-group)
 
@@ -115,7 +167,8 @@ permissões individuais. Adicionar participantes pode delegar acesso ao trabalho
 - **Pergunta ou seleção desatualizada:** consulte o contexto e peça uma seleção atual. Não responda a uma opção antiga
   supondo que ela ainda identifica o mesmo alvo.
 - **Limites de privacidade:** execução e credenciais de vinculação ficam no computador, mas mensagens usam os serviços
-  do WhatsApp e anexos passam por armazenamento temporário gerenciado pelo Kavor. Envie apenas o que pode compartilhar.
+  do WhatsApp, anexos passam por armazenamento temporário gerenciado pelo Kavor e o áudio recebido usa transcrição
+  na nuvem. Envie apenas o que pode compartilhar.
 - **Limites do WhatsApp:** a integração usa dispositivos vinculados, não a WhatsApp Business API hospedada pela Meta.
   Regras, restrições e suspensões da conta continuam sob controle da Meta.
 
