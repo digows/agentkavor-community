@@ -168,9 +168,9 @@ La participación se aplica en la siguiente selección automática real, como la
 por umbral. En cambio, elegir explícitamente otra cuenta predeterminada u otra cuenta Manual puede mover los
 CodingAgents afectados en el límite seguro entre turnos. Un agente cuya cuenta efectiva no haya cambiado no se reinicia.
 
-![Selector de Workspaces de Kavor frente a varias ventanas de Canvas abiertas para distintos proyectos de software.](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Panel Accounts de Codex con Auto Rotate activado, participación de las cuentas, capacidad restante y preferencias de rotación; identidades ocultas.](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-Los Workspaces independientes pueden permanecer abiertos en ventanas separadas. La participación de las cuentas se configura en el panel Accounts de cada Workspace.
+La participación de las cuentas se configura en el panel Accounts de cada Workspace. Los valores de capacidad restante y los horarios de renovación proceden de la captura de referencia, no de una consulta en tiempo real al proveedor. Las identidades se han ocultado.
 
 ### Cómo elige Automatic otra cuenta
 

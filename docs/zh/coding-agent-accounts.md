@@ -147,9 +147,9 @@ CodingAgent 设置中的 **Manual** 选择会为该 Node 固定一个账户，�
 参与设置会在下一次实际自动选择时应用，例如打开会话或因阈值触发轮换时。相反，明确选择另一个默认账户或另一个 Manual
 账户，可以在轮次之间的安全边界移动受影响的 CodingAgents。实际账户没有变化的 agent 不会重启。
 
-![Kavor Workspace 切换器，背景是多个不同软件项目的已打开 Canvas 窗口。](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Codex 的 Accounts 面板，Auto Rotate 已开启，显示账户参与开关、剩余容量和轮换偏好；账户身份信息已遮盖。](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-独立的 Workspaces 可以分别在不同窗口中保持打开。账户是否参与自动选择，在各 Workspace 的 Accounts 面板中设置。
+账户是否参与自动选择，在各 Workspace 的 Accounts 面板中设置。剩余容量和续期时间取自参考截图，并非实时查询 provider 的结果。账户身份信息已遮盖。
 
 ### Automatic 如何选择另一个账户
 

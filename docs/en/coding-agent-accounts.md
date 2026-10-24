@@ -166,9 +166,9 @@ running agents**. Participation applies at the next actual automatic selection, 
 threshold-based rotation. Explicitly choosing a different default account or Manual account can move affected
 CodingAgents at a safe turn boundary. An agent whose effective account has not changed is not restarted.
 
-![Kavor Workspace switcher in front of several open Canvas windows for different software projects.](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Codex Accounts panel with Auto Rotate enabled, account participation, remaining capacity and rotation preferences; account identities concealed.](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-Independent Workspaces can remain open in separate windows. Account participation is configured in each Workspace’s Accounts panel.
+Account participation is configured in each Workspace’s Accounts panel. Remaining-capacity values and renewal times come from the reference capture, not a live provider query. Account identities have been concealed.
 
 ### How Automatic chooses another account
 

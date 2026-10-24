@@ -159,9 +159,9 @@ Auto Rotate や参加設定の保存は即時ですが、**実行中の agents �
 別の Manual アカウントを明示的に選ぶと、影響を受ける CodingAgents がターン間の安全な境界で移ることがあります。
 実際のアカウントが変わらない agent は再起動しません。
 
-![複数のソフトウェアプロジェクトの Canvas ウィンドウを背景に表示された Kavor Workspace スイッチャー。](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Auto Rotate が有効な Codex の Accounts パネル。アカウントの参加設定、残り容量、ローテーション設定が表示され、識別情報はマスキングされています。](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-独立した Workspaces を別々のウィンドウで開いておけます。アカウントを自動選択の対象にする設定は、各 Workspace の Accounts パネルで行います。
+アカウントを自動選択の対象にする設定は、各 Workspace の Accounts パネルで行います。残り容量と更新時刻は参照用キャプチャの値であり、provider へのリアルタイム照会結果ではありません。アカウントの識別情報はマスキングしています。
 
 ### Automatic が別のアカウントを選ぶ仕組み
 
