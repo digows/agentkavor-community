@@ -184,9 +184,9 @@ ou lors d'une rotation déclenchée par le seuil. En revanche, choisir explicite
 un autre compte Manual peut déplacer les CodingAgents concernés au point sûr entre deux tours. Un agent dont le
 compte effectif ne change pas n'est pas redémarré.
 
-![Sélecteur de Workspaces Kavor devant plusieurs fenêtres Canvas ouvertes pour différents projets logiciels.](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Panneau Accounts de Codex avec Auto Rotate activé, participation des comptes, capacité restante et préférences de rotation ; identités masquées.](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-Des Workspaces indépendants peuvent rester ouverts dans des fenêtres séparées. La participation des comptes se configure dans le panneau Accounts de chaque Workspace.
+La participation des comptes se configure dans le panneau Accounts de chaque Workspace. Les valeurs de capacité restante et les horaires de renouvellement proviennent de la capture de référence, et non d’une requête en direct au fournisseur. Les identités ont été masquées.
 
 ### Comment Automatic choisit un autre compte
 

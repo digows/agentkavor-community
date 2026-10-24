@@ -164,9 +164,9 @@ participação passa a valer na próxima escolha automática real, como uma aber
 escolher explicitamente outra conta padrão ou outra conta Manual pode mover os CodingAgents afetados, no limite
 seguro entre turnos. Um agente cuja conta efetiva não mudou não é reiniciado.
 
-![Seletor de Workspaces do Kavor diante de várias janelas de Canvas abertas para diferentes projetos de software.](https://media.agentkavor.com/releases/1.3.0/multiple-workspaces/overview.baa20506a993.jpg)
+![Painel de Accounts do Codex com Auto Rotate ligado, participação das contas, capacidade restante e preferências de rotação; identidades ocultadas.](https://media.agentkavor.com/product/2.1.0/coding-agent-accounts/panel.2cf397f707ee.png)
 
-Workspaces independentes podem permanecer abertos em janelas separadas. A participação das contas é configurada no painel Accounts de cada Workspace.
+A participação das contas é configurada no painel Accounts de cada Workspace. Os valores de capacidade restante e os horários de renovação são da captura de referência, não de uma consulta ao vivo ao provider. As identidades foram ocultadas.
 
 ### Como Automatic escolhe outra conta
 
