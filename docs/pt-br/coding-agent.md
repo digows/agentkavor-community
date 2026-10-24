@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent no Kavor: seu harness favorito como parte de um grafo"
 description: Escolha um provider, preserve sua experiência nativa e conecte o CodingAgent ao contexto, às ferramentas e aos participantes certos.
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent
 ---
 
@@ -37,6 +37,15 @@ O provider é uma configuração do CodingAgent, não um tipo diferente de Node.
 Ao adicionar um CodingAgent pela toolbar, você escolhe primeiro o provider. Depois, configura aquela sessão de acordo
 com o trabalho. As opções disponíveis podem variar porque o Kavor preserva as capacidades reais de cada harness em
 vez de fingir que todos possuem o mesmo contrato.
+
+## Contas, uso e rotação
+
+Você pode acompanhar o uso dos providers no header e abrir o painel de **Accounts** para adicionar contas, escolher
+quais participam de cada Workspace e usar seleção **Automatic** ou uma conta fixa. O login nativo continua disponível;
+configurar outras contas é opcional e não substitui o login dos aplicativos do provider.
+
+O [guia de CodingAgent Accounts](./coding-agent-accounts.md) explica as janelas de uso, a distribuição entre
+Workspaces, a cópia inicial de preferências, a troca com continuidade da sessão e os limites de cada provider.
 
 ## O que ele faz sozinho
 

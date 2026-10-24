@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor : échangez avec vos agents via Channels"
 description: Associez WhatsApp, choisissez un CodingAgent et participez depuis Self-chat ou un groupe dédié au Workspace.
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/fr/docs/agent-kavor
 ---
 
@@ -63,6 +63,30 @@ La conversation personnelle conserve sa sélection. Consultez ou changez le cont
 
 Utilisez les noms réellement affichés par Kavor. Une mention explicite comme `@Reviewer` adresse une demande à un
 autre agent sans changer celui par défaut. L'état d'exécution ne prouve pas qu'une implémentation a passé tests ou revue.
+
+### Consultez et choisissez le compte du CodingAgent
+
+Dans le Workspace sélectionné, `/accounts` affiche l'utilisation, les renouvellements et la réserve de comptes
+par provider. `/account` indique le compte et le mode du CodingAgent sélectionné ; `/status` inclut aussi ces
+informations.
+
+Pour fixer un compte existant ou revenir à la sélection automatique, utilisez le nom réel du compte :
+
+```text
+@Reviewer /account "Trabalho"
+@Reviewer /account auto
+/autorotate codex off
+```
+
+La dernière commande désactive **Auto Rotate** pour Codex dans ce Workspace ; elle ne déplace pas les agents en
+cours d'exécution. Ce sont des contrôles structurés de Kavor, pas des demandes d'analyse à un modèle. Choisir un
+autre compte respecte les mêmes validations et le même point sûr entre deux tours que sur le desktop ; une réponse
+à la commande ne prouve pas que le changement est terminé.
+
+Ajouter des comptes, se connecter, se déconnecter, supprimer et choisir la participation ou le compte par défaut
+du Workspace restent des actions du panneau Accounts sur le desktop. Consultez
+[CodingAgent Accounts](./coding-agent-accounts.md#commandes-dagent-kavor) pour la syntaxe complète, les exemples et
+l'effet de chaque choix. Les règles déterminant qui peut envoyer des commandes via le Channel restent les mêmes.
 
 ## 3. Participez à distance
 

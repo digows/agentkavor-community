@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -33,6 +33,14 @@ Provider 是 CodingAgent 的配置，不是另一种 Node 类型。选择器包�
 
 从 toolbar 添加 CodingAgent 时，你先选择 provider，再按工作需要配置会话。可用选项可能不同，因为
 Kavor 保留每种 harness 的真实能力，而不会假装它们拥有完全相同的契约。
+
+## 账户、使用情况与轮换
+
+你可以在顶部栏查看 providers 的使用情况，并打开 **Accounts** 面板添加账户、选择各 Workspace 的参与账户，
+以及使用 **Automatic** 选择或固定账户。原生登录仍然可用；配置其他账户是可选的，不会替换 provider 应用的登录。
+
+[CodingAgent Accounts 指南](./coding-agent-accounts.md)说明使用窗口、Workspaces 之间的分配、偏好的初始复制、
+保留会话连续性的切换，以及各 provider 的限制。
 
 ## 它单独能做什么
 

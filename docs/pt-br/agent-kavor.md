@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor: converse com seus agentes por Channels"
 description: Vincule o WhatsApp, escolha um CodingAgent e participe do trabalho pelo Self-chat ou por um grupo dedicado ao Workspace.
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/pt-br/docs/agent-kavor
 ---
 
@@ -64,6 +64,28 @@ Sua conversa pessoal mantém a seleção. Você pode conferir ou mudar de contex
 Use os nomes reais apresentados pelo Kavor. Para dirigir um pedido a outro agente sem mudar o padrão, use uma menção
 explícita como `@Reviewer`. Uma consulta de status informa estado de execução; não prova que uma implementação passou
 nos testes ou foi revisada.
+
+### Consulte e escolha a conta do CodingAgent
+
+No Workspace selecionado, `/accounts` mostra o uso, as renovações e a reserva de contas por provider. `/account`
+informa a conta e o modo do CodingAgent selecionado; `/status` também inclui essa informação.
+
+Para fixar uma conta existente ou voltar à seleção automática, use o nome real da conta:
+
+```text
+@Reviewer /account "Trabalho"
+@Reviewer /account auto
+/autorotate codex off
+```
+
+O último comando desliga **Auto Rotate** para Codex nesse Workspace; não move os agentes em execução. Esses são
+controles estruturados do Kavor, não pedidos de análise a um modelo. Uma escolha de outra conta respeita a mesma
+validação e o limite seguro entre turnos usados pelo desktop; uma resposta ao comando não prova que a troca terminou.
+
+Adicionar contas, fazer login, sair, remover e escolher a participação ou a conta padrão do Workspace continuam no
+painel de Accounts do desktop. Veja [CodingAgent Accounts](./coding-agent-accounts.md#comandos-do-agent-kavor) para a
+sintaxe completa, os exemplos e o efeito de cada escolha. As regras de quem pode enviar comandos pelo Channel
+continuam as mesmas.
 
 ## 3. Participe do trabalho à distância
 

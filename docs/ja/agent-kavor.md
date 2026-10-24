@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor：Channels で agents と会話する"
 description: WhatsApp を連携し、CodingAgent を選び、Self-chat または Workspace 専用グループから仕事に参加します。
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/ja/docs/agent-kavor
 ---
 
@@ -62,6 +62,28 @@ WhatsApp の個人用会話を開きます。オンボーディングで Workspa
 
 Kavor が実際に表示する名前を使ってください。`@Reviewer` のような明示的なメンションで、既定を変えずに別の agent に
 依頼できます。状態表示は実行状態であり、実装がテストやレビューに合格した証拠ではありません。
+
+### CodingAgent のアカウントを確認して選ぶ
+
+選択中の Workspace では、`/accounts` で provider ごとの使用状況、回復時刻、予備アカウントを確認できます。
+`/account` は選択中の CodingAgent のアカウントとモードを示し、`/status` にも同じ情報が含まれます。
+
+既存のアカウントに固定する場合や自動選択に戻す場合は、実際のアカウント名を使います。
+
+```text
+@Reviewer /account "Trabalho"
+@Reviewer /account auto
+/autorotate codex off
+```
+
+最後のコマンドは、その Workspace の Codex の **Auto Rotate** をオフにし、実行中の agents は移しません。
+これらは Kavor の構造化された制御で、モデルへの分析依頼ではありません。別のアカウントを選ぶ場合も、desktop と同じ
+検証とターン間の安全な境界に従います。コマンドへの返答は、切り替え完了の証拠ではありません。
+
+アカウント追加、サインイン、サインアウト、削除、参加設定や Workspace の既定アカウントの選択は、引き続き desktop の
+Accounts パネルで行います。詳しい構文、例、選択ごとの効果は
+[CodingAgent Accounts](./coding-agent-accounts.md#agent-kavor-のコマンド)にあります。Channel からコマンドを送れる人の
+規則も変わりません。
 
 ## 3. 離れた場所から仕事に参加する
 
