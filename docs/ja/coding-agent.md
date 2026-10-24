@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor の CodingAgent：使い慣れた harness をグラフの一員にする"
 description: provider を選び、ネイティブな体験を保ったまま、CodingAgent を適切なコンテキスト、ツール、参加者に接続します。
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent
 ---
 
@@ -35,6 +35,15 @@ Provider は CodingAgent の設定であり、別の Node 種別ではありま�
 toolbar から CodingAgent を追加するときは、最初に provider を選び、その後で作業に合わせてセッションを
 設定します。Kavor はすべての harness が同じ契約を持つとは仮定せず、各 harness の実際の能力を保つため、
 利用できる選択肢は異なることがあります。
+
+## アカウント、使用状況、ローテーション
+
+ヘッダーで providers の使用状況を確認し、**Accounts** パネルからアカウントを追加して、各 Workspace に参加する
+アカウントを選び、**Automatic** による選択またはアカウントの固定を使えます。ネイティブログインは引き続き利用でき、
+他のアカウントの設定は任意です。provider のアプリのログインを置き換えることもありません。
+
+[CodingAgent Accounts ガイド](./coding-agent-accounts.md)では、利用枠、Workspaces 間の配分、設定の初期コピー、
+セッションの継続性を保つ切り替え、provider ごとの制限を説明します。
 
 ## 単独でできること
 

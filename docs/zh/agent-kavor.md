@@ -3,7 +3,7 @@ id: agent-kavor
 title: 通过 Channels 与 Agent Kavor 对话
 description: 关联 WhatsApp，选择 CodingAgent，通过 Self-chat 或 Workspace 专属群组参与工作。
 kind: guide
-lastReviewedAt: 2026-10-17
+lastReviewedAt: 2026-10-24
 canonicalUrl: https://agentkavor.com/zh/docs/agent-kavor
 ---
 
@@ -60,6 +60,26 @@ Agent Kavor 不是另一个模型，也不是替代 CodingAgents 的托管 agent
 
 请使用 Kavor 实际显示的名称。使用 `@Reviewer` 这样的明确提及，可以向另一个 agent 发请求而不改变默认选择。
 状态查询显示运行状态，不证明实现已通过测试或评审。
+
+### 查询并选择 CodingAgent 的账户
+
+在选定的 Workspace 中，`/accounts` 显示各 provider 的使用情况、重置时间和账户储备。`/account` 显示所选 CodingAgent
+的账户与模式；`/status` 也包含这些信息。
+
+要固定使用某个已有账户或恢复自动选择，请使用账户的实际名称：
+
+```text
+@Reviewer /account "Trabalho"
+@Reviewer /account auto
+/autorotate codex off
+```
+
+最后一条命令会关闭该 Workspace 的 Codex **Auto Rotate**，不会移动正在运行的 agents。这些是 Kavor 的结构化控制，
+不是向模型请求分析。选择另一个账户时，仍遵循 desktop 的相同校验和轮次之间的安全边界；命令回复不能证明切换已经完成。
+
+添加账户、登录、退出、移除，以及选择参与账户或 Workspace 默认账户，仍然在 desktop 的 Accounts 面板中操作。
+完整语法、示例与各项选择的效果，请参阅 [CodingAgent Accounts](./coding-agent-accounts.md#agent-kavor-命令)。
+谁可以通过 Channel 发送命令的规则保持不变。
 
 ## 3. 远程参与工作
 
