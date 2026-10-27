@@ -155,20 +155,20 @@ test('requires content changes to advance a correctly chained release ID', async
 
 test('binds a product release to its complete approved English documentation projection', async () => {
   const temporaryDirectory = await mkdtemp(join(tmpdir(), 'kavor-product-release-test-'))
-  const releaseNotesSourcePath = join(temporaryDirectory, 'v2.1.1.md')
+  const releaseNotesSourcePath = join(temporaryDirectory, 'v2.1.2.md')
   try {
     const { releaseId } = parseYaml(await readFile(resolve('docs/catalog.yaml'), 'utf8'))
-    const publicSource = await readFile(resolve('docs/en/release-notes/2.1.1.md'), 'utf8')
+    const publicSource = await readFile(resolve('docs/en/release-notes/2.1.2.md'), 'utf8')
     const frontmatterEnd = publicSource.indexOf('\n---\n', 4)
     await writeFile(releaseNotesSourcePath, publicSource.slice(frontmatterEnd + 5).replace(/^\n+/, ''))
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
-      version: '2.1.1',
+      version: '2.1.2',
       releaseNotesSourcePath,
       expectedReleaseId: releaseId,
     }))
-    await writeFile(releaseNotesSourcePath, '# Kavor 2.1.1\n\nDifferent meaning.\n')
+    await writeFile(releaseNotesSourcePath, '# Kavor 2.1.2\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
-      version: '2.1.1',
+      version: '2.1.2',
       releaseNotesSourcePath,
       expectedReleaseId: releaseId,
     }), /differ from the approved English documentation projection/)
