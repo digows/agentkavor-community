@@ -58,6 +58,11 @@ Public Kavor documentation lives under [`docs/`](docs/README.md) and is publishe
 [`agentkavor.com/docs`](https://agentkavor.com/en/docs). Documentation files are plain Markdown only. Do not add MDX,
 JSX, imports, scripts, raw HTML, credentials, private product information, or personal data.
 
+Every pull request runs the required `validate-pull-request` check against trusted base-branch code, including
+changes to validation scripts and workflows. Editorial releases also require approval metadata bound to the exact
+Brazilian Portuguese changes. An approved deletion records the removed document's `previousSha256`, not a hash for
+replacement content.
+
 Keep stable document IDs and paths aligned across every locale declared in `docs/catalog.yaml`. A localized document
 must be a complete translation of the current source; do not publish an English fallback under another locale.
 
