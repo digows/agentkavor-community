@@ -75,7 +75,7 @@ async function changedPortugueseDocuments(baseDocumentationDirectory, proposedDo
   return paths.flatMap((path) => {
     const base = baseFiles.get(path)
     const proposed = proposedFiles.get(path)
-    if (base?.equals(proposed) ?? proposed === undefined) return []
+    if (base && proposed && base.equals(proposed)) return []
     return [{
       path: `docs/pt-br/${path}`,
       state: proposed ? 'present' : 'deleted',

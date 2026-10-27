@@ -30,6 +30,7 @@ async function withChangedCorpus(callback) {
 }
 
 function bodyFor(documentSha256, options = {}) {
+  const documentState = options.state ?? 'present'
   const brief = `schemaVersion: 1
 id: first-loop-update
 runId: editorial-2026-08-05-first-loop
@@ -50,8 +51,8 @@ runId: editorial-2026-08-05-first-loop
 briefSha256: ${options.briefSha256 ?? sha256(brief)}
 ptBrDocuments:
   - path: docs/pt-br/first-loop.md
-    state: present
-    sha256: ${documentSha256}
+    state: ${documentState}
+    ${documentState === 'deleted' ? 'previousSha256' : 'sha256'}: ${documentSha256}
 decision: approved
 approvedAt: 2026-08-05T17:24:36Z`
   return `Summary\n\n<!-- kavor-editorial-brief\n${brief}\n-->\n\n<!-- kavor-editorial-approval\n${approval}\n-->`
@@ -77,6 +78,32 @@ test('rejects Portuguese content changed after approval', async () => {
       baseDocumentationDirectory: baseDirectory,
       proposedDocumentationDirectory: proposedDirectory,
     }), /does not match its exact content hash/)
+  })
+})
+
+test('accepts a Portuguese deletion approved against the exact previous content', async () => {
+  await withChangedCorpus(async ({ baseDirectory, proposedDirectory, documentPath }) => {
+    const previousSha256 = sha256(await readFile(join(baseDirectory, 'pt-br', 'first-loop.md')))
+    await rm(documentPath)
+    const result = await validateEditorialPullRequest({
+      body: bodyFor(previousSha256, { state: 'deleted' }),
+      baseCommit,
+      baseDocumentationDirectory: baseDirectory,
+      proposedDocumentationDirectory: proposedDirectory,
+    })
+    assert.deepEqual(result, { runId: 'editorial-2026-08-05-first-loop', approvedDocuments: 1 })
+  })
+})
+
+test('rejects a Portuguese deletion approved against different previous content', async () => {
+  await withChangedCorpus(async ({ baseDirectory, proposedDirectory, documentPath }) => {
+    await rm(documentPath)
+    await assert.rejects(validateEditorialPullRequest({
+      body: bodyFor('e'.repeat(64), { state: 'deleted' }),
+      baseCommit,
+      baseDocumentationDirectory: baseDirectory,
+      proposedDocumentationDirectory: proposedDirectory,
+    }), /does not match its previous content hash/)
   })
 })
 
