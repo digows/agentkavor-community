@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Comment les CodingAgents voient et construisent le Canvas
 description: Comprenez le contexte accessible, les messages entre agents et l’édition atomique du Canvas dans les limites que vous contrôlez.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agents-and-canvas
 ---
 
@@ -99,6 +99,7 @@ modifications structurelles initiées par l’agent et s’applique immédiateme
 Lorsqu’elle est active, l’agent peut, dans sa portée :
 
 - créer des Nodes actifs : CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser et Schedule ;
+- supprimer des Nodes accessibles, en arrêtant leur exécution si nécessaire ;
 - créer une Specification canonique et la matérialiser dans le Canvas ;
 - ajouter des Connections prises en charge et modifier les paramètres Terminal ;
 - retirer des Connections ;
@@ -108,6 +109,26 @@ Lorsqu’elle est active, l’agent peut, dans sa portée :
 
 Lorsqu’elle est désactivée, les changements structurels sont refusés et l’agent doit le signaler sans insister. Le
 layout reste disponible, car déplacer un Node n’étend pas l’autorité et ne modifie pas le contenu.
+
+Cette option est également requise lorsqu’un CodingAgent démarre, redémarre, arrête ou fait un Fork d’un autre CodingAgent accessible. Ces actions suivent la demande autorisée ; elles n’approuvent pas les messages retenus et ne répondent pas aux dialogues humains.
+
+Supprimer un Node retire sa présence et ses Connections du Canvas ; cela n’efface pas le File ou la Specification canonique et ne supprime pas un Git worktree. Si l’arrêt nécessaire échoue, Kavor signale un échec récupérable au lieu d’annoncer une suppression terminée normalement.
+
+## Déléguer à une session réellement prête
+
+Créer un CodingAgent, rendre son répertoire disponible et livrer un message sont des étapes distinctes. Un Node créé ou un message en file d’attente ne prouve ni le démarrage du provider ni l’exécution de la tâche.
+
+Pour déléguer du travail dans un worktree :
+
+1. Préparez le worktree avec Git et vérifiez les prérequis du projet.
+2. Créez le CodingAgent associé à cette racine et connectez-le au contexte nécessaire.
+3. Vérifiez le démarrage et la disponibilité avant d’annoncer un handoff terminé.
+4. Envoyez une tâche avec un résultat attendu et une condition d’arrêt.
+5. Inspectez la livraison et la réponse dans **Messages**.
+
+En cas d’échec, l’agent coordinateur doit consulter l’état du destinataire et signaler l’étape et l’erreur disponibles. Corrigez la cause avant Start ou Retry. Ne créez pas un autre Node pour masquer une tentative échouée et ne renvoyez pas une tâche uniquement parce que la réponse n’est pas encore arrivée.
+
+Start et Restart attendent que l’interface native soit prête. Cela ne signifie ni approbation d’une action, ni réussite de la tâche, ni autorisation de publier. Fork nécessite un historique et un support réels du provider. Consultez les [contrôles de session, worktrees et Fork](./coding-agent.md).
 
 ## La structure suit le graphe, pas tout le Workspace
 
@@ -130,11 +151,12 @@ changement structurel antérieur du lot ne subsiste.
 Créer un Terminal et le connecter produit les deux ou aucun ; aucun Node orphelin ne reste. Le résultat contient la
 forme réellement persistée et doit être lu plutôt que de supposer les defaults, la géométrie ou les chemins.
 
+L’atomicité structurelle ne promet pas d’annuler des commandes externes ni de rouvrir des processus déjà arrêtés. Vérifiez les erreurs d’exécution et de récupération avant de continuer.
+
 ## Ce qui reste humain
 
 `Allow workspace editing` ne donne pas un contrôle illimité. Un CodingAgent ne peut pas :
 
-- supprimer des Nodes ;
 - créer, retirer ou assouplir des Guardrails ;
 - reconfigurer arbitrairement les autres types de Node ;
 - changer le contrôle humain qui retient des messages pour approbation ;

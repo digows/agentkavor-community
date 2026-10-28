@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent no Kavor: seu harness favorito como parte de um grafo"
 description: Escolha um provider, preserve sua experiência nativa e conecte o CodingAgent ao contexto, às ferramentas e aos participantes certos.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent
 ---
 
@@ -66,6 +66,72 @@ enviá-lo; interpretar a imagem continua dependendo das capacidades do harness.
 
 O [guia do Terminal](./terminal.md#cole-arquivos-e-imagens-na-entrada-da-sessão) explica o procedimento, os limites e a
 diferença entre uma referência colada e um recurso mantido no grafo.
+
+## Inicie, reinicie ou encerre a execução
+
+O Node e o processo do provider não são a mesma coisa. Você pode manter o CodingAgent no Canvas mesmo quando a
+execução está encerrada.
+
+- **Start** inicia uma sessão parada no diretório selecionado. Repetir Start em uma sessão em execução não cria
+  outro processo.
+- **Restart** encerra o processo atual e inicia sua substituição, mantendo a conta, a raiz de trabalho e a intenção
+  de retomar a sessão nativa. Não é limpar o histórico nem desfazer alterações no projeto.
+- **Shutdown** encerra a execução, sem excluir o Node ou o histórico nativo. Use Start quando quiser voltar a
+  executá-lo.
+
+O Kavor mostra as etapas de preparação e informa quando o provider está pronto ou quando a inicialização falhou.
+Uma aprovação pendente continua sendo sua: iniciar ou reiniciar não autoriza o agente a respondê-la por você.
+
+Se a inicialização falhar, leia o erro antes de repetir. Corrija o diretório ausente, a instalação, a autenticação
+ou outro requisito indicado e use **Retry**. Uma tentativa nova não deve ser confundida com a sessão anterior nem
+com a confirmação de que a tarefa foi executada.
+
+## Separe o trabalho com Git worktrees
+
+Uma nova conversa separa contexto. Um Git worktree separa também o checkout, com diretório, arquivos e index próprios.
+Isso permite que dois CodingAgents trabalhem em branches diferentes sem trocar a branch do checkout compartilhado.
+
+No controle **Git** do CodingAgent:
+
+1. escolha a referência de base e um nome para o worktree;
+2. use **Create** para criar o worktree gerenciado em `.worktrees/` e associá-lo àquele CodingAgent;
+3. ou use **Use** em um worktree existente para selecionar seu diretório;
+4. confira a raiz e a branch exibidas antes de pedir alterações ou commits.
+
+Selecionar **Workspace root → Use** devolve o CodingAgent à raiz do Workspace; isso não remove o worktree anterior.
+Criar ou selecionar um worktree para o agente não muda a branch, o index ou os arquivos do checkout compartilhado.
+Operações posteriores de merge e limpeza são decisões separadas.
+
+Ao mudar a associação Git de um CodingAgent em execução, o Kavor relança a sessão na raiz selecionada, preservando a
+identidade nativa para retomada quando o provider permite. Uma sessão deliberadamente parada continua parada. Se a
+retomada falhar, o erro permanece visível para correção e Retry; não trate a troca da raiz como prova de prontidão.
+
+O worktree não é uma cópia completa do ambiente local. Dependências instaladas e arquivos não versionados, como
+configurações locais, podem não existir nele. Prepare o que o projeto exige, sem copiar credenciais automaticamente.
+Um caminho inexistente ou um worktree inválido deve ser corrigido antes da inicialização, não substituído
+silenciosamente por outro diretório.
+
+A remoção de um worktree é diferente de remover seu Node. O Kavor recusa remover ou finalizar um worktree ainda
+referenciado por outro CodingAgent. Se a pasta foi removida fora do Kavor, revise o estado Git e recupere a associação
+antes de continuar.
+
+## Continue por outro caminho com Fork
+
+**Fork** cria outro CodingAgent a partir do histórico nativo de uma sessão existente. A origem permanece independente;
+o novo Node recebe outra identidade de sessão e uma Connection com quem solicitou o Fork.
+
+Use-o para explorar uma alternativa sem recomeçar a conversa, ou separar uma investigação a partir de um contexto já
+construído. Depois do Fork, defina o objetivo e a condição de parada do novo CodingAgent.
+
+O suporte depende do provider e da versão instalada. Claude Code, Codex, Grok e OpenCode possuem integração de Fork;
+Antigravity não oferece essa capacidade no Kavor. É necessário existir uma sessão nativa que possa ser bifurcada.
+Quando o histórico não está disponível ou o provider não aceita a operação, o Kavor informa a falha em vez de
+substituí-la por uma conversa vazia apresentada como Fork.
+
+Fork não cria uma branch Git, não prepara dependências e não isola arquivos por si só. Por padrão, a nova sessão usa a
+mesma raiz da origem; selecione um worktree separado quando a alternativa também precisar de isolamento de código.
+Esse worktree deve estar preparado antes de ser usado. Copiar e colar um Node no Canvas também não substitui Fork:
+a cópia não transporta o histórico nativo da sessão.
 
 ## Converse por Channels
 
@@ -221,7 +287,9 @@ está pronto para revisão. Dois agentes olhando revisões diferentes do código
 - Providers não oferecem necessariamente os mesmos modelos, permissões, eventos ou operações de sessão.
 - Um Trigger entrega um prompt a uma sessão ativa; não amplia permissões nem garante que um efeito externo aconteça
   exatamente uma vez.
-- Autorizar edição do Canvas não autoriza apagar Nodes nem alterar Guardrails; essas fronteiras continuam humanas.
+- Com `Allow workspace editing`, um CodingAgent pode controlar sessões e remover Nodes alcançáveis dentro do pedido
+  autorizado. Isso não permite alterar Guardrails nem ignorar aprovações humanas. Veja os
+  [limites da edição do Canvas](./coding-agents-and-canvas.md#allow-workspace-editing).
 
 ## Antes de iniciar a sessão
 

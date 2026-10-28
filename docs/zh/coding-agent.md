@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -60,6 +60,47 @@ Connection 会把孤立会话变成工作系统中的参与者。
 
 [Terminal 指南](./terminal.md#把文件和图像粘贴到会话输入中)说明步骤、限制，
 以及粘贴的引用与长期保留在图中的资源之间的区别。
+
+## 启动、重启或停止执行
+
+Node 和 provider 进程不是一回事。即使执行已停止，CodingAgent 仍可保留在 Canvas 上。
+
+- **Start** 在选定目录中启动已停止的会话。对运行中的会话重复使用 Start，不会创建另一个进程。
+- **Restart** 关闭当前进程并启动替代进程，保留账户、工作根目录和恢复原生会话的意图。它不会清空历史，也不会撤销项目改动。
+- **Shutdown** 停止执行，但不删除 Node 或原生历史。需要再次运行时使用 Start。
+
+Kavor 会显示准备阶段，并报告 provider 已就绪或启动失败。待审批事项仍由你决定：启动或重启并不授权 agent 代你回答。
+
+启动失败时，先阅读错误，再决定是否重试。修复缺失目录、安装、认证或提示的其他前置条件后，使用 **Retry**。新的尝试不等于之前的会话，也不能证明任务已经执行。
+
+## 用 Git worktrees 分离工作
+
+新对话可以分离上下文。Git worktree 还会分离 checkout，拥有自己的目录、文件和 index。两个 CodingAgents 可以在不同分支工作，而不切换共享 checkout 的分支。
+
+在 CodingAgent 的 **Git** 控件中：
+
+1. 选择基准引用和 worktree 名称。
+2. 使用 **Create** 在 `.worktrees/` 下创建受管理的 worktree，并将其关联到该 CodingAgent。
+3. 或对现有 worktree 使用 **Use**，选择其目录。
+4. 请求修改或提交前，检查界面显示的根目录和分支。
+
+选择 **Workspace root → Use** 会将 CodingAgent 返回 Workspace 根目录，但不会删除之前的 worktree。为 agent 创建或选择 worktree，不会更改共享 checkout 的分支、index 或文件。后续合并和清理是独立的决定。
+
+运行中的 CodingAgent 更改 Git 关联时，Kavor 会在选定根目录重新启动它，并保留原生身份，以便在 provider 支持时恢复会话。明确停止的会话仍保持停止。恢复失败时，错误会保留，供修复和 Retry；更换根目录不等于会话已就绪。
+
+worktree 不是本地环境的完整副本。已安装依赖和未跟踪文件（例如本地配置）可能不存在。按项目要求准备环境，不要自动复制凭据。不存在的路径或无效 worktree 必须在启动前修复，不能静默换成另一个目录。
+
+删除 worktree 不等于删除它的 Node。Kavor 会拒绝删除或完成仍被其他 CodingAgent 引用的 worktree。如果文件夹在 Kavor 之外被删除，请先检查 Git 状态并恢复关联，再继续工作。
+
+## 用 Fork 探索另一条路径
+
+**Fork** 从现有会话的原生历史创建另一个 CodingAgent。源会话保持独立；新 Node 拥有不同的会话身份，并与 Fork 请求方建立一条 Connection。
+
+可用它在不重开对话的情况下探索替代方案，或从已有上下文分出一项调查。之后，为新 CodingAgent 定义目标和停止条件。
+
+是否支持取决于 provider 和已安装版本。Claude Code、Codex、Grok 和 OpenCode 集成了 Fork；Antigravity 在 Kavor 中不提供此能力。必须存在可分叉的原生会话。如果历史不可用或 provider 拒绝操作，Kavor 会报告失败，而不会把空白对话冒充成 Fork。
+
+Fork 本身不会创建 Git 分支、准备依赖或隔离文件。默认情况下，新会话使用源会话的根目录；如果还需要代码隔离，请选择一个已经准备好的独立 worktree。复制粘贴 Canvas Node 也不能替代 Fork：复制不会携带原生会话历史。
 
 ## 通过 Channels 对话
 
@@ -193,7 +234,7 @@ Specification — Implementer — Reviewer
 - 消息负责协调，但不应成为持久决策的唯一保存位置。
 - Providers 不一定提供相同的模型、权限、事件或会话操作。
 - Trigger 把 prompt 交给活动会话；它不会扩大权限，也不保证外部效果恰好发生一次。
-- 允许编辑 Canvas 不等于允许删除 Nodes 或更改 Guardrails；这些边界仍由人掌控。
+- 启用 `Allow workspace editing` 后，CodingAgent 可以在获授权的请求范围内控制会话并删除可达 Nodes，但不能修改 Guardrails 或绕过人工审批。参见 [Canvas 编辑边界](./coding-agents-and-canvas.md#allow-workspace-editing)。
 
 ## 启动会话前
 
