@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts：你的账户、使用情况与轮换"
 description: 查看 provider 的使用限制，添加自己的账户，并选择 CodingAgents 如何在 Workspaces 之间共享容量，而不替换原生登录。
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent-accounts
 ---
 
@@ -134,6 +134,9 @@ provider 密钥。文件保留其权限；这些值不会写入日志或 Kavor �
 CodingAgent 设置中的 **Manual** 选择会为该 Node 固定一个账户，优先于 Workspace 策略。
 处于 **Auto (Automatic)** 的 CodingAgent 会遵循其 Workspace 对该 provider 的选择。
 
+当实际生效的模式是 **Manual**，无论在 Node 上设置还是继承自 Workspace，完成一个轮次都不会触发用于轮换的容量查询。
+这不会停用可见的用量读数或 **Refresh**。
+
 在 Workspace 的 Accounts 面板中：
 
 - 开启 **Auto Rotate** 时，参与开关决定 Automatic 可以使用哪些账户。即使使用同一个账户池，每个 Workspace
@@ -156,6 +159,10 @@ CodingAgent 设置中的 **Manual** 选择会为该 Node 固定一个账户，�
 默认阈值为**已使用 95%**，可在 **Global rotation preferences** 中的 **Rotate at used capacity (%)** 调整。
 Kavor 会考虑身份验证、套餐资格、所选模型、Workspace 参与设置和所有已返回的窗口。
 它不会为了让某个账户符合选择条件而切换模型。
+
+Automatic 的决策可以在你的 Workspaces 之间共享同一账户的有效读数，从原始查询起最多 **30 秒**。
+复用不会延长这个期限。期限届满、用量窗口重置，或确认的认证或配额故障都要求重新评估；不可用数据不会被当作合格容量。
+轮换仍在配置的阈值处预防性进行，无需等待某个轮次失败。
 
 当前账户仍然有效时会保留它。需要从所有窗口都低于阈值的合格账户中选择时，Kavor 按以下顺序优先选择：
 

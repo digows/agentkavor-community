@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts: your accounts, usage, and rotation"
 description: Monitor provider limits, add your accounts, and choose how CodingAgents share capacity across Workspaces without replacing your native login.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent-accounts
 ---
 
@@ -150,6 +150,9 @@ Do not copy authentication files or delete the entire native profile as a repair
 A **Manual** choice in the CodingAgent settings pins an account to that Node and overrides the Workspace policy.
 A CodingAgent in **Auto (Automatic)** follows its Workspace's choices for that provider.
 
+When the effective mode is **Manual**, set on the Node or inherited from the Workspace, completing a turn does
+not trigger a capacity query for rotation. This does not disable visible usage readings or **Refresh**.
+
 In the Workspace's Accounts panel:
 
 - With **Auto Rotate** on, participation toggles define which accounts Automatic can use. Each Workspace has its
@@ -175,6 +178,11 @@ Account participation is configured in each Workspace’s Accounts panel. Remain
 The default threshold is **95% usage**, adjustable in **Rotate at used capacity (%)**, under
 **Global rotation preferences**. Kavor considers authentication, plan eligibility, the selected model, Workspace participation, and
 all reported windows. It does not change the model to make an account fit the selection.
+
+Automatic decisions can share a valid reading for the same account across your Workspaces for up to
+**30 seconds** from the original query. Reusing the reading does not extend that period. Expiry, a usage-window
+renewal, or a confirmed authentication or quota failure requires reevaluation; unavailable data does not become
+eligible capacity. Rotation remains preventive at the configured threshold, without waiting for a turn to fail.
 
 A valid current account is retained. When Kavor needs to choose among eligible accounts below the threshold in all
 windows, it prefers, in this order:

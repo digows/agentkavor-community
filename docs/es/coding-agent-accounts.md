@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts: tus cuentas, uso y rotación"
 description: Consulta los límites de los providers, añade tus cuentas y elige cómo comparten capacidad los CodingAgents entre Workspaces sin sustituir tu login nativo.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/es/docs/coding-agent-accounts
 ---
 
@@ -152,6 +152,9 @@ nuevo. No copies archivos de autenticación ni borres el perfil nativo completo 
 Una elección **Manual** en la configuración del CodingAgent fija una cuenta para ese Node y prevalece sobre la
 política del Workspace. Un CodingAgent en **Auto (Automatic)** sigue las opciones de su Workspace para ese provider.
 
+Cuando el modo efectivo es **Manual**, definido en el Node o heredado del Workspace, completar un turno no
+dispara una consulta de capacidad para la rotación. Esto no desactiva las lecturas de uso visibles ni **Refresh**.
+
 En el panel de Accounts del Workspace:
 
 - Con **Auto Rotate** activado, los interruptores de participación definen qué cuentas puede usar Automatic. Cada
@@ -177,6 +180,12 @@ La participación de las cuentas se configura en el panel Accounts de cada Works
 El umbral predeterminado es **95% de uso**, ajustable en **Rotate at used capacity (%)**, dentro de
 **Global rotation preferences**. Kavor considera la autenticación, la elegibilidad del plan, el modelo elegido, la
 participación en el Workspace y todas las ventanas informadas. No cambia el modelo para que una cuenta encaje en la selección.
+
+Las decisiones de Automatic pueden compartir una lectura válida de la misma cuenta entre tus Workspaces durante
+un máximo de **30 segundos** desde la consulta original. Reutilizarla no renueva ese plazo. Su vencimiento, la
+renovación de una ventana o un fallo confirmado de autenticación o cuota exigen una nueva evaluación; los datos no
+disponibles no pasan a representar capacidad elegible. La rotación sigue siendo preventiva, en el umbral configurado,
+sin esperar a que falle un turno.
 
 Se mantiene una cuenta actual válida. Cuando necesita elegir entre cuentas elegibles que estén por debajo del
 umbral en todas las ventanas, Kavor prefiere, por este orden:
