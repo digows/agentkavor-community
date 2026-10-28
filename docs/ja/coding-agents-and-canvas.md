@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents が Canvas を見て構築する仕組み
 description: 到達可能な context、agent 間 message、人が制御する境界内での Canvas の atomic editing を理解します。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agents-and-canvas
 ---
 
@@ -95,6 +95,7 @@ Workspace の整理を支援するため、CodingAgent は Canvas 上すべて�
 有効な場合、scope 内で次が可能です。
 
 - CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Schedule を含む active Nodes の作成。
+- 到達可能な Nodes の削除。必要な場合は実行を終了します。
 - canonical Specification の作成と Canvas への materialization。
 - supported Connections の追加、Terminal Connection parameter の変更。
 - Connections の削除。
@@ -104,6 +105,26 @@ Workspace の整理を支援するため、CodingAgent は Canvas 上すべて�
 
 無効なら structural change は拒否され、agent は設定が off と伝えて停止すべきです。Node の移動は authority や content を変えないため、
 layout は利用できます。
+
+到達可能な別の CodingAgent を開始・再起動・停止・Fork する場合にも、この設定が必要です。操作は許可された依頼に従います。保留されたメッセージの承認や人間向けダイアログへの代理回答は行いません。
+
+Node の削除は Canvas 上の表示と Connections を取り除きますが、正規の File や Specification、Git worktree を削除することではありません。必要な終了処理に失敗した場合は、削除が正常終了したと主張せず、復旧可能な失敗として報告します。
+
+## 本当に準備できたセッションへ委任する
+
+CodingAgent の作成、そのディレクトリの準備、メッセージの配信は別の段階です。Node を作ったことやメッセージをキューに入れたことは、provider の起動やタスクの実行を証明しません。
+
+worktree で作業を委任する場合：
+
+1. Git で worktree を準備し、プロジェクト固有の前提条件を確認します。
+2. そのルートに関連付けた CodingAgent を作り、必要なコンテキストへ接続します。
+3. 引き継ぎ完了を伝える前に、起動状態と準備完了を確認します。
+4. 期待する結果と停止条件を含むタスクを送ります。
+5. **Messages** で配信と返信を確認します。
+
+失敗したら、調整役の agent は宛先の状態を調べ、利用可能な段階とエラーを報告します。Start や Retry の前に原因を修正してください。失敗を隠すためだけに別の Node を作ったり、返信がまだないという理由だけでタスクを再送したりしないでください。
+
+Start と Restart はネイティブ画面の準備完了を待ちます。操作の承認、タスクの成功、公開の許可を意味するものではありません。Fork には provider の実際の対応と履歴が必要です。[セッション制御、worktrees、Fork](./coding-agent.md)を参照してください。
 
 ## structure は graph に従い、Workspace 全体には従わない
 
@@ -123,11 +144,12 @@ Kavor は complete set を検証し、順番に 1 unit として適用します�
 Terminal 作成と agent 接続は両方成功するか、両方とも起こりません。invalid Connection で orphan Node を残しません。返された result は実際に
 persist された形なので、defaults、geometry、canonical paths が request と同じだと仮定せず読み取ります。
 
+構造の原子性は、外部コマンドの取り消しや、終了済みプロセスの再起動を保証しません。作業を続ける前に、実行と復旧のエラーを確認してください。
+
 ## 人に残るもの
 
 `Allow workspace editing` は unrestricted control ではありません。CodingAgent は次を行えません。
 
-- Nodes の削除。
 - Guardrails の作成、削除、緩和。
 - 他 Node kinds の任意 reconfiguration。
 - incoming messages を人の approval に保留する control の変更。

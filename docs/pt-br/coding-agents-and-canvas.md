@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Como CodingAgents enxergam e constroem o Canvas
 description: Entenda contexto alcançável, mensagens entre agentes e edição atômica do Canvas com limites controlados por você.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agents-and-canvas
 ---
 
@@ -118,12 +118,41 @@ Com a opção ligada, o CodingAgent pode, dentro de seu escopo:
 - adicionar Connections suportadas;
 - alterar parâmetros de Connections com Terminal;
 - remover Connections;
+- remover Nodes alcançáveis, encerrando sua execução quando necessário;
 - renomear Nodes alcançáveis e Specifications;
 - configurar um Schedule alcançável;
 - mover, redimensionar e revelar Nodes.
 
 Com a opção desligada, alterações estruturais são recusadas. O agente deve informar que a configuração está desativada
 e não insistir. Layout continua disponível porque mover um Node não amplia autoridade nem altera conteúdo.
+
+Essa opção também é necessária quando um CodingAgent inicia, reinicia, encerra ou faz Fork de outro CodingAgent
+alcançável. Essas ações seguem o pedido autorizado; não aprovam mensagens retidas nem respondem diálogos humanos.
+
+Remover um Node retira sua presença e suas Connections do Canvas; não equivale a apagar o File ou a Specification
+canônica nem a remover um Git worktree. Se o encerramento necessário falhar, o Kavor informa a falha para recuperação,
+em vez de declarar que a exclusão terminou normalmente.
+
+## Delegue a uma sessão realmente pronta
+
+Criar um CodingAgent, disponibilizar seu diretório e entregar uma mensagem são passos diferentes. Um Node criado ou
+uma mensagem enfileirada ainda não provam que o provider iniciou nem que o trabalho foi executado.
+
+Para delegar trabalho em um worktree:
+
+1. prepare o worktree com Git e confira os requisitos específicos do projeto;
+2. crie o CodingAgent associado àquela raiz e conecte-o ao contexto necessário;
+3. confira seu estado de inicialização e de prontidão antes de anunciar um handoff concluído;
+4. envie uma tarefa com resultado esperado e condição de parada;
+5. inspecione a entrega e a resposta em `Messages`.
+
+Quando houver falha, o agente que coordena deve consultar o estado do destinatário e relatar a etapa e o erro
+disponíveis. Corrija a causa antes de Start ou Retry. Não crie outro Node apenas para esconder a tentativa que falhou,
+nem reenvie uma tarefa só porque a resposta ainda não chegou.
+
+Start e Restart aguardam a prontidão da interface nativa; isso não significa aprovação de uma ação, sucesso da tarefa
+ou autorização para publicar. Fork depende de histórico e suporte reais do provider. Veja os
+[controles de sessão, worktrees e Fork](./coding-agent.md#inicie-reinicie-ou-encerre-a-execução).
 
 ## Estrutura segue o grafo, não o Workspace inteiro
 
@@ -153,11 +182,13 @@ não fica com um Node órfão porque a Connection final era inválida.
 O resultado devolvido ao agente contém a forma realmente persistida. Ele deve lê-lo em vez de presumir que defaults,
 geometria e caminhos canônicos ficaram idênticos ao pedido.
 
+A atomicidade estrutural não promete desfazer comandos externos ou reabrir processos que já foram encerrados.
+Confira os erros de execução e recuperação antes de continuar o trabalho.
+
 ## O que continua humano
 
 `Allow workspace editing` não entrega controle irrestrito. Um CodingAgent não pode:
 
-- excluir Nodes;
 - criar, remover ou relaxar Guardrails;
 - reconfigurar arbitrariamente outros tipos de Node;
 - mudar o controle humano que segura mensagens recebidas para aprovação;

@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-10-27.2
+releaseId: docs-2026-10-28.1
 sourceRepository: digows/agentkavor-community
-currentProductVersion: 2.1.2
-previousReleaseId: docs-2026-10-27.1
+currentProductVersion: 2.2.0
+previousReleaseId: docs-2026-10-27.2
 locales:
   - slug: en
     languageTag: en
@@ -53,6 +53,22 @@ navigation:
     documents:
       - release-notes
 documents:
+  - id: release-notes-2.2.0
+    kind: release-note
+    slug: release-notes/2.2.0
+    path: release-notes/2.2.0.md
+    status: published
+    introducedIn: 2.2.0
+    lastVerifiedIn: 2.2.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+    version: 2.2.0
+    publishedAt: 2026-10-28T17:29:01Z
+    prerelease: false
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v2.2.0
+    sourceBodySha256: 850c7340e9830a7582cf1b39f3178efbd89471e4baa8592e43ddaaeee6d2478d
   - id: release-notes-2.1.2
     kind: release-note
     slug: release-notes/2.1.2
@@ -318,7 +334,7 @@ documents:
     path: coding-agent.md
     status: published
     introducedIn: 1.4.0
-    lastVerifiedIn: 2.1.0
+    lastVerifiedIn: 2.2.0
     owner: Kavor
     searchable: true
     agentReadable: true
@@ -351,7 +367,7 @@ documents:
     path: coding-agents-and-canvas.md
     status: published
     introducedIn: 1.3.0
-    lastVerifiedIn: 2.0.0
+    lastVerifiedIn: 2.2.0
     owner: Kavor
     searchable: true
     agentReadable: true

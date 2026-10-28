@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents 如何查看和构建 Canvas
 description: 了解可达上下文、agent 消息，以及在你控制的边界内进行 Canvas 原子编辑。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agents-and-canvas
 ---
 
@@ -87,6 +87,7 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 启用后，agent 可以在其范围内：
 
 - 创建活动 Nodes，包括 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Schedule；
+- 删除可达 Nodes，并在必要时停止其执行；
 - 创建规范 Specification 并将其呈现在 Canvas；
 - 添加受支持 Connections，修改 Terminal Connection 参数；
 - 删除 Connections；
@@ -95,6 +96,26 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 - 移动、调整大小和显示 Nodes。
 
 禁用后，结构变更会被拒绝；agent 应报告设置关闭并停止坚持。layout 仍可用，因为移动 Node 不扩大权限也不改变内容。
+
+当 CodingAgent 启动、重启、停止或 Fork 另一个可达 CodingAgent 时，也需要启用此选项。这些操作必须遵循获授权的请求，不会批准被保留的消息，也不会代答人工对话框。
+
+删除 Node 会移除它在 Canvas 上的存在及其 Connections，但不会删除规范 File、Specification 或 Git worktree。如果必要的停止操作失败，Kavor 会报告可恢复的失败，而不会声称删除已正常完成。
+
+## 将任务交给真正就绪的会话
+
+创建 CodingAgent、让其目录可用、投递消息，是不同的步骤。Node 已创建或消息已入队，并不证明 provider 已启动或任务已执行。
+
+在 worktree 中委派工作时：
+
+1. 用 Git 准备 worktree，并检查项目特定的前置条件。
+2. 创建关联到该根目录的 CodingAgent，将它连接到所需上下文。
+3. 宣布交接完成前，检查启动状态和就绪状态。
+4. 发送具有预期结果和停止条件的任务。
+5. 在 **Messages** 中检查投递和回复。
+
+失败时，协调 agent 应检查接收方状态，并报告可获得的阶段和错误。在 Start 或 Retry 前修复原因。不要为了隐藏失败尝试而创建另一个 Node，也不要仅因回复尚未到达就重发任务。
+
+Start 和 Restart 会等待原生界面就绪。这不代表操作已获批准、任务已成功或有权发布。Fork 需要 provider 的真实支持和历史。参见[会话控制、worktrees 和 Fork](./coding-agent.md)。
 
 ## 结构遵循图谱，而不是整个 Workspace
 
@@ -113,11 +134,12 @@ Kavor 验证完整变更集合，并按顺序作为一个单元应用。任何�
 创建 Terminal 并连接 agent，要么两者都成功，要么都不发生；Canvas 不会因最终 Connection 无效而留下孤立 Node。
 返回结果是实际持久化形式，agent 应读取它，而不是假设 defaults、几何或规范路径与请求完全相同。
 
+结构原子性不保证撤销外部命令，也不保证重新打开已停止的进程。继续工作前，请检查执行与恢复错误。
+
 ## 仍由人控制的部分
 
 `Allow workspace editing` 不授予无限控制。CodingAgent 不能：
 
-- 删除 Nodes；
 - 创建、删除或放宽 Guardrails；
 - 任意重配其他 Node 类型；
 - 更改将入站消息保留给人工批准的控制；
