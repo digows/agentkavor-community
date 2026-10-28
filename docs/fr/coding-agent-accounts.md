@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts : vos comptes, leur utilisation et la rotation"
 description: Suivez les limites des providers, ajoutez vos comptes et choisissez comment les CodingAgents partagent leur capacité entre Workspaces sans remplacer votre connexion native.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent-accounts
 ---
 
@@ -167,6 +167,9 @@ de réparer le problème.
 Un choix **Manual** dans les paramètres du CodingAgent fixe un compte pour ce Node et l'emporte sur la politique
 du Workspace. Un CodingAgent en **Auto (Automatic)** suit les choix de son Workspace pour ce provider.
 
+Lorsque le mode effectif est **Manual**, défini sur le Node ou hérité du Workspace, la fin d'un tour ne déclenche
+pas de consultation de capacité pour la rotation. Les relevés d'utilisation visibles et **Refresh** restent disponibles.
+
 Dans le panneau Accounts du Workspace :
 
 - Avec **Auto Rotate** activé, les interrupteurs de participation définissent les comptes utilisables par
@@ -194,6 +197,12 @@ Le seuil par défaut est de **95 % d'utilisation**, réglable dans **Rotate at u
 **Global rotation preferences**. Kavor tient compte de l'authentification, de l'éligibilité du forfait, du modèle
 choisi, de la participation au Workspace et de toutes les fenêtres signalées. Il ne change pas de modèle pour
 rendre un compte admissible à la sélection.
+
+Les décisions d'Automatic peuvent partager un relevé valide du même compte entre vos Workspaces pendant au plus
+**30 secondes** à partir de la consultation initiale. Sa réutilisation ne prolonge pas ce délai. Son expiration,
+le renouvellement d'une fenêtre ou un échec confirmé d'authentification ou de quota imposent une nouvelle évaluation ;
+des données indisponibles ne deviennent pas une capacité éligible. La rotation reste préventive, au seuil configuré,
+sans attendre l'échec d'un tour.
 
 Le compte actuel est conservé s'il est valide. Lorsqu'il faut choisir parmi des comptes éligibles sous le seuil
 dans toutes les fenêtres, Kavor préfère, dans cet ordre :

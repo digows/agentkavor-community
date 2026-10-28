@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts：アカウント、使用状況、ローテーション"
 description: provider の利用上限を確認し、自分のアカウントを追加して、ネイティブログインを置き換えずに Workspaces 間で CodingAgents が容量を共有する方法を選びます。
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent-accounts
 ---
 
@@ -144,6 +144,9 @@ MCPs を一から用意し直す必要を減らすためです。対象は provi
 CodingAgent の設定で **Manual** を選ぶと、その Node のアカウントを固定し、Workspace の方針より優先します。
 **Auto (Automatic)** の CodingAgent は、その provider に対する Workspace の選択に従います。
 
+Node で設定した場合も Workspace から継承した場合も、実効モードが **Manual** なら、ターンの完了によって
+ローテーション用の容量照会は発生しません。表示中の使用量の読み取りや **Refresh** は引き続き利用できます。
+
 Workspace の Accounts パネルでは次のように動作します。
 
 - **Auto Rotate** がオンの場合、参加スイッチで Automatic が使えるアカウントを決めます。同じプールを使っていても、
@@ -168,6 +171,10 @@ Auto Rotate や参加設定の保存は即時ですが、**実行中の agents �
 既定のしきい値は**使用済み容量 95%** で、**Global rotation preferences** の **Rotate at used capacity (%)** から
 調整できます。Kavor は認証、プランの利用資格、選択したモデル、Workspace の参加設定、報告されたすべての利用枠を考慮します。
 アカウントを選択可能にするためにモデルを変更することはありません。
+
+Automatic の判断では、同じアカウントの有効な読み取り結果を、元の照会から最大 **30 秒間**、あなたの Workspaces 間で
+共有できます。再利用しても期限は延びません。期限切れ、利用枠の更新、認証または quota の失敗が確認された場合は再評価が必要です。
+取得できないデータを利用可能な容量とは扱いません。ローテーションは引き続き設定したしきい値で予防的に行い、ターンの失敗を待ちません。
 
 現在のアカウントが有効なら維持します。すべての利用枠がしきい値未満の適格なアカウントから選ぶ必要がある場合、
 次の順序で優先します。

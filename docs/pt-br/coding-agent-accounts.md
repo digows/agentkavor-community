@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts: suas contas, uso e rotação"
 description: Acompanhe limites dos providers, adicione suas contas e escolha como os CodingAgents compartilham capacidade entre Workspaces sem substituir seu login nativo.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-28
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent-accounts
 ---
 
@@ -148,6 +148,9 @@ Não copie arquivos de autenticação nem apague o perfil nativo inteiro como te
 Uma escolha **Manual** nas configurações do CodingAgent fixa uma conta para aquele Node e vence a política do
 Workspace. Um CodingAgent em **Auto (Automatic)** segue as escolhas do seu Workspace para aquele provider.
 
+Quando o modo efetivo é **Manual**, definido no Node ou herdado do Workspace, concluir um turno não dispara uma
+consulta de capacidade para rotação. Isso não desativa as leituras de uso visíveis nem o botão **Refresh**.
+
 No painel de Accounts do Workspace:
 
 - Com **Auto Rotate** ligado, as chaves de participação definem quais contas Automatic pode usar. Cada Workspace
@@ -173,6 +176,12 @@ A participação das contas é configurada no painel Accounts de cada Workspace.
 O limite padrão é **95% de uso**, ajustável em **Rotate at used capacity (%)**, em **Global rotation preferences**.
 O Kavor considera autenticação, elegibilidade do plano, modelo escolhido, participação no Workspace e todas as
 janelas reportadas. Não troca o modelo para fazer uma conta caber na seleção.
+
+As decisões de Automatic podem compartilhar uma leitura válida da mesma conta entre seus Workspaces por até
+**30 segundos**, contados da consulta original. Reaproveitar a leitura não renova esse prazo. A expiração desse
+prazo, a renovação de uma janela ou uma falha confirmada de autenticação ou quota exigem reavaliação; dados
+indisponíveis não passam a representar capacidade elegível. A rotação continua preventiva, no limite configurado,
+sem precisar esperar um turno falhar.
 
 Uma conta atual válida é mantida. Quando precisa escolher entre contas elegíveis abaixo do limite em todas as
 janelas, o Kavor prefere, nesta ordem:
