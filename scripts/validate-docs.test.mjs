@@ -3,18 +3,27 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import test from 'node:test'
-import { parse as parseYaml } from 'yaml'
+import { parse as parseYaml, stringify as stringifyYaml } from 'yaml'
 import { validateDocumentation, validateDocumentationReleaseTransition, validateProductReleaseProjection } from './validate-docs.mjs'
 
-async function withCorpus(callback) {
+async function withCorpus(callback, originalDirectory = resolve('docs')) {
   const temporaryDirectory = await mkdtemp(join(tmpdir(), 'kavor-docs-test-'))
   const sourceDirectory = join(temporaryDirectory, 'docs')
   try {
-    await cp(resolve('docs'), sourceDirectory, { recursive: true })
+    await cp(originalDirectory, sourceDirectory, { recursive: true })
     return await callback(sourceDirectory)
   } finally {
     await rm(temporaryDirectory, { recursive: true, force: true })
   }
+}
+
+async function advanceRelease(sourceDirectory, baseSourceDirectory = resolve('docs')) {
+  const catalogPath = join(sourceDirectory, 'catalog.yaml')
+  const catalog = parseYaml(await readFile(catalogPath, 'utf8'))
+  const baseCatalog = parseYaml(await readFile(join(baseSourceDirectory, 'catalog.yaml'), 'utf8'))
+  catalog.releaseId = baseCatalog.releaseId.replace(/\d+$/, (sequence) => Number(sequence) + 1)
+  catalog.previousReleaseId = baseCatalog.releaseId
+  await writeFile(catalogPath, stringifyYaml(catalog))
 }
 
 test('validates the complete released corpus', async () => {
@@ -137,19 +146,78 @@ test('requires content changes to advance a correctly chained release ID', async
       /must use a new releaseId/,
     )
 
-    const catalogPath = join(proposedSourceDirectory, 'catalog.yaml')
-    const catalog = await readFile(catalogPath, 'utf8')
-    const { releaseId } = parseYaml(catalog)
-    const nextReleaseId = releaseId.replace(/\.(\d+)$/, (_, sequence) => `.${Number(sequence) + 1}`)
-    await writeFile(
-      catalogPath,
-      catalog
-        .replace(/^releaseId: .*$/m, `releaseId: ${nextReleaseId}`)
-        .replace(/^previousReleaseId: .*$/m, `previousReleaseId: ${releaseId}`),
-    )
+    await advanceRelease(proposedSourceDirectory)
     await assert.doesNotReject(
       validateDocumentationReleaseTransition(resolve('docs'), proposedSourceDirectory),
     )
+  })
+})
+
+test('rejects deprecated download links in changed public document bodies', async () => {
+  await withCorpus(async (sourceDirectory) => {
+    await advanceRelease(sourceDirectory)
+    const pagePath = join(sourceDirectory, 'en', 'index.md')
+    const source = await readFile(pagePath, 'utf8')
+    for (const link of [
+      '[Download](https://agentkavor.com/downloads)',
+      '<https://agentkavor.com/downloads/>',
+      '[Download](https://agentkavor.com/downloads?source=guide#install)',
+      'Download: https://agentkavor.com/downloads.',
+    ]) {
+      await writeFile(pagePath, `${source}\n${link}\n`)
+      await assert.rejects(
+        validateDocumentationReleaseTransition(resolve('docs'), sourceDirectory),
+        /en[/\\]index\.md contains a deprecated download URL.*Use https:\/\/download\.agentkavor\.com/,
+      )
+    }
+    await writeFile(pagePath, `${source}\n[Download](https://download.agentkavor.com)\n`)
+    await assert.doesNotReject(validateDocumentationReleaseTransition(resolve('docs'), sourceDirectory))
+  })
+})
+
+test('preserves inherited download links when historical bodies remain unchanged', async () => {
+  await withCorpus(async (baseDirectory) => {
+    const basePath = join(baseDirectory, 'en', 'index.md')
+    await writeFile(basePath, `${await readFile(basePath, 'utf8')}\n[Historical download](https://agentkavor.com/downloads)\n`)
+    await withCorpus(async (proposedDirectory) => {
+      await advanceRelease(proposedDirectory, baseDirectory)
+      const pagePath = join(proposedDirectory, 'en', 'index.md')
+      const source = await readFile(pagePath, 'utf8')
+      await writeFile(pagePath, source.replace(/^description:.*$/m, 'description: Updated metadata only.'))
+      const changedPath = join(proposedDirectory, 'pt-br', 'index.md')
+      await writeFile(changedPath, `${await readFile(changedPath, 'utf8')}\n[Download](https://download.agentkavor.com)\n`)
+      await assert.doesNotReject(validateDocumentation(proposedDirectory))
+      await assert.doesNotReject(validateDocumentationReleaseTransition(baseDirectory, proposedDirectory))
+    }, baseDirectory)
+  })
+})
+
+test('requires canonical download links in newly added public documents', async () => {
+  await withCorpus(async (sourceDirectory) => {
+    await advanceRelease(sourceDirectory)
+    const catalogPath = join(sourceDirectory, 'catalog.yaml')
+    const catalog = parseYaml(await readFile(catalogPath, 'utf8'))
+    const template = catalog.documents.find((document) => document.id === 'what-is-kavor')
+    catalog.documents.push({ ...template, id: 'download-help', slug: 'download-help', path: 'download-help.md' })
+    catalog.navigation[0].documents.push('download-help')
+    await writeFile(catalogPath, stringifyYaml(catalog))
+    for (const locale of catalog.locales) {
+      const source = (await readFile(join(sourceDirectory, locale.slug, template.path), 'utf8'))
+        .replace(/^id:.*$/m, 'id: download-help')
+        .replace(/^canonicalUrl:.*$/m, `canonicalUrl: https://agentkavor.com/${locale.slug}/docs/download-help`)
+      const downloadUrl = locale.slug === 'ru' ? 'https://agentkavor.com/downloads' : 'https://download.agentkavor.com'
+      await writeFile(join(sourceDirectory, locale.slug, 'download-help.md'), `${source}\n[Download](${downloadUrl})\n`)
+    }
+    await assert.doesNotReject(validateDocumentation(sourceDirectory))
+    await assert.rejects(
+      validateDocumentationReleaseTransition(resolve('docs'), sourceDirectory),
+      /ru[/\\]download-help\.md contains a deprecated download URL/,
+    )
+    for (const locale of catalog.locales) {
+      const pagePath = join(sourceDirectory, locale.slug, 'download-help.md')
+      await writeFile(pagePath, (await readFile(pagePath, 'utf8')).replaceAll('https://agentkavor.com/downloads', 'https://download.agentkavor.com'))
+    }
+    await assert.doesNotReject(validateDocumentationReleaseTransition(resolve('docs'), sourceDirectory))
   })
 })
 
