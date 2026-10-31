@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note : mémoire de travail partagée"
 description: Utilisez une Sticky Note pour noter l'état, les constats et les points d'attention avec vos CodingAgents sans transformer chaque note en Specification.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/sticky-note
 ---
 
@@ -55,7 +55,13 @@ Un format simple suffit :
 
 Connectez la Sticky Note à l'agent et demandez-lui de noter uniquement les faits utiles à votre prochaine décision :
 
-> Garde la Sticky Note comme un résumé court du tour. Note les changements, preuves, risques et questions qui demandent ma décision. Ne transforme pas les hypothèses en décisions finales.
+Choisissez une Sticky Note accessible et autorisez explicitement l’agent à la maintenir pendant le tour. Si elle contient déjà des observations, utilisez l’exemple plus délimité suivant.
+
+```prompt
+Garde la Sticky Note comme un résumé court du tour. Note les changements, preuves, risques et questions qui demandent ma décision. Ne transforme pas les hypothèses en décisions finales.
+```
+
+**Résultat attendu:** La note conserve un résumé court des faits, preuves et questions. Elle ne devient pas un rapport automatique de tous les agents du composant.
 
 L'agent peut ajouter des blocs séparés ou remplacer le contenu lorsque vous demandez une réorganisation complète. Le
 contenu reste éditable par l'humain et chaque changement doit respecter la dernière version de la note.
@@ -63,9 +69,15 @@ contenu reste éditable par l'humain et chaque changement doit respecter la dern
 Si la note contient déjà vos observations, précisez ce que l'agent peut modifier. Une note remplie ne l'invite pas
 à la réorganiser de sa propre initiative. Une consigne plus précise est :
 
-> Maintenez cette Sticky Note pendant l'enquête. Préservez mes notes et celles du Reviewer. Ajoutez seulement vos
-> découvertes vérifiées et modifiez uniquement les éléments portant votre nom. Demandez ma permission avant de
-> réorganiser tout le corps.
+Identifiez la note contenant vos observations ou celles du Reviewer. Collez dans l’agent qui doit ajouter uniquement sa contribution.
+
+```prompt
+Maintenez cette Sticky Note pendant l'enquête. Préservez mes notes et celles du Reviewer. Ajoutez seulement vos
+découvertes vérifiées et modifiez uniquement les éléments portant votre nom. Demandez ma permission avant de
+réorganiser tout le corps.
+```
+
+**Résultat attendu:** Les entrées précédentes sont préservées ; l’agent modifie seulement ses éléments et demande avant de réorganiser le corps.
 
 ### 3. Le pont entre implémentation et revue
 
@@ -102,9 +114,15 @@ d'architecture. Utilisez une note pour préserver la découverte, la preuve et l
 
 Demandez à l'agent :
 
-> Ajoute les découvertes vérifiées et les questions à la note. Préserve mes observations. Lorsqu'une hypothèse est
-> confirmée ou écartée, actualise son état avec les preuves. Si la décision définit le périmètre d'une correction,
-> reporte-la dans la Specification correspondante et laisse ici une courte référence.
+Utilisez pendant une investigation avec la note et la Specification correspondante accessibles. Autorisez la maintenance de la note et respectez les Guardrails de la Specification.
+
+```prompt
+Ajoute les découvertes vérifiées et les questions à la note. Préserve mes observations. Lorsqu'une hypothèse est
+confirmée ou écartée, actualise son état avec les preuves. Si la décision définit le périmètre d'une correction,
+reporte-la dans la Specification correspondante et laisse ici une courte référence.
+```
+
+**Résultat attendu:** Constats et hypothèses restent distincts ; les décisions durables sont traitées dans la Specification sans écraser les observations des autres.
 
 Pour une revue, un bloc séparé peut consigner **scénario, comportement observé, preuve et prochaine étape**. Cela
 permet de distinguer ce que le Builder a conclu de ce que le Reviewer a vérifié.

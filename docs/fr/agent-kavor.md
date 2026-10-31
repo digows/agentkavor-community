@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor : échangez avec vos agents via Channels"
 description: Associez WhatsApp, choisissez un CodingAgent et participez depuis Self-chat ou un groupe dédié au Workspace.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/agent-kavor
 ---
 
@@ -92,8 +92,14 @@ l'effet de chaque choix. Les règles déterminant qui peut envoyer des commandes
 
 Envoyez une demande claire à l'agent sélectionné. Par exemple :
 
-> Vérifie les résultats des tests de la tâche en cours. Ne modifie pas le code. Indique ce qui a réussi, ce qui a
-> échoué et les preuves que tu as pu consulter.
+Dans la conversation WhatsApp liée, confirmez le Workspace et le CodingAgent avec `/context`. Adressez la demande à cet agent, avec la tâche et ses preuves accessibles.
+
+```prompt
+Vérifie les résultats des tests de la tâche en cours. Ne modifie pas le code. Indique ce qui a réussi, ce qui a
+échoué et les preuves que tu as pu consulter.
+```
+
+**Résultat attendu:** La réponse distingue réussite, échec et éléments non vérifiés, en citant les preuves consultées. La demande n’autorise pas de modification du code.
 
 Suivez la progression et la réponse dans la même conversation. Lorsqu'une décision est nécessaire, répondez à la
 question correspondante avec les choix proposés ou le format demandé. Une confirmation d'envoi n'est pas une confirmation de fin.
@@ -109,7 +115,13 @@ leur propre disposition.
 Vous pouvez demander au CodingAgent, y compris depuis sa session desktop, de publier le résultat dans une
 conversation déjà configurée. Par exemple :
 
-> Quand tu auras terminé cette revue, envoie le résumé au groupe WhatsApp de ce Workspace. Ne publie pas dans d'autres conversations.
+Sur le desktop, adressez-vous au CodingAgent chargé de la revue. Le groupe du Workspace doit être configuré et activé ; vérifiez que ses participants peuvent recevoir le résumé.
+
+```prompt
+Quand tu auras terminé cette revue, envoie le résumé au groupe WhatsApp de ce Workspace. Ne publie pas dans d'autres conversations.
+```
+
+**Résultat attendu:** L’agent publie uniquement vers la destination demandée ou explique pourquoi l’envoi a échoué. Terminer la revue et confirmer la publication sont deux résultats distincts.
 
 L'agent découvre les conversations activées de son Workspace et choisit explicitement une destination. Un Channel
 peut contenir plusieurs conversations : il ne s'agit ni d'un envoi à tous les groupes ni d'un miroir automatique du terminal.

@@ -3,7 +3,7 @@ id: agents-and-roles
 title: Choisir ses CodingAgents et définir leurs rôles dans Kavor
 description: Apprenez à répartir le travail entre CodingAgents, à préserver un contexte partagé et à choisir provider, modèle et effort pour chaque responsabilité.
 kind: guide
-lastReviewedAt: 2026-08-06
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/agents-and-roles
 ---
 
@@ -41,6 +41,20 @@ findings et s’arrêter avant de modifier le code » définit un rôle vérifia
 Le même provider peut occuper des rôles différents dans des sessions distinctes. Des providers différents peuvent
 également remplir le même rôle. Le rôle appartient au travail ; provider, modèle et effort sont des réglages choisis
 pour l’exécuter.
+
+## Copier un prompt pour répartir les responsabilités
+
+Décrivez d’abord la tâche réelle et ses contraintes dans le CodingAgent. Indiquez vos providers ; la demande planifie sans créer de sessions ni modifier de code.
+
+```prompt
+À partir de la tâche décrite, propose la plus petite répartition utile des responsabilités entre CodingAgents.
+Pour chaque rôle, indique objectif, contexte requis, livraison vérifiable et condition d’arrêt.
+Explique où une revue indépendante aide et quand une autre session ajouterait seulement de la coordination.
+Considère les providers que j’indique ; n’invente pas la disponibilité des modèles et ne configure pas de sessions pour moi.
+Ne crée pas de Nodes, ne modifie pas les Connections et n’implémente rien avant ma revue de la proposition.
+```
+
+**Résultat attendu:** Une proposition de rôles et handoffs proportionnée au travail. Vous choisissez la configuration ; le nombre d’agents ou la diversité des providers ne garantissent ni qualité ni économie de tokens.
 
 ## Quatre rôles utiles
 

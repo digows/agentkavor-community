@@ -3,7 +3,7 @@ id: connections
 title: Matrice des Connections prises en charge par Kavor
 description: Consultez les combinaisons de Nodes prises en charge, les capacités accordées, les paramètres requis et les Guardrails disponibles.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/connections
 ---
 
@@ -168,6 +168,19 @@ Avant de connecter deux Nodes, demandez-vous quelle capacité concrète manque :
 
 Une bonne Connection rend le travail plus explicite. Si vous ne pouvez pas nommer la capacité qu'elle ajoute, le
 graphe n'en a probablement pas besoin.
+
+## Copier un prompt pour revoir les Connections
+
+Utilisez dans un CodingAgent du composant à examiner et précisez sa tâche. Cela n’autorise ni connexion à des Nodes préexistants hors du graphe ni modification des Guardrails.
+
+```prompt
+Consulte la documentation officielle des Connections et examine mon composant accessible.
+Explique quelles ressources la topologie permet déjà d’atteindre et quelles paires portent des paramètres ou Guardrails directs.
+Pour la tâche décrite, signale des Connections redondantes ou manquantes uniquement pour une raison concrète.
+Ne modifie pas le Canvas. Présente la proposition et l’effet de chaque changement avant ma décision.
+```
+
+**Résultat attendu:** Une revue distinguant accessibilité transitive et contrats directs. Une suggestion ne crée pas d’accès, ne retire pas de Guardrail et ne transforme pas les Connections en flèches d’exécution.
 
 ## Pour aller plus loin
 

@@ -3,7 +3,7 @@ id: agents-and-roles
 title: How to choose CodingAgents and define roles in Kavor
 description: Learn how to split work across CodingAgents, preserve shared context, and choose provider, model, and effort for each responsibility.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/agents-and-roles
 ---
 
@@ -40,6 +40,20 @@ stop before changing the code” defines a verifiable role.
 
 The same provider can fill different roles in separate sessions. Different providers can also fill the same role.
 The role belongs to the work; provider, model, and effort are settings chosen to execute it.
+
+## Copy a prompt to divide responsibilities
+
+Describe the real task and constraints in the CodingAgent first. State which providers you have; this request plans the work rather than creating sessions or changing code.
+
+```prompt
+Based on the task I described, propose the smallest useful division of responsibilities between CodingAgents.
+For each role, state its goal, required context, verifiable delivery and stopping condition.
+Explain where independent review helps and when another session would only add coordination.
+Consider the providers I identify; do not invent model availability or configure sessions for me.
+Do not create Nodes, change Connections or implement before I review the proposal.
+```
+
+**Expected result:** A task-sized proposal for roles and handoffs. You choose the configuration; agent count or different providers do not guarantee quality or token savings.
 
 ## Four useful roles
 

@@ -3,7 +3,7 @@ id: agent-kavor
 title: 通过 Channels 与 Agent Kavor 对话
 description: 关联 WhatsApp，选择 CodingAgent，通过 Self-chat 或 Workspace 专属群组参与工作。
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/agent-kavor
 ---
 
@@ -85,7 +85,13 @@ Agent Kavor 不是另一个模型，也不是替代 CodingAgents 的托管 agent
 
 向已选 agent 发送明确请求，例如：
 
-> 检查当前任务的测试结果，不要修改代码。告诉我哪些通过、哪些失败，以及你实际查阅了什么证据。
+在已关联的 WhatsApp 对话中，用 `/context` 确认 Workspace 和 CodingAgent。将请求发给该 agent，并确保任务及其证据在可达范围内。
+
+```prompt
+检查当前任务的测试结果，不要修改代码。告诉我哪些通过、哪些失败，以及你实际查阅了什么证据。
+```
+
+**预期结果:** 回复区分通过、失败和尚未验证的结果，并说明查阅了哪些证据。此请求不授权修改代码。
 
 在同一对话中跟进进度和回复。如果 agent 需要决策，请使用对应问题提供的选项或要求的格式回答。
 发送确认不等于完成确认。
@@ -98,7 +104,13 @@ Agent Kavor 不是另一个模型，也不是替代 CodingAgents 的托管 agent
 
 你可以要求 CodingAgent 将结果发布到已配置的对话，即使任务是在 desktop 会话中开始的。例如：
 
-> 完成这次评审后，请把摘要发送到这个 Workspace 的 WhatsApp 群组。不要发布到其他对话。
+在桌面端向负责评审的 CodingAgent 提出请求。Workspace 群组必须已配置并启用；确认群组成员可以接收摘要内容。
+
+```prompt
+完成这次评审后，请把摘要发送到这个 Workspace 的 WhatsApp 群组。不要发布到其他对话。
+```
+
+**预期结果:** agent 只向指定目标发布，或解释未能发送的原因。完成评审与确认发布是两个不同结果。
 
 agent 会查找其 Workspace 中已启用的对话，并明确选择一个目标。一个 Channel 可以包含多个对话；这不是向所有群组
 广播，也不会自动转发 agent 终端中的全部内容。

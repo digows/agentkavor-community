@@ -3,7 +3,7 @@ id: what-is-kavor
 title: Kavor とは？
 description: Coding Agent と永続的なエンジニアリングコンテキストを調整する、Kavor のローカルファーストな視覚システムを理解します。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/what-is-kavor
 ---
 
@@ -83,6 +83,8 @@ CodingAgent に契約を実装させ、証拠を確認し、意思決定を Work
 
 CodingAgent 自身に構造づくりを手伝わせたい場合は、[CodingAgents が Canvas を見て構築する仕組み](./coding-agents-and-canvas.md)
 を参照してください。時間を起点に作業を始めるには [Schedule](./schedule.md) を学んでください。
+
+すぐ使える依頼から始めますか？[最初のループの prompt をコピー](./first-loop.md#codingagent-と一緒に組み立てますか)し、タスクに合わせて調整して、準備と期待する結果を確認してから CodingAgent に送ってください。
 
 ## 1 つのアプリケーション、複数の Workspaces
 

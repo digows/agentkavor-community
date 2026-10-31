@@ -3,7 +3,7 @@ id: nodes
 title: KavorのNodes
 description: CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Triggerが単体でできることと、接続によって得られる能力を解説します。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/nodes
 ---
 
@@ -50,6 +50,19 @@ Connectionは、実務的な問いに答えます。**この2つのNodesは、�
 - グラフはコンテキストを到達可能にしますが、操作を自動承認するものではありません。
 
 結果は、魔法のように見せることより実用性を優先します。作業の前、最中、後に、その構造を確認できます。
+
+## prompt をコピーしてグラフを理解する
+
+Workspace の CodingAgent に貼り付け、整理したいタスクを説明してください。読み取りと案内だけを求める依頼です。コンポーネント外の Nodes は配置に見えているだけではアクセス可能になりません。
+
+```prompt
+私が説明したタスクに、到達可能なグラフの Nodes がどう役立つか説明してください。
+意図、資料、実行、作業メモリがどこにあるか示してください。
+不足があれば必要最小限の構造を提案し、各 Node が必要な理由を説明してください。
+Nodes や Connections の作成・削除や、グラフ外の内容の読み取りはしないでください。
+```
+
+**期待する結果:** 利用できるコンテキストの短い見取り図と、必要な場合の提案が得られます。説明は自動パイプラインを作らず、新しいアクセスも許可しません。次の行動はあなたが決めます。
 
 ## 7つのNodes
 

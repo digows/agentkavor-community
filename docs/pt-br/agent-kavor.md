@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor: converse com seus agentes por Channels"
 description: Vincule o WhatsApp, escolha um CodingAgent e participe do trabalho pelo Self-chat ou por um grupo dedicado ao Workspace.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/agent-kavor
 ---
 
@@ -91,8 +91,14 @@ continuam as mesmas.
 
 Envie um pedido claro para o agente selecionado. Por exemplo:
 
-> Confira o resultado dos testes da tarefa em andamento. Não altere código. Me diga o que passou, o que falhou e
-> qual evidência você conseguiu consultar.
+No WhatsApp já vinculado, confirme o Workspace e o CodingAgent com `/context`. Envie o pedido para esse agente, com a tarefa e suas evidências alcançáveis.
+
+```prompt
+Confira o resultado dos testes da tarefa em andamento. Não altere código. Me diga o que passou, o que falhou e
+qual evidência você conseguiu consultar.
+```
+
+**Resultado esperado:** Uma resposta distingue passou, falhou e não verificado, com a evidência consultada. O pedido não autoriza mudanças de código.
 
 Acompanhe o andamento e a resposta na mesma conversa. Se o agente precisar de uma decisão, responda à pergunta
 correspondente usando as opções ou o formato solicitado. Uma confirmação de envio não é confirmação de conclusão.
@@ -107,7 +113,13 @@ essa linha pode quebrar naturalmente. Respostas completas, perguntas e conteúdo
 Você pode pedir ao CodingAgent, inclusive na sessão do desktop, que publique o resultado em uma conversa já
 configurada. Por exemplo:
 
-> Quando concluir esta revisão, envie o resumo no grupo de WhatsApp deste Workspace. Não publique em outras conversas.
+No desktop, peça ao CodingAgent responsável pela revisão. O grupo do Workspace deve estar configurado e habilitado; confira se o resumo pode ser compartilhado com seus participantes.
+
+```prompt
+Quando concluir esta revisão, envie o resumo no grupo de WhatsApp deste Workspace. Não publique em outras conversas.
+```
+
+**Resultado esperado:** O agente publica o resultado apenas no destino pedido ou informa por que não conseguiu enviá-lo. Concluir a revisão e confirmar a publicação são resultados distintos.
 
 O agente descobre as conversas habilitadas do seu Workspace e escolhe explicitamente um destino. Um Channel pode
 ter várias conversas: isso não é envio para todos os grupos nem uma publicação automática de tudo que aparece no

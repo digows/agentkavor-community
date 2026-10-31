@@ -3,7 +3,7 @@ id: terminal
 title: "Kavor 中的 Terminal：让人和 agent 都看得见执行过程"
 description: 在 Canvas 上使用真实 shell，通过规范路径连接上下文，并让 CodingAgent 在不失去监督的前提下协助工作。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/terminal
 ---
 
@@ -86,7 +86,13 @@ markdownlint "$SPECIFICATION_FILE"
 
 例如，将出错表单的截图粘贴到 CodingAgent 输入中，然后请求：
 
-> 用引用的图像比较表单与其实现。在已连接的 WebBrowser 中复现问题，并在修改代码前描述观察到的差异。
+先将截图引用粘贴到 CodingAgent 输入框，再发送此请求。复现问题所需的 WebBrowser 也必须可达。
+
+```prompt
+用引用的图像比较表单与其实现。在已连接的 WebBrowser 中复现问题，并在修改代码前描述观察到的差异。
+```
+
+**预期结果:** agent 先说明观察到的差异，再提出变更。图像解读取决于 harness；粘贴引用不能证明已读取图像。
 
 Kavor 提供引用；是否能理解图像取决于 provider。粘贴图像不等于在 Terminal 中 inline 显示图像，
 也不能证明 harness 已经分析了它。
@@ -133,21 +139,39 @@ Maintainer 把 Specification 作为契约，把 File 作为明确来源，并用
 
 ## 更好的起始请求
 
-> 只使用可达上下文诊断故障。先读取 Terminal 当前屏幕。一次执行一条命令，说明它能区分什么，并保留
-> Reviewer 需要的 output。不要中断我启动的进程；在任何破坏性操作或扩大 Specification 范围前停止。
+让显示故障的 Terminal 可达，并在 Specification 中标明已授权的范围。不要用其他会话代替真正需要调查的会话。
+
+```prompt
+只使用可达上下文诊断故障。先读取 Terminal 当前屏幕。一次执行一条命令，说明它能区分什么，并保留
+Reviewer 需要的 output。不要中断我启动的进程；在任何破坏性操作或扩大 Specification 范围前停止。
+```
+
+**预期结果:** 诊断把命令与观察结果对应起来，不中断你的进程。受限的操作必须说明，不能绕过。
 
 用于监控：
 
-> 只跟踪此 Terminal 必要的 tail。出现新证据时通知我；不要把没有新行视为成功，也不要在调查结束后留下
-> 仅为调查启动的 watcher。
+用来跟踪可达 Terminal 中的日志。说明需要观察的事件，以及监控何时结束。
+
+```prompt
+只跟踪此 Terminal 必要的 tail。出现新证据时通知我；不要把没有新行视为成功，也不要在调查结束后留下
+仅为调查启动的 watcher。
+```
+
+**预期结果:** agent 报告新信号，并只结束自己启动的监控。没有新行不代表成功。
 
 ## 示例：无需重启一切即可调查失败
 
 Web 应用在 Terminal App 中运行，但表单无法完成提交。保持这个进程运行，使用另一个 Terminal——Checks——执行检查。
 将 CodingAgent 连接到所需资源，并请求：
 
-> 观察 Terminal App 的当前屏幕，在连接的 WebBrowser 中复现错误。将操作时间与日志对应起来。不要重启服务器，
-> 也不要中断我的进程。如果需要单独执行命令，请使用 Terminal Checks，并记录每项检查确认或排除了什么。
+在同一图谱中准备 Terminals App、Checks 和 WebBrowser。如果 Nodes 使用其他名称，请替换。
+
+```prompt
+观察 Terminal App 的当前屏幕，在连接的 WebBrowser 中复现错误。将操作时间与日志对应起来。不要重启服务器，
+也不要中断我的进程。如果需要单独执行命令，请使用 Terminal Checks，并记录每项检查确认或排除了什么。
+```
+
+**预期结果:** 报告将复现过程与日志对应，区分已证实的原因和假设，并保留你启动的服务器。
 
 如果是 Node.js 项目，Terminal Checks 中的一项简单检查可以确认环境：
 
@@ -164,8 +188,14 @@ node --version
 
 你也可以启动 build，然后让 CodingAgent 只跟踪相关输出：
 
-> 跟踪这个 Terminal 中的 build。使用近期输出，仅在必要时查看更多历史。报告你能观察到的结果，以及支持结论的消息。
-> 进程运行期间，不要发送命令，也不要结束进程。
+在 Terminal 中启动 build，并使其可达。将请求粘贴给只应跟踪输出、不应在该会话输入命令的 CodingAgent。
+
+```prompt
+跟踪这个 Terminal 中的 build。使用近期输出，仅在必要时查看更多历史。报告你能观察到的结果，以及支持结论的消息。
+进程运行期间，不要发送命令，也不要结束进程。
+```
+
+**预期结果:** agent 报告观察到的结果及其证据，让进程和输入继续由人控制。
 
 请求用于协调协作；`terminal_read_only` Guardrail 可以将 Kavor 操作限制为观察。你继续使用 shell，智能体则帮助解释可见状态。
 

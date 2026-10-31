@@ -3,7 +3,7 @@ id: docs-home
 title: Documentación de Kavor
 description: Monta tu primer loop en Kavor y encuentra guías para especificar, implementar, revisar, probar y programar trabajo con CodingAgents.
 kind: landing
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs
 ---
 
@@ -28,6 +28,8 @@ intención, implementación, revisión y decisión en el mismo loop.
 La estructura crece según lo requiera la tarea. Puedes empezar con pocos Nodes y añadir un Terminal para las
 verificaciones, un File como referencia o un WebBrowser para probar la aplicación. Si prefieres entender primero el
 modelo, lee [¿Qué es Kavor?](./what-is-kavor.md).
+
+¿Quieres un pedido listo? [Copia el prompt del primer loop](./first-loop.md#prefieres-montarlo-con-ayuda), adapta la tarea y revisa la preparación y el resultado esperado antes de enviarlo al CodingAgent.
 
 ## ¿Qué quieres hacer?
 

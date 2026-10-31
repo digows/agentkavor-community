@@ -3,7 +3,7 @@ id: file
 title: "File: contexto y alcance en el Canvas"
 description: Usa un File para mantener visible una fuente canónica, delimitar el contexto de un CodingAgent y pasar su ruta a un Terminal.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/file
 ---
 
@@ -38,7 +38,13 @@ identificar la configuración que debe revisarse.
 
 Un pedido inicial puede ser:
 
-> Lee el File conectado como la fuente canónica de esta tarea. Explica qué debe cambiar, conserva el alcance y edita solo después de que confirme el plan.
+Añade el archivo como File y hazlo alcanzable por el CodingAgent. Identifica el cambio deseado antes de pegar el pedido.
+
+```prompt
+Lee el File conectado como la fuente canónica de esta tarea. Explica qué debe cambiar, conserva el alcance y edita solo después de que confirme el plan.
+```
+
+**Resultado esperado:** El agente explica un plan desde la fuente real y espera tu confirmación antes de editar. Debe indicar si no puede leer el formato.
 
 Cuando el agente solo necesita consultar el material, usa el Guardrail file_read_only en la Connection directa. El
 agente puede alcanzar el File, pero no cambiar su fuente mediante operaciones mediadas por Kavor.
@@ -77,9 +83,15 @@ agente conectado, puede ayudar a interpretar la salida mientras sigues el proces
 
 Añade el cliente HTTP como File, conecta un Reviewer y deja una Sticky Note alcanzable para los findings. Pide:
 
-> Revisa el File del cliente HTTP, especialmente timeout, retry y tratamiento de errores. Úsalo como foco del
-> análisis. Si una conclusión depende de otro archivo, identifica esa dependencia antes de ampliar la investigación.
-> Registra solo findings respaldados por código o reproducción y no implementes correcciones.
+Úsalo con el Reviewer y el File del cliente HTTP alcanzable. Para registrar findings en una nota, identifica la Sticky Note y autoriza esa escritura.
+
+```prompt
+Revisa el File del cliente HTTP, especialmente timeout, retry y tratamiento de errores. Úsalo como foco del
+análisis. Si una conclusión depende de otro archivo, identifica esa dependencia antes de ampliar la investigación.
+Registra solo findings respaldados por código o reproducción y no implementes correcciones.
+```
+
+**Resultado esperado:** Una revisión localizada separa defectos demostrados de hipótesis e identifica dependencias antes de ampliar la investigación.
 
 Espera una revisión localizada con escenario y referencia al código relevante. El File explicita el foco; no es un
 sandbox para las herramientas nativas del harness. Delimita el alcance en la petición y utiliza el Guardrail
@@ -89,9 +101,15 @@ adecuado para las operaciones de Kavor.
 
 Mantén un PDF de requisitos o una imagen de referencia en el mismo grafo que la Specification y el CodingAgent:
 
-> Compara el material del File con la Specification. Separa requisitos explícitos, interpretaciones y dudas. Para
-> cada divergencia, identifica la página o elemento observado y registra la pregunta en la Sticky Note. No inventes
-> contenido que no puedas leer.
+Mantén el File, la Specification y una Sticky Note en el grafo del CodingAgent. Identifica el material a comparar y autoriza anotar preguntas.
+
+```prompt
+Compara el material del File con la Specification. Separa requisitos explícitos, interpretaciones y dudas. Para
+cada divergencia, identifica la página o elemento observado y registra la pregunta en la Sticky Note. No inventes
+contenido que no puedas leer.
+```
+
+**Resultado esperado:** La comparación referencia páginas o elementos leídos realmente. Se explicitan las partes que no se pudieron interpretar, sin inventar requisitos.
 
 Espera una comparación verificable, no solo un resumen. La interpretación depende del formato y de las herramientas
 del harness; el preview de Kavor mantiene la referencia visible para ti.

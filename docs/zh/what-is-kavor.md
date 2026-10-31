@@ -3,7 +3,7 @@ id: what-is-kavor
 title: 什么是 Kavor？
 description: 了解 Kavor 用于协调编码智能体和持久工程上下文的本地优先可视化系统。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/what-is-kavor
 ---
 
@@ -77,6 +77,8 @@ Canvas 组织工作；**Agent Kavor** 让你通过 **Channels** 继续与 Coding
 
 如果希望 CodingAgent 帮助搭建结构，请参阅 [CodingAgents 如何查看和构建 Canvas](./coding-agents-and-canvas.md)。
 要按时间启动工作，请学习使用 [Schedule](./schedule.md)。
+
+想从现成请求开始？[复制第一个闭环的 prompt](./first-loop.md#想让-codingagent-帮你搭建吗)，按实际任务调整，并在发给 CodingAgent 前检查准备步骤和预期结果。
 
 ## 一个应用，多个 Workspaces
 

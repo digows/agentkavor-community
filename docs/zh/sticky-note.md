@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note：共享工作记忆"
 description: 使用 Sticky Note 与 CodingAgents 记录状态、发现和注意事项，而不必把每条工作笔记都变成 Specification。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/sticky-note
 ---
 
@@ -52,7 +52,13 @@ Sticky Note 最初只是给人使用的便利贴。连接 CodingAgent 后，它�
 
 将 Sticky Note 连接到 agent，并要求它只记录有助于你下一次决定的事实：
 
-> 保持 Sticky Note 为简短的工作摘要。记录变更、证据、风险以及需要我决定的问题。不要把假设写成最终决定。
+选择一张可达的 Sticky Note，并明确授权 agent 在本轮中维护它。如果已有内容，请使用下方范围更窄的示例。
+
+```prompt
+保持 Sticky Note 为简短的工作摘要。记录变更、证据、风险以及需要我决定的问题。不要把假设写成最终决定。
+```
+
+**预期结果:** 笔记保留事实、证据和问题的简短摘要。它不会自动成为组件内所有 agent 的报告。
 
 当你要求完整整理时，agent 可以追加独立区块或替换整个内容。人仍然可以编辑内容，每一次变更都必须基于
 笔记的最新版本。
@@ -60,8 +66,14 @@ Sticky Note 最初只是给人使用的便利贴。连接 CodingAgent 后，它�
 如果便签已有你的观察，请明确智能体可以更新哪些内容。有内容的便签不是让它主动重新整理的邀请。
 更明确的指令可以是：
 
-> 调查期间维护这张 Sticky Note。保留我和 Reviewer 的笔记。只添加你已经验证的发现，只更新带有你名字的条目。
-> 整理整个正文前，先征求我的许可。
+指定已包含你或 Reviewer 观察记录的笔记。将请求粘贴给只应添加自己贡献的 agent。
+
+```prompt
+调查期间维护这张 Sticky Note。保留我和 Reviewer 的笔记。只添加你已经验证的发现，只更新带有你名字的条目。
+整理整个正文前，先征求我的许可。
+```
+
+**预期结果:** 已有条目保持不变；agent 只更新自己的条目，并在重新整理正文前征求许可。
 
 ### 3. 连接实现与评审
 
@@ -96,8 +108,14 @@ CodingAgents 之间的 Connection 不是自动 workflow 顺序；它让参与者
 
 请智能体：
 
-> 将已验证的发现和问题加入笔记。保留我的观察记录。假设得到确认或被排除后，用证据更新其状态。
-> 如果某项决定定义了修复范围，将其移入对应的 Specification，并在这里留下一条简短引用。
+调查时使用，确保笔记及对应 Specification 可达。授权维护笔记，并遵守 Specification 的所有 Guardrails。
+
+```prompt
+将已验证的发现和问题加入笔记。保留我的观察记录。假设得到确认或被排除后，用证据更新其状态。
+如果某项决定定义了修复范围，将其移入对应的 Specification，并在这里留下一条简短引用。
+```
+
+**预期结果:** 发现与假设保持区分；持久决策归入 Specification，不覆盖其他人的观察记录。
 
 审查时，可以用独立区块记录**场景、观察到的行为、证据和下一步**，以区分 Builder 的结论与 Reviewer 验证过的内容。
 

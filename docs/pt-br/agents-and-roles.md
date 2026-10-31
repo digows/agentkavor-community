@@ -3,7 +3,7 @@ id: agents-and-roles
 title: Como escolher CodingAgents e definir papéis no Kavor
 description: Aprenda a dividir o trabalho entre CodingAgents, preservar contexto compartilhado e escolher provider, modelo e effort para cada responsabilidade.
 kind: guide
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/agents-and-roles
 ---
 
@@ -40,6 +40,22 @@ parar antes de alterar o código` define um papel verificável.
 
 O mesmo provider pode ocupar papéis diferentes em sessões separadas. Providers diferentes também podem cumprir o
 mesmo papel. O papel pertence ao trabalho; o provider, o modelo e o effort são configurações escolhidas para executá-lo.
+
+## Copie um prompt para dividir responsabilidades
+
+No CodingAgent, descreva a tarefa real e suas restrições antes de colar o exemplo. Diga quais providers já possui;
+o pedido abaixo é de planejamento, não de criação automática de sessões ou alteração de código.
+
+```prompt
+Com base na tarefa que descrevi, proponha a menor divisão útil de responsabilidades entre CodingAgents.
+Para cada papel, indique objetivo, contexto necessário, entrega verificável e condição de parada.
+Explique onde uma revisão independente ajuda e quando uma segunda sessão só acrescentaria coordenação.
+Considere os providers que eu informar; não invente disponibilidade de modelos nem configure sessões por mim.
+Não crie Nodes, não altere Connections e não implemente antes de eu revisar a proposta.
+```
+
+**Resultado esperado:** uma proposta de papéis e handoffs proporcional ao trabalho. Você escolhe a configuração;
+quantidade de agentes ou providers diferentes não garante qualidade nem economia de tokens.
 
 ## Quatro papéis úteis
 

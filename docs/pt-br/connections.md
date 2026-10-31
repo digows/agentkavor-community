@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections suportadas no Kavor
 description: Consulte os pares de Nodes que podem ser conectados, seu papel estrutural, parâmetros, Guardrails e limites.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/connections
 ---
 
@@ -181,6 +181,21 @@ Antes de criar uma Connection, pergunte o que falta ao componente:
 Não conecte cada CodingAgent diretamente a cada recurso por reflexo. Crie a menor topologia que mantém tudo
 alcançável e acrescente uma Connection direta quando ela melhora a leitura do Canvas, carrega um parâmetro ou precisa
 de um Guardrail próprio.
+
+## Copie um prompt para revisar as Connections
+
+Use em um CodingAgent do componente que quer revisar e diga qual tarefa ele precisa cumprir. Este pedido não
+autoriza conectar o agente a Nodes preexistentes fora do grafo nem alterar Guardrails.
+
+```prompt
+Consulte a documentação oficial de Connections e examine meu componente alcançável.
+Explique quais recursos a topologia já permite alcançar e quais pares possuem parâmetros ou Guardrails diretos.
+Para a tarefa que descrevi, aponte Connections redundantes ou ausentes apenas quando houver uma razão concreta.
+Não altere o Canvas. Apresente a proposta e o efeito de cada mudança antes de eu decidir.
+```
+
+**Resultado esperado:** uma revisão que distingue alcance transitivo de contratos diretos. Uma sugestão não cria
+acesso, não remove um Guardrail e não transforma Connections em setas de execução.
 
 ## Continue
 

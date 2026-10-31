@@ -3,7 +3,7 @@ id: first-loop
 title: How to close your first loop in Kavor
 description: Build a small loop with a Specification, Claude Code, Codex, and a Sticky Note, from intent to a human decision.
 kind: tutorial
-lastReviewedAt: 2026-08-11
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/first-loop
 ---
 
@@ -51,10 +51,16 @@ CodingAgent can also create Nodes and Connections with you.
 
 You can start with this request:
 
-> Consult the official Kavor documentation and help me assemble a first loop for this task. First, explain the
-> smallest structure and the required Connections. Then, if the current graph and `Allow workspace editing` allow it,
-> create the Specification, CodingAgents, and Sticky Note in one atomic change, connect them, and stop before
-> implementation starts so I can review the loop.
+Describe the small task in the CodingAgent. Enable `Allow workspace editing` to allow Canvas assembly; with the option off, request guidance only.
+
+```prompt
+Consult the official Kavor documentation and help me assemble a first loop for this task. First, explain the
+smallest structure and the required Connections. Then, if the current graph and `Allow workspace editing` allow it,
+create the Specification, CodingAgents, and Sticky Note in one atomic change, connect them, and stop before
+implementation starts so I can review the loop.
+```
+
+**Expected result:** The agent explains or assembles the authorized structure and stops for your review. Documentation and the prompt grant no access to Nodes outside the graph.
 
 Documentation does not expand the CodingAgent's access, create implicit Connections, or allow Guardrails to be
 bypassed. If the documentation service is unavailable, Kavor's other local tools continue to work.
@@ -101,10 +107,16 @@ the intent clearer or need a pair-specific Guardrail, not merely to repeat acces
 
 Send this to Claude Code:
 
-> Read the connected Specification and implement only that scope. Before changing code, confirm the acceptance
-> criteria. When finished, run the relevant checks, register durable outputs on the Specification, and add a summary
-> of changed files, checks run, and remaining risks to the Sticky Note. Then send a Kavor message to Codex,
-> referencing the Specification, and request a review against the acceptance criteria.
+Send to Claude Code after preparing and connecting the four Nodes in this tutorial. If you renamed the participants, replace Codex with the Reviewer’s actual name.
+
+```prompt
+Read the connected Specification and implement only that scope. Before changing code, confirm the acceptance
+criteria. When finished, run the relevant checks, register durable outputs on the Specification, and add a summary
+of changed files, checks run, and remaining risks to the Sticky Note. Then send a Kavor message to Codex,
+referencing the Specification, and request a review against the acceptance criteria.
+```
+
+**Expected result:** Implementation leaves durable outputs and useful notes and requests review. Check delivery and the response in Messages; sending does not prove acceptance.
 
 A Connection makes authorized context and capabilities available; it does not execute the task on its own. Follow the
 work in the CodingAgent and do not treat “done” as sufficient evidence.

@@ -3,7 +3,7 @@ id: connections
 title: Kavor 支持的 Connections 矩阵
 description: 查看支持的 Node 组合、授予的能力、必需参数及可用 Guardrails。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/connections
 ---
 
@@ -150,6 +150,19 @@ Node 不会获得任何能力。
 - 时间是否真的应该启动活动？最后加入 Trigger。
 
 好的 Connection 让工作更明确。如果你无法说明它增加了什么能力，图很可能不需要它。
+
+## 复制 prompt 来检查 Connections
+
+在要检查的组件内向 CodingAgent 提出请求，并说明它的任务。此请求不授权连接图谱外的既有 Nodes，也不授权修改 Guardrails。
+
+```prompt
+查阅 Connections 官方文档，并检查我的可达组件。
+解释拓扑已经使哪些资源可达，以及哪些配对带有直接参数或 Guardrails。
+针对我描述的任务，只有存在具体理由时才指出冗余或缺失的 Connections。
+不要修改 Canvas。在我决定前，先说明提案及每项变更的影响。
+```
+
+**预期结果:** 区分传递可达性与直接契约的检查结果。建议不会创建访问权限、移除 Guardrail，也不会把 Connections 变成执行箭头。
 
 ## 继续阅读
 

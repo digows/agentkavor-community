@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal dans Kavor : une exécution visible pour l'humain et l'agent"
 description: Utilisez un vrai shell sur le Canvas, reliez le contexte par des chemins canoniques et laissez le CodingAgent aider sans perdre la supervision.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/terminal
 ---
 
@@ -95,8 +95,14 @@ CodingAgent insère une référence préparée pour la session, pas des données
 
 Par exemple, collez une capture d'un formulaire défectueux dans la saisie du CodingAgent, puis demandez :
 
-> Utilisez l'image référencée pour comparer le formulaire à son implémentation. Reproduisez le problème dans le
-> WebBrowser connecté et décrivez la différence observée avant de modifier le code.
+Après avoir collé la référence de la capture dans l’entrée du CodingAgent, envoyez cette demande. Le WebBrowser nécessaire à la reproduction doit aussi être accessible.
+
+```prompt
+Utilisez l'image référencée pour comparer le formulaire à son implémentation. Reproduisez le problème dans le
+WebBrowser connecté et décrivez la différence observée avant de modifier le code.
+```
+
+**Résultat attendu:** L’agent décrit la différence observée avant de proposer un changement. L’interprétation dépend du harness ; coller une référence ne prouve pas sa lecture.
 
 Kavor fournit la référence ; l'interprétation de l'image dépend du provider. Coller une image ne l'affiche pas inline
 dans Terminal et ne prouve pas que le harness l'a analysée.
@@ -147,25 +153,43 @@ par le shell sans copier manuellement un chemin.
 
 ## Une meilleure demande initiale
 
-> Diagnostique l'échec uniquement avec le contexte accessible. Lis d'abord l'écran actuel du Terminal. Exécute une
-> commande à la fois, explique ce qu'elle permet de distinguer et préserve l'output nécessaire au Reviewer.
-> N'interromps pas un processus lancé par moi et arrête-toi avant toute action destructive ou extension du périmètre
-> de la Specification.
+Rendez accessible le Terminal montrant l’échec et précisez le périmètre autorisé dans la Specification. Ne fournissez pas une autre session que celle à examiner.
+
+```prompt
+Diagnostique l'échec uniquement avec le contexte accessible. Lis d'abord l'écran actuel du Terminal. Exécute une
+commande à la fois, explique ce qu'elle permet de distinguer et préserve l'output nécessaire au Reviewer.
+N'interromps pas un processus lancé par moi et arrête-toi avant toute action destructive ou extension du périmètre
+de la Specification.
+```
+
+**Résultat attendu:** Le diagnostic relie commandes et observations sans interrompre votre processus. Une opération bloquée est signalée, pas contournée.
 
 Pour la surveillance :
 
-> Suis uniquement le tail nécessaire de ce Terminal. Préviens-moi lorsqu'une nouvelle preuve apparaît ; ne considère
-> pas l'absence de nouvelles lignes comme un succès et ne laisse pas tourner un watcher lancé uniquement pour ton
-> enquête après sa fin.
+Utilisez pour suivre les logs d’un Terminal accessible. Précisez l’événement attendu et le moment où terminer le suivi.
+
+```prompt
+Suis uniquement le tail nécessaire de ce Terminal. Préviens-moi lorsqu'une nouvelle preuve apparaît ; ne considère
+pas l'absence de nouvelles lignes comme un succès et ne laisse pas tourner un watcher lancé uniquement pour ton
+enquête après sa fin.
+```
+
+**Résultat attendu:** L’agent rapporte les nouveaux signaux et termine uniquement le suivi qu’il a lancé. Aucune nouvelle ligne ne signifie pas réussite.
 
 ## Exemple : enquêter sur une panne sans tout redémarrer
 
 Une application web tourne dans Terminal App, mais un formulaire ne termine pas son envoi. Gardez ce processus ouvert
 et utilisez un autre Terminal, Checks, pour les vérifications. Reliez le CodingAgent aux ressources nécessaires :
 
-> Observe l'écran actuel de Terminal App et reproduis l'erreur dans le WebBrowser connecté. Rapproche l'heure de
-> l'action des logs. Ne redémarre pas le serveur et n'interromps pas mon processus. Utilise Terminal Checks si tu as
-> besoin d'une commande distincte, et note ce que chaque vérification confirme ou écarte.
+Préparez les Terminals App et Checks et le WebBrowser dans le même graphe. Adaptez les noms si vos Nodes portent d’autres libellés.
+
+```prompt
+Observe l'écran actuel de Terminal App et reproduis l'erreur dans le WebBrowser connecté. Rapproche l'heure de
+l'action des logs. Ne redémarre pas le serveur et n'interromps pas mon processus. Utilise Terminal Checks si tu as
+besoin d'une commande distincte, et note ce que chaque vérification confirme ou écarte.
+```
+
+**Résultat attendu:** Le rapport corrèle reproduction et logs et distingue cause démontrée et hypothèse, sans arrêter votre serveur.
 
 Pour un projet Node.js, une vérification simple dans Terminal Checks peut confirmer l'environnement :
 
@@ -184,9 +208,15 @@ Après une correction autorisée, répétez le même parcours pour comparer les 
 
 Vous pouvez aussi lancer un build et demander au CodingAgent de ne suivre que la sortie pertinente :
 
-> Suis le build dans ce Terminal. Utilise la sortie récente et ne consulte davantage d'historique que si nécessaire.
-> Rapporte le résultat observable et les messages qui étayent ta conclusion. N'envoie pas de commandes et ne termine
-> pas le processus pendant son exécution.
+Lancez le build dans le Terminal et rendez-le accessible. Collez dans le CodingAgent chargé seulement de suivre la sortie, sans saisir de commandes dans cette session.
+
+```prompt
+Suis le build dans ce Terminal. Utilise la sortie récente et ne consulte davantage d'historique que si nécessaire.
+Rapporte le résultat observable et les messages qui étayent ta conclusion. N'envoie pas de commandes et ne termine
+pas le processus pendant son exécution.
+```
+
+**Résultat attendu:** L’agent rapporte le résultat observé et sa preuve, en laissant processus et saisie sous contrôle humain.
 
 La demande coordonne la collaboration ; `terminal_read_only` peut restreindre les opérations Kavor à l'observation.
 Vous continuez à utiliser le shell tandis que l'agent aide à interpréter l'état visible.

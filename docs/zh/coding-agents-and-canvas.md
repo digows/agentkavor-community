@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents 如何查看和构建 Canvas
 description: 了解可达上下文、agent 消息，以及在你控制的边界内进行 Canvas 原子编辑。
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agents-and-canvas
 ---
 
@@ -158,17 +158,35 @@ Kavor 中的 CodingAgents 可以通过本地 Docs MCP 查询官方文档。你�
 
 ### 修改前先解释
 
-> 查询 Kavor 官方文档和当前图谱。解释解决此任务所需的最小结构、哪些 Nodes 将可达，以及哪些限制保持不变。先不要修改 Canvas。
+将请求粘贴到 Workspace 的 CodingAgent，并说明要组织的任务。第一次请求只要求解释。
+
+```prompt
+查询 Kavor 官方文档和当前图谱。解释解决此任务所需的最小结构、哪些 Nodes 将可达，以及哪些限制保持不变。先不要修改 Canvas。
+```
+
+**预期结果:** 提案说明资源、Connections 和边界，不修改 Canvas。布局中可见不代表可以访问图谱外的内容。
 
 ### 构建可审查的 loop
 
-> 为此任务创建一个包含 Specification、Builder、Reviewer 和 Sticky Note 的小 loop。使用最少 Connections，在一个原子变更中
-> 创建并连接新 Nodes，然后在实现前停止，让我检查 Canvas。
+先描述一项小任务。在 CodingAgent 上启用 `Allow workspace editing`，以授权创建结构；只请求解释不需要启用该选项。
+
+```prompt
+为此任务创建一个包含 Specification、Builder、Reviewer 和 Sticky Note 的小 loop。使用最少 Connections，在一个原子变更中
+创建并连接新 Nodes，然后在实现前停止，让我检查 Canvas。
+```
+
+**预期结果:** 一个已连接的 loop 等待你检查，或 agent 说明无法创建的限制。此请求不得开始实施。
 
 ### 整理但不扩大访问
 
-> 整理 Canvas，让意图、实现、审查和证据清晰可读。不要创建或删除 Connections，不要修改 Guardrails，也不要假设能访问
-> 图谱外的 Nodes。
+将请求粘贴到需要整理 Canvas 的 Workspace CodingAgent。此请求授权调整视觉位置，不授权改变参与者的访问权限。
+
+```prompt
+整理 Canvas，让意图、实现、审查和证据清晰可读。不要创建或删除 Connections，不要修改 Guardrails，也不要假设能访问
+图谱外的 Nodes。
+```
+
+**预期结果:** 布局更清晰，同时保留 Connections、Guardrails 和可达内容的边界。
 
 ## 授权编辑前的检查表
 

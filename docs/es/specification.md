@@ -3,7 +3,7 @@ id: specification
 title: "Specification en Kavor: piensa con cuidado una vez, implementa mejor"
 description: Estructura intención, decisiones y criterios en Markdown duradero, organiza varias roots y guía el lifecycle de la Specification.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/specification
 ---
 
@@ -38,9 +38,15 @@ orientada a planificación y más capacidad de razonamiento antes de implementar
 
 Un buen punto de partida es:
 
-> Entrevístame sobre el tema X para escribir la Specification Y. Separa hechos verificados, decisiones, premisas,
-> non-goals, escenarios de fallo y criterios de aceptación observables. No trates el documento como Ready mientras
-> haya decisiones pendientes que puedan cambiar la solución.
+Pega el pedido en una sesión de planificación. Sustituye X por el asunto concreto e Y por el nombre de la Specification; identifica la existente antes de crear otra para el mismo trabajo.
+
+```prompt
+Entrevístame sobre el tema X para escribir la Specification Y. Separa hechos verificados, decisiones, premisas,
+non-goals, escenarios de fallo y criterios de aceptación observables. No trates el documento como Ready mientras
+haya decisiones pendientes que puedan cambiar la solución.
+```
+
+**Resultado esperado:** La entrevista expone decisiones abiertas y orienta un contrato verificable. Escribirlo no autoriza implementar ni convierte el estado en prueba de completitud.
 
 Pensar mejor aquí puede reducir retrabajo, contexto desperdiciado e implementación ambigua. No garantiza menor coste:
 una Specification mala sigue siendo mala aunque sea larga o la escriba un modelo caro.

@@ -3,7 +3,7 @@ id: nodes
 title: Kavor Nodes
 description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Trigger 各自的作用，以及它们连接后获得的能力。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/nodes
 ---
 
@@ -45,6 +45,19 @@ Connection 回答一个实际问题：**这两个 Nodes 能一起做什么？**
 - 图让上下文可达，但不会自动批准操作。
 
 结果少了“魔法”，却更加实用：你能在工作前、工作中和工作后检查结构。
+
+## 复制 prompt 来理解你的图谱
+
+将请求粘贴到 Workspace 的 CodingAgent，并说明要组织的任务。此请求只要求读取和指导；图谱组件外的 Nodes 不会因为出现在布局中就变得可访问。
+
+```prompt
+解释我可达图谱中的 Nodes 如何帮助完成我描述的任务。
+指出意图、来源、执行和工作记忆各在哪里。
+如果缺少内容，提出最小必要结构，并解释每个 Node 的用途。
+不要创建或删除 Nodes 或 Connections，也不要读取图谱外的内容。
+```
+
+**预期结果:** 可用上下文的简图，以及必要时的提案。解释不会搭建自动流水线，也不授予新访问权限；下一步由你决定。
 
 ## 七种 Nodes
 

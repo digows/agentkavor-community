@@ -3,7 +3,7 @@ id: specification
 title: "Kavor 中的 Specification：认真思考一次，更好地实现"
 description: 用持久 Markdown 组织意图、决策和标准，管理多个 roots，并引导 Specification lifecycle。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/specification
 ---
 
@@ -36,8 +36,14 @@ Kavor 只在源文件周围维护身份、状态和 outputs 等运行元数据�
 
 一个好的起点是：
 
-> 围绕主题 X 采访我，以便编写 Specification Y。区分已验证事实、决策、假设、non-goals、失败场景和
-> 可观察的验收标准。在仍有会改变解决方案的决策未完成时，不要把文档视为 Ready。
+将请求粘贴到规划会话中。把 X 替换为具体主题，把 Y 替换为 Specification 名称；已有同一工作的 Specification 时，应引用它，而不是另建一份。
+
+```prompt
+围绕主题 X 采访我，以便编写 Specification Y。区分已验证事实、决策、假设、non-goals、失败场景和
+可观察的验收标准。在仍有会改变解决方案的决策未完成时，不要把文档视为 Ready。
+```
+
+**预期结果:** 访谈揭示未定决策，并引导形成可验证的契约。写出文档既不授权实施，状态也不能证明内容完整。
 
 这里更好的思考可以减少返工、浪费的上下文和含糊实现。但它不保证成本更低：糟糕的 Specification 不会因为
 更长或由昂贵模型编写而变好。

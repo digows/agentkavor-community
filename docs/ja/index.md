@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor ドキュメント
 description: Kavorで最初のループを作り、CodingAgentsとの仕様作成、実装、レビュー、テスト、スケジュール実行のガイドを見つけましょう。
 kind: landing
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs
 ---
 
@@ -28,6 +28,8 @@ canonicalUrl: https://agentkavor.com/ja/docs
 構成は作業に合わせて育てます。少数のNodesから始め、検証用のTerminal、参照用のFile、アプリを
 テストするWebBrowserを必要に応じて加えられます。先にモデルを理解したい場合は
 [Kavorとは？](./what-is-kavor.md)を読んでください。
+
+すぐ使える依頼から始めますか？[最初のループの prompt をコピー](./first-loop.md#codingagent-と一緒に組み立てますか)し、タスクに合わせて調整して、準備と期待する結果を確認してから CodingAgent に送ってください。
 
 ## 何をしたいですか？
 

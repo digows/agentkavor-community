@@ -3,7 +3,7 @@ id: first-loop
 title: Kavor で最初のループを完結させる方法
 description: Specification、Claude Code、Codex、Sticky Note を使い、意図から人間の判断までをつなぐ小さなループを構築します。
 kind: tutorial
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/first-loop
 ---
 
@@ -51,10 +51,16 @@ CodingAgent と一緒に Nodes と Connections を作成することもできま
 
 次の依頼から始められます。
 
-> Kavor の公式ドキュメントを参照し、このタスクの最初のループを組み立てるのを手伝ってください。
-> 最初に、必要な構造と Connections を説明してください。その後、現在の Connections で許可されて
-> いる場合は、Specification、CodingAgents、Sticky Note を作成して接続し、私がループを確認できる
-> よう、実装を始める前に止まってください。
+小さなタスクを CodingAgent に説明してください。Canvas の組み立てを許可するには `Allow workspace editing` を有効にします。無効の場合は案内だけを求めてください。
+
+```prompt
+Kavor の公式ドキュメントを参照し、このタスクの最初のループを組み立てるのを手伝ってください。
+最初に、必要な構造と Connections を説明してください。その後、現在の Connections で許可されて
+いる場合は、Specification、CodingAgents、Sticky Note を作成して接続し、私がループを確認できる
+よう、実装を始める前に止まってください。
+```
+
+**期待する結果:** agent は許可された構造を説明または組み立て、あなたの確認を待って停止します。文書や prompt はグラフ外の Nodes へのアクセスを与えません。
 
 ドキュメントは CodingAgent のアクセス範囲を広げず、暗黙の Connections を作成せず、Guardrails の
 回避も許可しません。ドキュメントサービスが利用できない場合でも、Kavor の他のローカルツールは
@@ -101,11 +107,17 @@ Canvas を右クリックして、次を追加します。
 
 Claude Code に次を送ります。
 
-> 接続された Specification を読み、そのスコープだけを実装してください。コードを変更する前に、
-> 受け入れ基準を確認してください。完了したら、関連するチェックを実行し、永続的な outputs を
-> Specification に登録し、変更したファイル、実行したチェック、残っているリスクの概要を Sticky Note
-> に追記してください。その後、Specification を参照した Kavor メッセージを Codex に送り、受け入れ
-> 基準に対するレビューを依頼してください。
+このチュートリアルの四つの Nodes を用意して接続した後、Claude Code に送ってください。参加者の名前を変えた場合は Codex を Reviewer の実際の名前に置き換えます。
+
+```prompt
+接続された Specification を読み、そのスコープだけを実装してください。コードを変更する前に、
+受け入れ基準を確認してください。完了したら、関連するチェックを実行し、永続的な outputs を
+Specification に登録し、変更したファイル、実行したチェック、残っているリスクの概要を Sticky Note
+に追記してください。その後、Specification を参照した Kavor メッセージを Codex に送り、受け入れ
+基準に対するレビューを依頼してください。
+```
+
+**期待する結果:** 実装によって永続的な outputs と役立つメモが残り、レビューが依頼されます。Messages で配信と返信を確認してください。送信しただけでは受諾の証拠になりません。
 
 Connection は、許可されたコンテキストと能力を利用可能にします。タスクを自動で実行するものでは
 ありません。CodingAgent で作業を追跡し、「完了」という言葉だけを十分な証拠と見なさないでください。

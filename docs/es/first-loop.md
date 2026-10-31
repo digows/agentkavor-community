@@ -3,7 +3,7 @@ id: first-loop
 title: Cómo cerrar tu primer loop en Kavor
 description: Monta un loop pequeño con una Specification, Claude Code, Codex y una Sticky Note, desde la intención hasta la decisión humana.
 kind: tutorial
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/first-loop
 ---
 
@@ -50,10 +50,16 @@ lo permitan, el CodingAgent también puede crear Nodes y Connections contigo.
 
 Puedes empezar con esta petición:
 
-> Consulta la documentación oficial de Kavor y ayúdame a montar un primer loop para esta tarea. Primero, explica la
-> estructura y las Connections necesarias. Después, si las Connections actuales lo permiten, crea la Specification,
-> los CodingAgents y la Sticky Note, conéctalos y detente antes de comenzar la implementación para que pueda revisar
-> el loop.
+Describe la tarea pequeña en el CodingAgent. Activa `Allow workspace editing` para permitir montar el Canvas; con la opción desactivada, solicita solo orientación.
+
+```prompt
+Consulta la documentación oficial de Kavor y ayúdame a montar un primer loop para esta tarea. Primero, explica la
+estructura y las Connections necesarias. Después, si las Connections actuales lo permiten, crea la Specification,
+los CodingAgents y la Sticky Note, conéctalos y detente antes de comenzar la implementación para que pueda revisar
+el loop.
+```
+
+**Resultado esperado:** El agente explica o monta la estructura autorizada y se detiene para que la revises. El prompt y la documentación no conceden acceso a Nodes fuera del grafo.
 
 La documentación no amplía el acceso del CodingAgent, no crea Connections implícitas ni permite eludir Guardrails.
 Si el servicio de documentación no está disponible, las demás herramientas locales de Kavor siguen funcionando.
@@ -99,11 +105,17 @@ restricción concreta que aplicar.
 
 Envía esto a Claude Code:
 
-> Lee la Specification conectada e implementa únicamente ese alcance. Antes de modificar el código, confirma los
-> criterios de aceptación. Al terminar, ejecuta las verificaciones relevantes, registra los outputs duraderos en la
-> Specification y añade a la Sticky Note un resumen de los archivos modificados, las pruebas ejecutadas y los riesgos
-> restantes. Después envía un mensaje de Kavor a Codex, haciendo referencia a la Specification, y pide una revisión
-> según los criterios de aceptación.
+Envía al Claude Code después de preparar y conectar los cuatro Nodes del tutorial. Si cambiaste los nombres, sustituye Codex por el nombre real del Reviewer.
+
+```prompt
+Lee la Specification conectada e implementa únicamente ese alcance. Antes de modificar el código, confirma los
+criterios de aceptación. Al terminar, ejecuta las verificaciones relevantes, registra los outputs duraderos en la
+Specification y añade a la Sticky Note un resumen de los archivos modificados, las pruebas ejecutadas y los riesgos
+restantes. Después envía un mensaje de Kavor a Codex, haciendo referencia a la Specification, y pide una revisión
+según los criterios de aceptación.
+```
+
+**Resultado esperado:** La implementación deja outputs duraderos y notas útiles y solicita revisión. Comprueba la entrega y respuesta en Messages; enviar no demuestra aceptación.
 
 Una Connection hace accesibles el contexto y las capacidades autorizadas; no ejecuta la tarea por sí sola. Sigue el
 trabajo en el CodingAgent y no trates «terminado» como evidencia suficiente.

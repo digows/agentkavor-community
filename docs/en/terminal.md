@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal in Kavor: visible execution for human and agent"
 description: Use a real shell on the Canvas, connect context through canonical paths, and let a CodingAgent assist without losing supervision.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/terminal
 ---
 
@@ -94,8 +94,14 @@ file reference prepared for the session, not binary content inside the command l
 
 For example, paste a screenshot of a broken form into the CodingAgent's input, then ask:
 
-> Use the referenced image to compare the form with its implementation. Reproduce the issue in the connected
-> WebBrowser and describe the observed difference before changing code.
+After pasting the screenshot reference into the CodingAgent input, send this request. The WebBrowser needed to reproduce the issue must also be reachable.
+
+```prompt
+Use the referenced image to compare the form with its implementation. Reproduce the issue in the connected
+WebBrowser and describe the observed difference before changing code.
+```
+
+**Expected result:** The agent describes the observed difference before proposing changes. Image interpretation depends on the harness; a pasted reference does not prove it was read.
 
 Kavor supplies the reference; image interpretation depends on the provider. Pasting an image does not display it
 inline in the Terminal or prove that the harness analyzed it.
@@ -146,23 +152,41 @@ can use it without manually copying a path.
 
 ## A better opening request
 
-> Diagnose the failure using only reachable context. Read the Terminal's current screen first. Run one command at a
-> time, explain what it discriminates, and preserve the output needed by the Reviewer. Do not interrupt a process I
-> started, and stop before any destructive action or expansion of the Specification scope.
+Make the Terminal showing the failure reachable and identify the authorized scope in the Specification. Do not provide a different session from the one you want investigated.
+
+```prompt
+Diagnose the failure using only reachable context. Read the Terminal's current screen first. Run one command at a
+time, explain what it discriminates, and preserve the output needed by the Reviewer. Do not interrupt a process I
+started, and stop before any destructive action or expansion of the Specification scope.
+```
+
+**Expected result:** The diagnosis relates commands to observations without interrupting your process. A blocked operation must be reported, not bypassed.
 
 For monitoring:
 
-> Follow only the necessary tail from this Terminal. Notify me when new evidence appears; do not treat a lack of new
-> lines as success, and do not leave a watcher started only for your investigation running after you finish.
+Use to follow logs in a reachable Terminal. State the event to watch for and when monitoring should end.
+
+```prompt
+Follow only the necessary tail from this Terminal. Notify me when new evidence appears; do not treat a lack of new
+lines as success, and do not leave a watcher started only for your investigation running after you finish.
+```
+
+**Expected result:** The agent reports new signals and ends only the monitoring it started. No new lines does not mean success.
 
 ## Example: investigate a failure without restarting everything
 
 A web application runs in Terminal App, but a form cannot complete submission. Keep that process open and use a
 second Terminal, Checks, for verification. Connect the CodingAgent to the necessary resources and ask:
 
-> Observe Terminal App's current screen and reproduce the error in the connected WebBrowser. Correlate the action's
-> time with the logs. Do not restart the server or interrupt my process. Use Terminal Checks if you need a separate
-> command, and record what each check confirmed or ruled out.
+Prepare Terminals App and Checks and the WebBrowser in the same graph. Replace these names if your Nodes use other labels.
+
+```prompt
+Observe Terminal App's current screen and reproduce the error in the connected WebBrowser. Correlate the action's
+time with the logs. Do not restart the server or interrupt my process. Use Terminal Checks if you need a separate
+command, and record what each check confirmed or ruled out.
+```
+
+**Expected result:** The report correlates reproduction with logs and separates demonstrated cause from hypothesis, preserving the server you started.
 
 For a Node.js project, a simple check in Terminal Checks can confirm the environment:
 
@@ -181,9 +205,15 @@ After an authorized correction, repeat the same path to compare results.
 
 You can also start a build and ask the CodingAgent to follow only the relevant output:
 
-> Follow the build in this Terminal. Use recent output and inspect more history only when needed. Report the result
-> you can observe and the messages supporting your conclusion. Do not send commands or terminate the process while
-> it is running.
+Start the build in the Terminal and make it reachable. Paste into the CodingAgent that should only follow output, without typing commands into that session.
+
+```prompt
+Follow the build in this Terminal. Use recent output and inspect more history only when needed. Report the result
+you can observe and the messages supporting your conclusion. Do not send commands or terminate the process while
+it is running.
+```
+
+**Expected result:** The agent reports the observed result and its evidence, leaving your process and input under human control.
 
 The request coordinates collaboration; a `terminal_read_only` Guardrail can restrict Kavor operations to observation.
 You keep using the shell while the agent helps interpret the visible state.

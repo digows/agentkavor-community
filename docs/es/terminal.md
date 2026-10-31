@@ -3,7 +3,7 @@ id: terminal
 title: "Terminal en Kavor: ejecución visible para humano y agente"
 description: Usa un shell real en el Canvas, conecta contexto mediante rutas canónicas y permite la asistencia del CodingAgent sin perder supervisión.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/terminal
 ---
 
@@ -95,8 +95,14 @@ inserta una referencia preparada para la sesión, no contenido binario en la lí
 
 Por ejemplo, pega una captura de un formulario con error en CodingAgent y pide:
 
-> Usa la imagen referenciada para comparar el formulario con su implementación. Reproduce el problema en el
-> WebBrowser conectado y describe la diferencia observada antes de modificar código.
+Después de pegar la referencia de la captura en la entrada del CodingAgent, envía el pedido. El WebBrowser necesario para reproducir también debe ser alcanzable.
+
+```prompt
+Usa la imagen referenciada para comparar el formulario con su implementación. Reproduce el problema en el
+WebBrowser conectado y describe la diferencia observada antes de modificar código.
+```
+
+**Resultado esperado:** El agente describe la diferencia observada antes de proponer cambios. Interpretar la imagen depende del harness; pegar una referencia no demuestra que se haya leído.
 
 Kavor proporciona la referencia; interpretar la imagen depende del provider. Pegar no muestra la imagen inline en
 Terminal ni demuestra que el harness la haya analizado.
@@ -147,23 +153,41 @@ shell puede usarla sin copiar una ruta manualmente.
 
 ## Una petición inicial mejor
 
-> Diagnostica el fallo usando solo el contexto alcanzable. Lee primero la pantalla actual del Terminal. Ejecuta un
-> comando cada vez, explica qué discrimina y conserva el output necesario para el Reviewer. No interrumpas un proceso
-> iniciado por mí y detente antes de una acción destructiva o que amplíe el alcance de la Specification.
+Haz alcanzable el Terminal con el fallo e identifica el alcance autorizado en la Specification. No proporciones una sesión distinta de la que quieres investigar.
+
+```prompt
+Diagnostica el fallo usando solo el contexto alcanzable. Lee primero la pantalla actual del Terminal. Ejecuta un
+comando cada vez, explica qué discrimina y conserva el output necesario para el Reviewer. No interrumpas un proceso
+iniciado por mí y detente antes de una acción destructiva o que amplíe el alcance de la Specification.
+```
+
+**Resultado esperado:** El diagnóstico relaciona comandos y observaciones sin interrumpir tu proceso. Una operación bloqueada debe informarse, no eludirse.
 
 Para monitorización:
 
-> Sigue solo el tail necesario de este Terminal. Avísame cuando aparezca evidencia nueva; no trates la ausencia de
-> nuevas líneas como éxito ni dejes ejecutándose un watcher iniciado únicamente para tu investigación.
+Úsalo para seguir logs de un Terminal alcanzable. Indica el evento esperado y cuándo debe terminar el seguimiento.
+
+```prompt
+Sigue solo el tail necesario de este Terminal. Avísame cuando aparezca evidencia nueva; no trates la ausencia de
+nuevas líneas como éxito ni dejes ejecutándose un watcher iniciado únicamente para tu investigación.
+```
+
+**Resultado esperado:** El agente comunica señales nuevas y termina solo el seguimiento que inició. La ausencia de líneas nuevas no significa éxito.
 
 ## Ejemplo: investigar una falla sin reiniciar todo
 
 Una aplicación web corre en Terminal App, pero un formulario no completa el envío. Mantén ese proceso abierto y usa
 otro Terminal, Checks, para las verificaciones. Conecta el CodingAgent a los recursos necesarios y pide:
 
-> Observa la pantalla actual de Terminal App y reproduce el error en el WebBrowser conectado. Correlaciona la hora de
-> la acción con los logs. No reinicies el servidor ni interrumpas mi proceso. Usa Terminal Checks si necesitas un
-> comando separado y registra lo que cada verificación confirmó o descartó.
+Prepara los Terminals App y Checks y el WebBrowser en el mismo grafo. Sustituye esos nombres si tus Nodes tienen otros rótulos.
+
+```prompt
+Observa la pantalla actual de Terminal App y reproduce el error en el WebBrowser conectado. Correlaciona la hora de
+la acción con los logs. No reinicies el servidor ni interrumpas mi proceso. Usa Terminal Checks si necesitas un
+comando separado y registra lo que cada verificación confirmó o descartó.
+```
+
+**Resultado esperado:** El informe correlaciona reproducción y logs, distingue causa demostrada de hipótesis y preserva el servidor que iniciaste.
 
 En un proyecto Node.js, una comprobación sencilla en Terminal Checks puede confirmar el entorno:
 
@@ -182,9 +206,15 @@ autorizada, repite el mismo camino y compara los resultados.
 
 También puedes iniciar un build y pedir al CodingAgent que siga solo la salida relevante:
 
-> Sigue el build en este Terminal. Usa la salida reciente y consulta más historial solo cuando haga falta. Informa
-> el resultado que puedas observar y los mensajes que respaldan tu conclusión. No envíes comandos ni termines el
-> proceso mientras se ejecuta.
+Inicia el build en el Terminal y hazlo alcanzable. Pega el pedido en el CodingAgent que solo debe seguir la salida, sin escribir comandos en esa sesión.
+
+```prompt
+Sigue el build en este Terminal. Usa la salida reciente y consulta más historial solo cuando haga falta. Informa
+el resultado que puedas observar y los mensajes que respaldan tu conclusión. No envíes comandos ni termines el
+proceso mientras se ejecuta.
+```
+
+**Resultado esperado:** El agente informa del resultado observado y su evidencia, manteniendo tu proceso y entrada bajo control humano.
 
 La petición coordina la colaboración; `terminal_read_only` puede restringir las operaciones de Kavor a la observación.
 Tú sigues usando el shell y el agente ayuda a interpretar el estado visible.

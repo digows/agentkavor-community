@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor Schedule：为你的图谱加上时钟"
 description: 在不扩大权限的前提下，通过预览、暂停、Run now 和持久历史来安排周期性提示与命令。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/schedule
 ---
 
@@ -79,13 +79,19 @@ Trigger 在配置期间可以没有目标。运行中的 Schedule 若没有目�
 
 好的 CodingAgent prompt 应说明目标、图谱资源、预期证据和停止条件：
 
-> 分析最近的 CI 失败。只在 Checks Terminal 中执行相关检查，把有证据的摘要写入 Daily report Sticky Note，
-> 并请 Reviewer 独立评估。在记录可能原因前不要修改代码；如果修复需要扩大 Specification 范围就停止。
+将请求用作以 Maintainer 为目标的 Schedule payload。准备好可达的 Terminal Checks、Sticky Note Daily report、Specification 和 Reviewer；按实际图谱调整名称。
 
-好的 Terminal 命令应明确、非交互，并产生可观察结果：
+```prompt
+分析最近的 CI 失败。只在 Checks Terminal 中执行相关检查，把有证据的摘要写入 Daily report Sticky Note，
+并请 Reviewer 独立评估。在记录可能原因前不要修改代码；如果修复需要扩大 Specification 范围就停止。
+```
+
+**预期结果:** 例行任务生成基于证据的诊断，并在有 Reviewer 时请求评审。缺少上下文或需要扩大范围时，必须说明后停止。
+
+好的 Terminal 命令应明确、非交互，并产生可观察结果。例如，在已将 `test` 脚本配置为非交互执行的项目中：
 
 ```sh
-pnpm test -- --runInBand
+pnpm test
 ```
 
 payload 不能替代 Connections。仅在文字中提到 Sticky Note、File 或 Specification 不会授予访问权；该 Node 必须属于
@@ -100,8 +106,14 @@ CodingAgent 的可达组件。
 
 可以使用这样的 payload：
 
-> 使用 Terminal Checks 执行 Specification 授权的检查。阅读项目脚本，选择正确命令。在 Sticky Note Daily report 中记录
-> 时间、命令、结果和未完成事项。不要修改代码，也不要发布任何内容。如果某项检查无法执行，记录原因。完成后，留下具体的下一步并停止。
+将请求用作下方准备好的图谱的 payload。启用周期执行前，保持 Schedule 暂停，并明确使用 `Run now` 进行测试。
+
+```prompt
+使用 Terminal Checks 执行 Specification 授权的检查。阅读项目脚本，选择正确命令。在 Sticky Note Daily report 中记录
+时间、命令、结果和未完成事项。不要修改代码，也不要发布任何内容。如果某项检查无法执行，记录原因。完成后，留下具体的下一步并停止。
+```
+
+**预期结果:** 笔记记录命令、时间、结果和待办，不修改代码。还需检查投递和 Schedule 历史；排定时间不代表执行成功。
 
 设置 `Daily`，选择机器会保持唤醒的时间，并检查 `Next occurrences`。使用 `Resume` 前，在 Schedule 暂停状态下执行 `Run now`，确认：
 

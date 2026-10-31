@@ -3,7 +3,7 @@ id: agents-and-roles
 title: Kavor で CodingAgents を選び、役割を定義する方法
 description: CodingAgents 間で仕事を分け、共有コンテキストを保ち、責任ごとに provider、モデル、effort を選ぶ方法を説明します。
 kind: guide
-lastReviewedAt: 2026-08-06
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/agents-and-roles
 ---
 
@@ -40,6 +40,20 @@ findings を記録し、コードを変更する前に停止する」なら、�
 
 同じ provider が別々のセッションで異なる役割を担うことも、異なる providers が同じ役割を担うことも
 できます。役割は仕事に属し、provider、モデル、effort はその仕事を実行するための設定です。
+
+## prompt をコピーして役割を分ける
+
+先に CodingAgent に実際のタスクと制約を説明し、利用できる providers を伝えてください。この依頼は計画用であり、セッションの作成やコード変更を行うものではありません。
+
+```prompt
+私が説明したタスクについて、CodingAgents 間の最小限で有効な役割分担を提案してください。
+各役割の目標、必要なコンテキスト、検証可能な成果、停止条件を示してください。
+独立したレビューが役立つ場面と、別セッションを増やしても調整が増えるだけの場面を説明してください。
+私が伝えた providers を前提とし、モデルの利用可否を作り出したり、私に代わってセッションを設定したりしないでください。
+私が提案を確認する前に Nodes の作成、Connections の変更、実装をしないでください。
+```
+
+**期待する結果:** 作業規模に合う役割と引き継ぎの提案が得られます。設定はあなたが選びます。agent の数や providers の違いだけで品質や token 削減は保証されません。
 
 ## 役に立つ四つの役割
 

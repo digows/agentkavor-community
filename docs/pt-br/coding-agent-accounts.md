@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts: suas contas, uso e rotação"
 description: Acompanhe limites dos providers, adicione suas contas e escolha como os CodingAgents compartilham capacidade entre Workspaces sem substituir seu login nativo.
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent-accounts
 ---
 
@@ -241,8 +241,14 @@ trocar a conta de outro CodingAgent, fazer login, remover contas, alterar permis
 
 Por exemplo:
 
-> Compare as janelas e renovações das minhas contas sem alterar nenhuma seleção. Se recomendar uma troca para sua
-> própria sessão, explique quais leituras sustentam a sugestão e respeite minha escolha Manual.
+Cole em um CodingAgent do Workspace. O provider precisa oferecer os dados de uso descritos neste guia; não forneça credenciais no prompt.
+
+```prompt
+Compare as janelas e renovações das minhas contas sem alterar nenhuma seleção. Se recomendar uma troca para sua
+própria sessão, explique quais leituras sustentam a sugestão e respeite minha escolha Manual.
+```
+
+**Resultado esperado:** Um comparativo usa as janelas, os horários e as limitações realmente disponíveis. Consultar o uso não altera sua seleção nem autoriza gastos.
 
 ## Comandos do Agent Kavor
 

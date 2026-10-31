@@ -3,7 +3,7 @@ id: first-loop
 title: Comment fermer votre première boucle dans Kavor
 description: Construisez une petite boucle avec une Specification, Claude Code, Codex et une Sticky Note, de l'intention à la décision humaine.
 kind: tutorial
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/first-loop
 ---
 
@@ -52,10 +52,16 @@ Connections avec vous.
 
 Vous pouvez commencer par cette demande :
 
-> Consultez la documentation officielle de Kavor et aidez-moi à construire une première boucle pour cette tâche.
-> Commencez par expliquer la structure et les Connections nécessaires. Ensuite, si les Connections actuelles le
-> permettent, créez la Specification, les CodingAgents et la Sticky Note, reliez-les, puis arrêtez-vous avant de
-> commencer l'implémentation afin que je puisse examiner la boucle.
+Décrivez la petite tâche dans le CodingAgent. Activez `Allow workspace editing` pour permettre l’assemblage du Canvas ; sinon, demandez uniquement des conseils.
+
+```prompt
+Consultez la documentation officielle de Kavor et aidez-moi à construire une première boucle pour cette tâche.
+Commencez par expliquer la structure et les Connections nécessaires. Ensuite, si les Connections actuelles le
+permettent, créez la Specification, les CodingAgents et la Sticky Note, reliez-les, puis arrêtez-vous avant de
+commencer l'implémentation afin que je puisse examiner la boucle.
+```
+
+**Résultat attendu:** L’agent explique ou assemble la structure autorisée et s’arrête pour votre revue. Documentation et prompt n’ouvrent aucun accès aux Nodes hors du graphe.
 
 La documentation n'étend pas l'accès du CodingAgent, ne crée pas de Connections implicites et ne permet pas de
 contourner les Guardrails. Si le service de documentation est indisponible, les autres outils locaux de Kavor
@@ -102,11 +108,17 @@ plus tard lorsque vous aurez une restriction précise à appliquer.
 
 Envoyez ceci à Claude Code :
 
-> Lisez la Specification connectée et implémentez uniquement ce périmètre. Avant de modifier le code, confirmez les
-> critères d'acceptation. Une fois terminé, exécutez les vérifications pertinentes, enregistrez les outputs durables
-> sur la Specification et ajoutez à la Sticky Note un résumé des fichiers modifiés, des vérifications exécutées et
-> des risques restants. Envoyez ensuite un message Kavor à Codex, en référençant la Specification, et demandez une
-> revue selon les critères d'acceptation.
+Envoyez à Claude Code après préparation et connexion des quatre Nodes du tutoriel. Si vous les avez renommés, remplacez Codex par le nom réel du Reviewer.
+
+```prompt
+Lisez la Specification connectée et implémentez uniquement ce périmètre. Avant de modifier le code, confirmez les
+critères d'acceptation. Une fois terminé, exécutez les vérifications pertinentes, enregistrez les outputs durables
+sur la Specification et ajoutez à la Sticky Note un résumé des fichiers modifiés, des vérifications exécutées et
+des risques restants. Envoyez ensuite un message Kavor à Codex, en référençant la Specification, et demandez une
+revue selon les critères d'acceptation.
+```
+
+**Résultat attendu:** L’implémentation laisse des outputs durables et des notes utiles et demande une revue. Vérifiez livraison et réponse dans Messages ; envoyer ne prouve pas l’acceptation.
 
 Une Connection rend le contexte et les capacités autorisées accessibles ; elle n'exécute pas la tâche toute seule.
 Suivez le travail dans le CodingAgent et ne considérez pas « terminé » comme une preuve suffisante.

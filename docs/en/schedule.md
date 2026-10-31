@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule in Kavor: give your graph a clock"
 description: Schedule recurring prompts and commands with preview, pause, Run now, and durable history without expanding permissions.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/schedule
 ---
 
@@ -85,14 +85,20 @@ an attempt.
 
 A good CodingAgent prompt states the objective, graph resources, expected evidence, and stopping condition:
 
-> Analyze recent CI failures. Run only the relevant checks in the Checks Terminal, record an evidence-backed summary
-> in the Daily report Sticky Note, and ask the Reviewer for an independent evaluation. Do not change code before
-> recording the likely cause, and stop if the fix requires expanding the Specification scope.
+Use as the payload of a Schedule targeting the Maintainer. Prepare reachable Terminal Checks, Sticky Note Daily report, Specification and Reviewer; adapt names to your graph.
 
-A good Terminal command is explicit, non-interactive, and leaves an observable result:
+```prompt
+Analyze recent CI failures. Run only the relevant checks in the Checks Terminal, record an evidence-backed summary
+in the Daily report Sticky Note, and ask the Reviewer for an independent evaluation. Do not change code before
+recording the likely cause, and stop if the fix requires expanding the Specification scope.
+```
+
+**Expected result:** The routine produces an evidence-based diagnosis and requests review when available. Missing context or an expanded scope must be reported before stopping.
+
+A good Terminal command is explicit, noninteractive, and produces an observable result. For example, in a project with a `test` script configured for noninteractive execution:
 
 ```sh
-pnpm test -- --runInBand
+pnpm test
 ```
 
 The payload does not replace Connections. Naming a Sticky Note, File, or Specification does not grant access unless
@@ -109,9 +115,15 @@ authorize corrections separately once the cause and scope are clear.
 
 Use a payload such as:
 
-> Run the checks authorized in the Specification using Terminal Checks. Read the project's scripts to choose the
-> right commands. Record the time, commands, results, and outstanding items in Sticky Note Daily report. Do not change
-> code or publish anything. If a check cannot run, record why. Finish with a concrete next action and stop.
+Use as the payload in the graph prepared below. Before enabling recurrence, leave the Schedule paused and explicitly test with `Run now`.
+
+```prompt
+Run the checks authorized in the Specification using Terminal Checks. Read the project's scripts to choose the
+right commands. Record the time, commands, results, and outstanding items in Sticky Note Daily report. Do not change
+code or publish anything. If a check cannot run, record why. Finish with a concrete next action and stop.
+```
+
+**Expected result:** The note records commands, times, results and pending work without code changes. Check delivery and Schedule history too; a scheduled time does not prove execution.
 
 Configure `Daily`, choose a time when the machine will be awake, and inspect `Next occurrences`. Before `Resume`, use
 `Run now` while the Schedule is paused and verify:

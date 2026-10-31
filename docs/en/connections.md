@@ -3,7 +3,7 @@ id: connections
 title: Supported Connections matrix in Kavor
 description: Consult directly connectable Node pairs, structural roles, parameters, Guardrails, and limits.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/connections
 ---
 
@@ -142,6 +142,19 @@ Before creating a Connection, ask what the component lacks:
 Do not connect every CodingAgent directly to every resource by reflex. Build the smallest topology that keeps the
 right context reachable, then add a direct Connection when it improves readability, carries a parameter, or needs its
 own Guardrail.
+
+## Copy a prompt to review Connections
+
+Use in a CodingAgent of the component to review and state its task. This request does not authorize connecting to pre-existing Nodes outside the graph or changing Guardrails.
+
+```prompt
+Consult the official Connections documentation and examine my reachable component.
+Explain which resources the topology already makes reachable and which pairs carry direct parameters or Guardrails.
+For the task I described, identify redundant or missing Connections only when there is a concrete reason.
+Do not change the Canvas. Present the proposal and each change’s effect before I decide.
+```
+
+**Expected result:** A review distinguishing transitive reachability from direct contracts. A suggestion neither creates access nor removes a Guardrail, and does not turn Connections into execution arrows.
 
 ## Continue
 

@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents が Canvas を見て構築する仕組み
 description: 到達可能な context、agent 間 message、人が制御する境界内での Canvas の atomic editing を理解します。
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agents-and-canvas
 ---
 
@@ -170,18 +170,36 @@ change に変えません。
 
 ### 変更前に説明する
 
-> Kavor の公式 documentation と現在の graph を参照し、この task を解決する最小 structure、到達可能になる Nodes、残る limits を説明して
-> ください。まだ Canvas を変更しないでください。
+Workspace の CodingAgent に貼り付け、整理したいタスクを説明してください。最初の依頼は説明だけです。
+
+```prompt
+Kavor の公式 documentation と現在の graph を参照し、この task を解決する最小 structure、到達可能になる Nodes、残る limits を説明して
+ください。まだ Canvas を変更しないでください。
+```
+
+**期待する結果:** Canvas を変えずに、リソース、Connections、境界を提案します。配置上見えるだけではグラフ外の内容にアクセスできません。
 
 ### review できる loop を作る
 
-> Specification、Builder、Reviewer、Sticky Note を使った小さい loop を作ってください。必要最小限の Connections を使い、新 Nodes の作成と
-> 接続を 1 atomic change で行い、implementation 前に停止して Canvas を確認させてください。
+先に小さなタスクを説明してください。構造の作成を許可するには CodingAgent の `Allow workspace editing` を有効にします。説明を求めるだけなら、この設定は不要です。
+
+```prompt
+Specification、Builder、Reviewer、Sticky Note を使った小さい loop を作ってください。必要最小限の Connections を使い、新 Nodes の作成と
+接続を 1 atomic change で行い、implementation 前に停止して Canvas を確認させてください。
+```
+
+**期待する結果:** 接続されたループが確認待ちの状態になるか、作成を妨げる制限が説明されます。この依頼で実装を開始してはいけません。
 
 ### access を広げず整理する
 
-> intention、implementation、review、evidence が読みやすいよう Canvas を整理してください。Connections を作成・削除せず、Guardrails を変更せず、
-> graph 外の Nodes への access を仮定しないでください。
+Canvas を整理したい Workspace の CodingAgent に貼り付けてください。許可するのは見た目の配置変更であり、参加者のアクセス変更ではありません。
+
+```prompt
+intention、implementation、review、evidence が読みやすいよう Canvas を整理してください。Connections を作成・削除せず、Guardrails を変更せず、
+graph 外の Nodes への access を仮定しないでください。
+```
+
+**期待する結果:** Connections、Guardrails、到達可能な内容の境界を保ったまま、配置が読みやすくなります。
 
 ## edit を許可する前の checklist
 

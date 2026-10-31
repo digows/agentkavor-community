@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Cómo CodingAgents ven y construyen el Canvas
 description: Comprende el contexto alcanzable, los mensajes entre agentes y la edición atómica del Canvas dentro de límites que tú controlas.
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/coding-agents-and-canvas
 ---
 
@@ -176,18 +176,36 @@ sugerencia en un cambio del Canvas.
 
 ### Explica antes de tocar
 
-> Consulta la documentación oficial de Kavor y el grafo actual. Explica la menor estructura que resuelve esta tarea,
-> qué Nodes serán alcanzables y qué límites permanecen. No cambies todavía el Canvas.
+Pega el pedido en un CodingAgent del Workspace y describe la tarea que quieres organizar. Este primer pedido solo solicita una explicación.
+
+```prompt
+Consulta la documentación oficial de Kavor y el grafo actual. Explica la menor estructura que resuelve esta tarea,
+qué Nodes serán alcanzables y qué límites permanecen. No cambies todavía el Canvas.
+```
+
+**Resultado esperado:** La propuesta identifica recursos, Connections y límites sin modificar el Canvas. Ver el layout no concede acceso al contenido fuera del grafo.
 
 ### Construye un loop revisable
 
-> Construye un loop pequeño con una Specification, un Builder, un Reviewer y una Sticky Note. Usa el menor número de
-> Connections, crea y conecta los Nodes en un cambio atómico y detente antes de implementar para que revise el Canvas.
+Describe primero una tarea pequeña. Activa `Allow workspace editing` para autorizar crear la estructura; no necesitas activarlo para pedir solo una explicación.
+
+```prompt
+Construye un loop pequeño con una Specification, un Builder, un Reviewer y una Sticky Note. Usa el menor número de
+Connections, crea y conecta los Nodes en un cambio atómico y detente antes de implementar para que revise el Canvas.
+```
+
+**Resultado esperado:** Un loop conectado queda listo para revisar, o el agente explica la restricción que impidió crearlo. Este pedido no debe iniciar la implementación.
 
 ### Organiza sin ampliar acceso
 
-> Organiza visualmente el Canvas para que intención, implementación, revisión y evidencia sean legibles. No crees ni
-> quites Connections, no cambies Guardrails y no asumas acceso a Nodes fuera de tu grafo.
+Úsalo en el CodingAgent del Workspace cuyo Canvas quieres ordenar. Autoriza recolocar visualmente, no cambiar el acceso de los participantes.
+
+```prompt
+Organiza visualmente el Canvas para que intención, implementación, revisión y evidencia sean legibles. No crees ni
+quites Connections, no cambies Guardrails y no asumas acceso a Nodes fuera de tu grafo.
+```
+
+**Resultado esperado:** El layout queda más claro y conserva Connections, Guardrails y límites del contenido alcanzable.
 
 ## Checklist antes de autorizar una edición
 

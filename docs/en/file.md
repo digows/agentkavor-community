@@ -3,7 +3,7 @@ id: file
 title: "File: context and scope on the Canvas"
 description: Use a File to keep a canonical source visible, delimit a CodingAgent's context, and pass its path to a Terminal.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/file
 ---
 
@@ -38,7 +38,13 @@ reviewed.
 
 A direct starting request can be:
 
-> Read the connected File as the canonical source for this task. Explain what needs to change, preserve the scope, and edit only after I confirm the plan.
+Add the file as a File and make it reachable by the CodingAgent. Identify the desired change before pasting the request.
+
+```prompt
+Read the connected File as the canonical source for this task. Explain what needs to change, preserve the scope, and edit only after I confirm the plan.
+```
+
+**Expected result:** The agent explains a plan based on the real source and waits for your confirmation before editing. It must report any format it cannot read.
 
 When the agent only needs to consult the material, use the file_read_only Guardrail on the direct Connection. The
 agent can still reach the File, but cannot change its source through Kavor-mediated operations.
@@ -79,9 +85,15 @@ connected, it can help interpret the output while you follow the process.
 
 Add the HTTP client source as a File, connect a Reviewer, and keep a Sticky Note reachable for findings. Ask:
 
-> Review the HTTP client File, especially timeouts, retries, and error handling. Use it as the focus of the analysis.
-> If a conclusion depends on another file, identify that dependency before expanding the investigation. Record only
-> findings supported by code or reproduction, and do not implement corrections.
+Use with the Reviewer and the reachable HTTP-client File. To record findings in a note, identify the Sticky Note and authorize that writing.
+
+```prompt
+Review the HTTP client File, especially timeouts, retries, and error handling. Use it as the focus of the analysis.
+If a conclusion depends on another file, identify that dependency before expanding the investigation. Record only
+findings supported by code or reproduction, and do not implement corrections.
+```
+
+**Expected result:** A focused review separates demonstrated defects from hypotheses and identifies additional dependencies before expanding the investigation.
 
 Expect a focused review with a scenario and reference to the relevant code. The File makes the focus explicit; it is
 not a sandbox for the harness's native tools. Bound the scope in your request and use the appropriate Guardrail for
@@ -91,9 +103,15 @@ Kavor operations.
 
 Keep a requirements PDF or reference image in the same graph as the Specification and CodingAgent:
 
-> Compare the File material with the Specification. Separate explicit requirements, interpretations, and questions.
-> For each discrepancy, identify the page or element you observed and record the question in the Sticky Note. Do not
-> invent content you cannot read.
+Keep the File, Specification and Sticky Note in the CodingAgent’s graph. Identify the material to compare and authorize recording questions.
+
+```prompt
+Compare the File material with the Specification. Separate explicit requirements, interpretations, and questions.
+For each discrepancy, identify the page or element you observed and record the question in the Sticky Note. Do not
+invent content you cannot read.
+```
+
+**Expected result:** The comparison references pages or elements actually read. Uninterpretable sections are stated explicitly, without inventing requirements.
 
 Expect a verifiable comparison, not just a summary. Interpretation depends on the format and tools available in the
 harness; Kavor's preview keeps the reference visible to you.
