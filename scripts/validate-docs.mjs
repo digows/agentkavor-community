@@ -313,6 +313,22 @@ export async function validateDocumentationReleaseTransition(baseSourceDirectory
   const proposedCatalog = parseYaml(await readFile(join(proposedDirectory, 'catalog.yaml'), 'utf8'))
   assert(proposedCatalog.releaseId !== baseCatalog.releaseId, 'A documentation content change must use a new releaseId.')
   assert(proposedCatalog.previousReleaseId === baseCatalog.releaseId, `Documentation release ${proposedCatalog.releaseId} must name ${baseCatalog.releaseId} as previousReleaseId.`)
+  for (const locale of proposedCatalog.locales) {
+    for (const document of proposedCatalog.documents) {
+      const pagePath = join(locale.slug, document.path)
+      const { body } = parseMarkdown(await readFile(join(proposedDirectory, pagePath), 'utf8'), pagePath)
+      let baseBody
+      try {
+        baseBody = parseMarkdown(await readFile(join(baseDirectory, pagePath), 'utf8'), pagePath).body
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error
+      }
+      // Immutable historical bodies must not require rewrites after metadata-only changes.
+      if (body !== baseBody) {
+        assert(!/https:\/\/agentkavor\.com\/downloads(?=$|[/?#\s)\]>,.!;:'"])/iu.test(body), `${pagePath} contains a deprecated download URL in new or changed content. Use https://download.agentkavor.com.`)
+      }
+    }
+  }
 }
 
 export async function validateProductReleaseProjection(
