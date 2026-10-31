@@ -3,7 +3,7 @@ id: file
 title: "File：Canvas上のコンテキストとスコープ"
 description: Fileでcanonical sourceを見える形にし、CodingAgentのコンテキストを限定し、そのパスをTerminalへ渡します。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/file
 ---
 
@@ -36,7 +36,13 @@ CodingAgentに接続すると、Fileは一般的な意図を具体的な仕事�
 
 最初の依頼は簡潔でかまいません。
 
-> 接続されたFileをこのタスクのcanonical sourceとして読んでください。必要な変更を説明し、スコープを保ち、私が計画を確認してから編集してください。
+ファイルを File として追加し、CodingAgent から到達可能にしてください。依頼を貼り付ける前に、必要な変更を示します。
+
+```prompt
+接続されたFileをこのタスクのcanonical sourceとして読んでください。必要な変更を説明し、スコープを保ち、私が計画を確認してから編集してください。
+```
+
+**期待する結果:** agent は実際の資料に基づく計画を説明し、確認を待ってから編集します。読めない形式があれば報告する必要があります。
 
 agentが読むだけなら、直接Connectionにfile_read_only Guardrailを使います。agentはFileへ到達できますが、
 Kavorが仲介する操作でsourceを変更できません。
@@ -75,9 +81,15 @@ SQLやscriptのFileをTerminalに接続し、変数名を決め、shellから実
 
 HTTPクライアントをFileとして追加し、Reviewerを接続してfindings用のSticky Noteを到達可能にします：
 
-> HTTPクライアントのFileを、特にtimeout、retry、エラー処理についてレビューしてください。分析の焦点として
-> 使い、結論が他のファイルに依存するなら調査を広げる前に依存先を示してください。コードや再現で裏付けた
-> findingsだけを記録し、修正は実装しないでください。
+HTTP クライアントの File を到達可能にし、Reviewer に依頼してください。指摘をメモに残す場合は Sticky Note を指定し、書き込みを許可します。
+
+```prompt
+HTTPクライアントのFileを、特にtimeout、retry、エラー処理についてレビューしてください。分析の焦点として
+使い、結論が他のファイルに依存するなら調査を広げる前に依存先を示してください。コードや再現で裏付けた
+findingsだけを記録し、修正は実装しないでください。
+```
+
+**期待する結果:** 対象を絞ったレビューで実証された欠陥と仮説が分けられ、調査範囲を広げる前に追加の依存先が示されます。
 
 期待するのはシナリオと該当コードへの参照を持つ範囲の明確なレビューです。Fileは焦点を示しますが、harnessの
 ネイティブツールに対するsandboxではありません。依頼で範囲を定め、Kavorの操作には適切なGuardrailを使います。
@@ -86,8 +98,14 @@ HTTPクライアントをFileとして追加し、Reviewerを接続してfinding
 
 要件のPDFや参考画像をSpecification、CodingAgentと同じグラフに置きます：
 
-> Fileの資料とSpecificationを比較してください。明示された要件、解釈、質問を分け、相違ごとにページや
-> 観察した要素を示してSticky Noteに質問を残してください。読めない内容は作らないでください。
+File、Specification、Sticky Note を CodingAgent のグラフ内に置いてください。比較する資料を指定し、質問の記録を許可します。
+
+```prompt
+Fileの資料とSpecificationを比較してください。明示された要件、解釈、質問を分け、相違ごとにページや
+観察した要素を示してSticky Noteに質問を残してください。読めない内容は作らないでください。
+```
+
+**期待する結果:** 実際に読んだページや要素を参照して比較します。解釈できない部分は明示し、要件を作り出しません。
 
 期待するのは要約だけでなく検証できる比較です。解釈できる範囲は形式とharnessのツールに依存します。
 Kavorのpreviewはあなたが資料を見続けられるようにします。

@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule dans Kavor : donnez une horloge à votre graphe"
 description: Planifiez des prompts et commandes récurrents avec aperçu, pause, Run now et historique durable, sans étendre les permissions.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/schedule
 ---
 
@@ -84,14 +84,20 @@ l’occurrence comme `Blocked` ; `Run now` sans cible est refusé avant la créa
 
 Un bon prompt précise l’objectif, les ressources du graphe, les preuves attendues et la condition d’arrêt :
 
-> Analyse les échecs CI récents. Exécute seulement les contrôles pertinents dans le Terminal Checks, consigne un
-> résumé étayé dans la Sticky Note Daily report et demande au Reviewer une évaluation indépendante. Ne modifie pas le
-> code avant d’avoir consigné la cause probable et arrête-toi si la correction exige d’élargir la Specification.
+Utilisez comme payload d’un Schedule ciblant le Maintainer. Préparez Terminal Checks, Sticky Note Daily report, Specification et Reviewer accessibles ; adaptez les noms.
 
-Une bonne commande Terminal est explicite, non interactive et produit un résultat observable :
+```prompt
+Analyse les échecs CI récents. Exécute seulement les contrôles pertinents dans le Terminal Checks, consigne un
+résumé étayé dans la Sticky Note Daily report et demande au Reviewer une évaluation indépendante. Ne modifie pas le
+code avant d’avoir consigné la cause probable et arrête-toi si la correction exige d’élargir la Specification.
+```
+
+**Résultat attendu:** La routine produit un diagnostic étayé et demande une revue lorsqu’elle est disponible. Si le contexte manque ou le périmètre doit s’élargir, elle le signale et s’arrête.
+
+Une bonne commande Terminal est explicite, non interactive et produit un résultat observable. Par exemple, dans un projet dont le script `test` est configuré pour une exécution non interactive :
 
 ```sh
-pnpm test -- --runInBand
+pnpm test
 ```
 
 Le payload ne remplace pas les Connections. Citer une Sticky Note, un File ou une Specification ne donne pas accès si
@@ -108,10 +114,16 @@ rapport ; autorisez séparément les corrections quand la cause et le périmètr
 
 Un payload possible :
 
-> Exécute les vérifications autorisées par la Specification dans Terminal Checks. Lis les scripts du projet pour
-> choisir les bonnes commandes. Note l'heure, les commandes, résultats et points en attente dans Sticky Note Daily
-> report. Ne modifie pas le code et ne publie rien. Si une vérification ne peut pas tourner, note pourquoi. Termine par
-> une prochaine action concrète, puis arrête-toi.
+Utilisez comme payload dans le graphe préparé ci-dessous. Avant d’activer la récurrence, laissez le Schedule en pause et testez explicitement avec `Run now`.
+
+```prompt
+Exécute les vérifications autorisées par la Specification dans Terminal Checks. Lis les scripts du projet pour
+choisir les bonnes commandes. Note l'heure, les commandes, résultats et points en attente dans Sticky Note Daily
+report. Ne modifie pas le code et ne publie rien. Si une vérification ne peut pas tourner, note pourquoi. Termine par
+une prochaine action concrète, puis arrête-toi.
+```
+
+**Résultat attendu:** La note consigne commandes, horaires, résultats et points ouverts sans changement de code. Vérifiez aussi livraison et historique : une heure programmée ne prouve pas l’exécution.
 
 Configurez `Daily`, choisissez une heure où la machine sera éveillée et vérifiez `Next occurrences`. Avant `Resume`,
 utilisez `Run now` avec le Schedule en pause et vérifiez :

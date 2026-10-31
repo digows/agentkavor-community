@@ -3,7 +3,7 @@ id: specification
 title: "Specification in Kavor: think carefully once, implement better"
 description: Structure intent, decisions, and criteria in durable Markdown, organize multiple roots, and guide the Specification lifecycle.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/specification
 ---
 
@@ -37,9 +37,15 @@ more reasoning capacity before implementation may be worthwhile.
 
 A good starting point is:
 
-> Interview me about subject X so we can write Specification Y. Separate verified facts, decisions, assumptions,
-> non-goals, failure scenarios, and observable acceptance criteria. Do not treat the document as Ready while any
-> unresolved decision could change the solution.
+Paste into a planning session. Replace X with the concrete subject and Y with the Specification name; identify an existing Specification rather than creating another for the same work.
+
+```prompt
+Interview me about subject X so we can write Specification Y. Separate verified facts, decisions, assumptions,
+non-goals, failure scenarios, and observable acceptance criteria. Do not treat the document as Ready while any
+unresolved decision could change the solution.
+```
+
+**Expected result:** An interview exposes open decisions and guides a verifiable contract. Writing it neither authorizes implementation nor makes status proof of completeness.
 
 Better thinking here can reduce rework, wasted context, and ambiguous implementation. It does not guarantee lower
 cost: a bad Specification remains bad even when it is long or written by an expensive model.

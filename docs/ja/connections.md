@@ -3,7 +3,7 @@ id: connections
 title: KavorでサポートされるConnectionsのマトリクス
 description: サポートされるNodesの組み合わせ、付与される能力、必要なパラメーター、利用可能なGuardrailsを確認できます。
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/connections
 ---
 
@@ -163,6 +163,19 @@ Canvas上の近さ、メッセージ内での言及、同じWorkspaceへの参�
 
 良いConnectionは仕事をより明示的にします。何の能力を加えるのか説明できないなら、そのグラフにはおそらく
 不要です。
+
+## prompt をコピーして Connections を確認する
+
+確認するコンポーネントの CodingAgent に依頼し、担当タスクを伝えてください。この依頼はグラフ外の既存 Nodes への接続や Guardrails の変更を許可しません。
+
+```prompt
+Connections の公式ドキュメントを参照し、私の到達可能なコンポーネントを確認してください。
+現在の構造から到達できるリソースと、直接のパラメーターや Guardrails を持つ組み合わせを説明してください。
+私が説明したタスクについて、具体的な理由がある場合だけ過剰または不足する Connections を指摘してください。
+Canvas は変更しないでください。私が判断する前に提案と各変更の影響を示してください。
+```
+
+**期待する結果:** 推移的な到達可能性と直接の契約を分けた確認結果が得られます。提案はアクセスを作らず、Guardrail を外さず、Connections を実行の矢印にも変えません。
 
 ## 次に読む
 

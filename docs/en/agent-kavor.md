@@ -3,7 +3,7 @@ id: agent-kavor
 title: "Agent Kavor: talk to your agents through Channels"
 description: Link WhatsApp, choose a CodingAgent, and participate through Self-chat or a dedicated Workspace group.
 kind: guide
-lastReviewedAt: 2026-10-24
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/agent-kavor
 ---
 
@@ -89,8 +89,14 @@ Channel remain unchanged.
 
 Send a clear request to the selected agent. For example:
 
-> Check the test results for the task in progress. Do not change code. Tell me what passed, what failed, and which
-> evidence you could inspect.
+In the linked WhatsApp conversation, confirm the Workspace and CodingAgent with `/context`. Send the request to that agent, with the task and its evidence reachable.
+
+```prompt
+Check the test results for the task in progress. Do not change code. Tell me what passed, what failed, and which
+evidence you could inspect.
+```
+
+**Expected result:** The response distinguishes passed, failed and unverified results, citing the evidence consulted. The request does not authorize code changes.
 
 Follow progress and the response in the same conversation. If the agent needs a decision, answer the corresponding
 question using the offered choices or requested format. Submission confirmation is not completion confirmation.
@@ -105,7 +111,13 @@ naturally on a narrow screen. Full responses, questions, and long content retain
 You can ask the CodingAgent, including from its desktop session, to publish a result to an already configured
 conversation. For example:
 
-> When you finish this review, send the summary to this Workspace's WhatsApp group. Do not publish to other conversations.
+On the desktop, ask the CodingAgent responsible for the review. The Workspace group must be configured and enabled; check that its participants may receive the summary.
+
+```prompt
+When you finish this review, send the summary to this Workspace's WhatsApp group. Do not publish to other conversations.
+```
+
+**Expected result:** The agent publishes only to the requested destination or explains why it could not send the result. Completing the review and confirming publication are distinct outcomes.
 
 The agent discovers enabled conversations in its Workspace and explicitly selects a destination. A Channel can have
 several conversations: this is neither a broadcast to every group nor an automatic mirror of the agent's terminal.

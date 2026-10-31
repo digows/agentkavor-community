@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Comment les CodingAgents voient et construisent le Canvas
 description: Comprenez le contexte accessible, les messages entre agents et l’édition atomique du Canvas dans les limites que vous contrôlez.
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agents-and-canvas
 ---
 
@@ -178,18 +178,36 @@ Guardrails et ne transforme pas une suggestion en modification du Canvas.
 
 ### Expliquer avant de toucher
 
-> Consulte la documentation officielle de Kavor et le graphe actuel. Explique la plus petite structure qui résout
-> cette tâche, les Nodes accessibles et les limites restantes. Ne modifie pas encore le Canvas.
+Collez dans un CodingAgent du Workspace et décrivez la tâche à organiser. Cette première demande porte uniquement sur une explication.
+
+```prompt
+Consulte la documentation officielle de Kavor et le graphe actuel. Explique la plus petite structure qui résout
+cette tâche, les Nodes accessibles et les limites restantes. Ne modifie pas encore le Canvas.
+```
+
+**Résultat attendu:** La proposition identifie ressources, Connections et limites sans modifier le Canvas. Voir le layout ne donne pas accès au contenu hors du graphe.
 
 ### Construire une boucle révisable
 
-> Construis une petite boucle avec une Specification, un Builder, un Reviewer et une Sticky Note. Utilise le minimum
-> de Connections, crée et connecte les Nodes en un changement atomique, puis arrête-toi avant l’implémentation.
+Décrivez d’abord une petite tâche. Activez `Allow workspace editing` pour autoriser la création de la structure ; cette option n’est pas nécessaire pour une simple explication.
+
+```prompt
+Construis une petite boucle avec une Specification, un Builder, un Reviewer et une Sticky Note. Utilise le minimum
+de Connections, crée et connecte les Nodes en un changement atomique, puis arrête-toi avant l’implémentation.
+```
+
+**Résultat attendu:** Un loop connecté est prêt à être examiné, ou l’agent indique la restriction empêchant sa création. Cette demande ne doit pas lancer l’implémentation.
 
 ### Organiser sans étendre l’accès
 
-> Organise visuellement le Canvas pour rendre intention, implémentation, revue et preuves lisibles. Ne crée ni ne
-> retire de Connections, ne modifie pas les Guardrails et ne suppose aucun accès hors de ton graphe.
+Utilisez dans le CodingAgent du Workspace dont vous souhaitez organiser le Canvas. La demande autorise le placement visuel, pas la modification des accès.
+
+```prompt
+Organise visuellement le Canvas pour rendre intention, implémentation, revue et preuves lisibles. Ne crée ni ne
+retire de Connections, ne modifie pas les Guardrails et ne suppose aucun accès hors de ton graphe.
+```
+
+**Résultat attendu:** Le layout devient plus lisible en préservant Connections, Guardrails et frontières du contenu accessible.
 
 ## Checklist avant d’autoriser une modification
 

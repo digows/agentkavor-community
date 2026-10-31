@@ -3,7 +3,7 @@ id: docs-home
 title: Kavor 文档
 description: 在 Kavor 中搭建第一个闭环，查找使用 CodingAgents 编写契约、实现、审查、测试和安排定时工作的指南。
 kind: landing
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs
 ---
 
@@ -25,6 +25,8 @@ Canvas 让这些工作保持可见；Connections 让 CodingAgents 能够与可�
 
 结构随任务需要逐步扩展。你可以从少量 Nodes 开始，再添加用于检查的 Terminal、作为参考的 File，或用于测试应用的
 WebBrowser。如果想先理解模型，请阅读[什么是 Kavor？](./what-is-kavor.md)。
+
+想从现成请求开始？[复制第一个闭环的 prompt](./first-loop.md#想让-codingagent-帮你搭建吗)，按实际任务调整，并在发给 CodingAgent 前检查准备步骤和预期结果。
 
 ## 你想做什么？
 

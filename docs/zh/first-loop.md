@@ -3,7 +3,7 @@ id: first-loop
 title: 如何在 Kavor 中完成第一个闭环
 description: 使用 Specification、Claude Code、Codex 和 Sticky Note 构建一个从意图到人工决策的小型闭环。
 kind: tutorial
-lastReviewedAt: 2026-08-05
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/first-loop
 ---
 
@@ -47,9 +47,15 @@ Connections 不是流程箭头，而是 Nodes 之间的关系；上面的顺序�
 
 你可以从下面的请求开始：
 
-> 查阅 Kavor 官方文档，帮我为这项任务搭建第一个闭环。先解释所需结构和 Connections。然后，如果
-> 当前 Connections 允许，请创建 Specification、CodingAgents 和 Sticky Note，把它们连接起来，并在
-> 开始实现之前停下，让我先检查这个闭环。
+在 CodingAgent 中描述这项小任务。启用 `Allow workspace editing` 才能允许搭建 Canvas；关闭时，只请求指导。
+
+```prompt
+查阅 Kavor 官方文档，帮我为这项任务搭建第一个闭环。先解释所需结构和 Connections。然后，如果
+当前 Connections 允许，请创建 Specification、CodingAgents 和 Sticky Note，把它们连接起来，并在
+开始实现之前停下，让我先检查这个闭环。
+```
+
+**预期结果:** agent 解释或搭建获得授权的结构，并停下来让你检查。文档和 prompt 不会授予访问图谱外 Nodes 的权限。
 
 文档不会扩大 CodingAgent 的访问权限，不会创建隐式 Connections，也不能用于绕过 Guardrails。
 如果文档服务暂时不可用，Kavor 的其他本地工具仍会继续工作。
@@ -94,9 +100,15 @@ Kavor 的确认信息。不要在第一个闭环中添加 Guardrails；等到确
 
 把下面的内容发送给 Claude Code：
 
-> 阅读已连接的 Specification，只实现其中的范围。修改代码前，先确认验收标准。完成后，运行相关
-> 检查，在 Specification 上登记持久 outputs，并在 Sticky Note 中总结修改的文件、执行的检查和
-> 剩余风险。然后通过 Kavor 向 Codex 发送消息，引用该 Specification，并请它按照验收标准进行审查。
+准备并连接本教程的四个 Nodes 后，将请求发给 Claude Code。如果你重命名了参与者，请将 Codex 替换为 Reviewer 的实际名称。
+
+```prompt
+阅读已连接的 Specification，只实现其中的范围。修改代码前，先确认验收标准。完成后，运行相关
+检查，在 Specification 上登记持久 outputs，并在 Sticky Note 中总结修改的文件、执行的检查和
+剩余风险。然后通过 Kavor 向 Codex 发送消息，引用该 Specification，并请它按照验收标准进行审查。
+```
+
+**预期结果:** 实施留下持久 outputs 和有用笔记，并发起评审请求。到 Messages 中检查交付和回复；发送不代表对方接受。
 
 Connection 让获得授权的上下文和能力可用；它不会自行执行任务。请在 CodingAgent 中跟进工作，
 不要把“完成”本身当作充分证据。

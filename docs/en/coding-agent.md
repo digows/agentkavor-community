@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent in Kavor: your favorite harness as part of a graph"
 description: Choose a provider, preserve its native experience, and connect the CodingAgent to the right context, tools, and participants.
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent
 ---
 
@@ -208,15 +208,27 @@ what must survive sessions; you decide when the work is accepted.
 
 For an Implementer:
 
-> Implement only the scope defined in the reachable Specification. Before changing code, identify the relevant
-> Files and checks. Use the Terminal to produce evidence, record the result as a Specification output, and ask the
-> Reviewer for an independent assessment. Stop if a required decision falls outside the contract.
+Paste into the Implementer with a Specification ready for implementation, relevant Files and a reachable Terminal. The Reviewer must share the graph to receive the request.
+
+```prompt
+Implement only the scope defined in the reachable Specification. Before changing code, identify the relevant
+Files and checks. Use the Terminal to produce evidence, record the result as a Specification output, and ask the
+Reviewer for an independent assessment. Stop if a required decision falls outside the contract.
+```
+
+**Expected result:** A scoped delivery records actual changes and checks, followed by a review request. Missing context or contract decisions are reported as pending.
 
 For a Reviewer:
 
-> Compare the implementation and evidence with the Specification criteria. Look for incorrect behavior, missing
-> scenarios, regressions, and operational risks. Record concrete findings before suggesting changes, and do not
-> approve the work merely because existing tests passed.
+Paste into the Reviewer after the Implementer identifies the delivery and stabilizes the commit or diff. Make the Specification and evidence reachable.
+
+```prompt
+Compare the implementation and evidence with the Specification criteria. Look for incorrect behavior, missing
+scenarios, regressions, and operational risks. Record concrete findings before suggesting changes, and do not
+approve the work merely because existing tests passed.
+```
+
+**Expected result:** The review reports verifiable findings or the criteria examined without identified blockers. Passing existing tests does not replace review.
 
 ## Example: a handoff the Reviewer can verify
 
@@ -226,9 +238,15 @@ in separate sessions.
 
 Request to the Builder:
 
-> Implement the validation defined in the Specification. Preserve the valid path's behavior. Run the relevant tests
-> in the Terminal and record changed files, commands, and results. Then send the Reviewer the Specification handle
-> and the exact commit or diff to review. Report outstanding items and stop before publishing.
+Use with the Builder after adapting the Specification to the real form. Keep the Terminal and Reviewer in the same graph; publication is outside this request.
+
+```prompt
+Implement the validation defined in the Specification. Preserve the valid path's behavior. Run the relevant tests
+in the Terminal and record changed files, commands, and results. Then send the Reviewer the Specification handle
+and the exact commit or diff to review. Report outstanding items and stop before publishing.
+```
+
+**Expected result:** The Builder identifies the delivery and references canonical review context, without claiming checks it did not execute.
 
 A useful handoff identifies the deliverable instead of copying the entire conversation:
 
@@ -238,9 +256,15 @@ A useful handoff identifies the deliverable instead of copying the entire conver
 
 Request to the Reviewer:
 
-> Read the contract and examine the referenced deliverable. Verify each criterion, reproduce the relevant scenarios,
-> and add your conclusions to the Sticky Note. Distinguish a demonstrated defect from a hypothesis. If you find a
-> blocker, explain which behavior fails and send it back to the Builder for correction.
+Use with the Reviewer when the referenced delivery is stable. Make the Specification and Sticky Note reachable and authorize recording the review in the note.
+
+```prompt
+Read the contract and examine the referenced deliverable. Verify each criterion, reproduce the relevant scenarios,
+and add your conclusions to the Sticky Note. Distinguish a demonstrated defect from a hypothesis. If you find a
+blocker, explain which behavior fails and send it back to the Builder for correction.
+```
+
+**Expected result:** Criteria receive an evidence-based assessment. Findings return to the Builder; missing evidence is a limitation, not approval.
 
 The expected result is an identifiable change, an independent review, and your evidence-based decision. If the
 Builder is still changing the deliverable, wait for it to stabilize or explicitly define what is ready for review.

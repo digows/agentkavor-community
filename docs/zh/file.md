@@ -3,7 +3,7 @@ id: file
 title: "File：Canvas 上的上下文与范围"
 description: 使用 File 保持规范来源可见、限定 CodingAgent 的上下文，并将它的路径传给 Terminal。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/file
 ---
 
@@ -35,7 +35,13 @@ PDF 供分析，或指出需要评审的配置。
 
 可以这样开始：
 
-> 将连接的 File 作为这项任务的规范来源。说明需要改变什么，保持范围，并在我确认计划后再编辑。
+将文件添加为 File，并使其对 CodingAgent 可达。粘贴请求前，说明希望进行的变更。
+
+```prompt
+将连接的 File 作为这项任务的规范来源。说明需要改变什么，保持范围，并在我确认计划后再编辑。
+```
+
+**预期结果:** agent 根据实际来源解释计划，并在编辑前等待你确认。遇到无法读取的格式时必须说明。
 
 如果 agent 只需要查看材料，可以在直接 Connection 上使用 file_read_only Guardrail。agent 仍可到达 File，但不能
 通过 Kavor 的中介操作修改其来源。
@@ -74,8 +80,14 @@ Sticky Note 和用于检查的 Terminal 位于同一图中。
 
 将 HTTP 客户端文件添加为 File，连接 Reviewer，并让记录 findings 的 Sticky Note 保持可达。请求：
 
-> 审查 HTTP 客户端的 File，重点关注 timeout、retry 和错误处理。以它为分析焦点。如果某项结论依赖其他文件，
-> 请在扩大调查前明确该依赖。只记录有代码或复现支持的 findings，不要实施修复。
+向 Reviewer 提出请求，并确保 HTTP 客户端的 File 可达。若要把发现写入笔记，请指定 Sticky Note 并授权写入。
+
+```prompt
+审查 HTTP 客户端的 File，重点关注 timeout、retry 和错误处理。以它为分析焦点。如果某项结论依赖其他文件，
+请在扩大调查前明确该依赖。只记录有代码或复现支持的 findings，不要实施修复。
+```
+
+**预期结果:** 聚焦的评审区分已证实的缺陷和假设，并在扩大调查前标明额外依赖。
 
 预期结果是范围集中的审查，包含场景及相关代码片段的引用。File 明确了焦点，但不会为 harness 的原生工具提供 sandbox。
 请在请求中界定范围，并为 Kavor 操作使用适当的 Guardrail。
@@ -84,8 +96,14 @@ Sticky Note 和用于检查的 Terminal 位于同一图中。
 
 将需求 PDF 或参考图片与 Specification 和 CodingAgent 放在同一张图中：
 
-> 将 File 中的材料与 Specification 比较。区分明确要求、解释和疑问。对每一处差异，注明观察到的页码或元素，
-> 并把问题记录到 Sticky Note。不要编造无法读取的内容。
+让 File、Specification 和 Sticky Note 位于 CodingAgent 的图谱中。指定要比较的材料，并授权记录问题。
+
+```prompt
+将 File 中的材料与 Specification 比较。区分明确要求、解释和疑问。对每一处差异，注明观察到的页码或元素，
+并把问题记录到 Sticky Note。不要编造无法读取的内容。
+```
+
+**预期结果:** 比较引用实际阅读的页码或元素。无法理解的部分会明确标注，不编造要求。
 
 你需要的是可验证的比较，而不只是摘要。解释材料的能力取决于格式和 harness 中可用的工具；Kavor 的 preview 让参考材料
 对你保持可见。

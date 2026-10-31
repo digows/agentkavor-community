@@ -3,7 +3,7 @@ id: nodes
 title: Kavor Nodes
 description: Understand what CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser, and Trigger do on their own and what they gain when connected.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/nodes
 ---
 
@@ -50,6 +50,19 @@ At the same time, a Connection establishes a boundary:
 - the graph makes context reachable, but does not approve actions automatically.
 
 The result is less magical and more useful: you can inspect the structure before, during, and after the work.
+
+## Copy a prompt to understand your graph
+
+Paste into a Workspace CodingAgent and describe the task to organize. This requests reading and guidance only; Nodes outside the component do not become accessible just because they appear in the layout.
+
+```prompt
+Explain how the Nodes in my reachable graph can help with the task I described.
+Identify where intent, sources, execution and working memory live.
+If something is missing, propose the smallest necessary structure and explain why each Node exists.
+Do not create or remove Nodes or Connections, or read content outside your graph.
+```
+
+**Expected result:** A short map of available context and a proposal when needed. The explanation creates neither an automatic pipeline nor new access; you decide the next step.
 
 ## The seven Nodes
 

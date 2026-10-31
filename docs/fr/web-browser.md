@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser : développez et testez devant votre agent"
 description: Utilisez le WebBrowser partagé de Kavor pour développer des applications web, reproduire des bugs, déboguer des pages et prouver des flux E2E.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/web-browser
 ---
 
@@ -49,7 +49,13 @@ Enregistrez le résultat et les risques restants dans une [Sticky Note](./sticky
 
 Un prompt de départ peut être :
 
-> Ouvre l'application connectée dans WebBrowser. Observe d'abord la page et reproduis le parcours sans modifier le code. Décris ensuite la cause probable, propose le plus petit changement et valide le parcours complet avec des preuves visuelles et de console.
+Ouvrez l’application dans un WebBrowser accessible. Indiquez URL et comportement attendu ; définissez d’abord tout périmètre d’implémentation dans la Specification.
+
+```prompt
+Ouvre l'application connectée dans WebBrowser. Observe d'abord la page et reproduis le parcours sans modifier le code. Décris ensuite la cause probable, propose le plus petit changement et valide le parcours complet avec des preuves visuelles et de console.
+```
+
+**Résultat attendu:** L’agent commence par reproduire et recueillir des preuves, pas par une modification supposée. Il signale toute authentification ou intervention humaine nécessaire.
 
 ## Trois exemples pour développer avec des preuves
 
@@ -57,18 +63,30 @@ Un prompt de départ peut être :
 
 Avec le serveur dans le Terminal et l'application ouverte dans WebBrowser, demandez :
 
-> Reproduis l'envoi avec un e-mail invalide, puis avec une adresse valide. Avant de modifier le code, note l'état des
-> champs, le message affiché et si une requête a eu lieu. Après la correction autorisée, répète les deux parcours et
-> teste aussi la correction de l'adresse sans recharger la page.
+Utilisez des données de test dans une application sous votre contrôle, serveur et WebBrowser préparés. Autorisez séparément les corrections de code.
+
+```prompt
+Reproduis l'envoi avec un e-mail invalide, puis avec une adresse valide. Avant de modifier le code, note l'état des
+champs, le message affiché et si une requête a eu lieu. Après la correction autorisée, répète les deux parcours et
+teste aussi la correction de l'adresse sans recharger la page.
+```
+
+**Résultat attendu:** La revue compare cas invalide, valide et récupération à partir de l’état visible et du réseau observé, pas seulement d’un message de succès.
 
 Le résultat attendu associe comportement visible et requêtes observées. Une capture du message ne prouve pas à elle
 seule que l'envoi a été bloqué ; le réseau aide à vérifier ce critère.
 
 ### Comprendre pourquoi la page est vide
 
-> Observe la page, consulte les erreurs de console et identifie la requête liée au contenu absent. Distingue panne
-> réseau, réponse inattendue et erreur de rendu. Note l'URL pertinente, le status et les preuves disponibles. Si tu ne
-> peux pas observer le corps de la réponse, indique cette limite.
+Laissez la page concernée ouverte dans le WebBrowser accessible. Collez sans autoriser de changement de code pour ce diagnostic.
+
+```prompt
+Observe la page, consulte les erreurs de console et identifie la requête liée au contenu absent. Distingue panne
+réseau, réponse inattendue et erreur de rendu. Note l'URL pertinente, le status et les preuves disponibles. Si tu ne
+peux pas observer le corps de la réponse, indique cette limite.
+```
+
+**Résultat attendu:** Le diagnostic distingue réseau, réponse et rendu avec les signaux conservés. Le contenu supprimé ou inaccessible est déclaré comme limite.
 
 Le résultat attendu utilise des indices permettant de distinguer les causes avant de modifier le code. L'absence de
 contenu ne suffit pas à conclure à une panne du backend.
@@ -77,9 +95,15 @@ contenu ne suffit pas à conclure à une panne du backend.
 
 Dans une application de test sous votre contrôle, demandez un scénario temporaire :
 
-> Simule une réponse d'erreur uniquement pour la requête de chargement définie dans la Specification. Vérifie le
-> message d'échec et l'option de réessai. Supprime ensuite la règle temporaire et confirme que le parcours normal
-> récupère. Conserve les résultats et termine le test avec les règles réseau nettoyées.
+Utilisez uniquement une application et un environnement de test sous votre contrôle. La Specification doit identifier la requête et le comportement attendu en cas d’échec.
+
+```prompt
+Simule une réponse d'erreur uniquement pour la requête de chargement définie dans la Specification. Vérifie le
+message d'échec et l'option de réessai. Supprime ensuite la règle temporaire et confirme que le parcours normal
+récupère. Conserve les résultats et termine le test avec les règles réseau nettoyées.
+```
+
+**Résultat attendu:** Le test consigne échec et récupération et retire sa règle temporaire. La simulation ne doit pas affecter d’autres requêtes.
 
 Le résultat attendu couvre échec et récupération dans un scénario isolé. Utilisez des endpoints et données de test ;
 la simulation doit être assez précise pour ne pas modifier les requêtes étrangères au scénario.

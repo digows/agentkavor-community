@@ -3,7 +3,7 @@ id: agents-and-roles
 title: 如何在 Kavor 中选择 CodingAgents 并定义角色
 description: 学习如何在 CodingAgents 之间拆分工作、保留共享上下文，并为每项职责选择合适的 provider、模型与 effort。
 kind: guide
-lastReviewedAt: 2026-08-06
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/agents-and-roles
 ---
 
@@ -37,6 +37,20 @@ Specifications、Files 和 Sticky Notes 等持久资源形成图。Connections �
 
 同一个 provider 可以在不同会话中承担不同角色，不同 providers 也可以承担同一角色。角色属于工作；
 provider、模型和 effort 是为了执行这项工作而选择的配置。
+
+## 复制 prompt 来划分职责
+
+先在 CodingAgent 中描述真实任务及约束。说明你有哪些 providers；此请求用于规划工作，不创建会话，也不修改代码。
+
+```prompt
+根据我描述的任务，提出 CodingAgents 之间最小且有用的职责划分。
+为每个角色说明目标、所需上下文、可验证交付结果和停止条件。
+解释独立评审在哪里有帮助，以及什么时候另开一个会话只会增加协调成本。
+只考虑我提供的 providers；不要编造模型可用性，也不要替我配置会话。
+在我检查提案前，不要创建 Nodes、修改 Connections 或开始实施。
+```
+
+**预期结果:** 与任务规模相称的角色和交接提案。配置由你选择；agent 数量或不同 providers 不保证质量或 token 节省。
 
 ## 四个实用角色
 

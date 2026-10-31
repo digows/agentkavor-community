@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: desarrolla y prueba delante de tu agente"
 description: Usa el WebBrowser compartido de Kavor para desarrollar aplicaciones web, reproducir bugs, depurar páginas y demostrar flujos E2E.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/web-browser
 ---
 
@@ -48,7 +48,13 @@ resultado y los riesgos restantes en una [Sticky Note](./sticky-note.md).
 
 Un prompt inicial puede ser:
 
-> Abre la aplicación conectada en WebBrowser. Primero observa la página y reproduce el flujo sin cambiar código. Después describe la causa probable, propone el cambio mínimo y valida el recorrido completo con evidencia visual y de consola.
+Abre la aplicación en un WebBrowser alcanzable. Indica URL y comportamiento esperado; define primero en la Specification cualquier alcance de implementación.
+
+```prompt
+Abre la aplicación conectada en WebBrowser. Primero observa la página y reproduce el flujo sin cambiar código. Después describe la causa probable, propone el cambio mínimo y valida el recorrido completo con evidencia visual y de consola.
+```
+
+**Resultado esperado:** El agente empieza por reproducir y recoger evidencias, no por un cambio supuesto. Debe informar si falta autenticación o intervención humana.
 
 ## Tres ejemplos para desarrollar con evidencia
 
@@ -56,18 +62,30 @@ Un prompt inicial puede ser:
 
 Con el servidor en el Terminal y la aplicación abierta en WebBrowser, pide:
 
-> Reproduce el envío con un e-mail inválido y luego con uno válido. Antes de editar código, registra el estado de los
-> campos, el mensaje mostrado y si hubo request. Después de la corrección autorizada, repite ambos caminos y prueba
-> corregir la dirección sin recargar la página.
+Usa datos de prueba en una aplicación que controlas, con servidor y WebBrowser preparados. Autoriza las correcciones de código por separado.
+
+```prompt
+Reproduce el envío con un e-mail inválido y luego con uno válido. Antes de editar código, registra el estado de los
+campos, el mensaje mostrado y si hubo request. Después de la corrección autorizada, repite ambos caminos y prueba
+corregir la dirección sin recargar la página.
+```
+
+**Resultado esperado:** La revisión compara las rutas inválida, válida y de recuperación mediante estado visible y red observada, no solo un mensaje de éxito.
 
 Espera comportamiento visible y requests observados. Un screenshot del mensaje no demuestra por sí solo que se
 bloqueó el envío; la red ayuda a verificar ese criterio.
 
 ### Descubrir por qué la página quedó vacía
 
-> Observa la página, consulta los errores del console e identifica la petición relacionada con el contenido ausente.
-> Distingue falla de red, respuesta inesperada y error de renderizado. Registra el URL relevante, el status y la
-> evidencia disponible. Si no puedes observar el cuerpo de la respuesta, indica esa limitación.
+Deja abierta la página afectada en el WebBrowser alcanzable. Pega el pedido sin autorizar cambios de código para este diagnóstico.
+
+```prompt
+Observa la página, consulta los errores del console e identifica la petición relacionada con el contenido ausente.
+Distingue falla de red, respuesta inesperada y error de renderizado. Registra el URL relevante, el status y la
+evidencia disponible. Si no puedes observar el cuerpo de la respuesta, indica esa limitación.
+```
+
+**Resultado esperado:** El diagnóstico distingue red, respuesta y renderizado con las señales retenidas. El contenido descartado o inaccesible se declara como limitación.
 
 Espera señales que permitan distinguir las causas antes de cambiar código. El contenido ausente no basta para
 concluir que falló el backend.
@@ -76,9 +94,15 @@ concluir que falló el backend.
 
 En una aplicación de pruebas bajo tu control, pide un escenario temporal:
 
-> Simula una respuesta de error solo en la petición de carga definida en la Specification. Verifica el mensaje de
-> falla y la opción de reintentar. Después elimina la regla temporal y confirma que el flujo normal se recupera.
-> Conserva los resultados y termina la prueba con las reglas de red limpias.
+Úsalo solo en una aplicación y entorno de pruebas que controlas. La Specification debe identificar la petición y el comportamiento esperado ante el fallo.
+
+```prompt
+Simula una respuesta de error solo en la petición de carga definida en la Specification. Verifica el mensaje de
+falla y la opción de reintentar. Después elimina la regla temporal y confirma que el flujo normal se recupera.
+Conserva los resultados y termina la prueba con las reglas de red limpias.
+```
+
+**Resultado esperado:** La prueba registra fallo y recuperación y elimina su regla temporal. No dejes que la simulación afecte otras peticiones.
 
 Espera cobertura de falla y recuperación en un escenario aislado. Usa endpoints y datos de prueba; la simulación debe
 ser suficientemente específica para no cambiar peticiones ajenas al escenario.

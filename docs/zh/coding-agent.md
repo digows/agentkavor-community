@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -194,13 +194,25 @@ Specification — Implementer — Reviewer
 
 给 Implementer：
 
-> 只实现可达 Specification 定义的范围。修改代码前，先找出相关 Files 和检查项。使用 Terminal 产生证据，
-> 将结果记录为 Specification output，并请 Reviewer 独立评估。如果必要决策超出契约，请停止。
+将请求粘贴给 Implementer，并准备好可实施的 Specification、相关 Files 和可达的 Terminal。Reviewer 必须在同一图谱中才能接收请求。
+
+```prompt
+只实现可达 Specification 定义的范围。修改代码前，先找出相关 Files 和检查项。使用 Terminal 产生证据，
+将结果记录为 Specification output，并请 Reviewer 独立评估。如果必要决策超出契约，请停止。
+```
+
+**预期结果:** 限定范围的交付记录实际变更和检查结果，然后发起评审请求。缺失的上下文或契约决策会被列为待办。
 
 给 Reviewer：
 
-> 将实现和证据与 Specification 标准比较。寻找错误行为、遗漏场景、回归和运行风险。提出修改前先记录具体
-> findings，不要仅因为现有测试通过就批准工作。
+在 Implementer 标明交付结果并固定待审 commit 或 diff 后，将请求粘贴给 Reviewer。确保 Specification 和证据可达。
+
+```prompt
+将实现和证据与 Specification 标准比较。寻找错误行为、遗漏场景、回归和运行风险。提出修改前先记录具体
+findings，不要仅因为现有测试通过就批准工作。
+```
+
+**预期结果:** 评审报告可验证的发现，或说明检查了哪些标准且未发现阻塞。现有测试通过不能代替评审。
 
 ## 示例：Reviewer 能够验证的交接
 
@@ -209,8 +221,14 @@ Specification — Implementer — Reviewer
 
 给 Builder 的请求：
 
-> 实现 Specification 定义的校验。保持有效地址流程的行为。在 Terminal 中执行相关测试，记录修改的文件、命令和结果。
-> 然后将 Specification 的 handle 以及用于审查的确切 commit 或 diff 发给 Reviewer。说明未完成事项，并在发布前停止。
+先根据真实表单调整 Specification，再向 Builder 提出请求。让 Terminal 和 Reviewer 保持在同一图谱中；此请求不包含发布。
+
+```prompt
+实现 Specification 定义的校验。保持有效地址流程的行为。在 Terminal 中执行相关测试，记录修改的文件、命令和结果。
+然后将 Specification 的 handle 以及用于审查的确切 commit 或 diff 发给 Reviewer。说明未完成事项，并在发布前停止。
+```
+
+**预期结果:** Builder 标明交付结果，并引用规范的评审上下文，不声称执行了未实际运行的检查。
 
 有用的交接应标明交付结果，而不是复制整段对话：
 
@@ -219,8 +237,14 @@ Specification — Implementer — Reviewer
 
 给 Reviewer 的请求：
 
-> 阅读契约并检查所引用的交付结果。验证每条标准，复现相关场景，并把结论加入 Sticky Note。区分已证实的缺陷和假设。
-> 如果发现阻塞，说明哪个行为失败，并交回 Builder 修复。
+引用的交付结果稳定后，向 Reviewer 提出请求。确保 Specification 和 Sticky Note 可达，并授权把评审记录到笔记中。
+
+```prompt
+阅读契约并检查所引用的交付结果。验证每条标准，复现相关场景，并把结论加入 Sticky Note。区分已证实的缺陷和假设。
+如果发现阻塞，说明哪个行为失败，并交回 Builder 修复。
+```
+
+**预期结果:** 各项标准得到基于证据的评估。发现的问题交回 Builder；证据不足是限制，不是批准。
 
 预期结果是一项可明确识别的改动、一次独立审查，以及你基于证据作出的决定。如果 Builder 仍在修改交付内容，
 请等结果稳定，或明确界定哪些内容已准备好供审查。两个智能体查看不同版本的代码，就不是在评估同一份交付。

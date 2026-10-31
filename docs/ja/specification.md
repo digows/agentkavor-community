@@ -3,7 +3,7 @@ id: specification
 title: "Kavor の Specification：一度丁寧に考え、より良く実装する"
 description: 意図、決定、基準を永続的な Markdown にまとめ、複数の roots を整理し、Specification の lifecycle を導きます。
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/specification
 ---
 
@@ -37,9 +37,15 @@ lifecycle は製品の操作で更新します。
 
 良い出発点は次の prompt です。
 
-> テーマ X について私にインタビューし、Specification Y を書いてください。確認済みの事実、決定、前提、
-> non-goals、失敗シナリオ、観察可能な受け入れ基準を分けてください。解決策を変え得る判断が残る間は、
-> 文書を Ready と扱わないでください。
+計画用のセッションに貼り付けてください。X を具体的なテーマ、Y を Specification 名に置き換えます。同じ作業の Specification がある場合は、別の文書を作らずそれを指定してください。
+
+```prompt
+テーマ X について私にインタビューし、Specification Y を書いてください。確認済みの事実、決定、前提、
+non-goals、失敗シナリオ、観察可能な受け入れ基準を分けてください。解決策を変え得る判断が残る間は、
+文書を Ready と扱わないでください。
+```
+
+**期待する結果:** インタビューで未決定事項が明らかになり、検証可能な契約につながります。文書化は実装の許可ではなく、ステータスも完全性の証拠にはなりません。
 
 ここでよく考えることで、手戻り、無駄なコンテキスト、曖昧な実装を減らせます。ただし低コストの保証では
 ありません。悪い Specification は長くても、高価なモデルが書いても悪いままです。

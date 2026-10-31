@@ -3,7 +3,7 @@ id: schedule
 title: "Kavor の Schedule：グラフに時計を与える"
 description: 権限を広げず、プレビュー、Pause、Run now、永続履歴を使って繰り返しのプロンプトやコマンドを予約します。
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/schedule
 ---
 
@@ -82,14 +82,20 @@ preview を確認してから活動を許可できます。
 
 良い CodingAgent prompt は、目的、graph resources、期待する証拠、停止条件を示します。
 
-> 最近の CI failure を分析してください。Checks Terminal で必要な検証だけを実行し、証拠付きの要約を Daily report Sticky Note
-> に記録し、Reviewer に独立評価を依頼してください。原因候補を記録する前に code を変更せず、修正が Specification の scope
-> 拡大を必要とする場合は停止してください。
+Maintainer を対象とする Schedule の payload として使ってください。Terminal Checks、Sticky Note Daily report、Specification、Reviewer を到達可能にし、名前を実際のグラフに合わせます。
 
-良い Terminal command は明示的、非対話的で、観測可能な結果を残します。
+```prompt
+最近の CI failure を分析してください。Checks Terminal で必要な検証だけを実行し、証拠付きの要約を Daily report Sticky Note
+に記録し、Reviewer に独立評価を依頼してください。原因候補を記録する前に code を変更せず、修正が Specification の scope
+拡大を必要とする場合は停止してください。
+```
+
+**期待する結果:** 定期処理は証拠に基づく診断を残し、Reviewer が利用可能ならレビューを依頼します。不足するコンテキストや範囲拡大の必要は報告して停止します。
+
+良い Terminal コマンドは明示的かつ非対話的で、観察できる結果を残します。例えば、`test` スクリプトが非対話実行用に設定されたプロジェクトでは、次のように実行します。
 
 ```sh
-pnpm test -- --runInBand
+pnpm test
 ```
 
 payload は Connections の代わりにはなりません。Sticky Note、File、Specification の名前を書くだけではアクセスは付与されず、
@@ -106,9 +112,15 @@ Specificationに検証内容と失敗時の対応を定義します。診断と�
 
 payloadの例：
 
-> Specificationで許可された検証をTerminal Checksで実行してください。プロジェクトのscriptsを読み、
-> 適切なコマンドを選んでください。Sticky Note Daily reportに時刻、コマンド、結果、未解決事項を記録し、
-> コードの変更や公開はしないでください。検証できない場合は理由を残し、具体的な次の行動を書いて止まってください。
+以下で準備するグラフの payload として使ってください。繰り返しを有効にする前に Schedule を一時停止したまま、`Run now` で明示的に試します。
+
+```prompt
+Specificationで許可された検証をTerminal Checksで実行してください。プロジェクトのscriptsを読み、
+適切なコマンドを選んでください。Sticky Note Daily reportに時刻、コマンド、結果、未解決事項を記録し、
+コードの変更や公開はしないでください。検証できない場合は理由を残し、具体的な次の行動を書いて止まってください。
+```
+
+**期待する結果:** コードを変えずに、コマンド、時刻、結果、未解決事項がメモに記録されます。配信と Schedule の履歴も確認してください。予定時刻があるだけでは実行の証拠になりません。
 
 `Daily`を設定し、マシンが起きている時刻を選び、`Next occurrences`を確認します。`Resume`の前に
 Scheduleを停止したまま`Run now`を使い、次を確認します：

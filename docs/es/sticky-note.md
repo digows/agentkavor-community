@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: memoria de trabajo compartida"
 description: Usa una Sticky Note para registrar estado, hallazgos y puntos de atención con tus CodingAgents sin convertir cada nota de trabajo en una Specification.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/sticky-note
 ---
 
@@ -54,7 +54,13 @@ Un formato sencillo funciona bien:
 
 Conecta la Sticky Note al agente y pídele que registre solo los hechos que ayudarán en tu próxima decisión:
 
-> Mantén la Sticky Note como un resumen breve del turno. Registra cambios, evidencias, riesgos y preguntas que necesitan mi decisión. No conviertas hipótesis en decisiones finales.
+Elige una Sticky Note alcanzable y autoriza expresamente al agente a mantenerla durante el turno. Si ya contiene observaciones, usa el ejemplo más delimitado siguiente.
+
+```prompt
+Mantén la Sticky Note como un resumen breve del turno. Registra cambios, evidencias, riesgos y preguntas que necesitan mi decisión. No conviertas hipótesis en decisiones finales.
+```
+
+**Resultado esperado:** La nota conserva un resumen breve de hechos, evidencias y preguntas. No se convierte en un informe automático de todos los agentes del componente.
 
 El agente puede añadir bloques separados o reemplazar el contenido cuando pidas una reorganización completa. El
 contenido sigue siendo editable por la persona y cada cambio debe respetar la última versión de la nota.
@@ -62,9 +68,15 @@ contenido sigue siendo editable por la persona y cada cambio debe respetar la ú
 Si la nota ya contiene tus observaciones, delimita qué puede actualizar el agente. Una nota llena no es una invitación
 a reorganizarla sin pedirlo. Una instrucción más concreta es:
 
-> Mantén esta Sticky Note durante la investigación. Conserva mis notas y las del Reviewer. Añade solo tus hallazgos
-> verificados y actualiza únicamente los elementos identificados con tu nombre. Pide permiso antes de reorganizar
-> todo el cuerpo.
+Identifica la nota con tus observaciones o las del Reviewer. Pega el pedido en el agente que debe añadir solo su contribución.
+
+```prompt
+Mantén esta Sticky Note durante la investigación. Conserva mis notas y las del Reviewer. Añade solo tus hallazgos
+verificados y actualiza únicamente los elementos identificados con tu nombre. Pide permiso antes de reorganizar
+todo el cuerpo.
+```
+
+**Resultado esperado:** Se preservan las entradas anteriores; el agente actualiza solo sus elementos y pregunta antes de reorganizar el cuerpo.
 
 ### 3. Puente entre implementación y revisión
 
@@ -101,9 +113,15 @@ nota para conservar el hallazgo, la evidencia y la pregunta que sigue abierta:
 
 Pide al agente:
 
-> Añade hallazgos verificados y preguntas a la nota. Conserva mis observaciones. Cuando una hipótesis se confirme o
-> se descarte, actualiza su estado con la evidencia. Si la decisión define el alcance de una corrección, llévala a la
-> Specification correspondiente y deja aquí una referencia breve.
+Úsalo durante una investigación con la nota y la Specification correspondiente alcanzables. Autoriza mantener la nota y respeta los Guardrails de la Specification.
+
+```prompt
+Añade hallazgos verificados y preguntas a la nota. Conserva mis observaciones. Cuando una hipótesis se confirme o
+se descarte, actualiza su estado con la evidencia. Si la decisión define el alcance de una corrección, llévala a la
+Specification correspondiente y deja aquí una referencia breve.
+```
+
+**Resultado esperado:** Se distinguen hallazgos e hipótesis; las decisiones duraderas se tratan en la Specification sin sobrescribir observaciones ajenas.
 
 Para una revisión, un bloque separado puede registrar **escenario, comportamiento observado, evidencia y próximo
 paso**. Así puedes distinguir lo que el Builder completó de lo que el Reviewer verificó.

@@ -3,7 +3,7 @@ id: nodes
 title: Nodes de Kavor
 description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser y Trigger por separado y qué obtienen al conectarse.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/nodes
 ---
 
@@ -51,6 +51,19 @@ Al mismo tiempo, una Connection establece un límite:
 - el grafo hace alcanzable el contexto, pero no aprueba acciones automáticamente.
 
 El resultado es menos mágico y más útil: puedes inspeccionar la estructura antes, durante y después del trabajo.
+
+## Copia un prompt para entender tu grafo
+
+Pega el pedido en un CodingAgent del Workspace y describe la tarea. Solo solicita lectura y orientación; los Nodes externos no se vuelven accesibles por aparecer en el layout.
+
+```prompt
+Explica cómo pueden ayudar los Nodes de mi grafo alcanzable con la tarea que describí.
+Identifica dónde están la intención, las fuentes, la ejecución y la memoria de trabajo.
+Si falta algo, propón la menor estructura necesaria y explica por qué existe cada Node.
+No crees ni elimines Nodes o Connections ni leas contenido fuera de tu grafo.
+```
+
+**Resultado esperado:** Un mapa breve del contexto disponible y una propuesta cuando haga falta. La explicación no crea un pipeline automático ni concede accesos nuevos; tú decides el siguiente paso.
 
 ## Los siete Nodes
 

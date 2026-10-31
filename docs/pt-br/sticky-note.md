@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: memória de trabalho compartilhada"
 description: Use uma Sticky Note para registrar status, descobertas e pontos de atenção junto com seus CodingAgents sem transformar tudo em uma Specification.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/sticky-note
 ---
 
@@ -59,14 +59,26 @@ Um formato simples funciona bem:
 
 Conecte a Sticky Note ao agente e peça que ele registre somente fatos úteis para sua próxima decisão:
 
-> Mantenha a Sticky Note como um resumo curto do turno. Registre mudanças feitas, evidências, riscos e perguntas que precisam da minha decisão. Não transforme hipóteses em decisões finais.
+Escolha uma Sticky Note alcançável e autorize explicitamente o agente a mantê-la durante o turno. Se já houver conteúdo, use o exemplo delimitado a seguir.
+
+```prompt
+Mantenha a Sticky Note como um resumo curto do turno. Registre mudanças feitas, evidências, riscos e perguntas que precisam da minha decisão. Não transforme hipóteses em decisões finais.
+```
+
+**Resultado esperado:** A nota mantém um resumo curto de fatos, evidências e perguntas. Não vira um relatório automático de todos os agentes do componente.
 
 Se a nota já contém suas observações, deixe explícito o que o agente pode atualizar. Ele não deve tomar uma nota
 preenchida como um convite para reorganizá-la por conta própria. Uma instrução mais delimitada é:
 
-> Mantenha esta Sticky Note durante a investigação. Preserve minhas anotações e as do Reviewer. Acrescente apenas
-> suas descobertas verificadas e atualize somente os itens identificados com seu nome. Peça minha autorização antes
-> de reorganizar o corpo inteiro.
+Indique a nota que já contém observações suas ou do Reviewer. Cole no agente que deve acrescentar apenas a própria contribuição.
+
+```prompt
+Mantenha esta Sticky Note durante a investigação. Preserve minhas anotações e as do Reviewer. Acrescente apenas
+suas descobertas verificadas e atualize somente os itens identificados com seu nome. Peça minha autorização antes
+de reorganizar o corpo inteiro.
+```
+
+**Resultado esperado:** As entradas anteriores são preservadas; o agente atualiza somente seus itens e pede sua decisão antes de reorganizar o corpo.
 
 O agente pode acrescentar blocos separados ou substituir o conteúdo quando você pedir uma reorganização completa. O
 conteúdo continua editável pelo humano e cada alteração precisa respeitar a versão mais recente da nota.
@@ -112,9 +124,15 @@ uma nota para preservar a descoberta, a evidência e a pergunta ainda aberta:
 
 Peça ao agente:
 
-> Acrescente descobertas verificadas e perguntas à nota. Preserve minhas observações. Quando uma hipótese for
-> confirmada ou descartada, atualize seu estado com a evidência. Se a decisão definir o escopo de uma correção, leve-a
-> para a Specification correspondente e deixe aqui uma referência curta.
+Use durante uma investigação com a nota e a Specification correspondente alcançáveis. Autorize a manutenção da nota e respeite qualquer Guardrail da Specification.
+
+```prompt
+Acrescente descobertas verificadas e perguntas à nota. Preserve minhas observações. Quando uma hipótese for
+confirmada ou descartada, atualize seu estado com a evidência. Se a decisão definir o escopo de uma correção, leve-a
+para a Specification correspondente e deixe aqui uma referência curta.
+```
+
+**Resultado esperado:** Descobertas e hipóteses ficam diferenciadas; decisões duráveis são tratadas na Specification, sem sobrescrever observações de outros participantes.
 
 Para uma revisão, um bloco separado pode registrar **cenário, comportamento observado, evidência e próximo passo**.
 Isso permite distinguir o que o Builder concluiu do que o Reviewer verificou.

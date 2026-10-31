@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: develop and test in front of your agent"
 description: Use Kavor's shared WebBrowser to develop web applications, reproduce bugs, debug pages, and prove end-to-end flows.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/web-browser
 ---
 
@@ -58,7 +58,13 @@ Ask the agent to:
 
 A useful starting prompt is:
 
-> Open the connected application in WebBrowser. First observe the page and reproduce the flow without changing code. Then describe the likely cause, propose the smallest change, and validate the complete path with visual and console evidence.
+Open the application in a reachable WebBrowser. Provide the URL and expected behavior; define any implementation scope in the Specification first.
+
+```prompt
+Open the connected application in WebBrowser. First observe the page and reproduce the flow without changing code. Then describe the likely cause, propose the smallest change, and validate the complete path with visual and console evidence.
+```
+
+**Expected result:** The agent starts with reproduction and evidence, not a presumed change. It must report missing authentication or required human intervention.
 
 ## Three examples of development with evidence
 
@@ -66,18 +72,30 @@ A useful starting prompt is:
 
 With the server in the Terminal and the application open in WebBrowser, ask:
 
-> Reproduce submission with an invalid email and then a valid address. Before editing code, record the fields' state,
-> displayed message, and whether a request occurred. After the authorized correction, repeat both paths and test
-> correcting the address without reloading the page.
+Use test data in an application you control, with the server and WebBrowser prepared. Authorize code corrections separately.
+
+```prompt
+Reproduce submission with an invalid email and then a valid address. Before editing code, record the fields' state,
+displayed message, and whether a request occurred. After the authorized correction, repeat both paths and test
+correcting the address without reloading the page.
+```
+
+**Expected result:** The review compares invalid, valid and recovery paths using visible state and observed network behavior, not just a success message.
 
 Expect visible behavior together with observed requests. A screenshot of the message alone does not prove submission
 was blocked; network evidence helps verify that criterion.
 
 ### Find out why the page is blank
 
-> Observe the page, inspect console errors, and identify the request related to missing content. Distinguish a network
-> failure, an unexpected response, and a rendering error. Record the relevant URL, status, and available evidence.
-> If you cannot observe the response body, report that limitation.
+Leave the affected page open in the reachable WebBrowser. Paste into the CodingAgent without authorizing code changes for this diagnosis.
+
+```prompt
+Observe the page, inspect console errors, and identify the request related to missing content. Distinguish a network
+failure, an unexpected response, and a rendering error. Record the relevant URL, status, and available evidence.
+If you cannot observe the response body, report that limitation.
+```
+
+**Expected result:** The diagnosis distinguishes network, response and rendering issues using retained signals. Discarded or inaccessible content is reported as a limitation.
 
 Expect an investigation using signals that distinguish causes before changing code. Missing content alone does not
 establish that the backend failed.
@@ -86,9 +104,15 @@ establish that the backend failed.
 
 In a test application you control, request a temporary scenario:
 
-> Simulate an error response only for the loading request defined in the Specification. Verify the failure message
-> and retry option. Then remove the temporary rule and confirm that the normal flow recovers. Preserve the results
-> and end the test with network rules cleared.
+Use only with an application and test environment you control. The Specification must identify the request and expected failure behavior.
+
+```prompt
+Simulate an error response only for the loading request defined in the Specification. Verify the failure message
+and retry option. Then remove the temporary rule and confirm that the normal flow recovers. Preserve the results
+and end the test with network rules cleared.
+```
+
+**Expected result:** The test records failure and recovery and removes its temporary rule. Do not let the simulation affect unrelated requests.
 
 Expect coverage of failure and recovery in an isolated scenario. Use test endpoints and data; the simulation must be
 specific enough to leave unrelated requests unchanged.

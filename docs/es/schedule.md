@@ -3,7 +3,7 @@ id: schedule
 title: "Schedule en Kavor: dale un reloj a tu grafo"
 description: Programa prompts y comandos recurrentes con vista previa, pausa, Run now e historial persistente sin ampliar permisos.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/schedule
 ---
 
@@ -84,14 +84,20 @@ registra el instante como `Blocked`; `Run now` sin objetivo se rechaza antes de 
 
 Un buen prompt indica objetivo, recursos del grafo, evidencia esperada y condición de parada:
 
-> Analiza las fallas recientes de CI. Ejecuta solo las verificaciones relevantes en el Terminal Checks, registra un
-> resumen con evidencias en la Sticky Note Daily report y pide al Reviewer una evaluación independiente. No cambies
-> código antes de registrar la causa probable y detente si la corrección requiere ampliar la Specification.
+Úsalo como payload de un Schedule cuyo objetivo sea el Maintainer. Prepara Terminal Checks, Sticky Note Daily report, Specification y Reviewer alcanzables; adapta los nombres.
 
-Un buen comando de Terminal es explícito, no interactivo y deja un resultado observable:
+```prompt
+Analiza las fallas recientes de CI. Ejecuta solo las verificaciones relevantes en el Terminal Checks, registra un
+resumen con evidencias en la Sticky Note Daily report y pide al Reviewer una evaluación independiente. No cambies
+código antes de registrar la causa probable y detente si la corrección requiere ampliar la Specification.
+```
+
+**Resultado esperado:** La rutina produce un diagnóstico con evidencias y solicita revisión cuando esté disponible. Si falta contexto o hay que ampliar el alcance, debe informarlo y detenerse.
+
+Un buen comando de Terminal es explícito, no interactivo y deja un resultado observable. Por ejemplo, en un proyecto cuyo script `test` esté configurado para ejecución no interactiva:
 
 ```sh
-pnpm test -- --runInBand
+pnpm test
 ```
 
 El payload no sustituye Connections. Mencionar una Sticky Note, File o Specification no concede acceso si el Node no
@@ -108,10 +114,16 @@ e informe; autoriza las correcciones por separado cuando la causa y el alcance e
 
 Un payload útil:
 
-> Ejecuta las verificaciones autorizadas en la Specification usando Terminal Checks. Lee los scripts del proyecto
-> para elegir los comandos correctos. Registra hora, comandos, resultados y pendientes en Sticky Note Daily report.
-> No cambies código ni publiques nada. Si una verificación no puede ejecutarse, registra el motivo. Termina con una
-> próxima acción concreta y detente.
+Úsalo como payload en el grafo preparado abajo. Antes de activar la recurrencia, deja el Schedule pausado y prueba explícitamente con `Run now`.
+
+```prompt
+Ejecuta las verificaciones autorizadas en la Specification usando Terminal Checks. Lee los scripts del proyecto
+para elegir los comandos correctos. Registra hora, comandos, resultados y pendientes en Sticky Note Daily report.
+No cambies código ni publiques nada. Si una verificación no puede ejecutarse, registra el motivo. Termina con una
+próxima acción concreta y detente.
+```
+
+**Resultado esperado:** La nota registra comandos, horarios, resultados y pendientes sin cambiar código. Revisa también entrega e historial: la hora programada no demuestra ejecución.
 
 Configura `Daily`, elige una hora en que la máquina estará despierta y comprueba `Next occurrences`. Antes de `Resume`,
 usa `Run now` con el Schedule pausado y verifica:

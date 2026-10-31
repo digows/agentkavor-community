@@ -3,7 +3,7 @@ id: sticky-note
 title: "Sticky Note: shared working memory"
 description: Use a Sticky Note to record status, findings, and attention points with your CodingAgents without turning every working note into a Specification.
 kind: guide
-lastReviewedAt: 2026-10-08
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/en/docs/sticky-note
 ---
 
@@ -52,7 +52,13 @@ A simple format works well:
 
 Connect the Sticky Note to the agent and ask it to record only facts that will help with your next decision:
 
-> Keep the Sticky Note as a short turn summary. Record changes, evidence, risks, and questions that need my decision. Do not turn hypotheses into final decisions.
+Choose a reachable Sticky Note and explicitly authorize the agent to maintain it during the turn. If it already contains content, use the narrower example below.
+
+```prompt
+Keep the Sticky Note as a short turn summary. Record changes, evidence, risks, and questions that need my decision. Do not turn hypotheses into final decisions.
+```
+
+**Expected result:** The note keeps a short summary of facts, evidence and questions. It does not become an automatic report from every agent in the component.
 
 The agent can append separate blocks or replace the content when you ask for a complete reorganization. The content
 remains editable by the human, and every change must respect the note's latest version.
@@ -60,8 +66,14 @@ remains editable by the human, and every change must respect the note's latest v
 If the note already contains your observations, specify what the agent may update. A populated note is not an
 invitation to reorganize it unprompted. A more bounded instruction is:
 
-> Maintain this Sticky Note during the investigation. Preserve my notes and the Reviewer's entries. Add only your
-> verified findings and update only items identified with your name. Ask my permission before reorganizing the body.
+Identify the note already containing your or the Reviewer’s observations. Paste into the agent that should add only its own contribution.
+
+```prompt
+Maintain this Sticky Note during the investigation. Preserve my notes and the Reviewer's entries. Add only your
+verified findings and update only items identified with your name. Ask my permission before reorganizing the body.
+```
+
+**Expected result:** Existing entries are preserved; the agent updates only its own items and asks before reorganizing the body.
 
 ### 3. A bridge between implementation and review
 
@@ -104,9 +116,15 @@ note to preserve the finding, the evidence, and the question that remains open:
 
 Ask the agent:
 
-> Add verified findings and questions to the note. Preserve my observations. When a hypothesis is confirmed or
-> ruled out, update its status with the evidence. If the decision defines the scope of a fix, take it to the
-> corresponding Specification and leave a short reference here.
+Use during an investigation with the note and corresponding Specification reachable. Authorize note maintenance and respect any Specification Guardrail.
+
+```prompt
+Add verified findings and questions to the note. Preserve my observations. When a hypothesis is confirmed or
+ruled out, update its status with the evidence. If the decision defines the scope of a fix, take it to the
+corresponding Specification and leave a short reference here.
+```
+
+**Expected result:** Findings and hypotheses remain distinct; durable decisions belong in the Specification, without overwriting others’ observations.
 
 For a review, a separate block can record **scenario, observed behavior, evidence, and next step**. This distinguishes
 what the Builder completed from what the Reviewer verified.

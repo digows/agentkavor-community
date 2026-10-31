@@ -3,7 +3,7 @@ id: web-browser
 title: "WebBrowser: desenvolva e teste na frente do agente"
 description: Use o WebBrowser compartilhado do Kavor para desenvolver aplicações web, reproduzir bugs, depurar páginas e provar fluxos E2E.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/pt-br/docs/web-browser
 ---
 
@@ -59,7 +59,13 @@ Peça ao agente para:
 
 Um prompt inicial pode ser:
 
-> Abra a aplicação no WebBrowser conectado. Primeiro observe a página e reproduza o fluxo sem alterar código. Depois descreva a causa provável, proponha a menor mudança e valide o caminho completo com evidência visual e de console.
+Abra a aplicação em um WebBrowser alcançável. Informe o URL e o comportamento esperado; quando houver implementação, defina antes seu escopo na Specification.
+
+```prompt
+Abra a aplicação no WebBrowser conectado. Primeiro observe a página e reproduza o fluxo sem alterar código. Depois descreva a causa provável, proponha a menor mudança e valide o caminho completo com evidência visual e de console.
+```
+
+**Resultado esperado:** O agente começa pela reprodução e pelas evidências, não por uma alteração presumida. Se faltar autenticação ou intervenção humana, precisa informar essa condição.
 
 ## Três exemplos para desenvolver com evidência
 
@@ -67,18 +73,30 @@ Um prompt inicial pode ser:
 
 Com o servidor no Terminal e a aplicação aberta no WebBrowser, peça:
 
-> Reproduza o envio com um e-mail inválido e depois com um endereço válido. Antes de editar código, registre o estado
-> dos campos, a mensagem exibida e se houve request. Após a correção autorizada, repita os dois caminhos e teste
-> também corrigir o endereço sem recarregar a página.
+Use dados de teste em uma aplicação sob seu controle, com o servidor e o WebBrowser preparados. Autorize separadamente qualquer correção de código.
+
+```prompt
+Reproduza o envio com um e-mail inválido e depois com um endereço válido. Antes de editar código, registre o estado
+dos campos, a mensagem exibida e se houve request. Após a correção autorizada, repita os dois caminhos e teste
+também corrigir o endereço sem recarregar a página.
+```
+
+**Resultado esperado:** A revisão compara o caminho inválido, o válido e a recuperação, usando estado visível e rede observada em vez de apenas uma mensagem de sucesso.
 
 O resultado esperado combina comportamento visível e requests observados. Um screenshot da mensagem sozinho não
 prova que o envio foi bloqueado; a rede ajuda a verificar esse critério.
 
 ### Descobrir por que a página ficou vazia
 
-> Observe a página, consulte os erros do console e identifique a requisição relacionada ao conteúdo ausente.
-> Diferencie falha de rede, resposta inesperada e erro ao renderizar. Registre o URL relevante, o status e a evidência
-> disponível. Se não conseguir observar o corpo da resposta, informe essa limitação.
+Deixe a página com o problema aberta no WebBrowser alcançável. Cole no CodingAgent sem autorizar alteração de código neste diagnóstico.
+
+```prompt
+Observe a página, consulte os erros do console e identifique a requisição relacionada ao conteúdo ausente.
+Diferencie falha de rede, resposta inesperada e erro ao renderizar. Registre o URL relevante, o status e a evidência
+disponível. Se não conseguir observar o corpo da resposta, informe essa limitação.
+```
+
+**Resultado esperado:** O diagnóstico diferencia rede, resposta e renderização com os sinais retidos. Conteúdo descartado ou inacessível é declarado como limitação.
 
 O resultado esperado é uma investigação com sinais discriminantes antes de alterar código. A ausência de conteúdo
 não basta para concluir que o backend falhou.
@@ -87,9 +105,15 @@ não basta para concluir que o backend falhou.
 
 Em uma aplicação de teste sob seu controle, você pode pedir um cenário temporário:
 
-> Simule uma resposta de erro apenas na requisição de carregamento definida na Specification. Verifique a mensagem
-> de falha e a opção de tentar novamente. Depois remova a regra temporária e confirme que o fluxo normal se recupera.
-> Preserve os resultados e encerre o teste com as regras de rede limpas.
+Use somente em uma aplicação e ambiente de teste sob seu controle. A Specification precisa identificar a requisição e o comportamento esperado na falha.
+
+```prompt
+Simule uma resposta de erro apenas na requisição de carregamento definida na Specification. Verifique a mensagem
+de falha e a opção de tentar novamente. Depois remova a regra temporária e confirme que o fluxo normal se recupera.
+Preserve os resultados e encerre o teste com as regras de rede limpas.
+```
+
+**Resultado esperado:** O teste registra falha e recuperação e remove sua regra temporária. Não deixe a simulação interferindo em outras requisições.
 
 O resultado esperado cobre falha e recuperação, com o cenário isolado. Use endpoints e dados de teste; a simulação
 deve ser específica o suficiente para não alterar requisições que não pertencem ao cenário.

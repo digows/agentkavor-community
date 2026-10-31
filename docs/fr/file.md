@@ -3,7 +3,7 @@ id: file
 title: "File : contexte et portée sur le Canvas"
 description: Utilisez un File pour garder une source canonique visible, délimiter le contexte d'un CodingAgent et transmettre son chemin à un Terminal.
 kind: guide
-lastReviewedAt: 2026-10-01
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/file
 ---
 
@@ -38,7 +38,13 @@ configuration à revoir.
 
 Une demande de départ peut être :
 
-> Lis le File connecté comme la source canonique de cette tâche. Explique ce qui doit changer, préserve la portée et n'édite qu'après ma confirmation du plan.
+Ajoutez le fichier comme File et rendez-le accessible au CodingAgent. Précisez le changement souhaité avant de coller la demande.
+
+```prompt
+Lis le File connecté comme la source canonique de cette tâche. Explique ce qui doit changer, préserve la portée et n'édite qu'après ma confirmation du plan.
+```
+
+**Résultat attendu:** L’agent explique un plan fondé sur la source réelle et attend votre confirmation avant modification. Il signale tout format qu’il ne peut pas lire.
 
 Lorsque l'agent doit seulement consulter le contenu, utilisez le Guardrail file_read_only sur la Connection directe.
 L'agent peut toujours atteindre le File, mais ne peut pas modifier sa source par les opérations médiées par Kavor.
@@ -78,9 +84,15 @@ aussi connecté, il peut aider à interpréter la sortie pendant que vous suivez
 Ajoutez le fichier du client HTTP comme File, connectez un Reviewer et gardez une Sticky Note accessible pour les
 findings. Demandez :
 
-> Examine le File du client HTTP, notamment les délais d'expiration, le retry et la gestion des erreurs. Utilise-le
-> comme cible de l'analyse. Si une conclusion dépend d'un autre fichier, identifie cette dépendance avant d'élargir
-> l'enquête. Consigne uniquement les findings étayés par le code ou une reproduction et n'implémente pas de corrections.
+Utilisez avec le Reviewer et le File du client HTTP accessible. Pour consigner les findings dans une note, identifiez la Sticky Note et autorisez cette écriture.
+
+```prompt
+Examine le File du client HTTP, notamment les délais d'expiration, le retry et la gestion des erreurs. Utilise-le
+comme cible de l'analyse. Si une conclusion dépend d'un autre fichier, identifie cette dépendance avant d'élargir
+l'enquête. Consigne uniquement les findings étayés par le code ou une reproduction et n'implémente pas de corrections.
+```
+
+**Résultat attendu:** Une revue ciblée distingue défauts démontrés et hypothèses et identifie les dépendances avant d’élargir l’investigation.
 
 Le résultat attendu est une revue ciblée, avec scénario et référence au passage pertinent. Le File explicite la
 cible ; il ne constitue pas un sandbox pour les outils natifs du harness. Délimitez le périmètre dans la demande et
@@ -90,9 +102,15 @@ utilisez le Guardrail approprié pour les opérations de Kavor.
 
 Gardez un PDF d'exigences ou une image de référence dans le même graphe que la Specification et le CodingAgent :
 
-> Compare le contenu du File à la Specification. Sépare exigences explicites, interprétations et questions. Pour
-> chaque divergence, indique la page ou l'élément observé et consigne la question dans la Sticky Note. N'invente pas
-> de contenu que tu ne peux pas lire.
+Gardez File, Specification et Sticky Note dans le graphe du CodingAgent. Identifiez le document à comparer et autorisez la prise de notes.
+
+```prompt
+Compare le contenu du File à la Specification. Sépare exigences explicites, interprétations et questions. Pour
+chaque divergence, indique la page ou l'élément observé et consigne la question dans la Sticky Note. N'invente pas
+de contenu que tu ne peux pas lire.
+```
+
+**Résultat attendu:** La comparaison cite des pages ou éléments réellement lus. Les parties impossibles à interpréter sont explicites, sans exigences inventées.
 
 Vous attendez une comparaison vérifiable, pas seulement un résumé. La capacité d'interprétation dépend du format et
 des outils disponibles dans le harness ; l'aperçu de Kavor garde la référence visible pour vous.

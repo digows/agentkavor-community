@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent dans Kavor : votre harness préféré au sein d'un graphe"
 description: Choisissez un provider, conservez son expérience native et reliez le CodingAgent au contexte, aux outils et aux participants appropriés.
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent
 ---
 
@@ -213,16 +213,28 @@ ressources préservent ce qui doit survivre aux sessions ; vous décidez quand l
 
 Pour un Implementer :
 
-> Implémente uniquement le périmètre défini dans la Specification accessible. Avant de modifier le code, identifie
-> les Files et vérifications pertinents. Utilise le Terminal pour produire des preuves, enregistre le résultat comme
-> output de la Specification et demande au Reviewer une évaluation indépendante. Arrête-toi si une décision
-> nécessaire sort du contrat.
+Collez dans l’Implementer avec une Specification prête à implémenter, les Files utiles et un Terminal accessibles. Le Reviewer doit partager le graphe pour recevoir la demande.
+
+```prompt
+Implémente uniquement le périmètre défini dans la Specification accessible. Avant de modifier le code, identifie
+les Files et vérifications pertinents. Utilise le Terminal pour produire des preuves, enregistre le résultat comme
+output de la Specification et demande au Reviewer une évaluation indépendante. Arrête-toi si une décision
+nécessaire sort du contrat.
+```
+
+**Résultat attendu:** Une livraison délimitée consigne les changements et contrôles réels, puis demande une revue. Tout contexte ou choix contractuel manquant est signalé.
 
 Pour un Reviewer :
 
-> Compare l'implémentation et les preuves aux critères de la Specification. Recherche les comportements incorrects,
-> scénarios manquants, régressions et risques opérationnels. Enregistre des findings concrets avant de proposer des
-> changements et n'approuve pas seulement parce que les tests existants ont réussi.
+Utilisez avec le Reviewer après identification de la livraison et stabilisation du commit ou diff par l’Implementer. Rendez la Specification et les preuves accessibles.
+
+```prompt
+Compare l'implémentation et les preuves aux critères de la Specification. Recherche les comportements incorrects,
+scénarios manquants, régressions et risques opérationnels. Enregistre des findings concrets avant de proposer des
+changements et n'approuve pas seulement parce que les tests existants ont réussi.
+```
+
+**Résultat attendu:** La revue rapporte des findings vérifiables ou les critères examinés sans blocage identifié. Des tests existants réussis ne remplacent pas la revue.
 
 ## Exemple : un handoff que le Reviewer peut vérifier
 
@@ -232,10 +244,16 @@ gardez Builder et Reviewer dans des sessions distinctes.
 
 Demande au Builder :
 
-> Implémente la validation définie dans la Specification. Préserve le comportement du parcours valide. Exécute les
-> tests pertinents dans le Terminal et consigne les fichiers modifiés, commandes et résultats. Envoie ensuite au
-> Reviewer le handle de la Specification et le commit ou diff exact à revoir. Signale les points en suspens et
-> arrête-toi avant de publier.
+Utilisez avec le Builder après adaptation de la Specification au formulaire réel. Gardez Terminal et Reviewer dans le même graphe ; la publication est hors périmètre.
+
+```prompt
+Implémente la validation définie dans la Specification. Préserve le comportement du parcours valide. Exécute les
+tests pertinents dans le Terminal et consigne les fichiers modifiés, commandes et résultats. Envoie ensuite au
+Reviewer le handle de la Specification et le commit ou diff exact à revoir. Signale les points en suspens et
+arrête-toi avant de publier.
+```
+
+**Résultat attendu:** Le Builder identifie la livraison et référence le contexte canonique de revue, sans prétendre avoir exécuté des contrôles non réalisés.
 
 Un handoff utile identifie la livraison plutôt que de copier toute la conversation :
 
@@ -246,9 +264,15 @@ Un handoff utile identifie la livraison plutôt que de copier toute la conversat
 
 Demande au Reviewer :
 
-> Lis le contrat et examine la livraison référencée. Vérifie chaque critère, reproduis les scénarios pertinents et
-> ajoute tes conclusions à la Sticky Note. Distingue un défaut démontré d'une hypothèse. Si tu trouves un blocage,
-> explique quel comportement échoue et renvoie le travail au Builder pour correction.
+Utilisez avec le Reviewer lorsque la livraison référencée est stable. Rendez Specification et Sticky Note accessibles et autorisez l’inscription de la revue dans la note.
+
+```prompt
+Lis le contrat et examine la livraison référencée. Vérifie chaque critère, reproduis les scénarios pertinents et
+ajoute tes conclusions à la Sticky Note. Distingue un défaut démontré d'une hypothèse. Si tu trouves un blocage,
+explique quel comportement échoue et renvoie le travail au Builder pour correction.
+```
+
+**Résultat attendu:** Les critères reçoivent une évaluation étayée. Les findings reviennent au Builder ; le manque de preuves est une limite, pas une approbation.
 
 Le résultat attendu est un changement identifiable, une revue indépendante et votre décision fondée sur des preuves.
 Si le Builder modifie encore la livraison, attendez qu'il stabilise le résultat ou délimitez explicitement ce qui est

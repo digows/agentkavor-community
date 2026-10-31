@@ -3,7 +3,7 @@ id: what-is-kavor
 title: ¿Qué es Kavor?
 description: Comprende el sistema visual local-first de Kavor para coordinar coding agents y contexto de ingeniería duradero.
 kind: guide
-lastReviewedAt: 2026-10-16
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/es/docs/what-is-kavor
 ---
 
@@ -83,6 +83,8 @@ compartida y una decisión humana.
 
 Cuando quieras que el propio CodingAgent ayude a montar la estructura, consulta [cómo CodingAgents ven y construyen
 el Canvas](./coding-agents-and-canvas.md). Para iniciar trabajo en el tiempo, aprende a usar [Schedule](./schedule.md).
+
+¿Quieres un pedido listo? [Copia el prompt del primer loop](./first-loop.md#prefieres-montarlo-con-ayuda), adapta la tarea y revisa la preparación y el resultado esperado antes de enviarlo al CodingAgent.
 
 ## Una aplicación, varios Workspaces
 

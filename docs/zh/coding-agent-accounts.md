@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts：你的账户、使用情况与轮换"
 description: 查看 provider 的使用限制，添加自己的账户，并选择 CodingAgents 如何在 Workspaces 之间共享容量，而不替换原生登录。
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent-accounts
 ---
 
@@ -215,8 +215,14 @@ Manual 模式会拒绝切换请求；提出请求也不保证存在合格替代�
 
 例如：
 
-> 比较我的账户的窗口与重置时间，不要更改任何选择。如果建议为你自己的会话切换账户，请解释哪些读数支持这个建议，
-> 并尊重我的 Manual 选择。
+将请求粘贴到 Workspace 的 CodingAgent。provider 必须提供本指南所述的用量数据；不要在 prompt 中包含凭据。
+
+```prompt
+比较我的账户的窗口与重置时间，不要更改任何选择。如果建议为你自己的会话切换账户，请解释哪些读数支持这个建议，
+并尊重我的 Manual 选择。
+```
+
+**预期结果:** 比较基于实际可用的用量窗口、时间戳和限制。读取用量不会更改你的选择，也不授权产生费用。
 
 ## Agent Kavor 命令
 

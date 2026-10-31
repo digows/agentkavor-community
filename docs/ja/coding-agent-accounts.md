@@ -3,7 +3,7 @@ id: coding-agent-accounts
 title: "CodingAgent Accounts：アカウント、使用状況、ローテーション"
 description: provider の利用上限を確認し、自分のアカウントを追加して、ネイティブログインを置き換えずに Workspaces 間で CodingAgents が容量を共有する方法を選びます。
 kind: guide
-lastReviewedAt: 2026-10-28
+lastReviewedAt: 2026-10-29
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agent-accounts
 ---
 
@@ -232,8 +232,14 @@ Manual では要求を拒否し、要求しても適格な代替アカウント�
 
 例：
 
-> 選択を一切変えずに、私のアカウントの利用枠と回復時刻を比較してください。あなた自身のセッションの切り替えを勧める場合は、
-> どの読み取りに基づく提案なのか説明し、私の Manual の選択を尊重してください。
+Workspace の CodingAgent に貼り付けてください。provider がこのガイドで説明する利用状況データを提供している必要があります。prompt に認証情報を含めないでください。
+
+```prompt
+選択を一切変えずに、私のアカウントの利用枠と回復時刻を比較してください。あなた自身のセッションの切り替えを勧める場合は、
+どの読み取りに基づく提案なのか説明し、私の Manual の選択を尊重してください。
+```
+
+**期待する結果:** 比較には実際に取得できる利用枠、時刻、制限を使います。利用状況の読み取りで選択が変わったり、課金が許可されたりすることはありません。
 
 ## Agent Kavor のコマンド
 
