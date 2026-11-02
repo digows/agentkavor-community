@@ -1,51 +1,51 @@
 ---
 id: connections
 title: KavorでサポートされるConnectionsのマトリクス
-description: サポートされるNodesの組み合わせ、付与される能力、必要なパラメーター、利用可能なGuardrailsを確認できます。
+description: 直接接続できるNodesの組み合わせと、その構造上の役割、パラメーター、Guardrails、制限を確認できます。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/ja/docs/connections
 ---
 
 # KavorでサポートされるConnectionsのマトリクス
 
-Connectionは、Canvas上に描かれた単なる線ではありません。2つのNodesが同じグラフに参加することを宣言し、
-その組み合わせが仕事にどのような能力を加えるかを定義します。
+Connectionはワークフローの矢印ではありません。二つのNodesをCanvas上の同じ到達可能なコンポーネントに置く、明示的で方向のない関係です。
 
-すべての組み合わせが有効なわけではありません。サポートされる各ペアには固有の契約があります。コンテキストを
-到達可能にするConnections、Kavorを介した操作を可能にするConnections、環境変数を使ってTerminalへ正規パスを
-提供する2つのConnectionsがあります。
+CodingAgentにとっては、グラフ全体が重要です。有効なConnectionsの経路で到達できるNodeなら、直接接続されていなくても作業できます。
+直接のConnectionは、Scheduleの対象を選ぶ場合、パラメーターを持つ場合、CodingAgentとリソース間の固有のGuardrailを保持する場合に重要です。
 
-このページは、それらの契約に関する公開リファレンスです。
+このページは、Kavorで直接接続できるペアと、各ペアの固有の契約に関する公開リファレンスです。
 
 ## Connectionの読み方
 
-Connectionには3つの異なる責任があります。
+グラフを読むときは、次の四つのルールを区別してください。
 
-1. **存在：** Nodesを、グラフ内の同じ到達可能なコンポーネントへ接続します。
-2. **パラメーター：** そのペアで必要となる必須設定を記録します。
-3. **Guardrails：** 2つのNodes間で通常許可される振る舞いから、能力を差し引きます。
+1. **Connectionsに永続的な方向はありません。** 端点の順序はフロー、制御、優先順位を表しません。
+2. **到達可能性は推移的です。** CodingAgentと別のNodeの間に有効な経路があれば、同じコンテキストと能力のグラフに属します。
+3. **一部のルールは直接のペアに属します。** Guardrailは設定されたConnection、Terminalのパラメーターはそのペアに属し、Triggerは直接のConnectionで唯一の対象を選びます。
+4. **非対応のペアとは、直接接続できないペアです。** 他の対応ペアを介して、同じコンポーネントに参加することはできます。
 
-Connectionsは双方向の関係です。Kavorは2つのendpointsを正規順序で保存しますが、その順序はフロー、制御、
-優先順位を表しません。メッセージには送信者と受信者があり、Triggerには対象があります。これらの方向は、
-永続化されたConnectionではなく、実行される操作に属します。
-
-行列は直接の組み合わせを示します。直接接続できない Nodes も、別の対応する Connections で同じ到達可能コンポーネントに参加できます。見た目の近さだけではアクセスできません。
+メッセージには送信者と受信者があり、Scheduleには配信先があります。これらの方向は、Canvas上のConnectionではなく、実行される操作に属します。
 
 ## サポートされる組み合わせ
 
-| Nodesのペア | Connectionが可能にすること | パラメーター | 利用可能なGuardrail | 主な例 |
+| Nodesのペア | 直接のConnectionの役割 | パラメーター | 利用可能なGuardrail | 主な例 |
 | --- | --- | --- | --- | --- |
-| **CodingAgent + Specification** | メタデータと正規のMarkdownを読み、許可されている場合はlifecycleを操作して永続的なoutputsを記録する。 | なし | `specification_read_only` | Spec Writer、Builder、Reviewerが同じ契約を共有する。 |
-| **CodingAgent + Sticky Note** | バージョン管理された非公式のMarkdownメモリを読み書きする。書き込みごとにappendまたはreplaceを選ぶ。 | なし | `sticky_note_read_only` | 未解決の判断、進捗、調査結果、handoffsを見える形で残す。 |
-| **CodingAgent + Terminal** | 許可されている場合に、outputの読み取り、コマンド実行、対応づけられた実行の追跡や中断、foregroundプロセスとの対話を行う。 | なし | `terminal_read_only` | 診断、テスト、ログ確認、または監督下のSSHセッション支援。 |
-| **CodingAgent + File** | filesystem上の正規sourceをグラフ内で明示し、許可されている場合に読み取り、レビュー、変更する。 | なし | `file_read_only` | モジュール、PDF、画像、報告書、設定を具体的な対象にする。 |
+| **CodingAgent + Specification** | 永続的な意図をグラフに置き、そのエージェントを制限する直接の設定箇所を提供する。 | なし | `specification_read_only` | Spec Writer、Builder、Reviewerが同じ到達可能な契約を扱う。 |
+| **CodingAgent + Sticky Note** | 非公式のメモリをグラフに置き、そのエージェントを制限する直接の設定箇所を提供する。 | なし | `sticky_note_read_only` | 未解決の判断、進捗、調査結果、handoffsを見える形で残す。 |
+| **CodingAgent + Terminal** | シェルをグラフから到達可能にし、そのエージェントを制限する直接の設定箇所を提供する。 | なし | `terminal_read_only` | 診断、テスト、ログ確認、または監督下のSSHセッション支援。 |
+| **CodingAgent + File** | ファイルシステム上の正規の情報源をグラフに置き、そのエージェントを制限する直接の設定箇所を提供する。 | なし | `file_read_only` | モジュール、PDF、画像、報告書、設定を具体的な対象にする。 |
+| **CodingAgent + Diagram** | 図のソースとレンダリング結果を、グラフから到達可能にする。 | なし | `diagram_read_only` | 視覚的な提案を作り、現在のソースのエラーを確認する。 |
 | **CodingAgent + WebBrowser** | そのWebBrowserのライブページへ、Agentが仲介されたアクセスを行えるようにする。 | なし | なし | 人とAgentが同じ可視状態で移動、入力、検証、証拠取得を行う。 |
-| **CodingAgent + CodingAgent** | 非同期メッセージ、返信、独立レビュー、並行作業のための到達可能なグラフを構成する。 | 既定の配信モード | After turn、Native input、Send now を制限 | BuilderがReviewerにレビューを依頼する。 |
+| **CodingAgent + CodingAgent** | 参加者を同じコンポーネントにまとめる。到達可能なCodingAgentsは互いにメッセージを交換できる。 | 既定の配信モード | After turn、Native input、Send now を制限 | BuilderがReviewerにレビューを依頼する。 |
 | **Specification + Terminal** | Specificationの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | SpecificationのMarkdownを検証、確認、比較する。 |
 | **File + Terminal** | Fileの正規絶対パスをTerminalセッションへ公開する。 | 環境変数名が必須 | なし | ウィンドウ間でパスをコピーせずにscriptやSQLファイルを使う。 |
-| **Trigger + CodingAgent** | 設定した時刻に、アクティブなセッションを持つCodingAgentへpromptを届ける。 | なし | なし | Maintainerを起こして障害を分析し、報告を書き、レビューを依頼する。 |
-| **Trigger + Terminal** | 設定した時刻に、Terminalのアクティブなセッションへコマンドを届ける。 | なし | なし | テスト、データベース検証、メンテナンスscriptを実行する。 |
+| **Diagram + Terminal** | Diagramのソースの正規絶対パスをセッションへ公開する。 | 環境変数名が必須 | なし | 図のソースをプロジェクトのツールへの入力に使う。 |
+| **Trigger + CodingAgent** | アクティブなセッションを持つCodingAgentを、Scheduleのプロンプトの対象に選ぶ。 | なし | なし | Maintainerを起こして障害を分析し、報告を書き、レビューを依頼する。 |
+| **Trigger + Terminal** | Terminalのアクティブなセッションを、Scheduleのコマンドの対象に選ぶ。 | なし | なし | テスト、データベース検証、メンテナンスscriptを実行する。 |
+
+CodingAgentとリソースの直接のConnectionだけが、そのリソースに到達する方法ではありません。
+そのエージェントのグラフに明示的に参加させる方法であり、そのペア固有のGuardrailを設定できる唯一の場所です。
 
 CodingAgent + WebBrowserには固有の契約があります。Connectionは、そのNodeの実際のページを、仲介された移動、
 操作、待機、取得に利用できるようにします。汎用Guardrailを継承せず、認証、サイト権限、人間の判断を迂回しません。
@@ -54,8 +54,7 @@ CodingAgent + WebBrowserには固有の契約があります。Connectionは、�
 
 ## Guardrailsは制限する。アクセスを付与するものではない
 
-Connectionは、そのペアに実装された能力を基本として始まります。Guardrailは、その基本動作に対してユーザーが
-選んだ制限を記録します。
+到達可能なNodesには、既定ではグラフからアクセスできます。Guardrailは、CodingAgentとリソースの直接のConnectionに、ユーザーが選んだ制限を記録します。
 
 | Guardrail | Connection | 効果 |
 | --- | --- | --- |
@@ -63,19 +62,20 @@ Connectionは、そのペアに実装された能力を基本として始まり�
 | `sticky_note_read_only` | CodingAgent + Sticky Note | 読み取りは維持し、内容のappendまたはreplaceを禁止する。 |
 | `terminal_read_only` | CodingAgent + Terminal | Terminalの確認は維持し、セッション、プロセス、入力を変更する操作を禁止する。 |
 | `file_read_only` | CodingAgent + File | agentが正規sourceを変更してはならないことを宣言する。 |
+| `diagram_read_only` | CodingAgent + Diagram | 読み取りと結果の確認を維持し、ソースへの書き込みを禁止する。Nodeの名前変更と削除も禁止する。 |
 | `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | そのペアの After turn 配信を拒否します。 |
 | `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | そのペアの Native input 配信を拒否します。 |
 | `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | そのペアの Send now と steering を拒否します。 |
 
 Guardrailsは、CodingAgentとリソース間の直接のConnectionに属します。グラフ内に別の経路があっても、その直接ペアに
 存在する制限は消えません。
+ただし、別のCodingAgentのConnectionにある制限は、そのリソース全体の方針にはなりません。
 
-Guardrailが操作を禁止している場合、Kavorを介した操作は効果を生む前に拒否されます。FilesやSpecificationsの
+Guardrailが操作を禁止している場合、Kavorを介した操作は効果を生む前に拒否されます。Files、Diagrams、Specificationsの
 本文は、ハーネス自身のfilesystemツールからアクセスできる場合もあります。その場合、Guardrailは目に見える
 監視対象の契約であり、OSのsandboxではありません。
 
-GuardrailはConnectionを作成せず、Nodeを到達可能にせず、権限を増やしません。リソースをグラフに参加させたく
-ない場合は、Connectionを作成しないでください。
+GuardrailはConnectionを作成せず、権限を増やさず、Canvas上で近くにあるだけのNodeには適用されません。
 
 ## CodingAgents 間の配信
 
@@ -91,12 +91,13 @@ GuardrailはConnectionを作成せず、Nodeを到達可能にせず、権限を
 
 ## 環境変数を持つConnections
 
-環境変数でパスを提供する組み合わせは二つです。
+環境変数でパスを提供する組み合わせは三つです。
 
 - **File + Terminal**
+- **Diagram + Terminal**
 - **Specification + Terminal**
 
-どちらの場合も、環境変数の名前を選びます。Terminalへ渡される値はsourceの正規絶対パスであり、ファイルの内容
+いずれの場合も、環境変数の名前を選びます。Terminalへ渡される値はsourceの正規絶対パスであり、ファイルの内容
 ではありません。
 
 たとえば、`CHECK_SQL`として接続されたFileは、shellで次のように利用できます。
@@ -109,18 +110,20 @@ KavorはTerminalセッションの開始時に値を適用します。shellが�
 変更された場合、変数の反映にはセッションの再起動が必要であることをUIが示します。`TERM`と`COLORTERM`は
 予約名であり、これらのパラメーターには使用できません。
 
-## Trigger固有の制限
+## Schedule固有の制限
 
-Triggerが直接持てる対象は最大1つで、CodingAgentまたはTerminalのいずれかです。Specification、File、
-Sticky Noteへ直接接続することはなく、1回の発火を複数の対象へ配信することもありません。
+ScheduleはKavorで利用できるTriggerの起点です。Triggerが直接持てる対象は最大一つで、CodingAgentまたはTerminalのいずれかです。
+Connectionが対象を選び、設定に対象のIDを重複して保持することはありません。
 
-グラフの残りの部分は、対象の権限を広げることなく、対象ができることを増やせます。Triggerによって起こされた
-CodingAgentは、同じGuardrailsとセッション制限のもとで、すでに到達可能なNodesと作業できます。
+Scheduleによって起こされたCodingAgentは、同じ制限とGuardrailsのもとで、到達可能なコンポーネント内のすべてのNodesと作業できます。
+Scheduleが加えるのは時刻とペイロードであり、新しい権限ではありません。
 
 配信にはKavorが実行中で、マシンが起動し、対象のセッションが開いていることが必要です。起動時には、実行中の
-Triggersの対象で、開いたままにする設定のセッションを、ユーザーの他のWorkspacesも含めて復元します。Triggerは
-意図的に閉じたセッションを開始せず、外部への作用をexactly-once操作に変えません。各TriggerFiringは確認可能な
-永続的結果を保持します。
+Triggersの対象で、開いたままにする設定のセッションを、ユーザーの他のWorkspacesも含めて復元します。Scheduleは
+意図的に閉じたセッションを開始せず、一度の発火を複数の対象へ配信せず、外部への作用が厳密に一度だけ起こるとは保証しません。
+対象へのConnectionを削除すると、Triggerは一時停止し、理由が記録されます。
+
+繰り返しの設定、`Run now`、永続的な履歴の読み方は、[Schedule：グラフに時計を与える](./schedule.md)を参照してください。
 
 ## 存在しない組み合わせ
 
@@ -146,23 +149,26 @@ Kavorは、マトリクスにないすべてのペアを拒否します。たと
 Nodeを自分自身に接続することもできません。同じ2つのendpointsを逆にしても、関係には永続化された方向がないため、
 別のConnectionにはなりません。
 
-Canvas上の近さ、メッセージ内での言及、同じWorkspaceへの参加は、Connectionの代わりになりません。このページに
-ない組み合わせは、別のNodeの近くに見えているだけでは能力を付与しません。
+これらの制限があっても、有用な構成は作れます。SpecificationとSticky Noteは、それぞれが対応するペアでCodingAgentsに接続されていれば、
+同じグラフに参加できます。存在しないのは、両者の直接のConnectionです。
+
+Canvas上の近さ、メッセージ内での言及、同じWorkspaceへの参加は、Connectionsの経路の代わりにはなりません。
 
 ## 仕事を解決する最小のConnectionを選ぶ
 
-2つのNodesを接続する前に、どの具体的な能力が不足しているかを考えてください。
+Connectionを作る前に、コンポーネントに何が足りないかを考えてください。
 
 - agentに永続的な意図が必要ですか？Specificationを接続します。
 - 人間とagentが作業メモリを共有する必要がありますか？Sticky Noteを接続します。
 - agentがプロセスを実行または監視する必要がありますか？Terminalを接続します。
 - 正規sourceを明示する必要がありますか？Fileを接続します。
+- ソースで編集できる視覚的な説明が必要ですか？[Diagram](./diagrams.md)を追加します。
 - 人とAgentにライブページが必要ですか？WebBrowserを接続します。
 - 別の視点が実装やレビューを改善しますか？別のCodingAgentを接続します。
-- 時間が本当に活動を始めるべきですか？Triggerは最後に追加します。
+- 時間が本当に活動を始めるべきですか？Scheduleは最後に追加します。
 
-良いConnectionは仕事をより明示的にします。何の能力を加えるのか説明できないなら、そのグラフにはおそらく
-不要です。
+すべてのCodingAgentを、すべてのリソースへ反射的に直接接続する必要はありません。
+全体を到達可能に保つ最小の構造にし、Canvasを読みやすくする場合、パラメーターを持たせる場合、固有のGuardrailが必要な場合に直接のConnectionを加えます。
 
 ## prompt をコピーして Connections を確認する
 
@@ -181,7 +187,7 @@ Canvas は変更しないでください。私が判断する前に提案と各�
 
 - 各参加者の責任を理解するには、[Nodesの中心ガイド](./nodes.md)を読んでください。
 - [CodingAgent](./coding-agent.md)、[Specification](./specification.md)、
-  [Terminal](./terminal.md)、[Sticky Note](./sticky-note.md)、[File](./file.md)、[WebBrowser](./web-browser.md)の
+  [Terminal](./terminal.md)、[Sticky Note](./sticky-note.md)、[File](./file.md)、[WebBrowser](./web-browser.md)、[Diagram](./diagrams.md)の
   専用ガイドで詳しく学んでください。
 - 意図、実装、レビュー、人間の判断を含む[最初のループを完了](./first-loop.md)してください。
-- グラフを広げる前に、[CodingAgentsと役割の選び方](./agents-and-roles.md)を確認してください。
+- [CodingAgentsがCanvasを見て構築する仕組み](./coding-agents-and-canvas.md)を確認してください。

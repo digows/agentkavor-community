@@ -3,7 +3,7 @@ id: connections
 title: Matriz de Connections suportadas no Kavor
 description: Consulte os pares de Nodes que podem ser conectados, seu papel estrutural, parâmetros, Guardrails e limites.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/pt-br/docs/connections
 ---
 
@@ -41,10 +41,12 @@ operação realizada, não à Connection desenhada no Canvas.
 | **CodingAgent + Sticky Note** | Coloca a memória informal no grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `sticky_note_read_only` | Decisões abertas, progresso, findings e handoffs visíveis. |
 | **CodingAgent + Terminal** | Coloca o shell ao alcance do grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `terminal_read_only` | Diagnóstico, testes, logs ou assistência em uma sessão SSH supervisionada. |
 | **CodingAgent + File** | Coloca uma fonte canônica do filesystem no grafo e oferece o ponto direto para restringir aquele agente. | Nenhum | `file_read_only` | Delimitar um módulo, PDF, imagem, relatório ou configuração. |
+| **CodingAgent + Diagram** | Coloca a fonte e o resultado de renderização do diagrama ao alcance do grafo. | Nenhum | `diagram_read_only` | Produzir uma proposta visual e conferir erros da fonte atual. |
 | **CodingAgent + WebBrowser** | Entrega ao agente acesso mediado às páginas vivas daquele WebBrowser. | Nenhum | Nenhum | Humano e agente navegando, preenchendo, verificando e capturando evidências no mesmo estado visível. |
 | **CodingAgent + CodingAgent** | Une participantes em um componente. Qualquer CodingAgent alcançável pode trocar mensagens com outro. | Modo padrão de entrega | Bloquear After turn, Native input ou Send now | Builder solicitando uma revisão ao Reviewer. |
 | **Specification + Terminal** | Exporta o caminho absoluto canônico da Specification para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Validar, inspecionar ou comparar o Markdown da Specification. |
 | **File + Terminal** | Exporta o caminho absoluto canônico do File para a sessão do Terminal. | Nome de variável de ambiente obrigatório | Nenhum | Executar um script ou usar um arquivo SQL sem copiar seu caminho entre janelas. |
+| **Diagram + Terminal** | Exporta o caminho absoluto canônico da fonte do Diagram para a sessão. | Nome de variável de ambiente obrigatório | Nenhum | Usar a fonte de um diagrama como entrada de uma ferramenta do projeto. |
 | **Trigger + CodingAgent** | Seleciona um CodingAgent com sessão ativa como alvo do prompt do Schedule. | Nenhum | Nenhum | Acordar um Maintainer para analisar falhas, escrever um relatório e pedir revisão. |
 | **Trigger + Terminal** | Seleciona uma sessão ativa de Terminal como alvo do comando do Schedule. | Nenhum | Nenhum | Rodar testes, uma verificação de banco ou um script de manutenção. |
 
@@ -68,6 +70,7 @@ Connection direta entre um CodingAgent e um recurso:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Mantém leitura e bloqueia append ou replace do conteúdo. |
 | `terminal_read_only` | CodingAgent + Terminal | Mantém inspeção e bloqueia operações que alterariam sessão, processo ou entrada. |
 | `file_read_only` | CodingAgent + File | Declara que a fonte canônica não deve ser alterada pelo agente. |
+| `diagram_read_only` | CodingAgent + Diagram | Preserva leitura e consulta do resultado; proíbe escrever na fonte e bloqueia renomear ou excluir o Node. |
 | `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Impede entrega por After turn entre o par. |
 | `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Impede entrega por Native input entre o par. |
 | `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Impede Send now e steering entre o par. |
@@ -75,7 +78,7 @@ Connection direta entre um CodingAgent e um recurso:
 Uma rota alternativa pelo grafo não apaga um Guardrail que ainda exista na Connection direta entre o agente e o
 recurso. Ao mesmo tempo, uma restrição na Connection de outro agente não vira uma política global daquele Node.
 
-Operações mediadas pelo Kavor são rejeitadas antes de produzir efeitos quando um Guardrail as bloqueia. Files e o
+Operações mediadas pelo Kavor são rejeitadas antes de produzir efeitos quando um Guardrail as bloqueia. Files, Diagrams e o
 corpo de Specifications também podem ser alcançados pelas ferramentas de filesystem do próprio harness; nesse caso,
 o Guardrail é um contrato visível e monitorado, não uma sandbox do sistema operacional.
 
@@ -84,12 +87,13 @@ Canvas.
 
 ## Connections com variáveis de ambiente
 
-Dois pares fornecem caminhos por variáveis de ambiente:
+Três pares fornecem caminhos por variáveis de ambiente:
 
 - **File + Terminal**;
+- **Diagram + Terminal**;
 - **Specification + Terminal**.
 
-Nos dois casos, você escolhe o nome de uma variável de ambiente. O valor fornecido ao Terminal é o caminho absoluto
+Nos três casos, você escolhe o nome de uma variável de ambiente. O valor fornecido ao Terminal é o caminho absoluto
 canônico da fonte — nunca o conteúdo do arquivo.
 
 Por exemplo, um File conectado como `CHECK_SQL` pode ser usado no shell assim:
@@ -174,6 +178,7 @@ Antes de criar uma Connection, pergunte o que falta ao componente:
 - memória de trabalho entre humano e agente: adicione uma Sticky Note;
 - execução ou evidência: adicione um Terminal;
 - uma fonte canônica explícita: adicione um File;
+- uma explicação visual editável como fonte: adicione um [Diagram](./diagrams.md);
 - uma página viva para humano e agente: adicione um WebBrowser;
 - outra perspectiva: adicione um CodingAgent;
 - tempo como causa legítima da atividade: adicione um Schedule por último.
@@ -202,6 +207,6 @@ acesso, não remove um Guardrail e não transforma Connections em setas de execu
 - Leia [o guia central de Nodes](./nodes.md) para entender a responsabilidade de cada participante.
 - Aprofunde-se nos guias dedicados de [CodingAgent](./coding-agent.md), [Specification](./specification.md) e
   [Terminal](./terminal.md), além de [Sticky Note](./sticky-note.md), [File](./file.md) e
-  [WebBrowser](./web-browser.md).
+  [WebBrowser](./web-browser.md) e [Diagramas](./diagrams.md).
 - [Feche seu primeiro loop](./first-loop.md) com intenção, implementação, revisão e decisão humana.
 - Veja [como CodingAgents enxergam e constroem o Canvas](./coding-agents-and-canvas.md).

@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: How CodingAgents see and build the Canvas
 description: Understand reachable context, agent messages, and atomic Canvas editing within limits you control.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/en/docs/coding-agents-and-canvas
 ---
 
@@ -47,6 +47,7 @@ Kavor favors useful context, not a permanent Workspace dump.
 - Specifications provide lifecycle, path, and recent outputs while canonical Markdown remains in the Workspace;
 - Terminals provide state and foreground command, while output is read when needed;
 - Files provide their canonical source, whose content remains in the filesystem;
+- Diagrams provide path and format; the agent queries on demand whether the current source rendered, failed, or has no valid result yet;
 - CodingAgents provide state and work facts; messages and completed turns from provider-native sessions are read
   when useful.
 
@@ -106,7 +107,7 @@ initiated by that agent and takes effect immediately without restarting the sess
 
 When enabled, the CodingAgent can, within its scope:
 
-- create active Nodes, including CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser, and Schedule;
+- create active Nodes, including CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser, and Schedule;
 - remove reachable Nodes, shutting down their execution when necessary;
 - create a canonical Specification and materialize it on the Canvas;
 - add supported Connections;
@@ -121,7 +122,12 @@ Layout remains available because moving a Node does not expand authority or alte
 
 This setting is also required when a CodingAgent starts, restarts, shuts down or forks another reachable CodingAgent. These actions follow the authorized request; they do not approve held messages or answer human dialogs.
 
-Removing a Node removes its Canvas presence and Connections; it does not delete the canonical File or Specification, or remove a Git worktree. If required teardown fails, Kavor reports a recoverable failure rather than claiming deletion completed normally.
+To draw an architecture or flow, request a [Diagram](./diagrams.md) with an explicit path and format. The agent can
+write the source and query its current result; it must not claim success from an old preview or bypass
+`diagram_read_only`. Drop, paste, and the clipboard remain human gestures; agents add sources by path, as explained in
+[Add content to the Canvas](./adding-content.md).
+
+Removing a Node removes its Canvas presence and Connections; it does not delete the source of a File, Diagram, or Specification, or remove a Git worktree. If required teardown fails, Kavor reports a recoverable failure rather than claiming deletion completed normally.
 
 ## Delegate to a genuinely ready session
 
@@ -137,7 +143,7 @@ To delegate work in a worktree:
 
 On failure, the coordinating agent should inspect the recipient's state and report the available stage and error. Correct the cause before Start or Retry. Do not create another Node just to hide a failed attempt, or resend a task merely because a reply has not arrived.
 
-Start and Restart wait for the native interface to become ready. That does not mean action approval, task success or permission to publish. Fork requires real provider support and history. See [session controls, worktrees and Fork](./coding-agent.md).
+Start and Restart wait for the native interface to become ready. That does not mean action approval, task success or permission to publish. Fork requires real provider support and history. See [session controls, worktrees and Fork](./coding-agent.md#start-restart-or-shut-down-execution).
 
 ## Structure follows the graph, not the entire Workspace
 

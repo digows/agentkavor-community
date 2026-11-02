@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Como CodingAgents enxergam e constroem o Canvas
 description: Entenda contexto alcançável, mensagens entre agentes e edição atômica do Canvas com limites controlados por você.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agents-and-canvas
 ---
 
@@ -48,6 +48,7 @@ Kavor favorece contexto útil, não um dump permanente do Workspace.
 - Specifications informam lifecycle, caminho e outputs recentes, enquanto o Markdown canônico continua no Workspace;
 - Terminals informam estado e comando em foreground, e o output é consultado quando necessário;
 - Files informam a fonte canônica, cujo conteúdo continua no filesystem;
+- Diagrams informam caminho e formato; o agente consulta sob demanda se a fonte atual renderizou, falhou ou ainda não possui resultado válido;
 - CodingAgents informam estado e fatos de trabalho; mensagens e turnos concluídos da sessão provider-native são
   consultados quando úteis.
 
@@ -113,7 +114,7 @@ estruturais iniciadas pelo agente e entra em vigor imediatamente, sem reiniciar 
 
 Com a opção ligada, o CodingAgent pode, dentro de seu escopo:
 
-- criar Nodes ativos, incluindo CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser e Schedule;
+- criar Nodes ativos, incluindo CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser e Schedule;
 - criar uma Specification canônica e materializá-la no Canvas;
 - adicionar Connections suportadas;
 - alterar parâmetros de Connections com Terminal;
@@ -129,8 +130,12 @@ e não insistir. Layout continua disponível porque mover um Node não amplia au
 Essa opção também é necessária quando um CodingAgent inicia, reinicia, encerra ou faz Fork de outro CodingAgent
 alcançável. Essas ações seguem o pedido autorizado; não aprovam mensagens retidas nem respondem diálogos humanos.
 
-Remover um Node retira sua presença e suas Connections do Canvas; não equivale a apagar o File ou a Specification
-canônica nem a remover um Git worktree. Se o encerramento necessário falhar, o Kavor informa a falha para recuperação,
+Para desenhar uma arquitetura ou fluxo, peça um [Diagram](./diagrams.md) com caminho e formato explícitos. O agente
+pode escrever a fonte e consultar seu resultado atual; não deve declarar sucesso a partir de um preview antigo nem
+contornar `diagram_read_only`. Drop, paste e clipboard continuam sendo gestos humanos; agentes adicionam fontes por
+caminho, como explicado em [Adicionar conteúdo ao Canvas](./adding-content.md).
+
+Remover um Node retira sua presença e suas Connections do Canvas; não equivale a apagar a fonte do File, Diagram ou Specification nem a remover um Git worktree. Se o encerramento necessário falhar, o Kavor informa a falha para recuperação,
 em vez de declarar que a exclusão terminou normalmente.
 
 ## Delegue a uma sessão realmente pronta

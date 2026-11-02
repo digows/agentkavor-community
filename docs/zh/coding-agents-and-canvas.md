@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: CodingAgents 如何查看和构建 Canvas
 description: 了解可达上下文、agent 消息，以及在你控制的边界内进行 Canvas 原子编辑。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agents-and-canvas
 ---
 
@@ -42,6 +42,7 @@ Kavor 优先提供有用上下文，而不是永久复制整个 Workspace。
 - Specifications 提供 lifecycle、路径和近期 outputs，规范 Markdown 仍留在 Workspace；
 - Terminals 提供状态和 foreground 命令，output 按需读取；
 - Files 提供规范来源，内容仍在 filesystem；
+- Diagrams 提供路径和格式；agent 按需查询当前源文件是渲染成功、失败，还是尚无有效结果；
 - CodingAgents 提供状态与工作事实，消息和 provider-native 会话中已完成的 turns 按需读取。
 
 大型或持续变化的内容不会不断复制进 context window。agent 得到清晰引用，从而保留推理空间并维护真实信息源。
@@ -86,7 +87,7 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 
 启用后，agent 可以在其范围内：
 
-- 创建活动 Nodes，包括 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Schedule；
+- 创建活动 Nodes，包括 CodingAgent、Specification、Sticky Note、Terminal、File、Diagram、WebBrowser 和 Schedule；
 - 删除可达 Nodes，并在必要时停止其执行；
 - 创建规范 Specification 并将其呈现在 Canvas；
 - 添加受支持 Connections，修改 Terminal Connection 参数；
@@ -99,7 +100,11 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 
 当 CodingAgent 启动、重启、停止或 Fork 另一个可达 CodingAgent 时，也需要启用此选项。这些操作必须遵循获授权的请求，不会批准被保留的消息，也不会代答人工对话框。
 
-删除 Node 会移除它在 Canvas 上的存在及其 Connections，但不会删除规范 File、Specification 或 Git worktree。如果必要的停止操作失败，Kavor 会报告可恢复的失败，而不会声称删除已正常完成。
+绘制架构或流程时，请请求具有明确路径和格式的 [Diagram](./diagrams.md)。agent 可以编写源文件并查询当前结果，
+不能凭旧预览宣称成功，也不能绕过 `diagram_read_only`。拖放、粘贴和剪贴板仍是人的操作；agent 通过路径添加来源，
+详见[向 Canvas 添加内容](./adding-content.md)。
+
+删除 Node 会移除它在 Canvas 上的存在及其 Connections，但不等于删除 File、Diagram 或 Specification 的源文件，也不会删除 Git worktree。如果必要的停止操作失败，Kavor 会报告可恢复的失败，而不会声称删除已正常完成。
 
 ## 将任务交给真正就绪的会话
 
@@ -115,7 +120,7 @@ Reachability 定义访问，Guardrail 定义限制。若 CodingAgent 与 Specifi
 
 失败时，协调 agent 应检查接收方状态，并报告可获得的阶段和错误。在 Start 或 Retry 前修复原因。不要为了隐藏失败尝试而创建另一个 Node，也不要仅因回复尚未到达就重发任务。
 
-Start 和 Restart 会等待原生界面就绪。这不代表操作已获批准、任务已成功或有权发布。Fork 需要 provider 的真实支持和历史。参见[会话控制、worktrees 和 Fork](./coding-agent.md)。
+Start 和 Restart 会等待原生界面就绪。这不代表操作已获批准、任务已成功或有权发布。Fork 需要 provider 的真实支持和历史。参见[会话控制、worktrees 和 Fork](./coding-agent.md#启动重启或停止执行)。
 
 ## 结构遵循图谱，而不是整个 Workspace
 

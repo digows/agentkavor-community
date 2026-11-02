@@ -3,7 +3,7 @@ id: specification
 title: "Specification no Kavor: pense com cuidado uma vez, implemente melhor"
 description: Estruture intenção, decisões e critérios em Markdown durável, organize múltiplas roots e conduza o lifecycle da Specification.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/pt-br/docs/specification
 ---
 
@@ -86,27 +86,30 @@ prova sozinho que todos os critérios foram satisfeitos. Tratar como Done contin
 Uma prática forte é separar autoria, implementação e revisão. O CodingAgent que ajudou a escrever pode esclarecer o
 contrato; outro implementa; um Reviewer independente compara resultado e critérios.
 
-## Organize mais de uma Specification root
+## Organize Specifications e Diagrams com Documentation roots
 
-Um Workspace pode manter Specifications em mais de uma pasta. Isso ajuda quando um único projeto já separa decisões
-por produto, engenharia, operações ou módulos — ou quando uma raiz única se tornou um depósito difícil de navegar.
+Um Workspace pode manter documentação em mais de uma pasta. **Documentation roots** são as raízes compartilhadas
+pela descoberta de Specifications e Diagrams. Isso ajuda quando um projeto separa decisões por produto, engenharia,
+operações ou módulos.
 
-Abra Workspace Settings e use **Specification roots** para adicionar, remover ou reordenar as pastas. As roots são:
+Abra Workspace Settings e use **Documentation roots** para adicionar, remover ou reordenar as pastas. As roots são:
 
 - relativas ao diretório do Workspace;
 - ordenadas;
 - únicas e não sobrepostas;
 - limitadas a 32 por Workspace.
 
+O Workspace começa com `docs`. Se usar `.` como raiz, ela deve ser a única, porque já abrange o Workspace inteiro.
+
 A primeira root é a **Primary** e recebe novas Specifications por padrão. Reordenar muda esse destino padrão; não move
 arquivos existentes. Remover uma root também não apaga seus arquivos. As Specifications fora das roots configuradas
-deixam de participar da listagem ativa e podem voltar quando a root for adicionada novamente.
+deixam de participar da listagem e seus Nodes ficam inativos; podem voltar quando a root for adicionada novamente.
+Um Diagram fora das roots continua utilizável no Canvas por seu caminho explícito, embora não apareça na descoberta
+do painel Diagrams.
 
 Quando mais de uma root existe, o painel de Specifications agrupa primeiro por root e depois pelas pastas reais do
 filesystem. O Canvas não cria uma taxonomia paralela: a organização continua sendo a estrutura de arquivos que você
 já possui.
-
-![Workspace Settings do Kavor com quatro roots de Specification configuradas](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
 
 ### Um desenho simples de roots
 
@@ -119,6 +122,15 @@ operations/   manutenção e mudanças operacionais
 
 Não crie roots apenas para reduzir a quantidade de itens em uma lista. Use-as quando cada pasta possui uma fronteira
 durável e compreensível para humanos e agentes.
+
+Para criar pela interface, a ação **Spec** na toolbar abre a criação inline no painel Specs.
+O formulário usa a primeira root configurada, sem um campo de pasta adicional; com o padrão do Workspace, o destino
+é `docs/`. Arrastar o item da toolbar para o Canvas preserva a posição escolhida até confirmar a criação.
+
+O mesmo disclosure de Settings contém **Diagrams folder**, uma pasta relativa à primeira root. Ela define onde novos
+Diagramas são criados, sem alterar o destino das Specifications. O padrão `diagrams` resulta em `docs/diagrams/` com
+a raiz `docs`; `architecture/diagrams` é um exemplo de subpasta válida. O destino calculado aparece na configuração.
+Mudar a pasta não move fontes existentes. Veja [Diagramas](./diagrams.md) para criação, descoberta e exemplos.
 
 ## O que a Specification ganha no grafo
 

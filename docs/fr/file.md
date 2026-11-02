@@ -3,7 +3,7 @@ id: file
 title: "File : contexte et portée sur le Canvas"
 description: Utilisez un File pour garder une source canonique visible, délimiter le contexte d'un CodingAgent et transmettre son chemin à un Terminal.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/fr/docs/file
 ---
 
@@ -20,15 +20,24 @@ clair quel contenu le travail doit lire, revoir, modifier ou utiliser comme entr
 
 ## Ce que fait un File
 
-À lui seul, un File permet de visualiser et d'utiliser une source du Workspace. Selon son format, Kavor propose
+À lui seul, un File permet de visualiser et d'utiliser une source dans ou hors du Workspace. Selon son format, Kavor propose
 l'édition de texte, la recherche, des préférences de lecture et un aperçu enrichi.
 
 Les formats texte incluent Plain Text, Markdown, JSON, SQL, TypeScript, JavaScript, YAML, Shell, HTML et CSS. Les
-images et les PDF peuvent être visualisés sur le Canvas ; un SVG peut alterner entre aperçu et source.
+images et les PDF peuvent être visualisés sur le Canvas ; un SVG ordinaire est affiché comme image dans un File.
+Pour travailler avec la source comme diagramme, ajoutez explicitement un [Diagram](./diagrams.md).
 
 Le File continue de pointer vers la vraie source. Si le fichier change en dehors de Kavor, le Node reflète ce changement
 et signale lorsqu'une modification locale doit être réconciliée. Vous ne confondez ainsi pas une copie de contexte
 avec l'artefact qui sera réellement versionné.
+
+Les fichiers externes affichent leur chemin absolu et l'indication `Outside this Workspace`. Comme les fichiers
+internes, ils reflètent les changements sur disque en direct ; une source supprimée est signalée comme indisponible.
+Le Node est une référence, pas une copie qui devient partie intégrante du projet.
+
+Pour ajouter par glisser-déposer, coller une image ou comprendre la carte des formats sans aperçu, consultez
+[Ajouter du contenu au Canvas](./adding-content.md). Ce guide explique aussi les limites d'affichage et Undo, sans
+confondre le retrait d'un Node avec la suppression de sa source.
 
 ## Un File comme portée explicite
 
@@ -44,7 +53,7 @@ Ajoutez le fichier comme File et rendez-le accessible au CodingAgent. Précisez 
 Lis le File connecté comme la source canonique de cette tâche. Explique ce qui doit changer, préserve la portée et n'édite qu'après ma confirmation du plan.
 ```
 
-**Résultat attendu:** L’agent explique un plan fondé sur la source réelle et attend votre confirmation avant modification. Il signale tout format qu’il ne peut pas lire.
+**Résultat attendu :** L’agent explique un plan fondé sur la source réelle et attend votre confirmation avant modification. Il signale tout format qu’il ne peut pas lire.
 
 Lorsque l'agent doit seulement consulter le contenu, utilisez le Guardrail file_read_only sur la Connection directe.
 L'agent peut toujours atteindre le File, mais ne peut pas modifier sa source par les opérations médiées par Kavor.
@@ -53,6 +62,12 @@ L'agent peut toujours atteindre le File, mais ne peut pas modifier sa source par
 
 Une Connection File + Terminal exporte le chemin absolu canonique du fichier vers la session au moyen d'un nom de
 variable d'environnement choisi par vous. La valeur est le chemin, pas une copie du contenu.
+
+Par exemple, un File connecté sous le nom `CHECK_SQL` peut être utilisé ainsi :
+
+```sh
+sqlite3 app.db < "$CHECK_SQL"
+```
 
 Le chemin est appliqué au démarrage de la session Terminal. Si vous modifiez la Connection ou son paramètre alors que
 le shell est déjà ouvert, l'interface indique que la session doit être redémarrée pour recevoir la nouvelle valeur.
@@ -87,12 +102,12 @@ findings. Demandez :
 Utilisez avec le Reviewer et le File du client HTTP accessible. Pour consigner les findings dans une note, identifiez la Sticky Note et autorisez cette écriture.
 
 ```prompt
-Examine le File du client HTTP, notamment les délais d'expiration, le retry et la gestion des erreurs. Utilise-le
+Examine le File du client HTTP, notamment les délais d'expiration, les nouvelles tentatives et la gestion des erreurs. Utilise-le
 comme cible de l'analyse. Si une conclusion dépend d'un autre fichier, identifie cette dépendance avant d'élargir
-l'enquête. Consigne uniquement les findings étayés par le code ou une reproduction et n'implémente pas de corrections.
+l'enquête. Consigne uniquement les constats étayés par le code ou une reproduction et n'implémente pas de corrections.
 ```
 
-**Résultat attendu:** Une revue ciblée distingue défauts démontrés et hypothèses et identifie les dépendances avant d’élargir l’investigation.
+**Résultat attendu :** Une revue ciblée distingue défauts démontrés et hypothèses et identifie les dépendances avant d’élargir l’investigation.
 
 Le résultat attendu est une revue ciblée, avec scénario et référence au passage pertinent. Le File explicite la
 cible ; il ne constitue pas un sandbox pour les outils natifs du harness. Délimitez le périmètre dans la demande et
@@ -110,7 +125,7 @@ chaque divergence, indique la page ou l'élément observé et consigne la questi
 de contenu que tu ne peux pas lire.
 ```
 
-**Résultat attendu:** La comparaison cite des pages ou éléments réellement lus. Les parties impossibles à interpréter sont explicites, sans exigences inventées.
+**Résultat attendu :** La comparaison cite des pages ou éléments réellement lus. Les parties impossibles à interpréter sont explicites, sans exigences inventées.
 
 Vous attendez une comparaison vérifiable, pas seulement un résumé. La capacité d'interprétation dépend du format et
 des outils disponibles dans le harness ; l'aperçu de Kavor garde la référence visible pour vous.

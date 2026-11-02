@@ -3,7 +3,7 @@ id: file
 title: "File：Canvas上のコンテキストとスコープ"
 description: Fileでcanonical sourceを見える形にし、CodingAgentのコンテキストを限定し、そのパスをTerminalへ渡します。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/ja/docs/file
 ---
 
@@ -20,14 +20,21 @@ Fileは使い捨ての添付ではありません。Canvas上でcanonicalなfile
 
 ## Fileでできること
 
-File単体でもWorkspaceのsourceを表示して扱えます。形式に応じて、Kavorはテキスト編集、検索、読み方の設定、
+File単体でもWorkspace内外のsourceを表示して扱えます。形式に応じて、Kavorはテキスト編集、検索、読み方の設定、
 リッチpreviewを提供します。
 
 テキスト形式にはPlain Text、Markdown、JSON、SQL、TypeScript、JavaScript、YAML、Shell、HTML、CSSがあります。
-画像とPDFはCanvasで表示でき、SVGはpreviewとsourceを切り替えられます。
+画像とPDFはCanvasで表示できます。通常のSVGはFile内に画像として表示されます。
+ソースを図として扱うには、明示的に[Diagram](./diagrams.md)として追加してください。
 
 Fileは実際のsourceを指し続けます。Kavor外でファイルが変更されるとNodeにも反映され、ローカル編集との調整が
 必要な場合は通知されます。コンテキストのコピーと、実際にversion管理されるartifactを混同しません。
+
+外部ファイルには絶対パスと`Outside this Workspace`が表示されます。内部のファイルと同様に、ディスク上の変更は随時反映され、
+参照元が削除されると利用不可になります。Nodeは参照であり、プロジェクトの一部になるコピーではありません。
+
+ドラッグ＆ドロップによる追加、画像の貼り付け、プレビューのない形式のカードについては、[Canvasにコンテンツを追加する](./adding-content.md)を参照してください。
+表示上限や、Nodeの取り消しと元のファイルの削除を混同しないためのUndoの扱いも説明しています。
 
 ## 明示的なスコープとしてのFile
 
@@ -39,7 +46,7 @@ CodingAgentに接続すると、Fileは一般的な意図を具体的な仕事�
 ファイルを File として追加し、CodingAgent から到達可能にしてください。依頼を貼り付ける前に、必要な変更を示します。
 
 ```prompt
-接続されたFileをこのタスクのcanonical sourceとして読んでください。必要な変更を説明し、スコープを保ち、私が計画を確認してから編集してください。
+接続されたFileをこのタスクの正規の情報源として読んでください。必要な変更を説明し、スコープを保ち、私が計画を確認してから編集してください。
 ```
 
 **期待する結果:** agent は実際の資料に基づく計画を説明し、確認を待ってから編集します。読めない形式があれば報告する必要があります。
@@ -51,6 +58,12 @@ Kavorが仲介する操作でsourceを変更できません。
 
 File + Terminal Connectionは、あなたが選ぶ環境変数名を通じてファイルのcanonical absolute pathをsessionへ
 渡します。値はパスであり、内容のコピーではありません。
+
+たとえば、`CHECK_SQL`として接続したFileは、次のように使えます。
+
+```sh
+sqlite3 app.db < "$CHECK_SQL"
+```
 
 パスはTerminal session開始時に適用されます。shellが開いた後でConnectionやparameterを変更すると、新しい値を
 受け取るにはsessionの再起動が必要だとUIが示します。
@@ -84,9 +97,9 @@ HTTPクライアントをFileとして追加し、Reviewerを接続してfinding
 HTTP クライアントの File を到達可能にし、Reviewer に依頼してください。指摘をメモに残す場合は Sticky Note を指定し、書き込みを許可します。
 
 ```prompt
-HTTPクライアントのFileを、特にtimeout、retry、エラー処理についてレビューしてください。分析の焦点として
+HTTPクライアントのFileを、特にタイムアウト、再試行、エラー処理についてレビューしてください。分析の焦点として
 使い、結論が他のファイルに依存するなら調査を広げる前に依存先を示してください。コードや再現で裏付けた
-findingsだけを記録し、修正は実装しないでください。
+指摘だけを記録し、修正は実装しないでください。
 ```
 
 **期待する結果:** 対象を絞ったレビューで実証された欠陥と仮説が分けられ、調査範囲を広げる前に追加の依存先が示されます。

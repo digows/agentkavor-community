@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Cómo CodingAgents ven y construyen el Canvas
 description: Comprende el contexto alcanzable, los mensajes entre agentes y la edición atómica del Canvas dentro de límites que tú controlas.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/es/docs/coding-agents-and-canvas
 ---
 
@@ -46,6 +46,7 @@ Kavor prioriza contexto útil, no un volcado permanente del Workspace.
 - Specifications informan lifecycle, ruta y outputs recientes; el Markdown canónico sigue en el Workspace;
 - Terminals informan estado y comando en foreground; el output se consulta cuando hace falta;
 - Files informan su fuente canónica; el contenido sigue en el filesystem;
+- Diagrams informan ruta y formato; el agente consulta bajo demanda si la fuente actual se renderizó, falló o aún no tiene un resultado válido;
 - CodingAgents informan estado y hechos de trabajo; los mensajes y turnos terminados de sesiones provider-native se
   consultan cuando son útiles.
 
@@ -93,11 +94,11 @@ cambios estructurales no.
 ## Allow workspace editing
 
 Cada CodingAgent tiene `Allow workspace editing` en la configuración avanzada. Controla cambios estructurales
-iniciados por el agente y actúa inmediatamente.
+iniciados por el agente y actúa inmediatamente, sin reiniciar la sesión.
 
 Cuando está activado, dentro de su alcance puede:
 
-- crear Nodes activos: CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser y Schedule;
+- crear Nodes activos: CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser y Schedule;
 - eliminar Nodes alcanzables, deteniendo su ejecución cuando sea necesario;
 - crear una Specification canónica y materializarla en el Canvas;
 - añadir Connections soportadas y cambiar parámetros de Connections con Terminal;
@@ -111,7 +112,12 @@ disponible porque mover un Node no amplía autoridad ni cambia contenido.
 
 Esta opción también es necesaria cuando un CodingAgent inicia, reinicia, detiene o hace Fork de otro CodingAgent alcanzable. Estas acciones siguen la petición autorizada; no aprueban mensajes retenidos ni responden diálogos humanos.
 
-Eliminar un Node quita su presencia y sus Connections del Canvas; no borra el File o la Specification canónica ni elimina un Git worktree. Si falla el cierre necesario, Kavor informa de un fallo recuperable en vez de afirmar que la eliminación terminó normalmente.
+Para dibujar una arquitectura o un flujo, pide un [Diagram](./diagrams.md) con ruta y formato explícitos. El agente
+puede escribir la fuente y consultar su resultado actual; no debe declarar éxito a partir de un preview antiguo ni
+eludir `diagram_read_only`. Arrastrar, pegar y usar el portapapeles siguen siendo gestos humanos; los agentes añaden
+fuentes por ruta, como se explica en [Añadir contenido al Canvas](./adding-content.md).
+
+Eliminar un Node quita su presencia y sus Connections del Canvas; no borra la fuente del File, Diagram o Specification ni elimina un Git worktree. Si falla el cierre necesario, Kavor informa de un fallo recuperable en vez de afirmar que la eliminación terminó normalmente.
 
 ## Delega a una sesión realmente lista
 
@@ -127,7 +133,7 @@ Para delegar trabajo en un worktree:
 
 Si hay un fallo, el agente coordinador debe consultar el estado del destinatario e informar de la etapa y el error disponibles. Corrige la causa antes de Start o Retry. No crees otro Node solo para ocultar un intento fallido ni reenvíes una tarea porque todavía no haya llegado la respuesta.
 
-Start y Restart esperan a que la interfaz nativa esté lista. Eso no significa aprobación de una acción, éxito de la tarea ni permiso para publicar. Fork necesita soporte e historial reales del provider. Consulta los [controles de sesión, worktrees y Fork](./coding-agent.md).
+Start y Restart esperan a que la interfaz nativa esté lista. Eso no significa aprobación de una acción, éxito de la tarea ni permiso para publicar. Fork necesita soporte e historial reales del provider. Consulta los [controles de sesión, worktrees y Fork](./coding-agent.md#inicia-reinicia-o-detén-la-ejecución).
 
 ## La estructura sigue el grafo, no todo el Workspace
 

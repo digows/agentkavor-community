@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-10-31.1
+releaseId: docs-2026-11-02.1
 sourceRepository: digows/agentkavor-community
 currentProductVersion: 2.3.0
-previousReleaseId: docs-2026-10-28.2
+previousReleaseId: docs-2026-10-31.1
 locales:
   - slug: en
     languageTag: en
@@ -33,10 +33,12 @@ navigation:
   - id: core-model
     documents:
       - nodes
+      - adding-content
       - connections
       - specification
       - sticky-note
       - file
+      - diagrams
       - terminal
       - web-browser
   - id: working-with-agents
@@ -592,3 +594,25 @@ documents:
     prerelease: true
     sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v1.0.0
     sourceBodySha256: d1f81c2fa7b06df44f430e6a6a5fa2df8183b55165848329041db484e7cf1979
+  - id: adding-content
+    kind: guide
+    slug: adding-content
+    path: adding-content.md
+    status: published
+    introducedIn: 2.3.0
+    lastVerifiedIn: 2.3.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete
+  - id: diagrams
+    kind: guide
+    slug: diagrams
+    path: diagrams.md
+    status: published
+    introducedIn: 2.3.0
+    lastVerifiedIn: 2.3.0
+    owner: Kavor
+    searchable: true
+    agentReadable: true
+    translationStatus: complete

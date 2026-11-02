@@ -3,7 +3,7 @@ id: file
 title: "File: contexto e escopo no Canvas"
 description: Use um File para manter uma fonte canônica visível, delimitar o contexto de um CodingAgent e levar seu caminho a um Terminal.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/pt-br/docs/file
 ---
 
@@ -20,15 +20,24 @@ qual material o trabalho deve ler, revisar, editar ou usar como entrada.
 
 ## O que o File faz
 
-Sozinho, o File permite visualizar e trabalhar com uma fonte do Workspace. Dependendo do formato, o Kavor oferece
+Sozinho, o File permite visualizar e trabalhar com uma fonte dentro ou fora do Workspace. Dependendo do formato, o Kavor oferece
 edição textual, busca, ajuste de leitura e preview rico.
 
 Os formatos textuais incluem Plain Text, Markdown, JSON, SQL, TypeScript, JavaScript, YAML, Shell, HTML e CSS. Imagens
-e PDFs podem ser visualizados no Canvas; SVG pode alternar entre preview e source.
+e PDFs podem ser visualizados no Canvas; um SVG comum é apresentado como imagem em um File. Para trabalhar
+com a fonte como diagrama, adicione explicitamente um [Diagram](./diagrams.md).
 
 O File continua apontando para a fonte real. Se o arquivo mudar fora do Kavor, o Node acompanha a mudança e sinaliza
 quando existe uma edição local que precisa ser reconciliada. Isso evita confundir uma cópia de contexto com o artefato
 que realmente será versionado.
+
+Arquivos externos mostram o caminho absoluto e o marcador `Outside this Workspace`. Assim como os internos,
+acompanham mudanças no disco ao vivo; a fonte removida aparece como indisponível. O Node é uma referência, não uma
+cópia que passa a pertencer ao projeto.
+
+Para adicionar por drag and drop, colar uma imagem ou entender o cartão de formatos sem preview, veja
+[Adicionar conteúdo ao Canvas](./adding-content.md). Esse guia também explica limites de visualização e Undo sem
+confundir a remoção de um Node com a exclusão de sua fonte.
 
 ## File como escopo explícito
 

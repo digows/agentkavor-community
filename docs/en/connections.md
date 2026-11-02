@@ -3,7 +3,7 @@ id: connections
 title: Supported Connections matrix in Kavor
 description: Consult directly connectable Node pairs, structural roles, parameters, Guardrails, and limits.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/en/docs/connections
 ---
 
@@ -39,10 +39,12 @@ The matrix lists direct pairs. Nodes without a supported direct pair can still s
 | **CodingAgent + Sticky Note** | Places informal memory in the graph and provides the direct restriction point. | None | `sticky_note_read_only` | Visible open decisions, progress, findings, and handoffs. |
 | **CodingAgent + Terminal** | Places the shell in reach and provides the direct restriction point. | None | `terminal_read_only` | Diagnostics, tests, logs, or a supervised SSH session. |
 | **CodingAgent + File** | Places a canonical filesystem source in the graph and provides the direct restriction point. | None | `file_read_only` | Delimit a module, PDF, image, report, or configuration. |
+| **CodingAgent + Diagram** | Places the diagram's source and render result within the graph's reach. | None | `diagram_read_only` | Produce a visual proposal and check errors in the current source. |
 | **CodingAgent + WebBrowser** | Gives the agent mediated access to that WebBrowser's live pages. | None | None | Human and agent navigating, filling, verifying, and capturing evidence in the same visible state. |
 | **CodingAgent + CodingAgent** | Joins participants in one component. Any reachable CodingAgent may message another. | Default delivery mode | Block After turn, Native input, or Send now | A Builder requesting review from a Reviewer. |
 | **Specification + Terminal** | Exports the Specification's canonical absolute path to the Terminal session. | Required environment variable name | None | Validate or compare Specification Markdown. |
 | **File + Terminal** | Exports the File's canonical absolute path to the Terminal session. | Required environment variable name | None | Run a script or SQL file without copying its path. |
+| **Diagram + Terminal** | Exports the Diagram source's canonical absolute path to the session. | Required environment variable name | None | Use diagram source as input to a project tool. |
 | **Trigger + CodingAgent** | Selects a CodingAgent with an active session as the target of the Schedule prompt. | None | None | Wake a Maintainer to analyze failures and request review. |
 | **Trigger + Terminal** | Selects an active Terminal session as the target of the Schedule command. | None | None | Run tests, a database check, or maintenance script. |
 
@@ -65,6 +67,7 @@ CodingAgent and a resource:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Preserves reading and blocks appending or replacing content. |
 | `terminal_read_only` | CodingAgent + Terminal | Preserves inspection and blocks operations that change the session, process, or input. |
 | `file_read_only` | CodingAgent + File | Declares that the agent must not change the canonical source. |
+| `diagram_read_only` | CodingAgent + Diagram | Preserves reading and result queries; prohibits writing source and blocks renaming or deleting the Node. |
 | `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Blocks After turn delivery between the pair. |
 | `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Blocks Native input delivery between the pair. |
 | `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Blocks Send now and steering between the pair. |
@@ -72,7 +75,7 @@ CodingAgent and a resource:
 Another route does not erase a Guardrail on the direct pair. A restriction on another agent's Connection also does
 not become a global resource policy.
 
-Kavor-mediated operations are rejected before effects when blocked. Files and Specification bodies may also be
+Kavor-mediated operations are rejected before effects when blocked. Files, Diagrams, and Specification bodies may also be
 reachable through the harness filesystem tools; there the Guardrail is a visible, monitored contract, not an OS
 sandbox. A Guardrail does not create a Connection, expand permissions, or apply merely because a Node is nearby.
 
@@ -90,7 +93,16 @@ A direct Connection Guardrail still applies when another graph route exists. Non
 
 ## Connections with environment variables
 
-Two pairs supply paths through environment variables:
+Three pairs supply paths through environment variables:
+
+- **File + Terminal**;
+- **Diagram + Terminal**;
+- **Specification + Terminal**.
+
+In all three cases, you choose an environment variable name. The value supplied to the Terminal is the source's
+canonical absolute path — never the file's content.
+
+For example, a File connected as `CHECK_SQL` can be used in the shell like this:
 
 ```sh
 sqlite3 app.db < "$CHECK_SQL"
@@ -135,6 +147,7 @@ Before creating a Connection, ask what the component lacks:
 - shared working memory: add a Sticky Note;
 - execution or evidence: add a Terminal;
 - an explicit canonical source: add a File;
+- a visual explanation editable as source: add a [Diagram](./diagrams.md);
 - a live page for human and agent: add a WebBrowser;
 - another perspective: add a CodingAgent;
 - time as a legitimate cause: add Schedule last.
@@ -160,7 +173,7 @@ Do not change the Canvas. Present the proposal and each change’s effect before
 
 - Read the [central Nodes guide](./nodes.md).
 - Go deeper with the dedicated [CodingAgent](./coding-agent.md), [Specification](./specification.md), and
-  [Terminal](./terminal.md), plus [Sticky Note](./sticky-note.md), [File](./file.md), and
-  [WebBrowser](./web-browser.md).
+  [Terminal](./terminal.md) guides, plus [Sticky Note](./sticky-note.md), [File](./file.md),
+  [WebBrowser](./web-browser.md), and [Diagrams](./diagrams.md).
 - [Close your first loop](./first-loop.md) with intent, implementation, review, and human decision.
 - See [how CodingAgents see and build the Canvas](./coding-agents-and-canvas.md).
