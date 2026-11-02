@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: KavorのNodes
-description: CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Triggerが単体でできることと、接続によって得られる能力を解説します。
+description: CodingAgent、Specification、Sticky Note、Terminal、File、Diagram、WebBrowser、Triggerが単体でできることと、接続によって得られる能力を解説します。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/ja/docs/nodes
 ---
 
@@ -14,12 +14,12 @@ Kavorは、お気に入りのcoding agentを手放したり、ターミナルを
 どの制約のもとで作業しているのかを見えるようにします。
 
 このCanvas上の第一級の要素は、すべて**Node**です。CodingAgentはNodeです。Specificationも同じです。
-Sticky Note、Terminal、File、Triggerも、それぞれ異なる責任を持って仕事に参加できるため、同じ空間に
+Sticky Note、Terminal、File、Diagram、WebBrowser、Triggerも、それぞれ異なる責任を持って仕事に参加できるため、同じ空間に
 置かれます。
 
-Nodeは単体でもすでに有用です。**Connection**を作成すると、その有用性が明示的な能力になります。
-複数のConnectionsがグラフを構成すれば、コンテキスト、実行、記憶、協働が、個別のウィンドウや
-セッションに散らばったままになりません。
+Nodeは単体でもすでに有用です。**Connection**を作成すると、到達可能なコンポーネントに参加します。
+そのグラフ内では、CodingAgentsは距離に関係なくコンテキスト、実行、記憶、協働を利用できます。
+リソースごとに直接のConnectionを作る必要はありません。
 
 これが基本モデルです。
 
@@ -35,18 +35,18 @@ Nodeは単体でもすでに有用です。**Connection**を作成すると、�
 
 ## Connectionが実際に変えるもの
 
-Connectionは、実務的な問いに答えます。**この2つのNodesは、一緒に何ができるのか？**
+Connectionは、まず実務的な問いに答えます。**これらのNodesは、どのグラフに参加しているのか？**
 
-組み合わせに応じて、CodingAgentはSpecificationを扱い、Sticky Noteに書き込み、Terminalを操作し、Fileを
-明示的なスコープとして扱い、別のCodingAgentと会話できるようになります。また、Fileの正規パスをTerminalに
-渡したり、指定時刻にアクティブなセッションを持つCodingAgentを起こしたりすることもできます。
+どのCodingAgentも、そのグラフから到達可能なNodesと作業し、同じコンポーネントの他のCodingAgentsと会話できます。
+直接のConnectionには固有の契約もあります。Scheduleの対象の選択、File・Diagram・Specificationの正規パスのTerminalへの提供、
+CodingAgentとリソース間のGuardrailの設定などです。
 
 同時に、Connectionは境界も定めます。
 
 - Canvas上で近くにあるNodes同士が、自動的にアクセス権を得ることはありません。
 - メッセージ内でNodeに言及しても、能力は付与されません。
-- Nodesのすべての組み合わせがサポートされているわけではありません。
-- Guardrailは、Connectionによって与えられた能力を制限できます。
+- Nodesのすべての組み合わせが直接接続できるわけではありません。非対応のペアでも、有効な経路で同じグラフに参加できます。
+- Guardrailは設定された直接のペアだけを制限し、別の経路があっても有効です。
 - グラフはコンテキストを到達可能にしますが、操作を自動承認するものではありません。
 
 結果は、魔法のように見せることより実用性を優先します。作業の前、最中、後に、その構造を確認できます。
@@ -64,7 +64,7 @@ Nodes や Connections の作成・削除や、グラフ外の内容の読み取�
 
 **期待する結果:** 利用できるコンテキストの短い見取り図と、必要な場合の提案が得られます。説明は自動パイプラインを作らず、新しいアクセスも許可しません。次の行動はあなたが決めます。
 
-## 7つのNodes
+## Nodeの種類
 
 ### CodingAgent：愛用のハーネスをグラフの参加者にする
 
@@ -76,9 +76,9 @@ Nodeです。KavorはClaude Code、Codex、Google Antigravityを汎用チャッ�
 などのネイティブ設定もそのまま利用できます。質問と判断に集中するSpec Writer、実装を担うBuilder、結果を
 検証するReviewerというように、責任を分けられます。
 
-CodingAgents同士を接続すると、非同期にメッセージを交換できます。会話はMessagesパネルに表示され続けるため、
-必要なときに介入できます。Specifications、Files、Sticky Notes、Terminalsに接続すれば、その作業にどの
-リソースが参加しているかもグラフから明確に分かります。
+同じ到達可能なコンポーネントに属するCodingAgentsは、直接のConnectionがなくても非同期にメッセージを交換できます。
+会話はMessagesパネルに表示され続けるため、必要なときに介入できます。到達可能なSpecifications、Files、Sticky Notes、Terminalsにより、
+その作業にどのリソースが参加しているかも明確に分かります。
 
 同じハーネスのまま、コンテキストと能力が見えるようになります。
 
@@ -122,7 +122,7 @@ CodingAgentを接続すると、人間とagentが同じTerminalで作業でき�
 コマンドを実行し、対応づけられた実行を追跡し、診断を支援できます。人間の入力が常に優先され、Guardrailに
 よってConnectionを読み取り専用にすることもできます。
 
-FilesとSpecificationsは、環境変数を使ってTerminalにパスを渡すこともできます。Triggerは、予定された
+Files、Diagrams、Specificationsは、環境変数を使ってTerminalにパスを渡すこともできます。Triggerは、予定された
 コマンドをアクティブなshellセッションへ直接届けられます。
 
 Terminalは、不透明な自動化の背後に実行を隠しません。プロセス、コマンド、結果は見えるままです。
@@ -138,6 +138,18 @@ Terminalに接続すると、Fileの絶対パスを環境変数として公開�
 script、SQLファイル、設定ファイルなどを、視覚的にコマンドの入力として利用できます。
 
 Fileは使い捨てのattachmentにはなりません。filesystem上の実体が、そのまま正規のsourceです。
+
+### Diagram：図としても読めるソース
+
+Diagramは、図のファイルをCanvasに表示します。CodingAgentにアーキテクチャ、フロー、データモデルの提案を作ってもらい、
+結果を確認し、ソースを編集して、説明対象のSpecificationの近くに図を置けます。
+Excalidrawでは視覚的な編集もできます。draw.ioはKavor内では表示専用です。
+
+ソースは実際のファイルのままです。拡張子で形式が決まりますが、SVGは例外です。通常のSVGはFileとして開き、明示的にDiagramとして追加する必要があります。
+TerminalとのConnectionはソースのパスを提供します。CodingAgentとの直接のGuardrailでは、ソースを読み取り専用にできます。
+
+形式の選択やコピーできるプロンプトの例は、[Diagramガイド](./diagrams.md)を参照してください。
+編集、レンダリング結果、ダウンロード、オフラインの制限を説明し、古いプレビューを新しいソースの成功と混同しないための確認方法も紹介しています。
 
 ### WebBrowser：人とAgentに開かれたWeb
 
@@ -161,9 +173,9 @@ CodingAgentに接続すると、単なる視覚的な参照ではなくなりま
 
 [人とCodingAgentが同じページで作業する様子を見る →](https://agentkavor.com/ja/videos/web-browser-node)
 
-### Trigger：活動を始める目に見えるきっかけ
+### Schedule：活動を始める目に見えるきっかけ
 
-Triggerは、時間に基づいて操作を予定します。OSのcronのようにTerminalへコマンドを届けることも、アクティブな
+ScheduleはKavorで利用できるTriggerの起点です。時間に基づいて操作を予定し、OSのcronのようにTerminalへコマンドを届けることも、アクティブな
 セッションを持つCodingAgentへ明確なpromptを送ることもできます。
 
 対象がすでに他のNodesへ接続されていると、その価値はさらに高まります。Triggerによって、Fileを確認し、
@@ -173,7 +185,7 @@ Terminalで検証を行い、Sticky Noteへ報告を書き、別のCodingAgent�
 こうしてカレンダー上の時刻が、小さな自律または半自律システムの起点になります。Triggerが活動を開始し、
 グラフがコンテキスト、ツール、メモリ、協働を提供します。
 
-Triggerは、何をすべきかを単独で判断せず、権限を拡張せず、人間が停止したままにしたセッションを開始しません。
+Scheduleは、何をすべきかを単独で判断せず、権限を拡張せず、人間が停止したままにしたセッションを開始しません。
 また、直接の対象は1つだけで、CodingAgentまたはTerminalのいずれかです。
 
 ## Nodesがグラフを構成するとき
@@ -214,45 +226,12 @@ SQLやscriptを含むFileが、環境変数を通じてTerminalへパスを提�
 
 ## 各Nodeを作り直さずにグラフを再利用する
 
-Builder、Reviewer、Sticky Noteのような小さな構成は、別の作業用にコピーしたり、別のWorkspaceへ移動できます。
-一緒に移すNodesをすべて選択してください。選択したNodes同士のConnectionsだけがキャプチャされます。
+うまく機能するループのNodesは、別のタスク用にコピーしたり、Workspace間で移動したりできます。
+システムのファイル、スクリーンショット、リンク、テキストも、ドラッグ＆ドロップやPasteでCanvasに追加できます。
+これらの操作はセッションを複製せず、ファイルへの参照をバイトのコピーに変えるものでもありません。
 
-### コピーまたは移動
-
-1. Canvas上でNodesを選択し、エディター、Terminal、WebBrowserページの外にフォーカスを置きます。
-2. コピーはmacOSで`⌘C`、Windows/Linuxで`Ctrl+C`、移動は`⌘X`または`Ctrl+X`です。
-   コンテキストメニューの`Copy Node` / `Copy Nodes`、`Cut Node` / `Cut Nodes`も使えます。
-3. 同じCanvasにとどまるか、移動先のWorkspaceを開きます。別のKavorウィンドウでも構いません。
-4. グループを配置したい場所にポインターを置き、`⌘V`または`Ctrl+V`を使います。Canvas上のポインター位置が
-   なければ表示領域の中央に貼り付けます。メニューからの貼り付けはメニューを開いた位置を使います。
-5. 作業を再開する前に、移動先のNodes、Connections、リソースを確認します。
-
-相対配置は保たれます。コピーは繰り返し貼り付けられますが、カットは移動完了時に消費されます。
-カットだけでは即座に削除されません。貼り付け前なら元のCanvasで`Esc`を押してキャンセルできます。
-完了した貼り付けにはUndo/Redoも使えますが、その後のNode変更を上書きする取り消しは拒否される場合があります。
-
-### 構造はセッションやバックアップではない
-
-グラフのクリップボードはKavorプロセスの実行中だけ存在します。アプリを再起動すると失われ、別のコピーで
-クリップボードを置き換えた場合も無効になることがあります。別のマシンへ共有するエクスポート形式ではありません。
-
-- **外部Connections：** 選択外のNodesへの接続はコピーされません。別のWorkspaceへ移動すると元の接続は
-  削除されます。必要なコンテキスト全体を選択してください。
-- **CodingAgentとTerminal：** コピーは会話、プロセス、実行履歴を複製しません。Workspace間の移動は元の
-  セッションを閉じます。CodingAgentはGit/worktreeの関連付けを引き継がず、移動先のWorkspaceのコンテキストで
-  開始します。作業前にディレクトリと設定を確認してください。
-- **File：** 同じ物理ファイルを参照し、バイトを複製しません。移動先にすでに実体化されたNodeがあれば再利用します。
-  ソースの編集は同じファイルに影響します。
-- **別のWorkspaceのSpecification：** Markdownは同じlifecycleの新しいSpecificationではなくFileとして現れます。
-  Specificationとメタデータは所有元のWorkspaceに残ります。
-- **Trigger：** コピーは一時停止状態で作られます。`Resume`前にターゲットとpayloadを確認してください。
-  未解決のdeliveryがあるTriggerは別のWorkspaceへ移せません。最終状態になってから再試行します。
-
-カットした選択が変わったりソースがなくなって貼り付けに失敗した場合は、元の状態を確認して再キャプチャしてください。
-グラフをコピーできたことは、agentの作業完了の証拠ではありません。
-
-CanvasのNodesではなく**セッションの入力に**ファイルや画像を貼る場合は、
-[Terminalの手順](./terminal.md#セッション入力にファイルと画像を貼り付ける)を使ってください。
+[Canvasにコンテンツを追加する](./adding-content.md)では、手順、クリップボードの優先順位、各Nodeの保持内容、Undoの効果をまとめています。
+動作中のループを移動する前に確認してください。
 
 ## Nodesの数ではなく、仕事から始める
 
@@ -266,7 +245,8 @@ Canvasが大きければ自動的に優れているわけではありません�
 6. 人間とagentが作業メモリを共有する必要があるならSticky Noteを使います。
 7. ライブページの観察や操作が必要ならWebBrowserを接続します。
 8. 独立レビューや並行作業が本当に結果を改善する場合に、別のCodingAgentを追加します。
-9. 時間が活動の正当な原因である場合に、Triggerを追加します。
+9. 判断、構造、フローを視覚的に明示する必要がある場合に、Diagramを追加します。
+10. 時間が活動の正当な原因である場合に、Triggerを追加します。
 
 目的はCanvasを埋めることではありません。理解できるほど小さく、意図、実行、証拠、判断を保てるほど十分な
 システムを作ることです。
@@ -279,4 +259,6 @@ Canvasが大きければ自動的に優れているわけではありません�
 - [Sticky Noteを共有ワーキングメモリとして使う方法](./sticky-note.md)を読みます。
 - [Fileがcanonical sourceをコンテキストとスコープにする仕組み](./file.md)を理解します。
 - [WebBrowser](./web-browser.md)でagentと一緒に開発、debug、testします。
+- [Scheduleでグラフに時計を与える方法](./schedule.md)を学びます。
+- [CodingAgentsがCanvasを見て構築する仕組み](./coding-agents-and-canvas.md)を理解します。
 - 製品モデル全体を振り返るには、[Kavorとは？](./what-is-kavor.md)に戻ります。

@@ -3,7 +3,7 @@ id: file
 title: "File：Canvas 上的上下文与范围"
 description: 使用 File 保持规范来源可见、限定 CodingAgent 的上下文，并将它的路径传给 Terminal。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/zh/docs/file
 ---
 
@@ -20,13 +20,20 @@ File 不是一次性的附件。它代表 Canvas 上的规范 filesystem 来源�
 
 ## File 能做什么
 
-File 自身允许你查看并使用 Workspace 来源。根据格式，Kavor 提供文本编辑、搜索、阅读偏好和丰富预览。
+File 自身允许你查看并使用 Workspace 内外的来源。根据格式，Kavor 提供文本编辑、搜索、阅读偏好和丰富预览。
 
 文本格式包括 Plain Text、Markdown、JSON、SQL、TypeScript、JavaScript、YAML、Shell、HTML 和 CSS。图片和 PDF
-可以在 Canvas 上查看；SVG 可以在预览和 source 之间切换。
+可以在 Canvas 上查看；普通 SVG 在 File 中作为图片显示。若要将源文件作为图表使用，请明确添加为
+[Diagram](./diagrams.md)。
 
 File 仍然指向真实来源。如果文件在 Kavor 外部发生变化，Node 会反映该变化，并在本地编辑需要协调时发出
 提示。这样可以避免把上下文副本误认为最终要版本控制的工件。
+
+外部文件显示绝对路径和 `Outside this Workspace` 标记。与内部文件一样，它们会实时反映磁盘变更；来源被删除时会显示为不可用。
+Node 是引用，不是因此归入项目的副本。
+
+有关拖放添加、粘贴图片，以及没有预览的格式卡片，请参见[向 Canvas 添加内容](./adding-content.md)。
+该指南也说明预览限制和 Undo，避免把移除 Node 与删除来源混为一谈。
 
 ## File 作为明确范围
 
@@ -50,6 +57,12 @@ PDF 供分析，或指出需要评审的配置。
 
 File + Terminal Connection 会通过你选择的环境变量名，把文件的规范绝对路径导出到 session。变量值是路径，
 不是内容副本。
+
+例如，连接为 `CHECK_SQL` 的 File 可以这样使用：
+
+```sh
+sqlite3 app.db < "$CHECK_SQL"
+```
 
 路径会在 Terminal session 启动时应用。如果 shell 已经打开时修改 Connection 或参数，界面会提示你重启
 session 才能获得新值。

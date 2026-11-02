@@ -3,7 +3,7 @@ id: coding-agents-and-canvas
 title: Comment les CodingAgents voient et construisent le Canvas
 description: Comprenez le contexte accessible, les messages entre agents et l’édition atomique du Canvas dans les limites que vous contrôlez.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agents-and-canvas
 ---
 
@@ -46,6 +46,8 @@ Kavor privilégie un contexte utile, pas une copie permanente du Workspace.
 - les Specifications exposent lifecycle, chemin et outputs récents, tandis que le Markdown canonique reste dans le Workspace ;
 - les Terminals exposent l’état et la commande foreground ; l’output est lu au besoin ;
 - les Files exposent leur source canonique ; le contenu reste dans le filesystem ;
+- les Diagrams exposent chemin et format ; l'agent consulte à la demande si la source actuelle a été rendue, a échoué
+  ou n'a pas encore de résultat valide ;
 - les CodingAgents exposent état et faits de travail ; les messages et tours terminés des sessions provider-native
   sont consultés si nécessaire.
 
@@ -98,7 +100,7 @@ modifications structurelles initiées par l’agent et s’applique immédiateme
 
 Lorsqu’elle est active, l’agent peut, dans sa portée :
 
-- créer des Nodes actifs : CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser et Schedule ;
+- créer des Nodes actifs : CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser et Schedule ;
 - supprimer des Nodes accessibles, en arrêtant leur exécution si nécessaire ;
 - créer une Specification canonique et la matérialiser dans le Canvas ;
 - ajouter des Connections prises en charge et modifier les paramètres Terminal ;
@@ -112,7 +114,12 @@ layout reste disponible, car déplacer un Node n’étend pas l’autorité et n
 
 Cette option est également requise lorsqu’un CodingAgent démarre, redémarre, arrête ou fait un Fork d’un autre CodingAgent accessible. Ces actions suivent la demande autorisée ; elles n’approuvent pas les messages retenus et ne répondent pas aux dialogues humains.
 
-Supprimer un Node retire sa présence et ses Connections du Canvas ; cela n’efface pas le File ou la Specification canonique et ne supprime pas un Git worktree. Si l’arrêt nécessaire échoue, Kavor signale un échec récupérable au lieu d’annoncer une suppression terminée normalement.
+Pour dessiner une architecture ou un flux, demandez un [Diagram](./diagrams.md) avec un chemin et un format explicites.
+L'agent peut écrire la source et consulter son résultat actuel ; il ne doit ni annoncer une réussite à partir d'un
+ancien aperçu ni contourner `diagram_read_only`. Glisser-déposer, collage et presse-papiers restent des gestes
+humains ; les agents ajoutent des sources par chemin, comme l'explique [Ajouter du contenu au Canvas](./adding-content.md).
+
+Supprimer un Node retire sa présence et ses Connections du Canvas ; cela n’efface pas la source du File, Diagram ou Specification et ne supprime pas un Git worktree. Si l’arrêt nécessaire échoue, Kavor signale un échec récupérable au lieu d’annoncer une suppression terminée normalement.
 
 ## Déléguer à une session réellement prête
 
@@ -128,7 +135,7 @@ Pour déléguer du travail dans un worktree :
 
 En cas d’échec, l’agent coordinateur doit consulter l’état du destinataire et signaler l’étape et l’erreur disponibles. Corrigez la cause avant Start ou Retry. Ne créez pas un autre Node pour masquer une tentative échouée et ne renvoyez pas une tâche uniquement parce que la réponse n’est pas encore arrivée.
 
-Start et Restart attendent que l’interface native soit prête. Cela ne signifie ni approbation d’une action, ni réussite de la tâche, ni autorisation de publier. Fork nécessite un historique et un support réels du provider. Consultez les [contrôles de session, worktrees et Fork](./coding-agent.md).
+Start et Restart attendent que l’interface native soit prête. Cela ne signifie ni approbation d’une action, ni réussite de la tâche, ni autorisation de publier. Fork nécessite un historique et un support réels du provider. Consultez les [contrôles de session, worktrees et Fork](./coding-agent.md#démarrer-redémarrer-ou-arrêter-lexécution).
 
 ## La structure suit le graphe, pas tout le Workspace
 
@@ -185,7 +192,7 @@ Consulte la documentation officielle de Kavor et le graphe actuel. Explique la p
 cette tâche, les Nodes accessibles et les limites restantes. Ne modifie pas encore le Canvas.
 ```
 
-**Résultat attendu:** La proposition identifie ressources, Connections et limites sans modifier le Canvas. Voir le layout ne donne pas accès au contenu hors du graphe.
+**Résultat attendu :** La proposition identifie ressources, Connections et limites sans modifier le Canvas. Voir le layout ne donne pas accès au contenu hors du graphe.
 
 ### Construire une boucle révisable
 
@@ -193,10 +200,10 @@ Décrivez d’abord une petite tâche. Activez `Allow workspace editing` pour au
 
 ```prompt
 Construis une petite boucle avec une Specification, un Builder, un Reviewer et une Sticky Note. Utilise le minimum
-de Connections, crée et connecte les Nodes en un changement atomique, puis arrête-toi avant l’implémentation.
+de Connections, crée et connecte les nouveaux Nodes en un changement atomique, puis arrête-toi avant l’implémentation pour que je puisse examiner le Canvas.
 ```
 
-**Résultat attendu:** Un loop connecté est prêt à être examiné, ou l’agent indique la restriction empêchant sa création. Cette demande ne doit pas lancer l’implémentation.
+**Résultat attendu :** Une boucle connectée est prête à être examinée, ou l’agent indique la restriction empêchant sa création. Cette demande ne doit pas lancer l’implémentation.
 
 ### Organiser sans étendre l’accès
 
@@ -207,7 +214,7 @@ Organise visuellement le Canvas pour rendre intention, implémentation, revue et
 retire de Connections, ne modifie pas les Guardrails et ne suppose aucun accès hors de ton graphe.
 ```
 
-**Résultat attendu:** Le layout devient plus lisible en préservant Connections, Guardrails et frontières du contenu accessible.
+**Résultat attendu :** Le layout devient plus lisible en préservant Connections, Guardrails et frontières du contenu accessible.
 
 ## Checklist avant d’autoriser une modification
 

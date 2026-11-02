@@ -1,61 +1,67 @@
 ---
 id: connections
 title: Matriz de Connections soportadas en Kavor
-description: Consulta las combinaciones soportadas entre Nodes, las capacidades concedidas, los parámetros necesarios y los Guardrails disponibles.
+description: Consulta los pares de Nodes que pueden conectarse, su función estructural, parámetros, Guardrails y límites.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/es/docs/connections
 ---
 
 # Matriz de Connections soportadas en Kavor
 
-Una Connection no es solo una línea dibujada en el Canvas. Declara que dos Nodes participan en el mismo grafo y
-define las capacidades que esa combinación añade al trabajo.
+Una Connection no es una flecha de workflow. Es una relación explícita y sin dirección que sitúa dos Nodes en el
+mismo componente alcanzable del Canvas.
 
-No todas las combinaciones son válidas. Cada par soportado tiene un contrato específico: algunas Connections hacen
-alcanzable el contexto, otras permiten operaciones mediadas por Kavor y dos proporcionan rutas canónicas a un Terminal
-mediante variables de entorno.
+Para un CodingAgent importa el grafo entero: puede trabajar con cualquier Node alcanzable por un camino de
+Connections válidas, aunque el recurso no esté conectado directamente a él. La Connection directa sigue siendo
+importante cuando selecciona el objetivo de un Schedule, lleva parámetros o mantiene un Guardrail específico entre
+un CodingAgent y un recurso.
 
-Esta página es la referencia pública de esos contratos.
+Esta página es la referencia pública de los pares que Kavor permite conectar directamente y del contrato especial
+de cada par.
 
-## Cómo leer una Connection
+## Cuatro reglas para leer el grafo
 
-Una Connection tiene tres responsabilidades diferentes:
+1. **Las Connections no tienen dirección persistida.** El orden de los endpoints no expresa flujo, control ni precedencia.
+2. **El alcance es transitivo.** Si existe un camino válido entre un CodingAgent y otro Node, ambos pertenecen al
+   mismo grafo de contexto y capacidades.
+3. **Algunas reglas siguen siendo directas.** Un Guardrail pertenece a la Connection exacta que lo lleva; los
+   parámetros de Terminal pertenecen a su par; un Trigger selecciona su único objetivo mediante la Connection directa.
+4. **Un par no soportado significa «sin Connection directa».** Dos Nodes aún pueden participar en el mismo
+   componente mediante otros pares soportados.
 
-1. **Existencia:** conecta los Nodes en un mismo componente alcanzable del grafo.
-2. **Parámetros:** registra una configuración obligatoria cuando la combinación la necesita.
-3. **Guardrails:** resta capacidades al comportamiento normalmente permitido entre los dos Nodes.
-
-Las Connections son relaciones bidireccionales. Kavor almacena ambos endpoints en orden canónico, pero ese orden no
-expresa flujo, control ni precedencia. Un mensaje sigue teniendo remitente y destinatario; un Trigger sigue teniendo
-un objetivo. Esas direcciones pertenecen a la operación, no a la Connection persistida.
-
-La matriz enumera pares directos. Nodes sin un par directo compatible pueden compartir un componente alcanzable mediante otras Connections admitidas; la proximidad visual no concede acceso.
+Un mensaje sigue teniendo remitente y destinatario. Un Schedule sigue entregando a un objetivo. Esas direcciones
+pertenecen a la operación realizada, no a la Connection dibujada en el Canvas.
 
 ## Combinaciones soportadas
 
-| Par de Nodes | Qué permite la Connection | Parámetros | Guardrail disponible | Ejemplo principal |
+| Par de Nodes | Función de la Connection directa | Parámetros | Guardrail disponible | Ejemplo principal |
 | --- | --- | --- | --- | --- |
-| **CodingAgent + Specification** | Leer metadatos y Markdown canónico, trabajar con el lifecycle y registrar outputs duraderos cuando esté permitido. | Ninguno | `specification_read_only` | Spec Writer, Builder y Reviewer compartiendo el mismo contrato. |
-| **CodingAgent + Sticky Note** | Leer y escribir memoria informal en Markdown con control de versión; cada escritura elige append o replace. | Ninguno | `sticky_note_read_only` | Decisiones abiertas, progreso, findings y handoffs visibles. |
-| **CodingAgent + Terminal** | Leer output, ejecutar comandos, seguir o interrumpir una ejecución correlacionada e interactuar con el proceso en foreground cuando esté permitido. | Ninguno | `terminal_read_only` | Diagnóstico, tests, logs o asistencia en una sesión SSH supervisada. |
-| **CodingAgent + File** | Hacer explícita en el grafo una fuente canónica del filesystem para leerla, revisarla o modificarla cuando esté permitido. | Ninguno | `file_read_only` | Delimitar un módulo, PDF, imagen, informe o configuración. |
+| **CodingAgent + Specification** | Sitúa la intención duradera en el grafo y ofrece el punto directo para restringir a ese agente. | Ninguno | `specification_read_only` | Spec Writer, Builder y Reviewer trabajando con el mismo contrato alcanzable. |
+| **CodingAgent + Sticky Note** | Sitúa la memoria informal en el grafo y ofrece el punto directo para restringir a ese agente. | Ninguno | `sticky_note_read_only` | Decisiones abiertas, progreso, findings y handoffs visibles. |
+| **CodingAgent + Terminal** | Pone el shell al alcance del grafo y ofrece el punto directo para restringir a ese agente. | Ninguno | `terminal_read_only` | Diagnóstico, tests, logs o asistencia en una sesión SSH supervisada. |
+| **CodingAgent + File** | Sitúa una fuente canónica del filesystem en el grafo y ofrece el punto directo para restringir a ese agente. | Ninguno | `file_read_only` | Delimitar un módulo, PDF, imagen, informe o configuración. |
+| **CodingAgent + Diagram** | Pone la fuente y el resultado de renderización del diagrama al alcance del grafo. | Ninguno | `diagram_read_only` | Producir una propuesta visual y comprobar los errores de la fuente actual. |
 | **CodingAgent + WebBrowser** | Dar al agente acceso mediado a las páginas vivas de ese WebBrowser. | Ninguno | Ninguno | Persona y agente navegando, completando, verificando y capturando evidencia en el mismo estado visible. |
-| **CodingAgent + CodingAgent** | Formar un grafo alcanzable para mensajes asíncronos, respuestas, revisión independiente y trabajo paralelo. | Modo predeterminado de entrega | Bloquear After turn, Native input o Send now | Un Builder solicitando revisión a un Reviewer. |
+| **CodingAgent + CodingAgent** | Une participantes en un componente. Cualquier CodingAgent alcanzable puede intercambiar mensajes con otro. | Modo predeterminado de entrega | Bloquear After turn, Native input o Send now | Un Builder solicitando revisión a un Reviewer. |
 | **Specification + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica de la Specification. | Nombre obligatorio de variable de entorno | Ninguno | Validar, inspeccionar o comparar el Markdown de una Specification. |
 | **File + Terminal** | Exportar a la sesión del Terminal la ruta absoluta canónica del File. | Nombre obligatorio de variable de entorno | Ninguno | Ejecutar un script o usar un archivo SQL sin copiar su ruta entre ventanas. |
-| **Trigger + CodingAgent** | Entregar en un horario configurado un prompt a un CodingAgent con sesión activa. | Ninguno | Ninguno | Despertar a un Maintainer para analizar fallos, escribir un informe y pedir revisión. |
-| **Trigger + Terminal** | Entregar en un horario configurado un comando a la sesión activa de un Terminal. | Ninguno | Ninguno | Ejecutar tests, una verificación de base de datos o un script de mantenimiento. |
+| **Diagram + Terminal** | Exporta a la sesión la ruta absoluta canónica de la fuente del Diagram. | Nombre obligatorio de variable de entorno | Ninguno | Usar la fuente de un diagrama como entrada de una herramienta del proyecto. |
+| **Trigger + CodingAgent** | Selecciona un CodingAgent con sesión activa como objetivo del prompt de Schedule. | Ninguno | Ninguno | Despertar a un Maintainer para analizar fallos, escribir un informe y pedir revisión. |
+| **Trigger + Terminal** | Selecciona una sesión activa de Terminal como objetivo del comando de Schedule. | Ninguno | Ninguno | Ejecutar tests, una verificación de base de datos o un script de mantenimiento. |
+
+Las Connections entre CodingAgent y recurso no son la única forma de alcanzar el recurso. Son la forma más explícita
+de situarlo en el grafo de ese agente y la única superficie donde puede existir un Guardrail específico para ese par.
 
 CodingAgent + WebBrowser posee un contrato propio: la Connection permite navegar, interactuar, esperar y capturar
 las páginas reales de ese Node mediante operaciones controladas. No hereda un Guardrail genérico ni evita
 autenticación, permisos del sitio o decisiones humanas. El perfil dedicado acepta certificados de desarrollo no
 válidos; es un comportamiento explícito del navegador, no un permiso creado por la Connection.
 
-## Los Guardrails restringen; no conceden acceso
+## Los Guardrails restringen un par directo
 
-Una Connection comienza con las capacidades implementadas para esa combinación. Un Guardrail registra una restricción
-elegida por el usuario sobre esa base:
+El grafo está abierto por defecto para los Nodes alcanzables. Un Guardrail registra una restricción elegida por el
+usuario en la Connection directa entre un CodingAgent y un recurso:
 
 | Guardrail | Connection | Efecto |
 | --- | --- | --- |
@@ -63,19 +69,20 @@ elegida por el usuario sobre esa base:
 | `sticky_note_read_only` | CodingAgent + Sticky Note | Mantiene la lectura y bloquea append o replace del contenido. |
 | `terminal_read_only` | CodingAgent + Terminal | Mantiene la inspección del Terminal y bloquea operaciones que alterarían la sesión, el proceso o su entrada. |
 | `file_read_only` | CodingAgent + File | Declara que el agente no debe modificar la fuente canónica. |
+| `diagram_read_only` | CodingAgent + Diagram | Conserva la lectura y la consulta del resultado; prohíbe escribir en la fuente y bloquea renombrar o eliminar el Node. |
 | `coding_agent_message_after_turn_blocked` | CodingAgent + CodingAgent | Bloquea la entrega After turn entre el par. |
 | `coding_agent_message_native_blocked` | CodingAgent + CodingAgent | Bloquea la entrega Native input entre el par. |
 | `coding_agent_message_immediate_blocked` | CodingAgent + CodingAgent | Bloquea Send now y steering entre el par. |
 
-Los Guardrails pertenecen a la Connection directa entre el CodingAgent y el recurso. Una ruta alternativa por el
-grafo no elimina una restricción existente en ese par directo.
+Una ruta alternativa por el grafo no elimina un Guardrail que siga existiendo en la Connection directa entre el
+agente y el recurso. A su vez, una restricción en la Connection de otro agente no se convierte en una política
+global de ese Node.
 
-Las operaciones mediadas por Kavor se rechazan antes de producir efectos cuando un Guardrail las bloquea. Los Files y
+Las operaciones mediadas por Kavor se rechazan antes de producir efectos cuando un Guardrail las bloquea. Los Files, Diagrams y
 el cuerpo de las Specifications también pueden ser accesibles mediante las herramientas de filesystem del harness;
 allí el Guardrail es un contrato visible y monitorizado, no una sandbox del sistema operativo.
 
-Un Guardrail no crea una Connection, no hace alcanzable un Node y no aumenta permisos. Si un recurso no debe participar
-en el grafo, no crees la Connection.
+Un Guardrail no crea una Connection, no amplía permisos ni se aplica a un Node solo por estar cerca en el Canvas.
 
 ## Entrega entre CodingAgents
 
@@ -91,12 +98,13 @@ Un Guardrail directo sigue vigente aunque exista otra ruta en el grafo. Ningún 
 
 ## Connections con variables de entorno
 
-Dos pares suministran rutas mediante variables de entorno:
+Tres pares suministran rutas mediante variables de entorno:
 
 - **File + Terminal**;
+- **Diagram + Terminal**;
 - **Specification + Terminal**.
 
-En ambos casos eliges el nombre de una variable de entorno. El valor entregado al Terminal es la ruta absoluta
+En los tres casos eliges el nombre de una variable de entorno. El valor entregado al Terminal es la ruta absoluta
 canónica de la fuente, nunca el contenido del archivo.
 
 Por ejemplo, un File conectado como `CHECK_SQL` puede usarse en el shell así:
@@ -109,20 +117,24 @@ Kavor aplica el valor al iniciar la sesión del Terminal. Si la Connection o su 
 abierto, la interfaz indica que la variable espera el reinicio de la sesión. `TERM` y `COLORTERM` son nombres reservados
 y no pueden usarse en estos parámetros.
 
-## El límite especial de un Trigger
+## El límite especial de un Schedule
 
-Un Trigger tiene como máximo un objetivo directo: un CodingAgent o un Terminal. No se conecta directamente a una
-Specification, File o Sticky Note ni distribuye el mismo disparo a varios objetivos.
+Schedule es la fuente de Trigger disponible en el producto. Cada Trigger tiene como máximo un objetivo directo:
+un CodingAgent o un Terminal. La Connection selecciona ese objetivo; su id no se duplica en la configuración.
 
-El resto del grafo puede ampliar lo que el objetivo puede hacer sin ampliar sus permisos. Un CodingAgent despertado
-por un Trigger puede trabajar con Nodes ya alcanzables bajo los mismos Guardrails y límites de sesión.
+Un CodingAgent despertado por Schedule puede trabajar con todos los Nodes de su componente alcanzable, bajo los
+mismos límites y Guardrails que ya tenía. Schedule añade el momento y el payload, no nuevos permisos.
 
 Para que la entrega ocurra, Kavor debe estar en ejecución, la máquina despierta y la sesión del objetivo abierta. Al
 iniciar, Kavor restaura las sesiones marcadas para permanecer abiertas cuando son objetivo de Triggers en ejecución,
-incluso en otros Workspaces del usuario. Un Trigger no inicia una sesión cerrada deliberadamente ni convierte efectos
-externos en operaciones exactly-once. Cada TriggerFiring conserva su resultado duradero para inspección.
+incluso en otros Workspaces del usuario. Schedule no inicia una sesión cerrada deliberadamente, no distribuye un
+disparo a varios objetivos ni promete efectos externos exactamente una vez. Eliminar su Connection de objetivo
+pausa el Trigger y registra el motivo.
 
-## Combinaciones que no existen
+Lee [Schedule: dale un reloj a tu grafo](./schedule.md) para configurar recurrencia, usar `Run now` e interpretar el
+historial duradero.
+
+## Combinaciones que no existen directamente
 
 Kavor rechaza cualquier par ausente de la matriz. Esto incluye, entre otros:
 
@@ -146,23 +158,29 @@ Kavor rechaza cualquier par ausente de la matriz. Esto incluye, entre otros:
 Un Node tampoco puede conectarse consigo mismo. Invertir los mismos endpoints no crea otra Connection, pues la relación
 persistida no tiene dirección.
 
-La proximidad en el Canvas, una mención en un mensaje o la pertenencia al mismo Workspace no sustituyen una Connection.
-Si una combinación no aparece en esta página, estar cerca visualmente de otro Node no le concede capacidades.
+Estos límites no impiden composiciones útiles. Una Specification y una Sticky Note, por ejemplo, pueden participar
+en el mismo grafo cuando ambas están conectadas a CodingAgents mediante pares soportados. Lo que no existe es una
+Connection directa entre ellas.
 
-## Elige la Connection mínima que resuelva el trabajo
+La proximidad en el Canvas, una mención en un mensaje o la pertenencia al mismo Workspace no sustituyen un camino
+de Connections.
 
-Antes de conectar dos Nodes, pregunta qué capacidad concreta falta:
+## Elige la estructura mínima que resuelva el trabajo
 
-- ¿el agente necesita intención duradera? Conecta una Specification;
-- ¿humano y agente necesitan memoria de trabajo compartida? Conecta una Sticky Note;
-- ¿el agente necesita ejecutar u observar un proceso? Conecta un Terminal;
-- ¿una fuente canónica debe quedar explícita? Conecta un File;
-- ¿persona y agente necesitan una página viva? Conecta un WebBrowser;
-- ¿otro punto de vista mejoraría la implementación o revisión? Conecta otro CodingAgent;
-- ¿el tiempo debe iniciar realmente la actividad? Añade un Trigger al final.
+Antes de crear una Connection, pregunta qué falta en el componente:
 
-Una buena Connection hace el trabajo más explícito. Si no puedes nombrar la capacidad que añade, probablemente el
-grafo no la necesita.
+- intención duradera: añade una Specification;
+- memoria de trabajo entre persona y agente: añade una Sticky Note;
+- ejecución o evidencia: añade un Terminal;
+- una fuente canónica explícita: añade un File;
+- una explicación visual editable como fuente: añade un [Diagram](./diagrams.md);
+- una página viva para persona y agente: añade un WebBrowser;
+- otra perspectiva: añade un CodingAgent;
+- tiempo como causa legítima de actividad: añade un Schedule al final.
+
+No conectes por reflejo cada CodingAgent directamente a cada recurso. Crea la topología mínima que mantenga todo
+alcanzable y añade una Connection directa cuando mejore la lectura del Canvas, lleve un parámetro o necesite un
+Guardrail propio.
 
 ## Copia un prompt para revisar las Connections
 
@@ -182,6 +200,6 @@ No modifiques el Canvas. Presenta la propuesta y el efecto de cada cambio antes 
 - Lee la [guía central de Nodes](./nodes.md) para entender la responsabilidad de cada participante.
 - Profundiza con las guías de [CodingAgent](./coding-agent.md), [Specification](./specification.md) y
   [Terminal](./terminal.md), además de [Sticky Note](./sticky-note.md), [File](./file.md) y
-  [WebBrowser](./web-browser.md).
+  [WebBrowser](./web-browser.md) y [Diagramas](./diagrams.md).
 - [Cierra tu primer loop](./first-loop.md) con intención, implementación, revisión y decisión humana.
-- Aprende [cómo elegir CodingAgents y papeles](./agents-and-roles.md) antes de ampliar el grafo.
+- Aprende [cómo ven y construyen el Canvas los CodingAgents](./coding-agents-and-canvas.md).

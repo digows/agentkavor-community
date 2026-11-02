@@ -1,9 +1,9 @@
 ---
 id: coding-agents-and-canvas
 title: CodingAgents が Canvas を見て構築する仕組み
-description: 到達可能な context、agent 間 message、人が制御する境界内での Canvas の atomic editing を理解します。
+description: 到達可能なコンテキスト、エージェント間のメッセージ、人が制御する境界内でのCanvasの不可分な編集を解説します。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/ja/docs/coding-agents-and-canvas
 ---
 
@@ -45,6 +45,7 @@ Kavor は Workspace 全体の恒久 dump ではなく、有用な context を優
 - Specifications は lifecycle、path、最近の outputs を示し、canonical Markdown は Workspace に残る。
 - Terminals は state と foreground command を示し、output は必要時に読む。
 - Files は canonical source を示し、内容は filesystem に残る。
+- Diagramsはパスと形式を示します。現在のソースのレンダリングが成功したか、失敗したか、有効な結果がまだないかは、必要時に確認します。
 - CodingAgents は state と作業 facts を示し、messages と provider-native session の完了 turns は必要時に読む。
 
 大きい、または live な内容を context window に継続コピーしません。明確な reference により reasoning space と本物の source を保ちます。
@@ -94,7 +95,7 @@ Workspace の整理を支援するため、CodingAgent は Canvas 上すべて�
 
 有効な場合、scope 内で次が可能です。
 
-- CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser、Schedule を含む active Nodes の作成。
+- CodingAgent、Specification、Sticky Note、Terminal、File、Diagram、WebBrowser、Schedule を含む active Nodes の作成。
 - 到達可能な Nodes の削除。必要な場合は実行を終了します。
 - canonical Specification の作成と Canvas への materialization。
 - supported Connections の追加、Terminal Connection parameter の変更。
@@ -108,7 +109,12 @@ layout は利用できます。
 
 到達可能な別の CodingAgent を開始・再起動・停止・Fork する場合にも、この設定が必要です。操作は許可された依頼に従います。保留されたメッセージの承認や人間向けダイアログへの代理回答は行いません。
 
-Node の削除は Canvas 上の表示と Connections を取り除きますが、正規の File や Specification、Git worktree を削除することではありません。必要な終了処理に失敗した場合は、削除が正常終了したと主張せず、復旧可能な失敗として報告します。
+アーキテクチャやフローを描くには、パスと形式を明示して[Diagram](./diagrams.md)を依頼してください。エージェントはソースを書き、現在の結果を確認できます。
+古いプレビューから成功を宣言したり、`diagram_read_only`を迂回したりしてはいけません。
+ドロップ、貼り付け、クリップボード操作は引き続き人間が行い、エージェントはパスから参照元を追加します。
+詳しくは[Canvasにコンテンツを追加する](./adding-content.md)を参照してください。
+
+Node の削除は Canvas 上の表示と Connections を取り除きますが、File、Diagram、Specificationの元のファイルや、Git worktree を削除することではありません。必要な終了処理に失敗した場合は、削除が正常終了したと主張せず、復旧可能な失敗として報告します。
 
 ## 本当に準備できたセッションへ委任する
 
@@ -124,7 +130,7 @@ worktree で作業を委任する場合：
 
 失敗したら、調整役の agent は宛先の状態を調べ、利用可能な段階とエラーを報告します。Start や Retry の前に原因を修正してください。失敗を隠すためだけに別の Node を作ったり、返信がまだないという理由だけでタスクを再送したりしないでください。
 
-Start と Restart はネイティブ画面の準備完了を待ちます。操作の承認、タスクの成功、公開の許可を意味するものではありません。Fork には provider の実際の対応と履歴が必要です。[セッション制御、worktrees、Fork](./coding-agent.md)を参照してください。
+Start と Restart はネイティブ画面の準備完了を待ちます。操作の承認、タスクの成功、公開の許可を意味するものではありません。Fork には provider の実際の対応と履歴が必要です。[セッション制御、worktrees、Fork](./coding-agent.md#実行を開始再起動停止する)を参照してください。
 
 ## structure は graph に従い、Workspace 全体には従わない
 
@@ -173,8 +179,8 @@ change に変えません。
 Workspace の CodingAgent に貼り付け、整理したいタスクを説明してください。最初の依頼は説明だけです。
 
 ```prompt
-Kavor の公式 documentation と現在の graph を参照し、この task を解決する最小 structure、到達可能になる Nodes、残る limits を説明して
-ください。まだ Canvas を変更しないでください。
+Kavorの公式ドキュメントと現在のグラフを参照し、このタスクを解決する最小限の構造、到達可能になるNodes、残る制限を説明してください。
+まだCanvasを変更しないでください。
 ```
 
 **期待する結果:** Canvas を変えずに、リソース、Connections、境界を提案します。配置上見えるだけではグラフ外の内容にアクセスできません。
@@ -184,8 +190,8 @@ Kavor の公式 documentation と現在の graph を参照し、この task を�
 先に小さなタスクを説明してください。構造の作成を許可するには CodingAgent の `Allow workspace editing` を有効にします。説明を求めるだけなら、この設定は不要です。
 
 ```prompt
-Specification、Builder、Reviewer、Sticky Note を使った小さい loop を作ってください。必要最小限の Connections を使い、新 Nodes の作成と
-接続を 1 atomic change で行い、implementation 前に停止して Canvas を確認させてください。
+Specification、Builder、Reviewer、Sticky Noteを使った小さなループを作ってください。Connectionsは必要最小限にし、新しいNodesの作成と
+接続を一つの不可分な変更で行ってください。実装を始める前に停止し、私にCanvasを確認させてください。
 ```
 
 **期待する結果:** 接続されたループが確認待ちの状態になるか、作成を妨げる制限が説明されます。この依頼で実装を開始してはいけません。
@@ -195,8 +201,8 @@ Specification、Builder、Reviewer、Sticky Note を使った小さい loop を�
 Canvas を整理したい Workspace の CodingAgent に貼り付けてください。許可するのは見た目の配置変更であり、参加者のアクセス変更ではありません。
 
 ```prompt
-intention、implementation、review、evidence が読みやすいよう Canvas を整理してください。Connections を作成・削除せず、Guardrails を変更せず、
-graph 外の Nodes への access を仮定しないでください。
+意図、実装、レビュー、証拠を読み取りやすいよう、Canvasの配置を整理してください。Connectionsの作成・削除やGuardrailsの変更はせず、
+グラフ外のNodesの内容にアクセスできると仮定しないでください。
 ```
 
 **期待する結果:** Connections、Guardrails、到達可能な内容の境界を保ったまま、配置が読みやすくなります。

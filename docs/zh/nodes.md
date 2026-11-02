@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: Kavor Nodes
-description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File、WebBrowser 和 Trigger 各自的作用，以及它们连接后获得的能力。
+description: 了解 CodingAgent、Specification、Sticky Note、Terminal、File、Diagram、WebBrowser 和 Trigger 各自的作用，以及它们连接后获得的能力。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/zh/docs/nodes
 ---
 
@@ -12,11 +12,11 @@ canonicalUrl: https://agentkavor.com/zh/docs/nodes
 Kavor 不要求你放弃喜欢的 coding agent、隐藏终端，或把每个决定都变成新的聊天。它把参与者、工具和上下文放在同一个
 Canvas 上，让你看清谁在工作、使用什么资源，以及受哪些边界约束。
 
-Canvas 上的每个一等元素都是 **Node**。CodingAgent 是 Node，Specification 也是。Sticky Note、Terminal、File 和
-Trigger 共享同一空间，因为它们都能参与工作，只是各自承担不同责任。
+Canvas 上的每个一等元素都是 **Node**。CodingAgent 是 Node，Specification 也是。Sticky Note、Terminal、File、Diagram、
+WebBrowser 和 Trigger 共享同一空间，因为它们都能参与工作，只是各自承担不同责任。
 
-Node 单独存在时已经有价值。创建 **Connection** 后，这种价值会成为明确的能力。多条 Connections 形成图后，上下文、
-执行、记忆和协作便不再散落在相互隔离的窗口与会话中。
+Node 单独存在时已经有价值。创建 **Connection** 后，它便参与一个可达组件。在这张图中，CodingAgents 可以使用任意距离的
+上下文、执行工具、记忆和协作者，不需要为每项资源建立直接 Connection。
 
 模型如下：
 
@@ -31,17 +31,17 @@ Node 单独存在时已经有价值。创建 **Connection** 后，这种价值�
 
 ## Connection 真正改变了什么
 
-Connection 回答一个实际问题：**这两个 Nodes 能一起做什么？**
+Connection 首先回答一个实际问题：**这些 Nodes 参与哪张图？**
 
-根据组合不同，它可以让 CodingAgent 使用 Specification、写入 Sticky Note、操作 Terminal、把 File 作为明确范围，或与
-另一个 CodingAgent 对话。它也可以把 File 的规范路径提供给 Terminal，或在指定时间唤醒已有活动会话的 CodingAgent。
+任何 CodingAgent 都可以使用图中可达的 Nodes，并与同一组件中的其他 CodingAgents 对话。直接 Connection 仍可能有自己的契约：
+选择 Schedule 的目标、向 Terminal 提供 File、Diagram 或 Specification 的规范路径，或在 CodingAgent 与资源之间承载 Guardrail。
 
 同时，Connection 也建立边界：
 
 - Canvas 上相邻的 Nodes 不会因此互相获得访问权；
 - 在消息中提到一个 Node 不会授予能力；
-- 并非所有 Node 组合都受支持；
-- Guardrail 可以限制 Connection 已授予的能力；
+- 并非所有 Node 组合都支持直接 Connection，但不支持的配对仍可沿有效路径参与同一张图；
+- Guardrail 仅限制承载它的直接配对，即使有其他路径仍然适用；
 - 图让上下文可达，但不会自动批准操作。
 
 结果少了“魔法”，却更加实用：你能在工作前、工作中和工作后检查结构。
@@ -59,7 +59,7 @@ Connection 回答一个实际问题：**这两个 Nodes 能一起做什么？**
 
 **预期结果:** 可用上下文的简图，以及必要时的提案。解释不会搭建自动流水线，也不授予新访问权限；下一步由你决定。
 
-## 七种 Nodes
+## Node 类型
 
 ### CodingAgent：让你喜欢的 harness 成为图中的参与者
 
@@ -69,8 +69,8 @@ Google Antigravity，而是保留各 harness 的原生体验，并把它放到 C
 每个 CodingAgent 都可以有清晰角色。只要 harness 支持，它就保留原生的 provider、模型和 effort 选项。你可以让 Spec
 Writer 专注问题和决策，让 Builder 专注实现，让 Reviewer 负责质疑结果。
 
-相连的 CodingAgents 可以交换异步消息。你仍能在 Messages 面板查看对话并在需要时介入。把它们连接到 Specifications、
-Files、Sticky Notes 和 Terminals 后，图会明确展示哪些资源参与了这项工作。
+同一可达组件中的 CodingAgents 可以交换异步消息，即使它们之间没有直接 Connection。你仍能在 Messages 面板查看对话并在需要时介入。
+可达的 Specifications、Files、Sticky Notes 和 Terminals 会明确展示哪些资源参与了这项工作。
 
 还是同一个 harness，只是上下文和能力变得可见。
 
@@ -108,7 +108,7 @@ Terminal 把 shell 保留在同一个可视 Workspace 中。你可以在多个�
 连接 CodingAgent 后，你们可以在同一个 Terminal 中工作。Agent 能检查 output、在允许时运行命令、跟踪关联执行并协助
 诊断。人的输入始终优先，Guardrail 也可以让 Connection 保持只读。
 
-Files 和 Specifications 还能通过环境变量把路径提供给 Terminal。Trigger 可以把定时命令直接送到活动的 shell 会话。
+Files、Diagrams 和 Specifications 还能通过环境变量把路径提供给 Terminal。Trigger 可以把定时命令直接送到活动的 shell 会话。
 
 Terminal 不会把执行藏在不透明的自动化背后；进程、命令和结果始终可见。
 
@@ -123,6 +123,17 @@ File 就是文件。价值在于让它的规范来源在图中变得可见而明
 无需在窗口之间复制路径。
 
 File 不会变成一次性 attachment；它仍是 filesystem 中的真实来源。
+
+### Diagram：也能以图形阅读的源文件
+
+Diagram 在 Canvas 上表示一个图表文件。CodingAgent 可以提出架构、流程或数据模型方案；你检查结果、编辑源内容，
+并将图形保留在它所解释的 Specification 旁边。Excalidraw 还支持可视编辑；draw.io 在 Kavor 中仅供查看。
+
+来源仍是真实文件。扩展名决定格式，但 SVG 除外：普通 SVG 作为 File 打开，必须明确添加为 Diagram。
+与 Terminal 的 Connection 提供源文件路径；与 CodingAgent 的直接 Guardrail 可以使来源保持只读。
+
+使用 [Diagram 指南](./diagrams.md)选择格式并复制示例提示词。该指南说明编辑、渲染结果、下载和离线限制，
+不会把旧预览误认为新源内容已成功渲染。
 
 ### WebBrowser：向人与智能体开放的 Web
 
@@ -143,9 +154,9 @@ CodingAgent 在 Workspace 不可见时也能继续操作该状态。关闭标签
 
 [查看人与 CodingAgent 如何在同一页面上协作 →](https://agentkavor.com/zh/videos/web-browser-node)
 
-### Trigger：可见的活动起因
+### Schedule：可见的活动起因
 
-Trigger 在时间上安排一个操作。它可以像操作系统 cron 一样把命令交给 Terminal，也可以向已有活动会话的 CodingAgent
+Schedule 是 Kavor 提供的 Trigger 来源。它在时间上安排一个操作，可以像操作系统 cron 一样把命令交给 Terminal，也可以向已有活动会话的 CodingAgent
 发送清晰 prompt。
 
 当目标已连接其他 Nodes 时，Trigger 的价值更大。它可以唤醒一个 agent：检查 File、在 Terminal 中运行验证、把报告写入
@@ -153,7 +164,7 @@ Sticky Note，并请求另一个 CodingAgent 做独立评审。
 
 这样，一个日历时刻就能启动小型自治或半自治系统。Trigger 发起活动；图提供上下文、工具、记忆和协作。
 
-Trigger 不会自行决定什么值得做，不会扩大权限，也不会启动你关闭的会话。它只有一个直接目标：CodingAgent 或 Terminal。
+Schedule 不会自行决定什么值得做，不会扩大权限，也不会启动你关闭的会话。它只有一个直接目标：CodingAgent 或 Terminal。
 
 ## 当 Nodes 形成图
 
@@ -188,44 +199,11 @@ CodingAgent 可以协助分析结果，而你始终能看到整个过程。
 
 ## 复用图，而不必重建每个 Node
 
-一个有效的小组合，例如 Builder、Reviewer 和 Sticky Note，可以复制到另一项任务，也可以移动到另一个 Workspace。
-请选择所有应一起转移的 Nodes：只捕获所选 Nodes 之间的 Connections。
+当一个组合运作良好时，可以复制或移动它的 Nodes，供另一项任务使用，也可跨 Workspaces 操作。
+系统文件、截图、链接和文本也能通过拖放或 Paste 进入 Canvas。这些操作不会克隆会话，也不会把文件引用变成字节副本。
 
-### 复制或移动
-
-1. 在 Canvas 上选择 Nodes，将焦点移出编辑器、Terminal 和 WebBrowser 页面。
-2. macOS 使用 `⌘C` 复制，Windows/Linux 使用 `Ctrl+C`；移动使用 `⌘X` 或 `Ctrl+X`。
-   上下文菜单也提供 `Copy Node` / `Copy Nodes` 和 `Cut Node` / `Cut Nodes`。
-3. 留在同一 Canvas，或打开目标 Workspace，也可以在另一个 Kavor 窗口中打开。
-4. 将指针放在希望出现组合的位置，使用 `⌘V` 或 `Ctrl+V`。如果 Canvas 中没有指针位置，
-   则粘贴到可见区域中心。通过上下文菜单粘贴时使用菜单打开的位置。
-5. 继续工作前，检查目标中的 Nodes、Connections 和资源。
-
-相对布局保持不变。复制可以多次粘贴；剪切在移动完成后消耗。剪切并不立即删除组合：
-尚未粘贴时，在源 Canvas 按 `Esc` 可以取消。已完成的粘贴支持 Undo/Redo，但如果 Nodes 随后被修改，
-Kavor 可能拒绝会覆盖这些修改的撤销。
-
-### 结构不是会话，也不是备份
-
-图剪贴板只存在于当前运行的 Kavor 进程中。应用重启会丢失捕获，其他复制替换剪贴板也可能使其失效。
-它不是用于跨机器共享的导出格式。
-
-- **外部 Connections：** 不复制指向选择范围外 Nodes 的连接。移动到另一个 Workspace 时，
-  源端这些连接会被移除；请确保选中了需要的全部上下文。
-- **CodingAgent 和 Terminal：** 复制不会克隆对话、进程或执行历史。跨 Workspace 移动会关闭源会话。
-  CodingAgent 不带走 Git/worktree 关联，而是在目标 Workspace 的上下文中开始；工作前请检查目录和配置。
-- **File：** 粘贴引用同一个实体文件，不复制其字节。如果目标已经有该文件的实体化 Node，就复用它。
-  修改源仍会影响同一个文件。
-- **另一个 Workspace 中的 Specification：** Markdown 显示为 File，而不是具有相同 lifecycle 的新
-  Specification。Specification 和元数据仍属于原来的 Workspace。
-- **Trigger：** 复制的 Trigger 初始为暂停状态。使用 `Resume` 前检查目标和 payload。
-  尚有未解决 delivery 的 Trigger 不能移到另一个 Workspace；等到最终状态后再试。
-
-如果粘贴失败是因为剪切的选择发生变化，或源已不存在，请检查源端并重新捕获。
-复制了图不等于证明智能体已经完成工作。
-
-要把文件或图像粘贴到**会话输入中**，而不是把 Nodes 粘贴到 Canvas，请使用
-[Terminal 操作步骤](./terminal.md#把文件和图像粘贴到会话输入中)。
+[向 Canvas 添加内容](./adding-content.md)集中说明操作流程、剪贴板优先级、各类 Node 保留的内容和 Undo 的效果。
+移动正在运行的工作组合前，请先参考该指南。
 
 ## 从工作出发，而不是追求 Node 数量
 
@@ -239,7 +217,8 @@ Kavor 可能拒绝会覆盖这些修改的撤销。
 6. 当人和 agent 需要共享工作记忆时，使用 Sticky Note；
 7. 当工作需要观察或操作实时页面时，连接 WebBrowser；
 8. 当独立评审或并行工作确实改善结果时，加入另一个 CodingAgent；
-9. 当时间确实是活动起因时，最后加入 Trigger。
+9. 当决策、结构或流程需要直观呈现时，加入 Diagram；
+10. 当时间确实是活动起因时，加入 Trigger。
 
 目标不是填满 Canvas，而是建立一个足够小、易于理解，同时足够完整、能保留意图、执行、证据和决定的系统。
 
@@ -251,4 +230,6 @@ Kavor 可能拒绝会覆盖这些修改的撤销。
 - 使用 [Sticky Note 作为共享工作记忆](./sticky-note.md)。
 - 了解 [File 如何把规范来源变成上下文和范围](./file.md)。
 - 在 [WebBrowser](./web-browser.md) 中与 agent 一起开发、调试和测试。
+- 学习使用 [Schedule 为图谱加上时钟](./schedule.md)。
+- 了解 [CodingAgents 如何查看和构建 Canvas](./coding-agents-and-canvas.md)。
 - 返回[什么是 Kavor？](./what-is-kavor.md)，复习完整产品模型。

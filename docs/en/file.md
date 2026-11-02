@@ -3,7 +3,7 @@ id: file
 title: "File: context and scope on the Canvas"
 description: Use a File to keep a canonical source visible, delimit a CodingAgent's context, and pass its path to a Terminal.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/en/docs/file
 ---
 
@@ -20,15 +20,24 @@ which material the work should read, review, edit, or use as input.
 
 ## What a File does
 
-By itself, a File lets you view and work with a Workspace source. Depending on its format, Kavor provides text
+By itself, a File lets you view and work with a source inside or outside the Workspace. Depending on its format, Kavor provides text
 editing, search, reading preferences, and rich preview.
 
 Text formats include Plain Text, Markdown, JSON, SQL, TypeScript, JavaScript, YAML, Shell, HTML, and CSS. Images and
-PDFs can be viewed on the Canvas; SVG can switch between preview and source.
+PDFs can be viewed on the Canvas; an ordinary SVG is displayed as an image in a File. To work with the source as a
+diagram, explicitly add a [Diagram](./diagrams.md).
 
 A File continues to point to the real source. If the file changes outside Kavor, the Node reflects the change and
 signals when a local edit must be reconciled. This prevents confusing a context copy with the artifact that will
 actually be versioned.
+
+External files show their absolute path and the `Outside this Workspace` marker. Like internal files, they reflect
+changes on disk live; a removed source appears as unavailable. The Node is a reference, not a copy that becomes part
+of the project.
+
+To add by drag and drop, paste an image, or understand the card for formats without a preview, see
+[Add content to the Canvas](./adding-content.md). That guide also explains preview limits and Undo without confusing
+Node removal with source deletion.
 
 ## A File as explicit scope
 
@@ -46,7 +55,7 @@ Read the connected File as the canonical source for this task. Explain what need
 
 **Expected result:** The agent explains a plan based on the real source and waits for your confirmation before editing. It must report any format it cannot read.
 
-When the agent only needs to consult the material, use the file_read_only Guardrail on the direct Connection. The
+When the agent only needs to consult the material, use the `file_read_only` Guardrail on the direct Connection. The
 agent can still reach the File, but cannot change its source through Kavor-mediated operations.
 
 ## A File as Terminal input
@@ -54,7 +63,11 @@ agent can still reach the File, but cannot change its source through Kavor-media
 A File + Terminal Connection exports the file's canonical absolute path to the session through an environment variable
 name chosen by you. The value is the path, not a copy of the content.
 
-For example, a File connected as CHECK_SQL can be used by a shell command that reads that path.
+For example, a File connected as `CHECK_SQL` can be used like this:
+
+```sh
+sqlite3 app.db < "$CHECK_SQL"
+```
 
 The path is applied when the Terminal session starts. If you change the Connection or parameter while the shell is
 already open, the interface tells you that the session must restart to receive the new value.

@@ -1,9 +1,9 @@
 ---
 id: specification
 title: "Kavor の Specification：一度丁寧に考え、より良く実装する"
-description: 意図、決定、基準を永続的な Markdown にまとめ、複数の roots を整理し、Specification の lifecycle を導きます。
+description: 意図、決定、基準を永続的なMarkdownにまとめ、複数のルートを整理し、Specificationのライフサイクルを管理します。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/ja/docs/specification
 ---
 
@@ -41,7 +41,7 @@ lifecycle は製品の操作で更新します。
 
 ```prompt
 テーマ X について私にインタビューし、Specification Y を書いてください。確認済みの事実、決定、前提、
-non-goals、失敗シナリオ、観察可能な受け入れ基準を分けてください。解決策を変え得る判断が残る間は、
+対象外の事項、失敗シナリオ、観察可能な受け入れ基準を分けてください。解決策を変え得る判断が残る間は、
 文書を Ready と扱わないでください。
 ```
 
@@ -85,26 +85,27 @@ Status は意図的に advisory です。Kavor は Markdown の checkboxes を�
 執筆、実装、レビューを分けるのが堅実です。共同執筆した CodingAgent が契約を説明し、別の Agent が
 実装し、独立した Reviewer が結果と基準を比較できます。
 
-## 複数の Specification roots を整理する
+## Documentation rootsでSpecificationsとDiagramsを整理する
 
-一つの Workspace は複数のフォルダーに Specifications を保持できます。製品、エンジニアリング、運用、
-モジュールごとに判断を分けるプロジェクトや、一つの root が探しにくくなった場合に役立ちます。
+一つのWorkspaceは複数のフォルダーに文書を保持できます。**Documentation roots**は、SpecificationsとDiagramsの検出で共有するルートです。
+製品、エンジニアリング、運用、モジュールごとに判断を分けるプロジェクトに役立ちます。
 
-Workspace Settings の **Specification roots** でフォルダーを追加、削除、並べ替えます。Roots は：
+Workspace Settingsの**Documentation roots**でフォルダーを追加、削除、並べ替えます。ルートには次の条件があります。
 
 - Workspace ディレクトリからの相対パス
 - 順序付き
 - 一意で重複しない
 - Workspace ごとに最大 32
 
+Workspaceの初期設定は`docs`です。`.`をルートに使う場合は、Workspace全体を含むため、唯一のルートにする必要があります。
+
 最初の root は **Primary** で、新しい Specifications の既定先です。並べ替えると既定先は変わりますが、
 既存ファイルは移動しません。root を削除してもファイルは消えません。設定された roots の外にある
-Specifications はアクティブ一覧から外れ、その root を再追加すると戻せます。
+Specificationsは一覧から外れ、そのNodesは非アクティブになります。ルートを再追加すると戻せます。
+ルート外のDiagramはDiagramsパネルの検出には現れませんが、明示的なパスでCanvas上では引き続き利用できます。
 
 複数 roots がある場合、Specifications パネルは root、次に実際の filesystem フォルダーでグループ化します。
 Canvas は別の分類体系を作りません。整理はあなたが所有するファイル構造のままです。
-
-![四つの Specification roots が設定された Kavor Workspace Settings。](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
 
 ### シンプルな roots の構成
 
@@ -117,6 +118,15 @@ operations/   保守と運用変更
 
 一覧を短くするだけのために roots を作らないでください。各フォルダーが人と agents に理解できる永続的な
 境界を持つ場合に使います。
+
+インターフェースから作成するには、ツールバーの**Spec**を使います。Specsパネルにインラインの作成フォームが開きます。
+独立したフォルダー欄はなく、設定された最初のルートを使います。Workspaceの既定設定なら、保存先は`docs/`です。
+ツールバーの項目をCanvasへドラッグすると、作成を確定するまで選んだ位置を保持します。
+
+Settingsの同じ展開領域には、最初のルートからの相対フォルダーを指定する**Diagrams folder**もあります。
+新しいDiagramsの作成先を定めるもので、Specificationsの保存先は変えません。既定の`diagrams`は、ルートが`docs`なら`docs/diagrams/`になります。
+`architecture/diagrams`も有効なサブフォルダーの例です。計算された保存先は設定に表示されます。
+フォルダーを変更しても既存のソースは移動しません。作成、検出、例は[Diagramガイド](./diagrams.md)を参照してください。
 
 ## Specification がグラフから得るもの
 

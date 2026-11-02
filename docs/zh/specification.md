@@ -3,7 +3,7 @@ id: specification
 title: "Kavor 中的 Specification：认真思考一次，更好地实现"
 description: 用持久 Markdown 组织意图、决策和标准，管理多个 roots，并引导 Specification lifecycle。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/zh/docs/specification
 ---
 
@@ -83,25 +83,26 @@ Kavor 使用五种状态：
 把撰写、实现与审查分开是一种稳健做法。协助撰写的 CodingAgent 可以解释契约；另一个负责实现；独立
 Reviewer 对照结果与标准。
 
-## 管理多个 Specification roots
+## 用 Documentation roots 组织 Specifications 和 Diagrams
 
-一个 Workspace 可以把 Specifications 放在多个文件夹中。当项目已经按产品、工程、运维或模块拆分决策，
-或者单一 root 已难以浏览时，这很有用。
+一个 Workspace 可以把文档放在多个文件夹中。**Documentation roots** 是发现 Specifications 和 Diagrams 共用的根目录。
+当项目按产品、工程、运维或模块拆分决策时，这很有用。
 
-打开 Workspace Settings，使用 **Specification roots** 添加、移除或重排文件夹。Roots 必须：
+打开 Workspace Settings，使用 **Documentation roots** 添加、移除或重排文件夹。Roots 必须：
 
 - 相对于 Workspace 目录；
 - 有顺序；
 - 唯一且互不重叠；
 - 每个 Workspace 最多 32 个。
 
+Workspace 默认使用 `docs`。若将 `.` 用作根目录，它必须是唯一一项，因为它已覆盖整个 Workspace。
+
 第一个 root 是 **Primary**，新 Specifications 默认进入这里。重排会改变默认目标，但不会移动已有文件。
-移除 root 也不会删除文件。配置 roots 之外的 Specifications 会离开活动列表，再次添加该 root 后可以恢复。
+移除 root 也不会删除文件。配置 roots 之外的 Specifications 会离开列表，其 Nodes 变为非活动状态；再次添加该 root 后可以恢复。
+roots 之外的 Diagram 仍可通过明确路径在 Canvas 使用，但不会出现在 Diagrams 面板的发现列表中。
 
 存在多个 roots 时，Specifications 面板先按 root、再按实际 filesystem 文件夹分组。Canvas 不会创建平行
 分类法；组织方式仍是你拥有的文件结构。
-
-![Kavor Workspace Settings 中配置了四个 Specification roots](https://media.agentkavor.com/releases/1.4.0/multiple-specification-roots/article.7d42383e3a37.jpg)
 
 ### 一个简单的 roots 布局
 
@@ -113,6 +114,13 @@ operations/   维护与运维变更
 ```
 
 不要只为缩短列表而创建 roots。只有当每个文件夹代表人和 agents 都能理解的持久边界时才使用它们。
+
+通过界面创建时，工具栏的 **Spec** 操作会在 Specs 面板打开内联创建表单。表单使用第一项已配置 root，没有额外的文件夹字段；
+采用 Workspace 默认值时，目标为 `docs/`。将工具栏项目拖到 Canvas，会在确认创建前保留所选位置。
+
+Settings 的同一展开区域还包含 **Diagrams folder**，它是相对于第一项 root 的文件夹，只定义新 Diagram 的创建位置，不改变 Specification 的目标。
+默认值 `diagrams` 配合根目录 `docs`，结果为 `docs/diagrams/`；`architecture/diagrams` 是有效子文件夹示例。设置会显示计算出的目标位置。
+修改文件夹不会移动已有来源。有关创建、发现和示例，请参见 [Diagram 指南](./diagrams.md)。
 
 ## Specification 从图中获得什么
 

@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: Kavor Nodes
-description: Understand what CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser, and Trigger do on their own and what they gain when connected.
+description: Understand what CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser, and Trigger do on their own and what they gain when connected.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/en/docs/nodes
 ---
 
@@ -14,7 +14,7 @@ chat. It puts participants, tools, and context on the same Canvas so you can see
 which limits.
 
 Every first-class item on that Canvas is a **Node**. A CodingAgent is a Node. So is a Specification. Sticky Notes,
-Terminals, Files, and Triggers share the same space because each can participate in the work with a distinct
+Terminals, Files, Diagrams, WebBrowsers, and Triggers share the same space because each can participate in the work with a distinct
 responsibility.
 
 A Node is already useful by itself. When you create a **Connection**, it joins a reachable component. CodingAgents in
@@ -38,7 +38,7 @@ participants or their Connections.*
 A Connection first answers a practical question: **which graph do these Nodes belong to?**
 
 Any CodingAgent can work with reachable Nodes and message other CodingAgents in the same component. A direct
-Connection may still have its own contract: select a Schedule target, give a Terminal a File or Specification path,
+Connection may still have its own contract: select a Schedule target, give a Terminal a canonical File, Diagram, or Specification path,
 or carry a Guardrail between one CodingAgent and one resource.
 
 At the same time, a Connection establishes a boundary:
@@ -64,7 +64,7 @@ Do not create or remove Nodes or Connections, or read content outside your graph
 
 **Expected result:** A short map of available context and a proposal when needed. The explanation creates neither an automatic pipeline nor new access; you decide the next step.
 
-## The seven Nodes
+## Node types
 
 ### CodingAgent: your favorite harness as a graph participant
 
@@ -121,7 +121,7 @@ When a CodingAgent is connected, you can work in the same Terminal. The agent ca
 allowed, follow a correlated execution, and help diagnose a problem. Human input keeps priority, and a Guardrail can
 keep the Connection read-only.
 
-Files and Specifications can also provide their paths to the Terminal through environment variables. A Trigger can
+Files, Diagrams, and Specifications can also provide their paths to the Terminal through environment variables. A Trigger can
 deliver a scheduled command directly to an active shell session.
 
 The Terminal does not hide execution behind opaque automation. The process, command, and result stay visible.
@@ -137,6 +137,19 @@ Connected to a Terminal, the File's absolute path can be exposed through an envi
 script, SQL file, configuration, or other material visually as command input without copying paths between windows.
 
 The File does not become a disposable attachment. It remains the real source in the filesystem.
+
+### Diagram: source you can also read as a drawing
+
+A Diagram represents a diagram file on the Canvas. A CodingAgent can propose an architecture, flow, or data model;
+you check the result, edit the source, and keep the drawing near the Specification it helps explain. Excalidraw also
+offers visual editing; draw.io is view-only in Kavor.
+
+The source remains a real file. The extension selects the format, with the exception of SVG: an ordinary SVG opens
+as a File and must be explicitly added as a Diagram. A Terminal Connection provides the source path; with a
+CodingAgent, a direct Guardrail can keep it read-only.
+
+Use [Diagrams](./diagrams.md) to choose a format and copy example prompts. The page explains editing, render results,
+downloads, and offline limits without confusing an earlier preview with success for new source.
 
 ### WebBrowser: the web open to human and agent
 
@@ -214,45 +227,12 @@ This graph automates a cause and an execution without pretending the system unde
 
 ## Reuse a graph without rebuilding every Node
 
-A small set such as Builder, Reviewer, and Sticky Note can be copied for another task or moved to another Workspace.
-Select every Node that should travel together: only Connections between selected Nodes are captured.
+When a loop works well, its group of Nodes can be copied or moved to another task, including between Workspaces.
+System files, screenshots, links, and text can also enter the Canvas through drag and drop or Paste. These gestures
+neither clone sessions nor turn file references into copies of their bytes.
 
-### Copy or move
-
-1. Select the Nodes on the Canvas, with focus outside an editor, Terminal, or WebBrowser page.
-2. Copy with `⌘C` on macOS or `Ctrl+C` on Windows/Linux; move with `⌘X` or `Ctrl+X`. The context menu also offers
-   `Copy Node` / `Copy Nodes` and `Cut Node` / `Cut Nodes`.
-3. Stay on the same Canvas or open the destination Workspace, including in another Kavor window.
-4. Position the pointer where the group should appear and use `⌘V` or `Ctrl+V`. Without a pointer location on the
-   Canvas, paste uses the visible area's center. Context-menu paste uses the point where the menu opened.
-5. Check the destination's Nodes, Connections, and resources before resuming work.
-
-Relative placement is preserved. A copy can be pasted repeatedly; a cut is consumed when the move completes.
-Cutting does not immediately remove the group: `Esc` on the source Canvas cancels an unpasted cut. Undo/Redo also
-works for completed pastes, but Kavor may refuse an undo that would overwrite subsequent Node changes.
-
-### Structure is not a session or a backup
-
-The graph clipboard exists only while the Kavor process runs. Restarting loses the capture; replacing the clipboard
-with another copy can also invalidate it. It is not an export format for sharing between machines.
-
-- **External Connections:** links to Nodes outside the selection are not copied. Moving to another Workspace
-  removes those links at the source; select all the context you need.
-- **CodingAgent and Terminal:** copying does not clone a conversation, process, or execution history. Moving between
-  Workspaces closes source sessions. A CodingAgent leaves its Git/worktree association behind and starts in the
-  destination Workspace's context; check its directory and settings before working.
-- **File:** paste references the same physical file, not a duplicate of its bytes. An existing destination
-  materialization is reused. Editing the source still affects the same file.
-- **Specification in another Workspace:** its Markdown appears as a File, not a new Specification with the same
-  lifecycle. The Specification and metadata remain in their owning Workspace.
-- **Trigger:** a copy starts paused. Check target and payload before `Resume`. An unsettled delivery prevents moving
-  a Trigger to another Workspace; wait for a final state before retrying.
-
-If paste fails because a cut selection changed or a source disappeared, check the origin and capture again.
-A copied graph is not evidence that the agents' work is complete.
-
-To paste files or images **into session input**, rather than Nodes on the Canvas, follow the
-[Terminal procedure](./terminal.md#paste-files-and-images-into-session-input).
+The [Add content to the Canvas](./adding-content.md) guide covers the procedure, clipboard priority, what each Node
+type retains, and the effect of Undo. Consult it before moving a running loop.
 
 ## Start with the work, not the number of Nodes
 
@@ -266,7 +246,8 @@ A larger Canvas is not automatically better. Start with the smallest structure t
 6. use a Sticky Note when human and agent need shared working memory;
 7. connect a WebBrowser when the work needs to observe or operate a live page;
 8. add another CodingAgent when independent review or parallel work materially improves the result;
-9. add a Trigger when time is a legitimate cause of activity.
+9. add a Diagram when a decision, structure, or flow needs to be visually explicit;
+10. add a Trigger when time is a legitimate cause of activity.
 
 The goal is not to fill the Canvas. It is to build a system small enough to understand and complete enough to preserve
 intent, execution, evidence, and decision.

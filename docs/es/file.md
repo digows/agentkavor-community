@@ -3,7 +3,7 @@ id: file
 title: "File: contexto y alcance en el Canvas"
 description: Usa un File para mantener visible una fuente canónica, delimitar el contexto de un CodingAgent y pasar su ruta a un Terminal.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/es/docs/file
 ---
 
@@ -20,15 +20,24 @@ qué material debe leer, revisar, editar o usar como entrada el trabajo.
 
 ## Qué hace un File
 
-Por sí solo, un File permite visualizar y trabajar con una fuente del Workspace. Según el formato, Kavor ofrece
+Por sí solo, un File permite visualizar y trabajar con una fuente dentro o fuera del Workspace. Según el formato, Kavor ofrece
 edición de texto, búsqueda, preferencias de lectura y preview enriquecido.
 
 Los formatos de texto incluyen Plain Text, Markdown, JSON, SQL, TypeScript, JavaScript, YAML, Shell, HTML y CSS. Las
-imágenes y los PDF pueden visualizarse en el Canvas; SVG puede alternar entre preview y source.
+imágenes y los PDF pueden visualizarse en el Canvas; un SVG común se presenta como imagen en un File. Para trabajar
+con la fuente como diagrama, añade explícitamente un [Diagram](./diagrams.md).
 
 El File sigue apuntando a la fuente real. Si el archivo cambia fuera de Kavor, el Node refleja el cambio y avisa
 cuando una edición local debe reconciliarse. Así no confundes una copia de contexto con el artefacto que realmente se
 versionará.
+
+Los archivos externos muestran la ruta absoluta y el indicador `Outside this Workspace`. Al igual que los internos,
+reflejan los cambios en disco en vivo; si se elimina la fuente, aparece como no disponible. El Node es una referencia,
+no una copia que pasa a pertenecer al proyecto.
+
+Para añadir arrastrando y soltando, pegar una imagen o entender la tarjeta de formatos sin preview, consulta
+[Añadir contenido al Canvas](./adding-content.md). Esa guía también explica los límites de visualización y Undo sin
+confundir la eliminación de un Node con la de su fuente.
 
 ## Un File como alcance explícito
 
@@ -46,13 +55,19 @@ Lee el File conectado como la fuente canónica de esta tarea. Explica qué debe 
 
 **Resultado esperado:** El agente explica un plan desde la fuente real y espera tu confirmación antes de editar. Debe indicar si no puede leer el formato.
 
-Cuando el agente solo necesita consultar el material, usa el Guardrail file_read_only en la Connection directa. El
+Cuando el agente solo necesita consultar el material, usa el Guardrail `file_read_only` en la Connection directa. El
 agente puede alcanzar el File, pero no cambiar su fuente mediante operaciones mediadas por Kavor.
 
 ## Un File como entrada de Terminal
 
 Una Connection File + Terminal exporta la ruta absoluta canónica del archivo a la sesión mediante un nombre de variable
 de entorno que eliges tú. El valor es la ruta, no una copia del contenido.
+
+Por ejemplo, un File conectado como `CHECK_SQL` puede usarse así:
+
+```sh
+sqlite3 app.db < "$CHECK_SQL"
+```
 
 La ruta se aplica cuando inicia la sesión del Terminal. Si cambias la Connection o su parámetro mientras el shell ya
 está abierto, la interfaz informa que la sesión debe reiniciarse para recibir el nuevo valor.

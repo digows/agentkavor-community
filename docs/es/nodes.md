@@ -1,9 +1,9 @@
 ---
 id: nodes
 title: Nodes de Kavor
-description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File, WebBrowser y Trigger por separado y qué obtienen al conectarse.
+description: Entiende qué hacen CodingAgent, Specification, Sticky Note, Terminal, File, Diagram, WebBrowser y Trigger por separado y qué obtienen al conectarse.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-10-30
 canonicalUrl: https://agentkavor.com/es/docs/nodes
 ---
 
@@ -14,12 +14,12 @@ participantes, herramientas y contexto en el mismo Canvas para que puedas ver qu
 qué límites.
 
 Cada elemento de primera clase de ese Canvas es un **Node**. Un CodingAgent es un Node. Una Specification también.
-Sticky Notes, Terminals, Files y Triggers comparten el mismo espacio porque todos pueden participar en el trabajo, cada
-uno con una responsabilidad distinta.
+Sticky Notes, Terminals, Files, Diagrams, WebBrowsers y Triggers comparten el mismo espacio porque todos pueden
+participar en el trabajo, cada uno con una responsabilidad distinta.
 
-Un Node ya es útil por separado. Cuando creas una **Connection**, esa utilidad se convierte en una capacidad explícita.
-Cuando varias Connections forman un grafo, el contexto, la ejecución, la memoria y la colaboración dejan de estar
-dispersos entre ventanas y sesiones aisladas.
+Un Node ya es útil por separado. Cuando creas una **Connection**, pasa a participar en un componente alcanzable.
+En ese grafo, los CodingAgents pueden trabajar con contexto, ejecución, memoria y colaboradores a cualquier
+distancia, sin depender de una Connection directa para cada recurso.
 
 Este es el modelo:
 
@@ -35,19 +35,20 @@ ocultar a los participantes ni sus Connections.*
 
 ## Qué cambia realmente una Connection
 
-Una Connection responde una pregunta práctica: **¿qué pueden hacer juntos estos dos Nodes?**
+Una Connection responde primero una pregunta práctica: **¿en qué grafo participan estos Nodes?**
 
-Según la combinación, puede permitir que un CodingAgent trabaje con una Specification, escriba en una Sticky Note,
-opere un Terminal, trate un File como parte explícita del alcance o converse con otro CodingAgent. También puede
-entregar a un Terminal la ruta canónica de un File o despertar a un CodingAgent con sesión activa en un horario
-definido.
+Cualquier CodingAgent puede trabajar con los Nodes alcanzables por ese grafo y conversar con otros CodingAgents del
+mismo componente. La Connection directa aún puede tener un contrato propio: seleccionar el objetivo de un Schedule,
+entregar al Terminal la ruta canónica de un File, Diagram o Specification y llevar un Guardrail entre un CodingAgent
+y un recurso.
 
 Al mismo tiempo, una Connection establece un límite:
 
 - los Nodes cercanos en el Canvas no obtienen acceso entre sí;
 - mencionar un Node en un mensaje no concede una capacidad;
-- no todas las combinaciones de Nodes están soportadas;
-- un Guardrail puede restringir una capacidad concedida por la Connection;
+- no todas las combinaciones de Nodes aceptan una Connection directa, aunque los pares no soportados pueden
+  participar en el mismo grafo por rutas válidas;
+- un Guardrail restringe solo el par directo donde se colocó y sigue vigente aunque exista otra ruta;
 - el grafo hace alcanzable el contexto, pero no aprueba acciones automáticamente.
 
 El resultado es menos mágico y más útil: puedes inspeccionar la estructura antes, durante y después del trabajo.
@@ -65,7 +66,7 @@ No crees ni elimines Nodes o Connections ni leas contenido fuera de tu grafo.
 
 **Resultado esperado:** Un mapa breve del contexto disponible y una propuesta cuando haga falta. La explicación no crea un pipeline automático ni concede accesos nuevos; tú decides el siguiente paso.
 
-## Los siete Nodes
+## Tipos de Node
 
 ### CodingAgent: tu harness favorito como participante del grafo
 
@@ -77,9 +78,10 @@ Cada CodingAgent puede tener un papel claro. El harness conserva sus opciones na
 esfuerzo cuando las ofrece. Puedes mantener un Spec Writer centrado en preguntas y decisiones, un Builder en la
 implementación y un Reviewer responsable de cuestionar el resultado.
 
-Los CodingAgents conectados pueden intercambiar mensajes asíncronos. Sigues viendo las conversaciones en el panel
-Messages y puedes intervenir cuando sea necesario. Al conectarlos con Specifications, Files, Sticky Notes y Terminals,
-el grafo deja claro qué recursos participan en el trabajo.
+Los CodingAgents del mismo componente alcanzable pueden intercambiar mensajes asíncronos, incluso sin una
+Connection directa entre ellos. Sigues viendo las conversaciones en el panel Messages y puedes intervenir cuando
+sea necesario. Las Specifications, Files, Sticky Notes y Terminals alcanzables dejan claro qué recursos participan
+en ese trabajo.
 
 Es el mismo harness, ahora con contexto y capacidades visibles.
 
@@ -124,7 +126,7 @@ Cuando un CodingAgent está conectado, ambos pueden trabajar en el mismo Termina
 ejecutar comandos cuando esté permitido, seguir una ejecución correlacionada y ayudar en un diagnóstico. La entrada
 humana mantiene prioridad y un Guardrail puede dejar la Connection en modo de solo lectura.
 
-Files y Specifications también pueden proporcionar sus rutas al Terminal mediante variables de entorno. Un Trigger
+Files, Diagrams y Specifications también pueden proporcionar sus rutas al Terminal mediante variables de entorno. Un Trigger
 puede entregar un comando programado directamente a una sesión activa del shell.
 
 El Terminal no oculta la ejecución detrás de una automatización opaca. El proceso, el comando y el resultado permanecen
@@ -142,6 +144,21 @@ visualmente un script, un archivo SQL, una configuración u otro material como e
 entre ventanas.
 
 El File no se convierte en un attachment descartable. Sigue siendo la fuente real en el filesystem.
+
+### Diagram: una fuente que también puede leerse como dibujo
+
+Un Diagram representa un archivo de diagrama en el Canvas. Un CodingAgent puede producir una propuesta de
+arquitectura, flujo o modelo de datos; tú compruebas el resultado, editas la fuente y mantienes el dibujo cerca de
+la Specification que ayuda a explicar. Excalidraw también ofrece edición visual; draw.io es solo para visualización
+en Kavor.
+
+La fuente sigue siendo un archivo real. La extensión selecciona el formato, con la excepción de SVG: un SVG común
+se abre como File y debe añadirse explícitamente como Diagram. Una Connection con Terminal proporciona la ruta de
+la fuente; con un CodingAgent, un Guardrail directo puede mantenerla en solo lectura.
+
+Usa [Diagramas](./diagrams.md) para elegir el formato y copiar ejemplos de prompts. La página explica la edición,
+el resultado de renderización, las descargas y los límites offline sin confundir un preview anterior con el éxito
+de la nueva fuente.
 
 ### WebBrowser: la web abierta a la persona y al agente
 
@@ -165,10 +182,10 @@ la pestaña, eliminar el Node o finalizar la sesión termina esa continuidad.
 
 [Mira a una persona y un CodingAgent trabajando en la misma página →](https://agentkavor.com/es/videos/web-browser-node)
 
-### Trigger: una causa visible de actividad
+### Schedule: una causa visible de actividad
 
-Un Trigger programa una acción en el tiempo. Puede entregar un comando a un Terminal, como un cron del sistema
-operativo, o enviar un prompt claro a un CodingAgent con una sesión activa.
+Schedule es la fuente de Trigger disponible en Kavor. Programa una acción en el tiempo: puede entregar un comando a
+un Terminal, como un cron del sistema operativo, o enviar un prompt claro a un CodingAgent con una sesión activa.
 
 Su valor crece cuando el objetivo ya está conectado a otros Nodes. Un Trigger puede despertar a un agente encargado
 de inspeccionar un File, ejecutar verificaciones en un Terminal, escribir un informe en una Sticky Note y solicitar
@@ -177,7 +194,7 @@ una revisión independiente a otro CodingAgent.
 Así, una hora del calendario puede iniciar un pequeño sistema autónomo o semiautónomo. El Trigger inicia la actividad;
 el grafo proporciona contexto, herramientas, memoria y colaboración.
 
-Un Trigger no decide qué merece hacerse, no amplía permisos ni inicia una sesión que dejaste apagada. Solo tiene un
+Schedule no decide qué merece hacerse, no amplía permisos ni inicia una sesión que dejaste apagada. Solo tiene un
 objetivo directo: un CodingAgent o un Terminal.
 
 ## Cuando los Nodes forman un grafo
@@ -219,46 +236,12 @@ Este grafo automatiza una causa y una ejecución sin fingir que el sistema conoc
 
 ## Reutiliza un grafo sin reconstruir cada Node
 
-Un conjunto pequeño, como Builder, Reviewer y Sticky Note, puede copiarse para otra tarea o moverse a otro Workspace.
-Selecciona todos los Nodes que deben viajar juntos: solo se capturan Connections entre Nodes seleccionados.
+Cuando un loop funciona bien, su grupo de Nodes puede copiarse o moverse para otra tarea, incluso entre Workspaces.
+Los archivos del sistema, las capturas, los enlaces y el texto también pueden entrar en el Canvas arrastrándolos o
+mediante Paste. Estos gestos no clonan sesiones ni convierten las referencias a archivos en copias de sus bytes.
 
-### Copiar o mover
-
-1. Selecciona los Nodes en el Canvas, con el foco fuera de un editor, Terminal o página del WebBrowser.
-2. Copia con `⌘C` en macOS o `Ctrl+C` en Windows/Linux; mueve con `⌘X` o `Ctrl+X`. El menú contextual también
-   ofrece `Copy Node` / `Copy Nodes` y `Cut Node` / `Cut Nodes`.
-3. Permanece en el mismo Canvas o abre el Workspace de destino, incluso en otra ventana de Kavor.
-4. Coloca el puntero donde debe aparecer el grupo y usa `⌘V` o `Ctrl+V`. Sin un punto del puntero en el Canvas,
-   se pega en el centro del área visible. El menú contextual pega en el punto donde se abrió.
-5. Comprueba los Nodes, Connections y recursos del destino antes de continuar.
-
-Se conserva la disposición relativa. Una copia puede pegarse varias veces; un corte se consume al completar el
-movimiento. Cortar no elimina inmediatamente el grupo: `Esc` en el Canvas de origen cancela un corte aún no pegado.
-Undo/Redo permite revertir una operación completada, pero Kavor puede rechazar un undo que sobrescriba cambios
-posteriores en los Nodes.
-
-### La estructura no es una sesión ni un backup
-
-El portapapeles de grafos existe solo mientras el proceso de Kavor está abierto. Reiniciar pierde la captura; otra
-copia que sustituya el portapapeles también puede invalidarla. No es un formato para exportar entre máquinas.
-
-- **Connections externas:** no se copian enlaces a Nodes fuera de la selección. Al mover a otro Workspace se eliminan
-  esos enlaces en el origen; selecciona todo el contexto necesario.
-- **CodingAgent y Terminal:** copiar no clona conversación, proceso ni historial de ejecución. Mover entre Workspaces
-  cierra las sesiones de origen. El CodingAgent no lleva su asociación Git/worktree y comienza en el contexto del
-  destino; comprueba directorio y configuración.
-- **File:** se referencia el mismo archivo físico, sin duplicar sus bytes. Si ya está materializado en el destino,
-  se reutiliza ese Node. Editar la fuente sigue afectando al mismo archivo.
-- **Specification en otro Workspace:** su Markdown aparece como File, no como una nueva Specification con el mismo
-  lifecycle. La Specification y sus metadatos siguen en el Workspace propietario.
-- **Trigger:** una copia nace pausada. Comprueba objetivo y payload antes de `Resume`. Una entrega aún no resuelta
-  impide mover el Trigger a otro Workspace; espera un estado final antes de intentarlo de nuevo.
-
-Si el pegado falla porque cambió la selección cortada o desapareció una fuente, comprueba el origen y captura otra
-vez. Un grafo copiado no demuestra que el trabajo de los agentes haya terminado.
-
-Para pegar archivos o imágenes **en la entrada de una sesión**, no Nodes en el Canvas, sigue el
-[procedimiento de Terminal](./terminal.md#pega-archivos-e-imágenes-en-la-entrada-de-la-sesión).
+La guía [Añadir contenido al Canvas](./adding-content.md) reúne el procedimiento, la prioridad del portapapeles, lo
+que conserva cada tipo de Node y el efecto de Undo. Úsala como referencia antes de mover un loop en ejecución.
 
 ## Empieza por el trabajo, no por la cantidad de Nodes
 
@@ -272,7 +255,8 @@ Un Canvas más grande no es automáticamente mejor. Empieza por la estructura m�
 6. usa una Sticky Note cuando humano y agente necesiten memoria de trabajo compartida;
 7. conecta un WebBrowser cuando el trabajo necesite observar u operar una página viva;
 8. añade otro CodingAgent cuando una revisión independiente o trabajo paralelo mejore realmente el resultado;
-9. añade un Trigger cuando el tiempo sea una causa legítima de actividad.
+9. añade un Diagram cuando una decisión, estructura o flujo deba quedar visualmente explícito;
+10. añade un Trigger cuando el tiempo sea una causa legítima de actividad.
 
 El objetivo no es llenar el Canvas. Es construir un sistema lo bastante pequeño para entenderse y lo bastante
 completo para preservar intención, ejecución, evidencia y decisión.
@@ -285,4 +269,6 @@ completo para preservar intención, ejecución, evidencia y decisión.
 - Usa una [Sticky Note como memoria de trabajo compartida](./sticky-note.md).
 - Entiende cómo un [File convierte una fuente canónica en contexto y alcance](./file.md).
 - Desarrolla, depura y prueba junto a un agente en [WebBrowser](./web-browser.md).
+- Aprende a usar [Schedule para dar un reloj a tu grafo](./schedule.md).
+- Entiende [cómo ven y construyen el Canvas los CodingAgents](./coding-agents-and-canvas.md).
 - Vuelve a [¿Qué es Kavor?](./what-is-kavor.md) para revisar el modelo completo del producto.
