@@ -223,20 +223,20 @@ test('requires canonical download links in newly added public documents', async 
 
 test('binds a product release to its complete approved English documentation projection', async () => {
   const temporaryDirectory = await mkdtemp(join(tmpdir(), 'kavor-product-release-test-'))
-  const releaseNotesSourcePath = join(temporaryDirectory, 'v2.4.0.md')
+  const releaseNotesSourcePath = join(temporaryDirectory, 'v2.4.1.md')
   try {
     const { releaseId } = parseYaml(await readFile(resolve('docs/catalog.yaml'), 'utf8'))
-    const publicSource = await readFile(resolve('docs/en/release-notes/2.4.0.md'), 'utf8')
+    const publicSource = await readFile(resolve('docs/en/release-notes/2.4.1.md'), 'utf8')
     const frontmatterEnd = publicSource.indexOf('\n---\n', 4)
     await writeFile(releaseNotesSourcePath, publicSource.slice(frontmatterEnd + 5).replace(/^\n+/, ''))
     await assert.doesNotReject(validateProductReleaseProjection(resolve('docs'), {
-      version: '2.4.0',
+      version: '2.4.1',
       releaseNotesSourcePath,
       expectedReleaseId: releaseId,
     }))
-    await writeFile(releaseNotesSourcePath, '# Kavor 2.4.0\n\nDifferent meaning.\n')
+    await writeFile(releaseNotesSourcePath, '# Kavor 2.4.1\n\nDifferent meaning.\n')
     await assert.rejects(validateProductReleaseProjection(resolve('docs'), {
-      version: '2.4.0',
+      version: '2.4.1',
       releaseNotesSourcePath,
       expectedReleaseId: releaseId,
     }), /differ from the approved English documentation projection/)
