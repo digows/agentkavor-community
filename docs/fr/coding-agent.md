@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent dans Kavor : votre harness préféré au sein d'un graphe"
 description: Choisissez un provider, conservez son expérience native et reliez le CodingAgent au contexte, aux outils et aux participants appropriés.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-11-03
 canonicalUrl: https://agentkavor.com/fr/docs/coding-agent
 ---
 
@@ -77,9 +77,108 @@ Le Node et le processus du provider sont deux choses différentes. Un CodingAgen
 - **Restart** ferme le processus actuel et démarre son remplaçant, en conservant le compte, la racine de travail et l’intention de reprendre la session native. Cela n’efface pas l’historique et n’annule pas les changements du projet.
 - **Shutdown** arrête l’exécution sans supprimer le Node ni l’historique natif. Utilisez Start pour le relancer.
 
-Kavor affiche les étapes de préparation et indique si le provider est prêt ou si le démarrage a échoué. Une approbation en attente reste votre décision : démarrer ou redémarrer n’autorise pas l’agent à répondre à votre place.
+Kavor affiche les étapes de préparation et indique si le provider est prêt ou si le démarrage a échoué. L’authentification,
+les approbations d’outils et les confirmations MCP restent sous votre contrôle. La préférence **Skip trust prompts**,
+décrite ci-dessous, concerne spécifiquement la confiance accordée au dossier et à ses hooks ; elle n’autorise pas à
+répondre à d’autres dialogues de manière générale.
 
 En cas d’échec, lisez l’erreur avant de réessayer. Corrigez le répertoire manquant, l’installation, l’authentification ou l’autre prérequis indiqué, puis utilisez **Retry**. Une nouvelle tentative n’est ni la session précédente ni la preuve que la tâche a été exécutée.
+
+## Démarrer sans confirmation de confiance
+
+**Skip trust prompts** évite que le démarrage interactif géré par Kavor s’interrompe pour vous demander si vous faites
+confiance au dossier ou à ses hooks. Cette préférence est **activée par défaut**, y compris pour les CodingAgents
+existants qui n’ont pas encore de valeur enregistrée. Elle appartient au Node, pas au Workspace ni à un réglage global.
+
+Elle vise le **répertoire effectif de démarrage** : la racine du Workspace, un répertoire choisi dans **Working directory**
+ou le répertoire associé au CodingAgent. Elle s’applique aux nouveaux démarrages, aux reprises et aux redémarrages
+gérés par Kavor, avec le compte Main comme avec les comptes gérés par Kavor.
+
+**N’ouvrez pas de code inconnu en comptant sur la confirmation de confiance comme barrière.** En choisissant un dossier
+où travailler avec cette préférence activée, vous acceptez le contenu que le provider charge depuis un dépôt de
+confiance. Cela inclut les hooks du projet lui-même, pas seulement les hooks d’intégration de Kavor.
+
+### Modifier la préférence avant le prochain démarrage
+
+1. Ouvrez **Settings** dans le CodingAgent et repérez **Skip trust prompts** dans la section **Startup**, sous **Permission**.
+2. Désactivez l’option si vous souhaitez que le provider utilise son comportement natif de confiance.
+3. Vérifiez aussi **Working directory** et **CLI args**. Une configuration native explicite reste prioritaire.
+4. Appliquez le changement avec l’action de démarrage affichée dans le panneau — **Save & restart**, **Start** ou sa
+   confirmation intégrée. Redémarrer met fin à l’exécution en cours ; changer seulement l’interrupteur ne le fait pas.
+
+**Applies on next start** signifie que le changement prend effet au prochain démarrage. Lorsqu’une session est en cours,
+un changement qui n’a pas encore été appliqué apparaît comme **Pending — applies on next start**. Fermer le panneau
+n’enregistre pas le brouillon, ne redémarre pas le provider et ne répond pas à une demande déjà affichée.
+
+Si l’application du changement échoue, le panneau conserve le brouillon et l’erreur pour vous permettre de corriger le
+problème et de réessayer. Désactiver la préférence fait cesser les mécanismes fournis par Kavor pour éviter ces
+confirmations et sa réponse automatique à la confirmation du dossier ; cela n’annule pas les actions déjà exécutées
+et ne révoque pas la confiance enregistrée par le CLI lui-même. Un dossier déjà approuvé peut ne plus faire l’objet
+d’une demande de confirmation.
+
+Changer de provider conserve la préférence. Cloner le Node, effectuer un Fork pris en charge ou copier le Node sur le
+Canvas conserve aussi sa valeur, même si vous l’avez désactivée. Cela ne transforme pas une copie du Node en copie de
+la conversation native.
+
+### L’effet dépend du provider
+
+| Provider | Ce qui change au démarrage |
+| --- | --- |
+| **Codex** | Kavor déclare le dossier effectif comme fiable et dispense de la confirmation des hooks, y compris ceux du dépôt. Cela ne change pas le préréglage des permissions des outils. |
+| **Claude Code** | Kavor répond à l’écran de confiance du dossier lorsqu’il le reconnaît de manière sûre. Cet écran peut apparaître brièvement. L’approbation du MCP du projet reste séparée. |
+| **Antigravity** | Kavor déclare le dossier comme fiable dans la configuration de démarrage, sans enregistrer cette préférence de confiance dans le fichier natif. |
+| **Grok** | Kavor demande au CLI de faire confiance au dossier. Grok peut lui-même enregistrer cette confiance dans son fichier natif. |
+| **OpenCode** | Il n’y a pas de confirmation de confiance pour le dossier ou les hooks. L’interrupteur est désactivé avec la mention **Not required** ; sa valeur est conservée pour un futur changement de provider, sans appliquer de mécanisme de contournement à OpenCode. |
+
+Kavor n’écrit pas dans les fichiers natifs de confiance. Cela n’empêche pas le provider lui-même d’enregistrer une
+décision : Claude Code peut mémoriser le dossier accepté dans `.claude.json`, et Grok dans `trusted_folders.toml`.
+
+Avec Claude Code, Kavor confirme uniquement l’écran de confiance du dossier qu’il reconnaît, au maximum une fois par
+démarrage, et vérifie que **Yes, I trust this folder** est sélectionné avant d’envoyer la confirmation. Si l’écran n’est
+pas reconnu ou si vous avez déjà commencé à interagir avec la session, il ne répond pas automatiquement. Dans le
+répertoire personnel, Claude Code peut ne conserver cette confiance que pour la durée de la session et la redemander
+au prochain démarrage.
+
+Si une mise à jour du CLI modifie la demande ou la manière de l’éviter, la confirmation peut apparaître normalement
+dans le Terminal. Lisez ce qui est demandé et répondez vous-même ; cette préférence ne promet pas de supprimer tous
+les dialogues.
+
+### Ce que la confiance dans le dossier permet de charger
+
+Faire confiance ne consiste pas seulement à masquer un avertissement. Chaque provider applique ses propres règles
+au contenu du projet :
+
+- **Codex :** configuration du projet dans `.codex`, règles, serveurs MCP déclarés et hooks.
+- **Claude Code :** configuration, hooks, instructions, règles, skills et permissions déclarées par le dépôt.
+  Des autorisations comme `permissions.allow` et `additionalDirectories` deviennent admissibles selon les règles natives.
+- **Antigravity :** `AGENTS.md`, `GEMINI.md`, règles et skills dans `.agents`, agents personnalisés, plugins, hooks et configuration MCP.
+- **Grok :** configuration MCP et LSP, hooks, instructions, skills, permissions, plugins et workflows du projet, ainsi que
+  le chargement de `.envrc`.
+
+Ce contenu peut affecter la session avant la première demande au modèle. Des hooks peuvent s’exécuter à l’ouverture
+du CodingAgent ; découvrir une skill, une règle ou un script ne signifie toutefois pas qu’ils s’exécutent tous
+automatiquement. L’effet dépend du contenu, de la configuration et des règles natives du provider.
+
+Vérifiez donc l’origine et le contenu du dépôt avant de le démarrer comme dépôt de confiance. Désactivez la préférence
+**avant de démarrer le CodingAgent dans ce répertoire** si vous souhaitez conserver la demande native. Ce n’est pas
+un mode isolé pour analyser du code hostile, ni une garantie qu’un provider déjà configuré reposera la question.
+
+### La confiance ne remplace pas les autres approbations
+
+**Skip trust prompts** ne choisit pas de préréglage de permissions, n’accorde pas d’autorisations d’outils et ne vous
+connecte pas au provider. Les permissions déclarées par le projet lui-même peuvent s’appliquer selon les règles
+natives une fois la confiance accordée, comme indiqué ci-dessus.
+L’authentification, les consentements initiaux du provider, les approbations d’outils et les autres dialogues restent
+régis par le contrat natif. La préférence ne modifie pas non plus les Connections, les Guardrails ou `Allow workspace editing`.
+
+Avec **Claude Code**, le `.mcp.json` du dépôt conserve sa propre approbation des serveurs MCP. Kavor n’y répond pas et
+n’écrit pas de configuration pour l’approuver. Cette confirmation est distincte de l’intégration MCP de Kavor.
+
+Les arguments natifs explicites dans **CLI args** l’emportent sur les valeurs par défaut générées en cas de conflit.
+Une sous-commande native ne reçoit pas les mécanismes générés par Kavor pour éviter ces confirmations. Dans Codex,
+une option `-c` concernant un autre réglage, comme le choix du modèle, n’annule pas la confiance générée pour le dossier ;
+une configuration qui remplace la même clé de confiance peut le faire. Désactiver l’interrupteur ne neutralise pas
+non plus une option de confiance que vous avez fournie vous-même.
 
 ## Séparer le travail avec des Git worktrees
 
@@ -301,6 +400,7 @@ Vérifiez :
 - les Nodes qui doivent être accessibles ;
 - les Guardrails nécessaires sur les Connections directes ;
 - si provider, modèle et effort correspondent au risque de la tâche ;
+- si vous faites confiance au dossier et au contenu que le provider y charge, et quel est l’état de **Skip trust prompts** ;
 - où préserver décisions, progression et preuves ;
 - avec qui il doit communiquer et quand il doit s'arrêter.
 

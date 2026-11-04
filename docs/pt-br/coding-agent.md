@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent no Kavor: seu harness favorito como parte de um grafo"
 description: Escolha um provider, preserve sua experiência nativa e conecte o CodingAgent ao contexto, às ferramentas e aos participantes certos.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-11-03
 canonicalUrl: https://agentkavor.com/pt-br/docs/coding-agent
 ---
 
@@ -80,11 +80,102 @@ execução está encerrada.
   executá-lo.
 
 O Kavor mostra as etapas de preparação e informa quando o provider está pronto ou quando a inicialização falhou.
-Uma aprovação pendente continua sendo sua: iniciar ou reiniciar não autoriza o agente a respondê-la por você.
+Autenticação, aprovações de ferramentas e confirmações de MCP continuam sob seu controle. A preferência
+**Skip trust prompts**, descrita abaixo, trata especificamente da confiança na pasta e em seus hooks; não é uma
+autorização geral para responder a outros diálogos.
 
 Se a inicialização falhar, leia o erro antes de repetir. Corrija o diretório ausente, a instalação, a autenticação
 ou outro requisito indicado e use **Retry**. Uma tentativa nova não deve ser confundida com a sessão anterior nem
 com a confirmação de que a tarefa foi executada.
+
+## Inicie sem prompts de confiança
+
+**Skip trust prompts** evita que a inicialização interativa gerenciada pelo Kavor pare para perguntar se você confia
+na pasta ou em seus hooks. A preferência vem **ligada por padrão**, inclusive em CodingAgents existentes que ainda
+não tenham um valor salvo. Ela pertence ao Node, não ao Workspace nem a uma configuração global.
+
+O alvo é o **diretório efetivo de inicialização**: ele pode ser a raiz do Workspace, um diretório escolhido em
+**Working directory** ou o diretório associado ao CodingAgent. A preferência acompanha novas inicializações,
+retomadas e reinicializações gerenciadas, tanto com a conta Main quanto com contas gerenciadas pelo Kavor.
+
+**Não abra código desconhecido contando com o prompt de confiança como barreira.** Ao escolher uma pasta para
+trabalhar com essa preferência ligada, você aceita o que o provider carrega de um repositório confiável. Isso inclui
+hooks do próprio projeto, não apenas os hooks de integração do Kavor.
+
+### Altere a preferência antes da próxima inicialização
+
+1. Abra **Settings** no CodingAgent e localize **Skip trust prompts** na seção **Startup**, abaixo de **Permission**.
+2. Desligue a opção se quiser que o provider use seu comportamento nativo de confiança.
+3. Confira também **Working directory** e **CLI args**. Uma configuração nativa explícita continua tendo precedência.
+4. Aplique pela ação de inicialização mostrada no painel — **Save & restart**, **Start** ou sua confirmação inline.
+   Reiniciar encerra a execução atual; mudar apenas o switch não faz isso.
+
+**Applies on next start** significa que a alteração vale na próxima inicialização. Enquanto há uma sessão em execução,
+uma mudança ainda não aplicada aparece como **Pending — applies on next start**. Fechar o painel não salva o rascunho,
+não reinicia o provider e não responde a um prompt que já esteja na tela.
+
+Se a aplicação falhar, o painel mantém o rascunho e o erro para você corrigir e tentar novamente. Desligar a preferência
+faz o Kavor deixar de fornecer seus skips e de responder automaticamente à confirmação de pasta; não desfaz ações
+já executadas nem revoga confiança que o próprio CLI tenha salvo. Uma pasta já confiável pode continuar sem perguntar.
+
+Trocar de provider conserva a preferência. Clonar o Node, fazer um Fork compatível ou copiar o Node no Canvas também
+preserva o valor, inclusive quando você o desligou. Isso não transforma uma cópia do Node em cópia da conversa nativa.
+
+### O efeito depende do provider
+
+| Provider | O que muda na inicialização |
+| --- | --- |
+| **Codex** | O Kavor fornece confiança para a pasta efetiva e dispensa a confirmação de hooks, incluindo os hooks do repositório. Isso não muda o preset de permissões das ferramentas. |
+| **Claude Code** | O Kavor responde à tela de confiança da pasta quando a reconhece com segurança. A tela pode aparecer brevemente. A aprovação do MCP de projeto continua separada. |
+| **Antigravity** | O Kavor fornece a pasta como confiável na configuração de inicialização, sem gravar essa preferência de confiança no arquivo nativo. |
+| **Grok** | O Kavor solicita ao CLI que confie na pasta. O próprio Grok pode registrar essa confiança em seu arquivo nativo. |
+| **OpenCode** | Não há confirmação de confiança de pasta ou hooks. O switch fica desabilitado com **Not required**; seu valor é conservado para uma futura troca de provider, sem aplicar um skip ao OpenCode. |
+
+O Kavor não grava os arquivos nativos de confiança. Isso é diferente de o próprio provider registrar uma decisão:
+Claude Code pode lembrar a pasta aceita em `.claude.json`, e Grok pode registrá-la em `trusted_folders.toml`.
+
+No Claude Code, o Kavor só confirma a tela reconhecida de confiança da pasta, no máximo uma vez por inicialização,
+e verifica a seleção de **Yes, I trust this folder** antes de enviar a confirmação. Se a tela não for reconhecida
+ou você já tiver começado a interagir com a sessão, ele não responde automaticamente. Na pasta pessoal, o Claude Code
+pode manter essa confiança apenas durante a sessão e perguntar de novo na próxima inicialização.
+
+Se uma atualização do CLI mudar o prompt ou a forma de dispensá-lo, a confirmação pode aparecer normalmente no
+Terminal. Leia o que está sendo pedido e responda você; a preferência não promete remover qualquer diálogo.
+
+### O que confiar na pasta permite carregar
+
+Confiar não é apenas esconder um aviso. Cada provider aplica suas próprias regras ao conteúdo do projeto:
+
+- **Codex:** configurações do projeto em `.codex`, regras, servidores MCP declarados e hooks.
+- **Claude Code:** configurações, hooks, instruções, regras, skills e permissões declaradas pelo repositório.
+  Grants como `permissions.allow` e `additionalDirectories` tornam-se elegíveis sob as regras nativas.
+- **Antigravity:** `AGENTS.md`, `GEMINI.md`, regras e skills em `.agents`, custom agents, plugins, hooks e configurações MCP.
+- **Grok:** configurações de MCP e LSP, hooks, instruções, skills, permissões, plugins e workflows do projeto, além do
+  carregamento de `.envrc`.
+
+Esse conteúdo pode afetar a sessão antes do primeiro pedido ao modelo. Hooks podem executar ao abrir o CodingAgent;
+descobrir uma skill, uma regra ou um script, porém, não significa executar todos eles automaticamente. O efeito
+depende do conteúdo, da configuração e das regras nativas do provider.
+
+Por isso, revise a origem e o conteúdo do repositório antes de iniciá-lo como confiável. Desligue a preferência
+**antes de iniciar o CodingAgent nesse diretório** se quiser preservar a pergunta nativa. Isso não é um modo isolado
+para analisar código hostil, nem garante que um provider já configurado voltará a perguntar.
+
+### Confiança não substitui outras aprovações
+
+**Skip trust prompts** não escolhe um preset de permissões, não gera concessões de ferramentas e não faz login.
+Permissões declaradas pelo próprio projeto podem passar a valer sob as regras nativas após a confiança, como
+descrito acima.
+Autenticação, consentimentos iniciais do provider, aprovações de ferramentas e outros diálogos continuam seguindo o
+contrato nativo. A preferência também não altera Connections, Guardrails ou `Allow workspace editing`.
+
+No **Claude Code**, o `.mcp.json` do repositório mantém a própria aprovação de servidores MCP. O Kavor não responde
+a ela nem grava uma configuração para aprová-la. Essa confirmação não é a mesma coisa que a integração MCP do Kavor.
+
+Argumentos nativos explícitos em **CLI args** vencem os defaults gerados quando há conflito. Um subcomando nativo
+não recebe os skips gerados pelo Kavor. No Codex, uma opção `-c` de outro assunto, como seleção de modelo, não cancela
+a confiança gerada para a pasta; uma configuração que sobrescreve a mesma chave de confiança pode fazê-lo.
+Desligar o switch também não neutraliza uma opção de confiança que você tenha fornecido por conta própria.
 
 ## Separe o trabalho com Git worktrees
 
@@ -324,6 +415,7 @@ Confirme:
 - quais Nodes precisam estar alcançáveis;
 - quais Guardrails devem existir nas Connections diretas;
 - se provider, modelo e esforço combinam com o risco da tarefa;
+- se você confia na pasta e no conteúdo que o provider carrega dela, e como está **Skip trust prompts**;
 - onde decisões, progresso e evidências serão preservados;
 - com quem ele deve conversar e em que condição deve parar.
 

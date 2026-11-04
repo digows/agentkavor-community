@@ -3,7 +3,7 @@ id: coding-agent
 title: "Kavor 中的 CodingAgent：让你熟悉的 harness 成为图的一部分"
 description: 选择 provider，保留原生体验，并把 CodingAgent 连接到正确的上下文、工具与参与者。
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-11-03
 canonicalUrl: https://agentkavor.com/zh/docs/coding-agent
 ---
 
@@ -69,9 +69,85 @@ Node 和 provider 进程不是一回事。即使执行已停止，CodingAgent �
 - **Restart** 关闭当前进程并启动替代进程，保留账户、工作根目录和恢复原生会话的意图。它不会清空历史，也不会撤销项目改动。
 - **Shutdown** 停止执行，但不删除 Node 或原生历史。需要再次运行时使用 Start。
 
-Kavor 会显示准备阶段，并报告 provider 已就绪或启动失败。待审批事项仍由你决定：启动或重启并不授权 agent 代你回答。
+Kavor 会显示准备阶段，并报告 provider 已就绪或启动失败。认证、工具审批和 MCP 确认仍由你控制。
+下文的 **Skip trust prompts** 偏好专门处理对文件夹及其 hooks 的信任，并不授权 Kavor 代你回答其他对话框。
 
 启动失败时，先阅读错误，再决定是否重试。修复缺失目录、安装、认证或提示的其他前置条件后，使用 **Retry**。新的尝试不等于之前的会话，也不能证明任务已经执行。
+
+## 启动时跳过信任提示
+
+**Skip trust prompts** 可避免 Kavor 管理的交互式启动因询问你是否信任文件夹或其 hooks 而暂停。
+该偏好 **默认开启**，包括尚未保存此项值的现有 CodingAgents。它属于单个 Node，而不是 Workspace 或全局配置。
+
+它作用于 **实际启动目录**：可能是 Workspace 根目录、在 **Working directory** 中选择的目录，或与 CodingAgent 关联的目录。
+该偏好适用于 Kavor 管理的新启动、会话恢复和重启，无论使用 Main 账户还是由 Kavor 管理的账户。
+
+**不要在打开未知代码时，把信任提示当作安全屏障。** 开启该偏好并选择工作文件夹，意味着你接受 provider 从受信任仓库加载的内容。
+这包括项目自身的 hooks，而不只是 Kavor 集成的 hooks。
+
+### 在下次启动前更改偏好
+
+1. 打开 CodingAgent 的 **Settings**，在 **Startup** 部分的 **Permission** 下方找到 **Skip trust prompts**。
+2. 如果希望 provider 使用原生信任行为，请关闭该选项。
+3. 同时检查 **Working directory** 和 **CLI args**。显式指定的原生配置仍然优先。
+4. 通过面板中显示的启动操作应用更改：**Save & restart**、**Start** 或内联确认。
+   重启会结束当前执行；仅切换开关不会结束执行。
+
+**Applies on next start** 表示更改将在下次启动时生效。会话运行期间，尚未应用的更改显示为 **Pending — applies on next start**。
+关闭面板不会保存草稿、重启 provider，也不会回答屏幕上已有的提示。
+
+如果应用失败，面板会保留草稿和错误，供你修正后重试。关闭该偏好后，Kavor 将不再提供用于跳过信任提示的设置，也不再自动响应文件夹确认；
+这不会撤销已执行的操作，也不会取消 CLI 自身已保存的信任。已经受信任的文件夹可能仍然不会再询问。
+
+切换 provider 会保留该偏好。克隆 Node、执行受支持的 Fork，或在 Canvas 中复制 Node，也会保留该值，包括你已将它关闭的情况。
+这并不意味着复制 Node 就会复制原生对话。
+
+### 各 provider 的效果不同
+
+| Provider | 启动时的变化 |
+| --- | --- |
+| **Codex** | Kavor 为实际启动目录提供信任配置，并跳过 hooks 确认，包括仓库自身的 hooks。这不会更改工具权限预设。 |
+| **Claude Code** | Kavor 在能够可靠识别文件夹信任界面时作出确认。该界面可能短暂出现。项目 MCP 审批仍然独立。 |
+| **Antigravity** | Kavor 在启动配置中将该文件夹设为受信任，但不将此信任偏好写入原生文件。 |
+| **Grok** | Kavor 请求 CLI 信任该文件夹。Grok 自身可能将此信任记录到其原生文件中。 |
+| **OpenCode** | 没有文件夹或 hooks 信任确认。开关处于禁用状态并显示 **Not required**；其值会保留，供日后切换 provider 使用，但不会对 OpenCode 应用跳过信任提示的设置。 |
+
+Kavor 不会写入原生信任文件。这与 provider 自身记录决定不同：Claude Code 可能在 `.claude.json` 中记住已接受的文件夹，
+Grok 可能将它记录到 `trusted_folders.toml`。
+
+对于 Claude Code，Kavor 只会确认已识别的文件夹信任界面，每次启动最多一次，并在发送确认前核实选中的是 **Yes, I trust this folder**。
+如果无法识别界面，或你已经开始与会话交互，Kavor 就不会自动回答。对于用户主目录，Claude Code 可能只在当前会话中保留该信任，
+并在下次启动时再次询问。
+
+如果 CLI 更新改变了提示或跳过提示的方式，确认提示可能仍会正常出现在 Terminal 中。请阅读请求并自行回答；该偏好不保证消除所有对话框。
+
+### 信任文件夹后可以加载哪些内容
+
+信任不只是隐藏警告。每个 provider 都按自身规则处理项目内容：
+
+- **Codex：** `.codex` 中的项目配置、规则、声明的 MCP 服务器和 hooks。
+- **Claude Code：** 仓库声明的配置、hooks、指令、规则、skills 和权限。
+  `permissions.allow` 和 `additionalDirectories` 等授权会在原生规则下具备生效资格。
+- **Antigravity：** `AGENTS.md`、`GEMINI.md`、`.agents` 中的规则和 skills、custom agents、插件、hooks 和 MCP 配置。
+- **Grok：** 项目的 MCP 和 LSP 配置、hooks、指令、skills、权限、插件和 workflows，以及 `.envrc` 的加载。
+
+这些内容可能在第一次向模型发出请求前就影响会话。打开 CodingAgent 时，hooks 就可能执行；但发现某个 skill、规则或脚本，
+并不意味着它们都会自动执行。具体效果取决于内容、配置和 provider 的原生规则。
+
+因此，在以受信任方式启动仓库前，请检查其来源和内容。如果希望保留原生询问，请 **在该目录启动 CodingAgent 之前** 关闭此偏好。
+这不是用于分析恶意代码的隔离模式，也不保证已经配置过的 provider 会再次询问。
+
+### 信任不能替代其他审批
+
+**Skip trust prompts** 不会选择权限预设、授予工具权限或执行登录。如上所述，项目自身声明的权限可能在获得信任后按原生规则生效。
+认证、provider 的初始同意流程、工具审批和其他对话框仍遵循原生契约。该偏好也不会更改 Connections、Guardrails 或 `Allow workspace editing`。
+
+对于 **Claude Code**，仓库的 `.mcp.json` 仍有独立的 MCP 服务器审批。Kavor 不会代为回答，也不会写入配置来批准它。
+这一确认与 Kavor 的 MCP 集成不是一回事。
+
+当出现冲突时，**CLI args** 中显式指定的原生参数优先于生成的默认值。原生子命令不会收到 Kavor 生成的跳过信任提示设置。
+对于 Codex，用于其他用途（例如选择模型）的 `-c` 选项不会取消为文件夹生成的信任配置；覆盖同一信任键的配置则可能取消它。
+关闭开关也不会抵消你自行提供的信任选项。
 
 ## 用 Git worktrees 分离工作
 
@@ -269,6 +345,7 @@ findings，不要仅因为现有测试通过就批准工作。
 - 哪些 Nodes 必须可达；
 - 直接 Connections 上需要哪些 Guardrails；
 - provider、模型和 effort 是否符合任务风险；
+- 是否信任该文件夹及 provider 从中加载的内容，以及 **Skip trust prompts** 的设置；
 - 决策、进度和证据保存在哪里；
 - 它应与谁沟通，以及何时停止。
 
