@@ -3,7 +3,7 @@ id: coding-agent
 title: "CodingAgent in Kavor: your favorite harness as part of a graph"
 description: Choose a provider, preserve its native experience, and connect the CodingAgent to the right context, tools, and participants.
 kind: guide
-lastReviewedAt: 2026-10-29
+lastReviewedAt: 2026-11-03
 canonicalUrl: https://agentkavor.com/en/docs/coding-agent
 ---
 
@@ -74,9 +74,99 @@ The Node and the provider process are different things. A CodingAgent can remain
 - **Restart** closes the current process and starts its replacement, keeping the account, working root and intent to resume the native session. It neither clears history nor undoes project changes.
 - **Shutdown** ends execution without deleting the Node or native history. Use Start when you want to run it again.
 
-Kavor shows preparation stages and reports when the provider is ready or startup has failed. Pending approval remains yours: starting or restarting does not authorize an agent to answer it for you.
+Kavor shows preparation stages and reports when the provider is ready or startup has failed. Authentication, tool approvals, and MCP confirmations remain under your control. The **Skip trust prompts** preference, described below, specifically covers trust in the folder and its hooks; it is not general authorization to answer other dialogs.
 
 If startup fails, read the error before repeating it. Fix the missing directory, installation, authentication or other reported requirement, then use **Retry**. A new attempt is not the previous session or confirmation that the task ran.
+
+## Start without trust prompts
+
+**Skip trust prompts** prevents Kavor-managed interactive startup from stopping to ask whether you trust the folder
+or its hooks. The preference is **on by default**, including for existing CodingAgents that do not yet have a saved
+value. It belongs to the Node, not the Workspace or a global setting.
+
+It targets the **effective startup directory**: this may be the Workspace root, a directory selected in
+**Working directory**, or the directory associated with the CodingAgent. The preference applies to managed starts,
+resumes, and restarts, with both the Main account and Kavor-managed accounts.
+
+**Do not rely on the trust prompt as a barrier when opening unfamiliar code.** When you choose a folder to work in with
+this preference on, you accept what the provider loads from a trusted repository. This includes the project's own
+hooks, not just Kavor's integration hooks.
+
+### Change the preference before the next start
+
+1. Open **Settings** on the CodingAgent and find **Skip trust prompts** in the **Startup** section, below **Permission**.
+2. Turn it off if you want the provider to use its native trust behavior.
+3. Also check **Working directory** and **CLI args**. Explicit native configuration still takes precedence.
+4. Apply the change through the startup action shown in the panel — **Save & restart**, **Start**, or its inline
+   confirmation. Restarting ends the current execution; changing the switch alone does not.
+
+**Applies on next start** means the change takes effect at the next startup. While a session is running, an unapplied
+change appears as **Pending — applies on next start**. Closing the panel does not save the draft, restart the provider,
+or answer a prompt already on screen.
+
+If applying the change fails, the panel keeps the draft and error so you can correct the problem and try again.
+Turning the preference off stops Kavor from supplying prompt-skipping options or automatically answering the folder confirmation;
+it does not undo actions already taken or revoke trust the CLI itself has saved. A folder already trusted may still
+open without a prompt.
+
+Switching providers keeps the preference. Cloning the Node, creating a supported Fork, or copying the Node on the
+Canvas also preserves the value, including when you have turned it off. This does not turn a Node copy into a copy
+of the native conversation.
+
+### The effect depends on the provider
+
+| Provider | What changes at startup |
+| --- | --- |
+| **Codex** | Kavor supplies trust for the effective folder and skips hook confirmation, including for repository hooks. This does not change the tool permission preset. |
+| **Claude Code** | Kavor responds to the folder trust screen when it can safely recognize it. The screen may appear briefly. Project MCP approval remains separate. |
+| **Antigravity** | Kavor supplies the folder as trusted in the startup configuration, without writing that trust preference to the native file. |
+| **Grok** | Kavor asks the CLI to trust the folder. Grok itself may record that trust in its native file. |
+| **OpenCode** | There is no folder or hook trust confirmation. The switch is disabled with **Not required**; its value is preserved for a future provider switch, without applying a skip to OpenCode. |
+
+Kavor does not write native trust files. This is different from the provider itself recording a decision:
+Claude Code may remember the accepted folder in `.claude.json`, and Grok may record it in `trusted_folders.toml`.
+
+For Claude Code, Kavor only confirms the recognized folder trust screen, at most once per startup, and checks that
+**Yes, I trust this folder** is selected before sending the confirmation. If the screen is not recognized or you
+have already started interacting with the session, it does not respond automatically. In your home directory,
+Claude Code may keep that trust only for the session and ask again at the next startup.
+
+If a CLI update changes the prompt or how to skip it, the confirmation may appear normally in the Terminal.
+Read what it asks and respond yourself; the preference does not promise to remove every dialog.
+
+### What trusting the folder allows the provider to load
+
+Trusting a folder is more than hiding a warning. Each provider applies its own rules to project content:
+
+- **Codex:** project configuration in `.codex`, rules, declared MCP servers, and hooks.
+- **Claude Code:** configuration, hooks, instructions, rules, skills, and permissions declared by the repository.
+  Grants such as `permissions.allow` and `additionalDirectories` become eligible under native rules.
+- **Antigravity:** `AGENTS.md`, `GEMINI.md`, rules and skills in `.agents`, custom agents, plugins, hooks, and MCP configuration.
+- **Grok:** project MCP and LSP configuration, hooks, instructions, skills, permissions, plugins, and workflows, as well
+  as loading `.envrc`.
+
+This content may affect the session before the first request to the model. Hooks may run when the CodingAgent opens;
+discovering a skill, rule, or script, however, does not mean they all run automatically. The effect depends on the
+content, configuration, and the provider's native rules.
+
+Review the repository's origin and contents before starting it as trusted. Turn the preference off
+**before starting the CodingAgent in that directory** if you want to retain the native prompt. This is not an
+isolated mode for inspecting hostile code, nor does it guarantee that an already configured provider will ask again.
+
+### Trust does not replace other approvals
+
+**Skip trust prompts** does not choose a permission preset, generate tool grants, or sign you in. Permissions declared
+by the project itself may take effect under native rules after trust is established, as described above.
+Authentication, initial provider consents, tool approvals, and other dialogs still follow the native contract.
+The preference also does not change Connections, Guardrails, or `Allow workspace editing`.
+
+In **Claude Code**, the repository's `.mcp.json` retains its own MCP server approval. Kavor neither answers it nor writes
+configuration to approve it. That confirmation is not the same as Kavor's MCP integration.
+
+Explicit native arguments in **CLI args** override generated defaults when they conflict. A native subcommand does
+not receive Kavor-generated skips. In Codex, a `-c` option for something else, such as model selection, does not cancel
+the generated folder trust; a configuration that overrides the same trust key may do so. Turning the switch off also
+does not neutralize a trust option you supplied yourself.
 
 ## Separate work with Git worktrees
 
@@ -292,6 +382,7 @@ Confirm:
 - which Nodes must be reachable;
 - which Guardrails should exist on direct Connections;
 - whether the provider, model, and effort fit the task's risk;
+- whether you trust the folder and the content the provider loads from it, and how **Skip trust prompts** is set;
 - where decisions, progress, and evidence will be preserved;
 - who it should talk to and when it should stop.
 
