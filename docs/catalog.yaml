@@ -1,8 +1,8 @@
 schemaVersion: 1
-releaseId: docs-2026-11-04.3
+releaseId: docs-2026-11-05.1
 sourceRepository: digows/agentkavor-community
-currentProductVersion: 2.4.3
-previousReleaseId: docs-2026-11-04.2
+currentProductVersion: 2.4.4
+previousReleaseId: docs-2026-11-04.3
 locales:
   - slug: en
     languageTag: en
@@ -55,22 +55,22 @@ navigation:
     documents:
       - release-notes
 documents:
-  - id: release-notes-2.4.3
+  - id: release-notes-2.4.4
     kind: release-note
-    slug: release-notes/2.4.3
-    path: release-notes/2.4.3.md
+    slug: release-notes/2.4.4
+    path: release-notes/2.4.4.md
     status: published
-    introducedIn: 2.4.3
-    lastVerifiedIn: 2.4.3
+    introducedIn: 2.4.4
+    lastVerifiedIn: 2.4.4
     owner: Kavor
     searchable: true
     agentReadable: true
     translationStatus: complete
-    version: 2.4.3
+    version: 2.4.4
     publishedAt: 2026-11-03T21:10:22Z
     prerelease: false
-    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v2.4.3
-    sourceBodySha256: d15c68292800341d80d846c42776415866c1aa7128ba49ca760aeacd2a8e5a9d
+    sourceUrl: https://github.com/digows/agentkavor-community/releases/tag/v2.4.4
+    sourceBodySha256: 6d7bddf7a30c5a3f0c3e4182433185e1a4bc7ee16e72051a51efa8c7e6187b9a
   - id: release-notes-2.3.0
     kind: release-note
     slug: release-notes/2.3.0
@@ -384,7 +384,7 @@ documents:
     path: coding-agent.md
     status: published
     introducedIn: 1.4.0
-    lastVerifiedIn: 2.4.3
+    lastVerifiedIn: 2.4.4
     owner: Kavor
     searchable: true
     agentReadable: true
